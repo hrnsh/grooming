@@ -1,4 +1,4 @@
-package kr.co.gudi.main;
+package kr.co.gudi.main.dao;
 
 public interface MainDAO {
 

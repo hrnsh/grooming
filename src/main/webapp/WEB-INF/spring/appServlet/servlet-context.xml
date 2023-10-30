@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -22,6 +24,33 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="kr.co.gudi" />
+	
+	
+	<!-- datasource -->
+	<!-- url, username, password 는 바뀔수 있으니 항상 확인 할 것 -->
+	<!-- DB의 종류가 바뀌면 driverClassName,url 도 바뀌게 된다. -->
+	<beans:bean name="datasource" class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName" value="org.mariadb.jdbc.Driver"/>
+		<beans:property name="url" value="jdbc:mariadb://localhost:3306/gdj70"/>
+		<beans:property name="username" value="web_user"/>
+		<beans:property name="password" value="pass"/>
+	</beans:bean>
+	
+	<!--mapper location-->
+	<!-- 마이바티스 에서 xml 사용 설정 -->
+	<!-- mapper의 위치 꼭 확인 할 것 -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- DB 접속에 필요한 데이터소스 지정 -->
+		<beans:property name="dataSource" ref="datasource"/>
+		<!-- 쿼리문 xml 위치 지정-->
+		<beans:property name="mapperLocations" value="classpath:kr/co/gudi/dao/*.xml"/>
+	</beans:bean>
+	
+	<!-- mybatis package area -->	
+	<!--  마이바티스를 사용할 패키지 지정 -->
+	<!-- dao 패키지 경로 확인 -->
+	<mybatis-spring:scan base-package="kr.co.gudi.dao"/>
+    <!--하단 Namespaces -> mybatis-spring 체크-->
 	
 	
 	
