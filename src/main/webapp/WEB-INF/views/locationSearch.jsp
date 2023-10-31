@@ -10,48 +10,62 @@
 		<script>
 			let map;
 			let marker;
-		
+			
+			// 초기 지도
 			function initMap() {
 				map = new google.maps.Map(document.getElementById("map"), 
 				{
 					mapTypeId : 'roadmap',
-					center : {lat : 37.476517, lng : 126.880036},
+					center : {lat : 37.5666612, lng : 126.9783785},
 					zoom : 15
 				});
 			}
-		
+			
+			// 현재 위치
 			function showCurrentLocation() {
 				if(navigator.geolocation){
-					navigator.geolocation.getCurrentPosition(
-						(position) => {
-							const currentLocation = {
-									lat: position.coords.latitude,
-									lng: position.coords.longitude
-							};
-							
-							// 기존 마커 삭제
-							if(marker){
-								marker.setMap(null);
-							}
-							
-							// 새로운 마커 생성
-							marker = new google.maps.Marker({
-								position: currentLocation,
-								map: map,
-								title: "현재 위치"
-							});
-							
-							// 지도 이동
-							map.panTo(currentLocation);
-						},
-						() => {
-							alert("위치 정보를 가져올 수 없습니다.");
-						}
-					);
+					navigator.geolocation.getCurrentPosition(success, error, options);
 				} else{
 					alert("브라우저가 위치 정보를 지원하지 않습니다!!");
 				}
 			}
+			
+			// 위치 정보 요청 성공
+			function success(position){
+				const currentLocation = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+				};
+					
+				// 기존 마커 삭제
+				if(marker){
+					marker.setMap(null);
+				}
+					
+				// 새로운 마커 생성
+				marker = new google.maps.Marker({
+					position: currentLocation,
+					map: map,
+					title: "현재 위치"
+				});
+					
+				// 지도 이동
+				map.panTo(currentLocation);
+			}
+			
+			// 실패
+			function error() {
+				alert("위치 정보를 가져올 수 없습니다!!");
+			}
+			
+			const options = {
+					// 높은 정확도 위치 설정
+					enableHighAccuracy: true,
+					// 위치 정보를 받기 위해 15초 동안 대기
+					timeout: 15000,
+					// 5분이 지나기 전까지는 위치 정보가 수정되지 않게 함
+					maximumAge: 30000
+			};
 		</script>
 	</head>
 	<body onload="initMap()">
