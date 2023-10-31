@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ReserveController {
 
-	@RequestMapping(value="/")
-	public String reserve() {
-		return "reserve/reserve";
-	}
+
 //	년도를 넘겨받아 윤년/ 평년을 판단해 윤년이면 true, 평년이면 false를 리턴하는 메서드
 	public static boolean isLeapYear(int year) {
 		return (year % 4 ==0) && (year % 100 !=0) ||(year % 400 ==0);
