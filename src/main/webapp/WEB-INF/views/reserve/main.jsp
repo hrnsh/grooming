@@ -8,7 +8,7 @@
 <style></style>
 </head>
 <body>
-	<p>가나다라</p>
+
 </body>
 <script></script>
 </html>
