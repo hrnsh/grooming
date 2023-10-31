@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.gudi.member.service.MemberService;
 
@@ -21,7 +22,7 @@ public class MemberController {
 	
 	@Autowired MemberService service;
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/login")
 	public String login() {
 		logger.info("로그인 페이지로 이동");
 		return "login";
@@ -46,12 +47,28 @@ public class MemberController {
 	}
 	
 	
-	
 	@RequestMapping(value = "/joinForm")
 	public String joinForm() {
 		logger.info("회원가입 페이지로 이동");
 		return "joinForm";
 	}
+	
+	@RequestMapping(value="/overlay")
+	@ResponseBody // ajax 에서 반환하는 값을 response 에 그려주는 역할을 한다.
+	public HashMap<String, Object> overlay(@RequestParam String id) {
+		boolean use = service.overlay(id);
+		logger.info("사용 가능 여부 : "+use);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("use", use);
+		// No converter found for return value of type: class java.util.HashMap
+		// 자바가 아닌 타입으로 들어가기 때문에 어떻게 해석을 해야할지 모르겠다는 의미이다.
+		// response 는 출력(페이지그리기)이 되는 객체이므로 값을 기존 페이지위에 값을 그리고 출력한다.
+		
+		return map;
+	}
+	
+	
+	
 	
 	@RequestMapping(value = "/join")
 	public String join(Model model, @RequestParam HashMap<String, String> params) {
