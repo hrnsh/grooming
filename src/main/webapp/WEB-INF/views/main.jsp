@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/star.css}" />
 <style>
 nav {
 	height: 200px;
@@ -17,7 +18,7 @@ nav {
 	margin-left: 50px;
 }
 
-.loginBox {
+.profileBox {
 	width: 300px;
 	height: 150px;
 	background-color: rgb(221, 215, 214);
@@ -26,7 +27,26 @@ nav {
 	position: relative;
 }
 
-.logButton{
+.btnBox{
+	width: 300px;
+	height: 70px;
+	background-color: rgb(170, 164, 164);
+	position: absolute;
+	display: flex;
+	justify-content: space-around;
+	top: 80px;
+}
+
+.profileBtn{
+	height: 40px;
+	width: 80px;
+	top: 15px;
+	border: none;
+	background-color: rgb(170, 164, 164);
+	position: relative;
+}
+
+.logBtn{
 	border: none;
 	height: 50px;
 	width: 150px;
@@ -37,8 +57,33 @@ nav {
 	font-weight: 700;
 	font-size: inherit;
 	position: absolute;
-	top: 20px;
+	top: 50px;
 	left: 70px;
+}
+
+.logoutBox {
+	width: 300px;
+	height: 70px;
+	background-color: rgb(221, 215, 214);
+	position: absolute;
+	display: flex;
+	justify-content: space-around;
+	border-radius: 50px;
+}
+
+.logoutNotiBtn{
+	border: none;
+	width: 70px;
+	height: 30px;
+	background-color: rgb(221, 215, 214);
+	position: relative;
+	top: 30px;
+}
+
+.name{
+	position: relative;
+	top: 35px;
+	left: 35px;
 }
 
 main {
@@ -56,7 +101,7 @@ main {
 	display: flex;
 	justify-content: space-around;
 	position: absolute;
-	top: 100px;
+	top: 115px;
 }
 
 .button {
@@ -75,6 +120,14 @@ main {
 	transform: scale(1.05);
 }
 
+.iconAll{
+	width: 60%;
+	display: flex;
+	justify-content: space-around;
+	position: absolute;
+	top: 0px;
+}
+
 .rankBox{
 	width: 500px;
 	height: 150px;
@@ -82,6 +135,15 @@ main {
 	position: absolute;
 	top: 200px;
 	border-radius: 30px;
+}
+
+.company{
+	width: 350px;
+	height: 150px;
+}
+
+.compName{
+	margin-left: 20px;
 }
 
 footer {
@@ -118,7 +180,21 @@ footer {
 	color: #464646;
 	text-align: center;
 	line-height: 400px;
-	position: relative;
+}
+
+.stars {
+    font-size: 24px; 
+    color: gold;
+}
+
+td{
+	width: 30%;
+}
+
+
+table{
+	border-spacing: 20px;
+	border-collapse: seperate;
 }
 
 </style>
@@ -128,34 +204,53 @@ footer {
 		<div class="logo">
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<div class="loginBox">
-			<button onclick="location.href='login'" class="logButton"> LOGIN </button>
+		<div class="profileBox">
+			<button onclick="location.href='./login'" class="logBtn" id="loginBtn" style="display:none"> LOGIN </button>
+			<div class="logoutBox">
+				<div class="name">신민정님</div>
+				<button onclick="location.href='./pfNotiList'" class="logoutNotiBtn">⚫️</button>
+				<button onclick="location.href='./'" class="logoutNotiBtn">로그아웃</button>
+			</div>
+			<div class="btnBox">
+				<button onclick="location.href='./profile'" class="profileBtn" id="profileBtn">프로필</button>
+				<button onclick="location.href='./pfNoteList'" class="profileBtn">쪽지함</button>
+				<button onclick="location.href='./pfWrite'" class="profileBtn">내가 쓴 글</button>
+			</div>
 		</div>
 	</nav>
 	<main>
+		<div class="iconAll">
+			<img src="resources/img/mapIcon.jpg" alt="mapIcon" width=100 height=100/>
+			<img src="resources/img/calendarIcon.jpg" alt="calendarIcon" width=100 height=100/>
+			<img src="resources/img/boardIcon.jpg" alt="boardIcon" width=100 height=100/>
+			<img src="resources/img/faqIcon.jpg" alt="faqIcon" width=100 height=100/>
+		</div>
 		<div class="buttonAll">
-			<button onclick="location.href='locationSearch'" class="button">위치 탐색</button>
-			<button onclick="location.href='reserve'" class="button">예약 관리</button>
-			<button onclick="location.href='boardMain'" class="button">게시판</button>
-			<button onclick="location.href='adFaqList'" class="button">FAQ</button>
+			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
+			<button onclick="location.href='./reserve'" class="button">예약 관리</button>
+			<button onclick="location.href='./boardMain'" class="button">게시판</button>
+			<button onclick="location.href='./adFaqList'" class="button">FAQ</button>
 		</div>
 		<div class="rankBox">
-			<div class="company1">
-				<div>업체 1</div>
-				<div>누적 이용자 수 : </div>
-				<div>별점 : </div>
-			</div>
-			<div class="company2">
-				<div>업체 2</div>
-				<div>누적 이용자 수 : </div>
-				<div>별점 : </div>
-			</div>
-			<div class="company3">
-				<div>업체 3</div>
-				<div>누적 이용자 수 : </div>
-				<div>별점 : </div>
-			</div>
-		</div>
+			<table>
+				<c:forEach items="${rank}" var="info">
+					<tr>
+						<td> <a href="location.href='./locationSearch?id=${member.id}'">${info.com_name}</a></td>
+						<td> 누적 이용자 수 : ${info.user_total}</td>
+						<td>
+							별점 :
+							<c:choose>
+								<c:when test="${info.avg_star<=1}">★☆☆☆☆</c:when>
+								<c:when test="${info.avg_star<=2}">★★☆☆☆</c:when>
+								<c:when test="${info.avg_star<=3}">★★★☆☆</c:when>
+								<c:when test="${info.avg_star<=4}">★★★★☆</c:when>
+								<c:when test="${info.avg_star<=5}">★★★★★</c:when>
+							</c:choose>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div> 	
 	</main>
 	<footer>
 		<div class="image">
