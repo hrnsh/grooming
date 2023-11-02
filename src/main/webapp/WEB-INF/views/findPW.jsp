@@ -21,47 +21,39 @@
 <body>
 	<h2>LOGIN</h2>
 	<hr/>
-	<form action="logingo" method="post">
+	<form action="userfind" method="post">
 	    <table>
 	        <tr>
-	            <th>ID</th>
+	            <th>이름</th>
 	            <th colspan="2">
-	                <input type="text" name="id" value="" placeholder="아이디를 입력 하세요"/>
+	                <input type="text" name="name" value="" placeholder="이름을 입력 하세요"/>
 	            </th>
 	        </tr>
 	        <tr>
-	            <th>PW</th>
+	            <th>아이디</th>
 	            <th colspan="2">
-	                <input type="password" name="pw" value="" placeholder="비밀번호를 입력 하세요"/>
+	                <input type="text" name="id" value="" placeholder="아이디를 입력하세요"/>
 	            </th>                
 	        </tr>
 	        <tr>
+	            <th>이메일</th>
 	            <th colspan="2">
-	                <input type="submit" value="login"/>
-	            </th>	        
+	                <input type="email" name="email" value="" placeholder="이메일을 입력하세요"/>
+	            </th>                
 	        </tr>
 	        <tr>
 	            <th colspan="3">
-	                <input id="regist" type="button" value="회원가입"/>
-	                <input id ="findID" type="button" value="아이디 찾기"/>
-	                <input id ="findPW" type="button" value="비밀번호 찾기"/>
+	                <input id ="userFind" type="button" value="비밀번호 찾기"/>
 	            </th>    
 	        </tr>
 	    </table>
 	</form>
 </body>
 <script>
-	$('#regist').on('click',function(){
+	$('#userFind').on('click',function(){
 		location.href='joinForm';
 	});
 	
-	$('#findID').on('click',function(){
-		location.href='findID';
-	});	
-
-	$('#"findPW"').on('click',function(){
-		location.href='"findPW"';
-	});
 	
 	var msg = "${msg}";
 	if(msg != ""){

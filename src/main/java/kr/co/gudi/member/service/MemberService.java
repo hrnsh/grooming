@@ -16,21 +16,39 @@ public class MemberService {
 	
 	@Autowired MemberDAO dao;
 
-	public String login(String id, String pw) {
-		boolean success = false;
-		return dao.login(id,pw);
-	}
-
-	public String join(HashMap<String, String> params) {
-		String msg = "회원가입에 실패했습니다."; 
-		int row = dao.join(params);
-		if(row > 0) {
-			msg = "회원가입에 성공했습니다.";
+	public boolean overlay(String id) {
+		
+		boolean use = false;
+		int cnt = dao.overlay(id);
+		if(cnt==0) {
+			use = true;
 		}
-		return msg;
+		return use;
 	}
 
-	
+	public int join(HashMap<String, String> params) {
+		int row = 0;
+		row = dao.join(params);
+		if(row>0 && params.get("id")!=null) {
+			row = dao.join(params);
+		}
+		return row;
+	}
+
+
+	public String logingo(String id, String pw) {
+		boolean success = false;
+		return dao.logingo(id,pw);
+	}
+
+	public Object dofindID(String id, String email) {
+		boolean success = false;
+		return dao.dofindId(id,email);
+	}
+
+
+
+
 
 	
 }
