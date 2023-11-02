@@ -1,5 +1,14 @@
+/**
+ * 
+ */
 package kr.co.gudi.location.service;
 
-public class LocationService {
+import java.util.List;
+
+import kr.co.gudi.location.dto.LocationDTO;
+
+public interface LocationService {
+
+	List<LocationDTO> getNearbyPlaces(double lat, double lng);
 
 }
