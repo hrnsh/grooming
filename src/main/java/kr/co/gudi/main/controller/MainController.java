@@ -37,10 +37,6 @@ public class MainController {
 		return "boardMain";
 	}
 	
-	@RequestMapping(value="/adFaqList")
-	public String adFaqList() {
-		return "adFaqList";
-	}
 	
 	@RequestMapping(value="/login")
 	public String login() {
@@ -52,10 +48,6 @@ public class MainController {
 		return "profile";
 	}
 	
-	@RequestMapping(value="/pfNoteList")
-	public String pfNoteList() {
-		return "pfNoteList";
-	}
 	
 	@RequestMapping(value="/pfWrite")
 	public String pfWrite() {

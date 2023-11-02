@@ -197,6 +197,10 @@ table{
 	border-collapse: seperate;
 }
 
+a{
+	text-decoration: none;
+}
+
 </style>
 </head>
 <body>

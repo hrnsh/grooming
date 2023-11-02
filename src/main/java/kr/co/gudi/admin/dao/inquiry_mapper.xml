@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-      <mapper namespace="kr.co.gudi.admin.dao.InquiryDAO">
+<mapper namespace="kr.co.gudi.admin.dao.InquiryDAO">
+	<!--로그인 한 아이디가 sender 로 들어가야 한다. -->
+	<select id="list" resultType="kr.co.gudi.admin.dto.InquiryDTO"> 
+		SELECT n.note_num, n.receiver, n.note_date, n.note_subject, n.note_state,
+			(SELECT user_id from member m where n.sender = m.user_id) as user_id 
+				FROM note n
+	</select>
 	
 </mapper>
