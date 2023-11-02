@@ -21,6 +21,7 @@ public class MainController {
 		model.addAttribute("rank", rank);
 		return "main";
 	}
+
 	
 	@RequestMapping(value="/locationSearch")
 	public String locationSearch() {
