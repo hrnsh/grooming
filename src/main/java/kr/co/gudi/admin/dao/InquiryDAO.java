@@ -11,6 +11,7 @@ public interface InquiryDAO {
 	int totalPage();
 
 	ArrayList<InquiryDTO> receiveList(int offset);
+
 	
 
 }

@@ -6,20 +6,10 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
 <style>
-nav {
-	height: 150px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.logo {
-	margin-left: 50px;
-}
 
 table, th, td{
 	border: 1px solid black;
@@ -27,18 +17,53 @@ table, th, td{
 	padding: 5px 10px;
 }
 
-table{
-	width: 500px;
+th{
+	 text-align: center;
 }
 
-main{
-	height: 540px;
-	background-size: 175%;
-	background-position: 46% 4%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;	
+table{	
+	width: 500px;
+	table-layout: fixed;
+}
+
+.subjectCol{
+	width: 190px;
+	min-width:190px;
+	max-width: 190px;
+}
+
+.subjectColTd{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.idCol{
+	width: 100px;
+	min-width:100px;
+	max-width: 100px;
+}
+
+.dateCol{
+	width: 125px;
+	min-width:125px;
+	max-width: 125px;
+}
+
+.readCol{
+	width: 50px;
+	min-width:50px;
+	max-width: 50px;
+}
+
+.checkCol{
+	width: 15px;
+	min-width:15px;
+	max-width: 15px;
+}
+
+.checkReadTd{
+	text-align: center;
 }
 
 .sentListBox{
@@ -48,12 +73,12 @@ main{
 	border-radius: 50px;
 	align-items: center;
 	position: relative;
-	left: 100px;
+	left: 90px;
 }
 
 .pagingBox{
 	position: relative;
-	left: 18%;
+	left: 15%;
 }
 
 .sentListContent{
@@ -69,7 +94,7 @@ main{
 	color: white;
 	position: relative;
 	top: 50px;
-	left: 80%;
+	left: 82%;
 }
 
 .receiveBox{
@@ -79,31 +104,13 @@ main{
 	border-radius: 50px;
 	align-items: center;
 	position: relative;
-	left: 150px;
+	left: 120px;
 }
 
 .receiveContent{
 	margin: 30px;
 }
 
-.buttonBox{
-	width: 60%;
-	position: absolute;
-	top: 10px;
-	display:flex;
-	left: 50px;
-	flex-direction: column;
-}
-
-.button{
-	border: none;
-	background-color: rgb(224, 224, 224);
-	border-radius: 500px;
-	margin-top: 30px;
-	height: 50px;
-	width: 150px;
-	font-size: 18px;
-}
 
 </style>
 </head>
@@ -114,12 +121,12 @@ main{
 		</div>
 	</nav>
 	<main>
-		<div class="buttonBox">
-			<button onclick="location.href='./pfNormal'" class="button">내 프로필</button>
-			<button onclick="location.href='./pfNoteList'" class="button">쪽지함</button>
-			<button onclick="location.href='./pfWrite'" class="button">내가 쓴 글</button>
-			<button onclick="location.href='./pfNotiList'" class="button">알림함</button>
-			<button onclick="location.href='./pfReportList'" class="button">신고 내역</button>
+		<div class="profButtonBox">
+			<button onclick="location.href='./pfNormal'" class="profButton">내 프로필</button>
+			<button onclick="location.href='./pfNoteList'" class="profButton">쪽지함</button>
+			<button onclick="location.href='./pfWrite'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='./pfNotiList'" class="profButton">알림함</button>
+			<button onclick="location.href='./pfReportList'" class="profButton">신고 내역</button>
 		</div>
 		<div class="sentListBox">
 			<div class="sentListContent">
@@ -127,11 +134,11 @@ main{
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="all"/></th>
-							<th>제목</th>
-							<th>날짜</th>
-							<th>받는 사람</th>
-							<th>읽음</th>
+							<th><input type="checkbox" id="allSent" name="allSent" class="checkCol"/></th>
+							<th class="subjectCol">제목</th>
+							<th class="dateCol">날짜</th>
+							<th class="idCol">받는 사람</th>
+							<th class="readCol">읽음</th>
 						</tr>
 					</thead>
 					<tbody id="sentList">
@@ -139,7 +146,7 @@ main{
 					</tbody>
 				</table>
 			</div>
-			<button onclick="del()" class="delBtn">삭제</button>
+			<button onclick="delSent()" class="delBtn">삭제</button>
 			<div id="paging" class="pagingBox">
 				<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공함-->
 				<div class="container">
@@ -155,11 +162,11 @@ main{
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="all"/></th>
-							<th>제목</th>
-							<th>날짜</th>
-							<th>받는 사람</th>
-							<th>읽음</th>
+							<th><input type="checkbox" id="allReceive" name="allReceive" class="checkCol"/></th>
+							<th class="subjectCol">제목</th>
+							<th class="dateCol">날짜</th>
+							<th class="idCol">받는 사람</th>
+							<th class="readCol">읽음</th>
 						</tr>
 					</thead>
 					<tbody id="receiveList">
@@ -167,7 +174,7 @@ main{
 					</tbody>
 				</table>
 			</div>
-			<button onclick="del()" class="delBtn">삭제</button>
+			<button onclick="delReceive()" class="delBtn">삭제</button>
 			<div id="paging" class="pagingBox">
 				<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공함-->
 				<div class="container">
@@ -180,6 +187,8 @@ main{
 	</main>
 </body>
 <script>
+
+// 내가 쓴 쪽지 리스트 호출 
 var showPage=1;
 sentListCall(showPage);
 
@@ -204,34 +213,34 @@ function drawList(sentList){
 	var content='';
 	sentList.list.forEach(function(item,note_num){ 
 		content+='<tr>';
-		content+='<td><input type="checkbox"/></td>';
-		content+='<td>'+item.note_subject+'</td>';
+		content+='<td><input type="checkbox" name="allSentCheck" value="'+item.note_num+'" class="checkReadTd"/></td>';
+		content+='<td class="subjectColTd"><a href="pfNoteSend?idx='+item.note_num+'">'+item.note_subject+'</a></td>';
 		var date = new Date(item.note_date);
 		var dateStr = date.toLocaleDateString("ko-KR");
 		content+='<td>'+dateStr+'</td>';
 		content+='<td>'+item.receiver+'</td>';
-		content+='<td>'+item.note_state+'</td>';
+		content+='<td class="checkReadTd">'+item.note_state+'</td>';
 		content+='</tr>';
 	});
 	$('#sentList').empty();
 	$('#sentList').append(content);
 	
-	// 페이징 처리 UI 그리기 (플러그인 사용)
 	$('#paginationSent').twbsPagination({
-		startPage: sentList.currPage, // 보여줄 페이지 (1,2,3..) ***페이지 변경 이슈로 showPage 에서 obj.currPage로 변경
-		totalPages: sentList.pages, // 총 페이지 수 (총 게시물 수/페이지 당 보여줄 게시물 수) - 서버에서 계산해서 가져와야 함
-		visiblePages:5, // [1],[2],[3],[4],[5] - 고정값이다.
-		onPageClick:function(e,page){ // 번호 클릭시 실행할 내용
-			//console.log(e);
-			if(showPage != page){ // page 가 1 이면 보여주지 않기? (처음 켜지면 console에 1을 보여준다)
+		startPage: sentList.currPage,
+		totalPages: sentList.pages, 
+		visiblePages:5, 
+		onPageClick:function(e,page){ 
+			if(showPage != page){ 
 				console.log(page);	
-				showPage=page; // 클릭해서 다른 페이지를 보여주게 되면 현재 보고 있는 페이지 번호도 변경해준다.
+				showPage=page; 
 				sentListCall(page);
 			}
 		}
 	});
 }
 
+
+// 받은 쪽지 리스트 호츨
 receiveListCall(showPage);
 
 function receiveListCall(page){
@@ -255,33 +264,56 @@ function drawReceiveList(receiveList){
 	var content='';
 	receiveList.list.forEach(function(item,note_num){ 
 		content+='<tr>';
-		content+='<td><input type="checkbox"/></td>';
-		content+='<td>'+item.note_subject+'</td>';
+		content+='<td><input type="checkbox" name="allReceiveCheck" value="'+item.note_num+'" class="checkReadTd"/></td>';
+		content+='<td class="subjectColTd"><a href="pfNoteReceive?idx='+item.note_num+'">'+item.note_subject+'</a></td>';
 		var date = new Date(item.note_date);
 		var dateStr = date.toLocaleDateString("ko-KR");
 		content+='<td>'+dateStr+'</td>';
 		content+='<td>'+item.receiver+'</td>';
-		content+='<td>'+item.note_state+'</td>';
+		content+='<td class="checkReadTd">'+item.note_state+'</td>';
 		content+='</tr>';
 	});
 	$('#receiveList').empty();
 	$('#receiveList').append(content);
 	
-	// 페이징 처리 UI 그리기 (플러그인 사용)
 	$('#pagenationReceive').twbsPagination({
-		startPage: receiveList.currPage, // 보여줄 페이지 (1,2,3..) ***페이지 변경 이슈로 showPage 에서 obj.currPage로 변경
-		totalPages: receiveList.pages, // 총 페이지 수 (총 게시물 수/페이지 당 보여줄 게시물 수) - 서버에서 계산해서 가져와야 함
-		visiblePages:5, // [1],[2],[3],[4],[5] - 고정값이다.
-		onPageClick:function(e,page){ // 번호 클릭시 실행할 내용
-			//console.log(e);
-			if(showPage != page){ // page 가 1 이면 보여주지 않기? (처음 켜지면 console에 1을 보여준다)
+		startPage: receiveList.currPage, 
+		totalPages: receiveList.pages, 
+		visiblePages:5, 
+		onPageClick:function(e,page){ 
+			if(showPage != page){ 
 				console.log(page);	
-				showPage=page; // 클릭해서 다른 페이지를 보여주게 되면 현재 보고 있는 페이지 번호도 변경해준다.
+				showPage=page; 
 				receiveListCall(page);
 			}
 		}
 	});
 }
+
+// 내가 쓴 쪽지 체크 박스 
+$('#allSent').on('click',function(){
+	var $chk = $('input[name="allSentCheck"]');
+	console.log($chk);
+	console.log($(this).is(":checked")); 
+	if($(this).is(":checked")){
+		$chk.prop("checked",true);
+	}else{
+		$chk.prop("checked",false);
+	}
+});
+
+// 받은 쪽지 체크 박스
+$('#allReceive').on('click',function(){
+	var $chk = $('input[name="allReceiveCheck"]'); 
+	console.log($chk);
+	console.log($(this).is(":checked")); 
+	if($(this).is(":checked")){
+		$chk.prop("checked",true);
+	}else{
+		$chk.prop("checked",false);
+	}
+});
+
 
 
 

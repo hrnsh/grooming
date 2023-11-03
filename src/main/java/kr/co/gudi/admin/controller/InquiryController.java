@@ -35,7 +35,17 @@ public class InquiryController {
 	public Map<String, Object> receiveList(@RequestParam String page){
 		logger.info("받은 쪽지 리스트 호출 성공");
 		return inquiryService.receiveList(page);
-		
+	}
+	
+	
+	@RequestMapping(value="/pfNoteSend")
+	public String pfNoteSend() {
+		return "pfNoteSend";
+	}
+	
+	@RequestMapping(value="/pfNoteReceive")
+	public String pfNoteReceive() {
+		return "pfNoteReceive";
 	}
 	
 }

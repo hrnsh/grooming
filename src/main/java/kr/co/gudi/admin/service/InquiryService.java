@@ -63,4 +63,5 @@ public class InquiryService {
 
 		return map;
 	}
+
 }
