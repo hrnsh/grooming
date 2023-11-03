@@ -18,36 +18,17 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
+    <title>아이디 찾기 결과</title>
+</head>
 <body>
-	<h2>아이디</h2>
-	<hr/>
-	<form action="logingo" method="post">
-	    <table>
-	        <tr>
-	            <th>ID</th>
-	            <th colspan="2">
-	            <th>
-	            </th>
-	        </tr>
-	        <tr>
-	        	<th>
-	                <input id ="findPW" type="button" value="비밀번호 찾기"/>
-	            </th>    
-	        </tr>
-	    </table>
-	</form>
+    <c:if test="${user_Id != null}">
+        <p>찾은 아이디: ${user_Id}</p>
+    </c:if>
+    <c:if test="${user_Id == null}">
+        <p>${message}</p>
+    </c:if>
 </body>
 <script>
-
-	$('#"findPW"').on('click',function(){
-		location.href='"findPW"';
-	});
-	
-	var msg = "${msg}";
-	if(msg != ""){
-		alert(msg);
-	}
-
 
 </script>
 </html>

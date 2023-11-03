@@ -3,7 +3,7 @@ package kr.co.gudi.member.dto;
 public class MemberDTO {
 
 	private String name;
-	private String id;
+	private String user_id;
 	private String pw;
 	private String phone;
 	private String email;
@@ -14,12 +14,14 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getId() {
-		return id;
+	
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
+	
 	public String getPw() {
 		return pw;
 	}

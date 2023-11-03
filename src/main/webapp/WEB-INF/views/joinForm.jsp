@@ -13,157 +13,90 @@
 </style>
 </head>
 <body>
-     <table>
-        <tr>
-             <!--공백문자-->
-             <th>이&nbsp;&nbsp;&nbsp;&nbsp;름</th>
-             <th>
-                 <input type="text" name="name" maxlength="5"/>
-             </th>
-         </tr>
-         <tr>
-             <th>아이디</th>
-             <th>
-                 <input type="text" name="id" maxlength="13"/>
-             </th>
-             <th>
-                <input type = "button" id = "overlay" value = "ID 중복 체크"/>
-             </th>
-         </tr>
-         <tr>
-             <th>비밀번호</th>
-             <th>
-                 <input type="password" name="pw" maxlength="15"/>
-             </th>
-         </tr>
-         <tr>
-         	<th>연락처</th>
-         	<th>
-         		<input type="text" maxlength="11" name="phone" placeholder="(-없이)01012345678"/>
-         	</th>
-         </tr>
-         <tr>
-             <th>이메일</th>
-             <th>
-                 <input type="email" id="email" name="email"/>
-             </th>
-             <th>
-                 <input type="button" onclick="" value="인증번호 발송"/>
-             </th>
-         </tr>
-         <tr>
-             <th>인증번호</th>
-             <th>
-                 <input type="text" id="verification" name="number"/>
-             </th>
-             <th>
-                 <input type="button" onclick="" value="인증"/>
-             </th>
-         </tr>
-         <tr>
-             <th colspan="2">
-                 <input type="button" id = "join" value="회원가입"/>
-             </th>
-         </tr>
-     </table>
+   <form action="join" method = "post">
+   <h2>Welcome 돌봐주개!</h2>
+	
+    <p/>이&nbsp;&nbsp;&nbsp;&nbsp;름
+    <input type = "text" name = "name" placeholder="이름을 입력해주세요"/>
+
+    <p/>아이디
+    <input type = "text" name = "user_id" placeholder="이름을 입력해주세요"/>
+    <input type = "button" id = "overlayId" value="아이디 중복확인"/>
+    <p/><span class="label1"></span>
+    
+    <p/>비밀번호
+    <input type = "password" name = "pw" placeholder="비밀번호를 입력해주세요"/>
+    
+    <p/>전화번호
+    <input type = "text" name = "phone" placeholder="'-'없이 입력해주세요"/>
+    
+    <p/>이메일
+    <input type = "email" name = "email" placeholder="이메일을 입력해주세요"/>
+    <input type = "button" id = "overlayEmail" value="이메일 중복확인"/>
+    <p/><span class="label2"></span>
+
+     <br/>
+ 	<input type="submit" value="돌봐주개 회원가입"/>
+   </form>
 </body>
 <script>
-var overlayChk = false;
-
-$('#join').on('click',function(){
-	var $name = $('input[name="name"]');
-	var $id = $('input[name="id"]');
-	var $pw = $('input[name="pw"]');
-	var $phone = $('input[name="phone"]');
-	var $email = $('input[name="email"]');
-	
-	if(overlayChk){
-		if($name.val()==''){
-			alert('이름을 입력해주세요');
-		}else if($id.val()==''){
-			alert('아이디를 입력해 주세요!');
-			$id.focus();
-		}else if($pw.val()==''){
-			alert('비밀번호를 입력해 주세요');
-			$pw.focus();
-		}else if($phone.val()==''){
-			alert('번호를 입력해 주세요');
-			$name.focus();
-		}else if($email.val()==''){
-			alert('이메일을 입력해 주세요');
-			$email.focus();
-		}else{
-
-			var param = {};
-			param.name = $name.val();
-			param.id = $id.val();
-			param['pw'] = $pw.val();
-			
-			var regex = new RegExp('[a-zA-Zㄱ-ㅎ가-힣]');
-			var match = regex.test($phone.val());
-			console.log("match : "+match);
-			if(match){
-				alert('전화번호는 숫자만 넣어 주세요');
-				return false;
-			}			
-			param.email = $email.val();
-			
-			
-			console.log(param);
-			
-			$.ajax({
-				type:'post',
-				url:'join',
-				data:param,
-				dataType:'JSON',
-				success:function(data){
-					console.log(data);
-					if(data.success>0){
-						alert('회원 가입에 성공했습니다.');
-						location.href='/login';
-					}else{
-						alert('회원 가입에 실패했습니다.');
-					}
-				},
-				error:function(e){
-					console.log(e);
-				}
-			});
-			
-		}
-	}else{
-		alert('아이디 중복 체크를 해주세요');
-	}
-	
-});
+var overlayIdChk = false;
+var $id;
 
 
-
-$('#overlay').on('click',function(){
-	var id = $('input[name="id"]').val();
-	console.log('id='+id);
+$('#overlayId').on('click', function(){
+	$id = $('input[name="user_id"]').val();
+	console.log('user_id='+$id);
 	
 	$.ajax({
-		type : 'get',
-		url:'overlay', 
-		data : {'id':id},
-		dataType : 'JSON', 
+		type : 'post',
+		url : 'overlayId',
+		data : {'user_id' : $id},
+		dataType : 'JSON',
 		success : function(data){
-			console.log(data)
-			overlayChk = data.use;
+			console.log(data);
+			overlayIdChk = data.use;
 			if(data.use){
-				alert('사용 가능한 아이디 입니다.');
+				$(".label1").text("사용이 가능한 ID입니다.").css("color", "green").css("font=size", "8px");
 			}else{
-				alert('이미 사용중인 아이디 입니다.');
-				$('input[name="id"]').val('');
+				$(".label1").text("이미 사용중인 아이디입니다.").css("color", "red").css("font=size", "8px");
+				$('input[name="user_id"]').val("");
 			}
-			}, 
-		error : function(error){console.log(error)} 
-	});	
-})
+		},
+		error : function(e){
+		}
+	});
 
+var overlayEmailChk = false;
+var $email;
 
+$('#overlayEmail').on('click', function(){
+	$email = $('input[name="email"]').val();
+	console.log('email='+$email);
+	
+	if($email = ""){
+		$(".label2").text("ID를 입력해주세요!").css("color", "red").css("font=size", "8px");
+		return false;
+	}
 
-
+	$.ajax({
+		type : 'post',
+		url : 'overlayEmail',
+		data : {'email' : $email},
+		dataType : 'JSON',
+		success : function(data){
+			console.log(data);
+			overlayEmailChk = data.use;
+			if(data.use){
+				$(".label2").text("사용이 가능한 ID입니다.").css("color", "green").css("font=size", "8px");
+			}else{
+				$(".label2").text("이미 사용중인 아이디입니다.").css("color", "red").css("font=size", "8px");
+				$('input[name="email"]').val("");
+			}
+		},
+		error : function(e){
+		}
+	});
+});
 </script>
 </html>

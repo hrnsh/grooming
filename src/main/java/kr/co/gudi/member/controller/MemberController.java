@@ -2,7 +2,6 @@ package kr.co.gudi.member.controller;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.gudi.main.dto.MainDTO;
-import kr.co.gudi.member.dto.MemberDTO;
 import kr.co.gudi.member.service.MemberService;
 
 @Controller
@@ -33,15 +30,15 @@ public class MemberController {
 	
 	@RequestMapping(value = "/logingo", method = RequestMethod.POST)
 	public String logingo(Model model, HttpSession session,
-			@RequestParam String id, @RequestParam String pw) {
+			@RequestParam String user_id, @RequestParam String pw) {
 		
-		logger.info(id+"/"+pw);
-		boolean success = service.logingo(id,pw)!= null ? true : false;
+		logger.info(user_id+"/"+pw);
+		boolean success = service.logingo(user_id,pw)!= null ? true : false;
 		logger.info("login success : "+success);
 		String page = "redirect:/login";
 		
 		if(success) {
-			session.setAttribute("loginId", id);
+			session.setAttribute("loginId", user_id);
 			page = "redirect:/";
 		}else {
 			model.addAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
@@ -56,27 +53,34 @@ public class MemberController {
 		return "findID";
 	}
 	
-	@RequestMapping(value= {"/dofindID"})
-	public String dofindID(@RequestParam String id, @RequestParam String email, Model model, HttpSession session) {
-		logger.info(id+"/"+email);
-		boolean success = service.dofindID(id,email)!= null ? true : false;
-		logger.info("findID success : "+success);
-		String page = "redirect:/findIDresult";
-		
-		if(success) {
-			session.setAttribute("loginId", id);
-			page = "redirect:/findIDresult";
+	@RequestMapping(value = {"/dofindID"})
+	public String dofindID(@RequestParam String name, @RequestParam String email, Model model, HttpSession session) {
+		String user_Id = service.dofindID(name,email);
+		if(user_Id != null) {
+			model.addAttribute("user_Id", user_Id);
 		}else {
-			model.addAttribute("msg", "아이디 또는 이메일을 확인하세요");
+			model.addAttribute("message", "아이디를 찾을 수 없습니다.");
 		}
 		
-		return page;
+		return "findIDresult";
 	}
-	
 	
 	@RequestMapping(value = {"/findPW"})
 	public String findPW() {
 		return "findPW";
+	}
+	
+	@RequestMapping(value = {"/dofindPW"})
+	public String dofindPW(@RequestParam String name, @RequestParam String user_id, @RequestParam String email, Model model, HttpSession session) {
+		logger.info("name,user_id,email " + name,user_id,email);
+		String pw = service.dofindPW(name, user_id, email);
+		if(pw != null) {
+			model.addAttribute("pw", pw);
+		}else {
+			model.addAttribute("message", "비밀번호를 찾을 수 없습니다.");
+		}
+		
+		return "findPWresult";
 	}
 	
 	
@@ -86,24 +90,34 @@ public class MemberController {
 		return "joinForm";
 	}
 	
-	@RequestMapping(value="/overlay")
+	@RequestMapping(value="/overlayId")
 	@ResponseBody
-	public HashMap<String, Object> overlay(@RequestParam String id) {
-		boolean use = service.overlay(id);
+	public HashMap<String, Object> overlayId(@RequestParam String user_id) {
+		logger.info("user"+user_id);
+		boolean use = service.overlayId(user_id);
 		logger.info("사용 가능 여부 : "+use);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("use", use);
 		return map;
 	}
 	
-	@RequestMapping(value="/join", method = RequestMethod.POST)
+	@RequestMapping(value="/overlayEmail")
 	@ResponseBody
-	public HashMap<String, Object> join(@RequestParam HashMap<String, String> params){
+	public HashMap<String, Object> overlayEmail(@RequestParam String email) {
+		logger.info("email"+email);
+		boolean use = service.overlayEmail(email);
+		logger.info("사용 가능 여부 : "+use);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("use", use);
+		return map;
+	}
+	
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String join(Model model, @RequestParam HashMap<String, String> params) {
 		logger.info("params : "+params);
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		int row = service.join(params);
-		result.put("success", row);
-		return result;
+		String msg = service.join(params);
+		model.addAttribute("msg", msg);
+		return "login";
 	}
 	
 	

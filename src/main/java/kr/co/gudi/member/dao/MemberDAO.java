@@ -4,14 +4,19 @@ import java.util.HashMap;
 
 public interface MemberDAO {
 
-	int overlay(String id);
+	int overlayId(String user_id);
 
 	int join(HashMap<String, String> params);
 
 	HashMap<String, Object> login(HashMap<String, String> params);
 
-	String logingo(String id, String pw);
+	String logingo(String user_id, String pw);
 
-	Object dofindId(String id, String email);
-;
+	int overlayEmail(String email);
+
+	String dofindID(String name, String email);
+
+	String dofindPW(String name, String user_id, String email);
+
+
 }

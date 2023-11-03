@@ -59,8 +59,8 @@
 		location.href='findID';
 	});	
 
-	$('#"findPW"').on('click',function(){
-		location.href='"findPW"';
+	$('#findPW').on('click',function(){
+		location.href='findPW';
 	});
 	
 	var msg = "${msg}";
