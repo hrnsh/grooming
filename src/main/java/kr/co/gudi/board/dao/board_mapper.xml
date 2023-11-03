@@ -2,6 +2,60 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-      <mapper namespace="kr.co.gudi.board.dao.BoardDAO">
+<mapper namespace="kr.co.gudi.board.dao.BoardDAO">
+      
+<!--       <select id="boardList" resultType="kr.co.gudi.board.dto.BoardDTO">
+		SELECT *
+		FROM board WHERE user_id in(SELECT user_id FROM MEMBER WHERE state = #{param1})
+		AND b_state = 1 ORDER BY idx DESC	LIMIT #{param1} OFFSET #{param2}
+      </select> -->
+
+      <select id="searchList" resultType="kr.co.gudi.board.dto.BoardDTO">
+      SELECT * FROM board WHERE ${param1} like '%${param2}%' AND b_state = 1 ORDER BY b_num DESC LIMIT #{param3} OFFSET #{param4}
+      </select>
+      
+      <select id="boardList" resultType="kr.co.gudi.board.dto.BoardDTO">
+
+		SELECT *
+			FROM board WHERE user_id in(SELECT user_id FROM MEMBER WHERE state = #{param1})
+		AND b_state = 1 ORDER BY b_num DESC LIMIT #{param2} OFFSET #{param3}
+
+		</select>
+
+		<select id="searchmaxpage" resultType="int">
+		SELECT (count(b_num)/#{param1})
+		FROM board  
+		WHERE ${param2} like '%${param3}%' AND b_state = 1 ORDER BY b_num DESC
+		</select>
+
+		<select id="maxpage" resultType="int">
+		SELECT (count(b_num)/#{param1})
+		FROM board  
+		WHERE user_id = (SELECT user_id FROM MEMBER WHERE state = #{param2}) AND b_state=1
+		</select>
+		
+		<select id="boardDetail" resultType="hashmap">
+		
+		SELECT b_subject, b_hit, user_id, b_date,b_content ,b_num FROM board WHERE b_num = #{param1}
+		
+		</select>
+		
+		<select id="boarduse" resultType="String">
+		
+		SELECT user_id FROM board WHERE b_num = #{param1}
+		
+		</select>
+		
+		<update id="boardDelete" parameterType="int">
+		
+		update board set b_state = 0 WHERE b_num = #{param1};
+		
+		</update>
+		<update id="hit" parameterType="String">
+		
+		update board set b_hit = b_hit + 1 WHERE b_num = #{param1};
+		
+		</update>
+		
 	
 </mapper>
