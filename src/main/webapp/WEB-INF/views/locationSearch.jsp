@@ -75,7 +75,7 @@
 					
 			function displayUserMarker(userLocation, message){
 				var imageSrc = "resources/img/userMarker.png";
-				var imageSize = new kakao.maps.Size(30, 35);
+				var imageSize = new kakao.maps.Size(35, 35);
 				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 				
 				// 마커 생성
