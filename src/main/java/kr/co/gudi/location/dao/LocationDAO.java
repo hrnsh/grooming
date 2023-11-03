@@ -5,7 +5,5 @@ import java.util.List;
 import kr.co.gudi.location.dto.LocationDTO;
 
 public interface LocationDAO {
-
-	List<LocationDTO> getNearbyPlaces(double lat, double lng);
-
+	List<LocationDTO> getNearbyLocations(double lat, double lon);
 }
