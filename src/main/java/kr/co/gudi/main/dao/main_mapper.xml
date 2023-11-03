@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-  <mapper namespace="kr.co.gudi.main.dao.MainDAO">
+ <mapper namespace="kr.co.gudi.main.dao.MainDAO">
+	<select id="rank" resultType="kr.co.gudi.main.dto.MainDTO">
+		SELECT com_name, user_total, avg_star FROM company 
+			ORDER BY avg_star DESC, user_total DESC LIMIT 3;
+	</select>
+		
 	
 </mapper>
