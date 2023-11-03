@@ -2,6 +2,22 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-      <mapper namespace="kr.co.gudi.admin.dao.InquiryDAO">
+<mapper namespace="kr.co.gudi.admin.dao.InquiryDAO">
+	<!--로그인 한 아이디가 sender 로 들어가야 한다. -->
+	<select id="sentList" resultType="kr.co.gudi.admin.dto.InquiryDTO"> 
+		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
+			WHERE sender = (SELECT user_id FROM member WHERE user_id = 'abcd002')
+				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+	</select>
+	
+	<select id="totalPage" resultType="int">
+		SELECT CEIL(COUNT(note_num)/5) AS pages FROM note
+	</select>
+	
+	<select id="receiveList" resultType="kr.co.gudi.admin.dto.InquiryDTO"> 
+		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
+			WHERE receiver = (SELECT user_id FROM member WHERE user_id = 'abcd002')
+				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+	</select>
 	
 </mapper>
