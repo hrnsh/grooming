@@ -21,7 +21,7 @@ public class ReserveController {
 		@RequestMapping(value="/reserve")
 		public String reserve(Model model) {
 			ArrayList<ReserveDTO> animal = service.animal();
-			
+			model.addAttribute("animal",animal);
 			return "reserve/reserve";
 		}
 		
