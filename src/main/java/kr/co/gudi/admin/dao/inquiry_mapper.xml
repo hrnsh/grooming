@@ -20,6 +20,9 @@
 				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
 	</select>
 	
+	<select id="sentDetail" resultType="kr.co.gudi.admin.dto.InquiryDTO">
+		SELECT * FROM note WHERE note_num=#{param1}
+	</select>
 	
 	
 </mapper>

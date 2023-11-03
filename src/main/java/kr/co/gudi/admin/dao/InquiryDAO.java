@@ -12,6 +12,8 @@ public interface InquiryDAO {
 
 	ArrayList<InquiryDTO> receiveList(int offset);
 
+	InquiryDTO sentDetail(String idx);
+
 	
 
 }

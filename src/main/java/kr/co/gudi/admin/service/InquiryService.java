@@ -64,4 +64,8 @@ public class InquiryService {
 		return map;
 	}
 
+	public InquiryDTO sentDetail(String idx) {
+		return inquiryDao.sentDetail(idx);
+	}
+
 }
