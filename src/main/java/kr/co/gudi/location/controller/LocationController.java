@@ -1,5 +1,7 @@
 package kr.co.gudi.location.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.gudi.location.dto.LocationDTO;
 import kr.co.gudi.location.service.LocationService;
 
 @Controller
@@ -22,14 +25,14 @@ public class LocationController {
     public String locationSearch() {
         return "locationSearch";
     }
-    @RequestMapping(value =  "/updateLocation", method = RequestMethod.POST)
+    
+    @RequestMapping(value = "/getNearbyCompanies", method = RequestMethod.POST)
     @ResponseBody
-    public String updateLocation(
-    		@RequestParam double lat, 
-    		@RequestParam double lon) {
-    	String locationInfo = locationService.processLocation(lat, lon);
-    	
-    	return locationInfo;
+    public List<LocationDTO> getNearbyCompanies(
+            @RequestParam double lat,
+            @RequestParam double lon) {
+        List<LocationDTO> nearbyCompanies = locationService.getNearbyCompanies(lat, lon);
+        return nearbyCompanies;
     }
-	
+
 }
