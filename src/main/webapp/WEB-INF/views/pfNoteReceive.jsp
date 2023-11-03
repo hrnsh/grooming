@@ -29,7 +29,6 @@ h1{
 	height: 400px;
 	border: 1px solid black;
 	border-radius: 50px;
-	left: 100px;
 }
 
 th, td{
