@@ -6,6 +6,11 @@ import kr.co.gudi.admin.dto.InquiryDTO;
 
 public interface InquiryDAO {
 
-	ArrayList<InquiryDTO> list();
+	ArrayList<InquiryDTO> sentList(int offset);
+
+	int totalPage();
+
+	ArrayList<InquiryDTO> receiveList(int offset);
+	
 
 }

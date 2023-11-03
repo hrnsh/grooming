@@ -21,38 +21,5 @@ public class MainController {
 		model.addAttribute("rank", rank);
 		return "main";
 	}
-
-	
-	@RequestMapping(value="/locationSearch")
-	public String locationSearch() {
-		return "locationSearch";
-	}
-	
-	@RequestMapping(value="/reserve")
-	public String reserve() {
-		return "locationSearch";
-	}
-	
-	@RequestMapping(value="/boardMain")
-	public String boardMain() {
-		return "boardMain";
-	}
-	
-	
-	@RequestMapping(value="/login")
-	public String login() {
-		return "login";
-	}
-	
-	@RequestMapping(value="/profile")
-	public String profile() {
-		return "profile";
-	}
-	
-	
-	@RequestMapping(value="/pfWrite")
-	public String pfWrite() {
-		return "pfWrite";
-	}
 	
 }

@@ -199,6 +199,11 @@ table{
 
 a{
 	text-decoration: none;
+	color: black;
+}
+
+a:visited {
+  color : black;
 }
 
 </style>

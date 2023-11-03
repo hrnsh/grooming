@@ -1,16 +1,15 @@
 package kr.co.gudi.admin.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.gudi.admin.dto.InquiryDTO;
 import kr.co.gudi.admin.service.InquiryService;
 
 @Controller
@@ -23,15 +22,20 @@ public class InquiryController {
 		return "pfNoteList";
 	}
 	
-	@RequestMapping(value="/listCall")
+	@RequestMapping(value="/sentList")
 	@ResponseBody
-	public HashMap<String, Object> listCall(){
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		logger.info("리스트 호출 성공");
-		ArrayList<InquiryDTO> list = inquiryService.list();
-		result.put("sentList", list);
-		return result;
+	public Map<String, Object> sentList(@RequestParam String page){
+		logger.info("내가 쓴 쪽지 리스트 호출 성공");
+		logger.info("보여줄 페이지 : " +page);
+		return inquiryService.sentList(page);
 	}
 	
+	@RequestMapping(value="/receiveList")
+	@ResponseBody
+	public Map<String, Object> receiveList(@RequestParam String page){
+		logger.info("받은 쪽지 리스트 호출 성공");
+		return inquiryService.receiveList(page);
+		
+	}
 	
 }
