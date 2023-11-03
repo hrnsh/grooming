@@ -44,7 +44,8 @@
 </style>
 <script>
 
-document.addEventListener('DOMContentLoaded', function() {
+
+ document.addEventListener('DOMContentLoaded', function() {
 	var calendarEl = document.getElementById('calendar');
 	var calendar = new FullCalendar.Calendar(calendarEl, {
 		initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
@@ -62,14 +63,33 @@ document.addEventListener('DOMContentLoaded', function() {
 		editable : true,
 		nowIndicator: true, // 현재 시간 마크
 		locale: 'ko', // 한국어 설정
-	
+		events: {
+            url: '/events', // Spring MVC 컨트롤러에서 데이터를 가져올 엔드포인트
+            method: 'GET',
+            success: function(data) {
+                var events = []; // 서버에서 받아온 이벤트 데이터
+                data.forEach(function(item) {
+                    var event = {
+                        title: '이벤트 제목', // 이벤트 제목을 지정하거나 item에서 필요한 속성을 가져올 수 있음
+                        start: item.r_start, // 시작 날짜 및 시간
+                        end: item.r_end, // 끝나는 날짜 및 시간 (선택적)
+                        allDay: true // 하루 종일 이벤트인 경우 true, 시간까지 표시하려면 false
+                    };
+                    events.push(event);
+                });
+                calendar.addEventSource(events); // FullCalendar에 이벤트 추가
+            },
+            error: function() {
+                console.error('Error fetching events');
+            }
+        },
 		// date click
-		dateClick: function() {
+		dateClick: function(info) {
 			$("#revdetail").show();
 			  }
 	});
 	calendar.render();
-});
+}); 
 
 //픽업여부에 따른 주소 입력창
 function addrShow() {
@@ -95,13 +115,11 @@ document.getElementById("addr_kakao").addEventListener("click", function(){ //�
 });
 }
 	
-	var animal = "${animal.com_id}";
-	console.log(animal);
 
 </script>
 </head>
 <body>
-	<form action="events"><input type="submit" value="예약정보"> </form>
+	<!-- <form action="events"><input type="submit" value="예약정보"> </form> -->
 
 	<div id="calendar"></div>
 	

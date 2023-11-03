@@ -1,21 +1,19 @@
 package kr.co.gudi.reserve.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import kr.co.gudi.reserve.dto.ReserveDTO;
 
 public interface ReserveDAO {
 
-	int amCnt();
 
-	int pmCnt();
+	/* List<Event> getAllEvents(); */
 
-	int apmCnt();
+	List<Calendar> getCalendar();
 
-	ArrayList<ReserveDTO> aniName();
+	ArrayList<ReserveDTO> animail();
 
 	
 

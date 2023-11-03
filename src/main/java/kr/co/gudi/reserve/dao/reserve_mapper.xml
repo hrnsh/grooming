@@ -4,19 +4,7 @@
    
     <mapper namespace="kr.co.gudi.reserve.dao.ReserveDAO">
 	
-	<select id="amCnt" resultType="int">
-		SELECT count(r_state) FROM reserve where r_state='0'
-	</select>
-	
-	<select id="pmCnt" resultType="int">
-		SELECT count(r_state) FROM reserve where r_state='1'
-	</select>
-	
-	<select id="apmCnt" resultType="int">
-		SELECT count(r_state) FROM reserve where r_state='2'
-	</select>
-	
-	<select id="aniName" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
-		SELECT com_id FROM reserve
+	<select id="getAllEvents" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT * FROM reserve
 	</select>
 </mapper>

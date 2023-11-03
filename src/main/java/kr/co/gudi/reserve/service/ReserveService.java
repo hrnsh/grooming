@@ -1,12 +1,14 @@
 package kr.co.gudi.reserve.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.events.Event;
 
 import kr.co.gudi.reserve.dao.ReserveDAO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
@@ -15,23 +17,22 @@ import kr.co.gudi.reserve.dto.ReserveDTO;
 public class ReserveService {
 	@Autowired ReserveDAO dao;
 
-	public int amCnt() {
-		
-		return dao.amCnt();
+
+
+	/*
+	 * public List<Event> getAllEvents() { return dao.getAllEvents(); }
+	 */
+
+
+
+	public List<Calendar> getCalendar() {
+		return dao.getCalendar();
 	}
 
-	public int pmCnt() {
-		return dao.pmCnt();
-	}
 
-	public int apmCnt() {
-		
-		return dao.apmCnt();
-	}
 
-	public ArrayList<ReserveDTO> aniName() {
-	
-		return dao.aniName();
+	public ArrayList<ReserveDTO> animal() {
+		return dao.animail();
 	}
 	
 
