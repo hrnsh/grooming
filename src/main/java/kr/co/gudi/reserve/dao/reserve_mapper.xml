@@ -4,4 +4,7 @@
    
     <mapper namespace="kr.co.gudi.reserve.dao.ReserveDAO">
 	
+	<select id="getAllEvents" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT * FROM reserve
+	</select>
 </mapper>
