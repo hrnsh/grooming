@@ -13,6 +13,8 @@
 				height: 922px;
 				width: 100%;
 			}
+			
+			
 		</style>
 	</head>
 	
@@ -23,6 +25,10 @@
 		
 		<div id="map"></div>	<!-- 맵이 출력될 공간 -->
 		
+		<div style="float: left; width: 300px; height: 100%; overflow-y: auto;">
+		  <ul id="companyList"></ul>
+		</div>
+		
 		<script>
 			var container = document.getElementById("map");
 			
@@ -31,7 +37,11 @@
 				level: 5
 			};
 			
+			var zoomControl = new kakao.maps.ZoomControl();
+			
 			var map = new kakao.maps.Map(container, options);
+			
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 			
 			$("#showUserLocation").on("click", function() {
 				console.log("showUserLocation 호출!");
@@ -114,6 +124,8 @@
 					success: function(companies){
 						console.log("현재 위치 전송 완료!");
 						
+						$("#companyList").empty();
+						
 						for (var i = 0; i < companies.length; i++){
 							var company = companies[i];
 							var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
@@ -124,7 +136,21 @@
 							+'누적 이용자 수: ' + company.user_total
 							+ '</div>';
 							displayCompaniesMarker(companyLocation, message);
+							
+							// 화면 왼쪽의 리스트에 업체 이름을 추가
+							$("#companyList").append('<li class="companyItem" data-lat="' + company.lat 
+									+ '" data-lon="' + company.lon 
+									+ '">' + company.com_name 
+									+ '</li>');
 						}
+						
+						$(".companyItem").on("click", function(){
+							var lat = $(this).data("lat");
+							var lon = $(this).data("lon");
+							
+							var companyLocation = new kakao.maps.LatLng(lat, lon);
+							map.setCenter(companyLocation);
+						});
 					},
 					error: function(error){
 						console.error("오류 발생:", error);
