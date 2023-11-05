@@ -28,7 +28,7 @@
 			
 			var options = {
 				center : new kakao.maps.LatLng(37.5666612, 126.9783785),
-				level: 3
+				level: 5
 			};
 			
 			var map = new kakao.maps.Map(container, options);
@@ -50,6 +50,9 @@
 						displayUserMarker(userLocation, message);	// 마커와 인포윈도우를 표시
 						
 						sendLocationToServer(lat, lon);	// 서버로 현재 위치 정보 전송
+						
+						// 지도 중심 좌표를 접속위치로 변경
+						map.setCenter(userLocation);
 					}, function (error){
 						switch (error.code) {
 		  				case error.PERMISSION_DENIED:
@@ -67,6 +70,8 @@
 		  				default:
 		  				      console.error("알 수 없는 오류가 발생했습니다.");
 	  				  	}
+					},{
+						enableHighAccuracy: true
 					});
 				} else{	// HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 					alert("GeoLocation을 지원하지 않습니다!!");
@@ -96,9 +101,6 @@
 				
 				// 인포윈도우를 마커 위에 표시
 				infowindow.open(map, marker);
-				
-				// 지도 중심 좌표를 접속위치로 변경
-				map.setCenter(userLocation);
 			}
 			
 			function sendLocationToServer(lat, lon) {
@@ -115,7 +117,12 @@
 						for (var i = 0; i < companies.length; i++){
 							var company = companies[i];
 							var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
-							var message = '<div style="padding:5px;">' + company.name + '</div>';
+							var message = '<div style="padding:5px;">'
+							+'<a href="#">' + company.com_name + '</a><br>'
+							+'평균 별점: '+ company.avg_star
+							+'<br>' 
+							+'누적 이용자 수: ' + company.user_total
+							+ '</div>';
 							displayCompaniesMarker(companyLocation, message);
 						}
 					},
