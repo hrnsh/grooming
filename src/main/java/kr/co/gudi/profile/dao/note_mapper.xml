@@ -6,20 +6,20 @@
 	<!--로그인 한 아이디가 sender 로 들어가야 한다. -->
 	<select id="sentList" resultType="kr.co.gudi.profile.dto.NoteDTO"> 
 		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
-			WHERE sender = (SELECT user_id FROM member WHERE user_id = #{param2})
-				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+			WHERE sender = (SELECT user_id FROM member WHERE user_id = #{param2}) AND sent_hidden=0
+				ORDER BY note_num DESC LIMIT 5 OFFSET #{param1}
 	</select>
 	
 	<select id="sentListRead" resultType="kr.co.gudi.profile.dto.NoteDTO"> 
 		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
 			WHERE sender = (SELECT user_id FROM member WHERE user_id = #{param2}) AND note_state=1
-				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+				ORDER BY note_num DESC LIMIT 5 OFFSET #{param1}
 	</select>
 	
 	<select id="sentListUnread" resultType="kr.co.gudi.profile.dto.NoteDTO"> 
 		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
 			WHERE sender = (SELECT user_id FROM member WHERE user_id = #{param2}) AND note_state=0
-				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+				ORDER BY note_num DESC LIMIT 5 OFFSET #{param1}
 	</select>
 	
 	<select id="totalPage" resultType="int">
@@ -28,20 +28,20 @@
 	
 	<select id="receiveList" resultType="kr.co.gudi.profile.dto.NoteDTO"> 
 		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
-			WHERE receiver = (SELECT user_id FROM member WHERE user_id = #{param2}) 
-				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+			WHERE receiver = (SELECT user_id FROM member WHERE user_id = #{param2}) AND receive_hidden=0
+				ORDER BY note_num DESC LIMIT 5 OFFSET #{param1}
 	</select>
 	
 	<select id="receiveListRead" resultType="kr.co.gudi.profile.dto.NoteDTO"> 
 		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
 			WHERE receiver = (SELECT user_id FROM member WHERE user_id = #{param2}) AND note_state=1
-				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+				ORDER BY note_num DESC LIMIT 5 OFFSET #{param1}
 	</select> 
 
 	<select id="receiveListUnread" resultType="kr.co.gudi.profile.dto.NoteDTO"> 
 		SELECT note_num, receiver, sender, note_date, note_subject, note_state FROM note
 			WHERE receiver = (SELECT user_id FROM member WHERE user_id = #{param2}) AND note_state=0
-				ORDER BY note_num ASC LIMIT 5 OFFSET #{param1}
+				ORDER BY note_num DESC LIMIT 5 OFFSET #{param1}
 	</select>
 	
 	<select id="callDetail" resultType="kr.co.gudi.profile.dto.NoteDTO">
@@ -56,7 +56,14 @@
 		INSERT INTO note (note_subject, note_content, receiver, sender)
 			VALUES (#{param1}, #{param2}, #{param3}, #{param4})
 	</insert>
-
+	
+	<update id="delSent">
+		UPDATE note SET sent_hidden=1 WHERE note_num=#{param1}
+	</update>
+	
+	<update id="delReceive">
+		UPDATE note SET receive_hidden=1 WHERE note_num=#{param1}
+	</update>
 	
 </mapper>
 	

@@ -73,7 +73,42 @@ table{
 	border: none;
 	border-radius: 10px;
 	color: white;
+	cursor: pointer;
 }
+
+#delNoteSend{
+	display: none; 
+	width:300px; 
+	height:150px; 
+	background: rgb(237, 237, 237); 
+	border:1px solid gray; 
+	text-align:center;
+	position:absolute; 
+	left:80%; 
+	top:40%; 
+	margin-left:-200px; 
+}
+
+.modalBtnNo, .modalBtnYes{
+	height: 35px;
+	width: 80px;
+	color: white;
+	border: none;
+	border-radius: 10px;
+}
+
+.modalBtnNo{
+	background-color: gray;
+}
+
+.modalBtnYes{
+	background-color: rgb(94, 94, 94);
+}
+
+button{
+	cursor: pointer;
+}
+
 
 </style>
 </head>
@@ -104,7 +139,13 @@ table{
 					<td colspan="3" class="content">${sentDetail.note_content}</td>
 				</tr>
 			</table>
-			<button onclick="del()" class="delBtn">삭제하기</button>
+			<button onclick="delNoteSend()" class="delBtn">삭제하기</button>
+		</div>
+		<!-- 모달 -->
+		<div id="delNoteSend">
+			<div style="margin:30px 0; font-size:24px;">삭제 하시겠습니까?</div>
+			<button onclick="delNo()" class="modalBtnNo">아니요</button>
+			<button onclick="location.href='./delNoteSend?idx='+${sentDetail.note_num}+''" class="modalBtnYes">예</button>	
 		</div>
 	</main>
 </body>
@@ -115,6 +156,15 @@ if (!loginId) {
     alert("페이지에 권한이 없습니다.");
     location.href = "./"; 
 }
+
+function delNoteSend(){
+	document.getElementById('delNoteSend').style.display = 'block';
+}
+
+function delNo(){
+	document.getElementById('delNoteSend').style.display = 'none';
+}
+
 
 </script>
 </html>

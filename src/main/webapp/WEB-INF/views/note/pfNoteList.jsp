@@ -12,6 +12,26 @@
 <link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
 <style>
 
+.nav {
+	height: 150px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.container{
+	max-width: 450px;
+	left: 30px;
+}
+
+.logo{
+	position: relative;
+	right: 43%;
+}
+
+main{
+	max-width: 100%;
+}
+
 table, th, td{
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -88,12 +108,6 @@ table{
 	left: 90px;
 }
 
-.pagingBox{
-	position: relative;
-	left: 30px;
-	top: 10px;
-}
-
 .sentListContent{
 	margin: 30px;
 }
@@ -125,8 +139,12 @@ table{
 	margin: 30px;
 }
 
+button{
+	cursor: pointer;
+}
+
 #del_modal, #del_modal_receive{
-	display: block; 
+	display: none; 
 	width:300px; 
 	height:150px; 
 	background: rgb(237, 237, 237); 
@@ -170,7 +188,7 @@ table{
 </style>
 </head>
 <body>
-	<nav>
+	<nav class="nav">
 		<div class="logo">
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
@@ -221,8 +239,8 @@ table{
 		<!-- 모달 -->
 		<div id="del_modal">
 			<div style="margin:30px 0; font-size:24px;">삭제 하시겠습니까?</div>
-			<button onclick="delNo()" class="modalBtnNo">아니요</button>
-			<button onclick="delSent()" class="modalBtnYes">예</button>	
+			<button onclick="delNoSent()" class="modalBtnNo">아니요</button>
+			<button onclick="delYesSent()" class="modalBtnYes">예</button>	
 		</div>
 		<!-- 받은 쪽지 -->
 		<div class="receiveBox">
@@ -262,10 +280,13 @@ table{
 		<!-- 모달 -->
 		<div id="del_modal_receive">
 			<div style="margin:30px 0; font-size:24px;">삭제 하시겠습니까?</div>
-			<button onclick="delNo()" class="modalBtnNo">아니요</button>
-			<button onclick="delReceive()" class="modalBtnYes">예</button>	
+			<button onclick="delNoReceive()" class="modalBtnNo">아니요</button>
+			<button onclick="delYesReceive()" class="modalBtnYes">예</button>	
 		</div>
 	</main>
+	<footer>
+	
+	</footer>
 </body>
 <script>
 // 로그인 여부에 따른 페이지 권한 설정
@@ -346,7 +367,7 @@ function drawSentList(sentList){
 	});
 }
 
-//내가 쓴 쪽지 체크 박스 
+// 내가 쓴 쪽지 체크 박스 
 $('#allSent').on('click',function(){
 	var $chk = $('input[name="allSentCheck"]');
 	console.log($chk);
@@ -358,43 +379,46 @@ $('#allSent').on('click',function(){
 	}
 }); 
 
-// 내가 쓴 쪽지 삭제 모달창
+// 내가 쓴 쪽지 삭제 모달창 (체크했을 때만 나타남)
 function del_modal(){
 	document.getElementById('del_modal').style.display = 'block';
 }
 
-function delNo(){
+// 모달창 아니요 버튼 클릭
+function delNoSent(){
 	document.getElementById('del_modal').style.display = 'none';
 }
 
-
-// 내가 쓴 쪽지 삭제 기능
-/* var chkArr = []; 
-$('input[name="allSentCheck"]:checked').each(function(idx,item){
-	console.log(idx, $(item).val()); 
-	var val = $(item).val();
-	if(val != 'on'){
-		chkArr.push(val);
-	}
-});
-console.log(chkArr);
-
-$.ajax({
-	type:'get',
-	url:'delSent',
-	data:{'delList' : chkArr},
-	dataType:'JSON',
-	success:function(data){
-		console.log(data);
-		if(data.del_cnt>0){
-			alert('요청하신'+data.del_cnt+'개의 게시물이 삭제 되었습니다.');
-			listCall();
+// 모달창 예 버튼 클릭 (리스트에서 숨김 처리)
+function delYesSent(){
+	var chkArr = []; 
+	$('input[name="allSentCheck"]:checked').each(function(idx,item){
+		//console.log(idx, $(item).val()); 
+		var val = $(item).val();
+		if(val != 'on'){
+			chkArr.push(val);
 		}
-	},
-	error:function(e){
-		console.log(e)
-	}
-}); */
+	});
+	console.log(chkArr);
+
+	$.ajax({
+		type:'get',
+		url:'delSent',
+		data:{'delList' : chkArr},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			if(data.del_cnt>0){
+				alert('요청하신 '+data.del_cnt+'개의 게시물이 삭제 되었습니다.');
+				sentListCall(showPage);
+				document.getElementById('del_modal').style.display = 'none';
+			}
+		},
+		error:function(e){
+			console.log(e)
+		}
+	});
+}
 
 // 받은 쪽지 리스트 호츨
 receiveListCall(showPage);
@@ -471,6 +495,46 @@ $('#allReceive').on('click',function(){
 	}
 });
 
+// 받은 쪽지 삭제 모달창
+function delReceive(){
+	document.getElementById('del_modal_receive').style.display = 'block';
+}
+
+// 받은 쪽지 '아니요' 버튼 클릭
+function delNoReceive(){
+	document.getElementById('del_modal_receive').style.display = 'none';
+}
+
+// 받은 쪽지 '예' 버튼 클릭 (리스트에서 숨김 처리)
+function delYesReceive(){
+	var chkArr = []; 
+	$('input[name="allReceiveCheck"]:checked').each(function(idx,item){
+		//console.log(idx, $(item).val()); 
+		var val = $(item).val();
+		if(val != 'on'){
+			chkArr.push(val);
+		}
+	});
+	console.log(chkArr);
+
+	$.ajax({
+		type:'get',
+		url:'delReceive',
+		data:{'delList' : chkArr},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			if(data.del_cnt>0){
+				alert('요청하신 '+data.del_cnt+'개의 게시물이 삭제 되었습니다.');
+				receiveListCall(showPage);
+				document.getElementById('del_modal_receive').style.display = 'none';
+			}
+		},
+		error:function(e){
+			console.log(e)
+		}
+	});
+}
 
 
 </script>

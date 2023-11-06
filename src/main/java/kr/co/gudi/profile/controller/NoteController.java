@@ -1,5 +1,6 @@
 package kr.co.gudi.profile.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,10 +82,36 @@ public class NoteController {
 	
 	@RequestMapping(value="/delSent")
 	@ResponseBody
-	public HashMap<String, Object> delSent(){
+	public HashMap<String, Object> delSent(HttpSession session,
+			@RequestParam(value="delList[]") ArrayList<String> delList){
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		
+		int cnt = noteService.delSent(delList);
+		logger.info("내가 쓴 쪽지 삭제 성공");
+		result.put("del_cnt", cnt);
 		return result;
+	}
+	
+	@RequestMapping(value="/delReceive")
+	@ResponseBody
+	public HashMap<String, Object> delReceive(HttpSession session,
+			@RequestParam(value="delList[]") ArrayList<String> delList){
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int cnt = noteService.delReceive(delList);
+		logger.info("받은 쪽지 삭제 성공");
+		result.put("del_cnt", cnt);
+		return result;
+	}
+	
+	@RequestMapping(value="/delNoteSend")
+	public String delNoteSend(@RequestParam String idx) {
+		noteService.delNoteSend(idx);
+		return "/note/pfNoteList";
+	}
+	
+	@RequestMapping(value="/delNoteReceive")
+	public String delNoteReceive(@RequestParam String idx) {
+		noteService.delNoteReceive(idx);
+		return "/note/pfNoteList";
 	}
 	
 }

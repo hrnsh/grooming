@@ -30,4 +30,8 @@ public interface NoteDAO {
 
 	void sendNote(String subject, String content, String receiver, String sender);
 
+	int delSent(String idx);
+
+	int delReceive(String idx);
+
 }

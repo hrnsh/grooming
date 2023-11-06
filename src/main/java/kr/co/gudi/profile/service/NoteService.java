@@ -96,4 +96,30 @@ public class NoteService {
 		noteDao.sendNote(subject,content,receiver, sender);
 	}
 
+	public int delSent(ArrayList<String> delList) {
+		int cnt = 0;
+		for(String idx : delList) {
+			cnt+=noteDao.delSent(idx);
+			logger.info("sent_hidden update 성공: "+cnt);
+		}
+		return cnt;
+	}
+
+	public int delReceive(ArrayList<String> delList) {
+		int cnt = 0;
+		for(String idx : delList) {
+			cnt+=noteDao.delReceive(idx);
+			logger.info("sent_hidden update 성공: "+cnt);
+		}
+		return cnt;
+	}
+
+	public void delNoteSend(String idx) {
+		noteDao.delSent(idx);
+	}
+
+	public void delNoteReceive(String idx) {
+		noteDao.delReceive(idx);
+	}
+
 }
