@@ -70,7 +70,7 @@
                 var events = []; // 서버에서 받아온 이벤트 데이터
                 data.forEach(function(item) {
                     var event = {
-                        title: '이벤트 제목', // 이벤트 제목을 지정하거나 item에서 필요한 속성을 가져올 수 있음
+                        title: '오전권', // 이벤트 제목을 지정하거나 item에서 필요한 속성을 가져올 수 있음
                         start: item.r_start, // 시작 날짜 및 시간
                         end: item.r_end, // 끝나는 날짜 및 시간 (선택적)
                         allDay: true // 하루 종일 이벤트인 경우 true, 시간까지 표시하려면 false
@@ -115,7 +115,8 @@ document.getElementById("addr_kakao").addEventListener("click", function(){ //�
 });
 }
 	
-
+var animal="${animal}";
+console.log(animal.a_num);
 </script>
 </head>
 <body>

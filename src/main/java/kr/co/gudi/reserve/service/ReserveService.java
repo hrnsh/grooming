@@ -31,8 +31,8 @@ public class ReserveService {
 
 
 
-	public ArrayList<ReserveDTO> animal() {
-		return dao.animail();
+	public List<ReserveDTO> animal() {
+		return dao.animal();
 	}
 	
 
