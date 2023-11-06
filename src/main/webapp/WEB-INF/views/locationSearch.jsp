@@ -6,35 +6,100 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>업체 위치 찾기</title>
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f7bbdf9c95373d60e5bb55bb6f315e1"></script>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f7bbdf9c95373d60e5bb55bb6f315e1&libraries=services"></script>
 		
 		<style>
 			#map{
-				height: 922px;
+				height: 100vh;
 				width: 100%;
 				position:relative;
 				overflow:hidden;
+			}
+			
+			.search-container {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                z-index: 1;
+                background-color: #fff;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                display: inline-block;
+            }
+            
+            .companyListContainer {
+                position: absolute;
+                top: 70px;
+                left: 10px;
+                z-index: 1;
+                background-color: #fff;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                max-height: 80%;
+                overflow-y: auto;
+            }
+			
+			.companyList{
+				list-style-type: none;
+				padding: 10px;
+				margin: 0;
+			}
+			
+			.companyItem{
+				cursor: pointer;
+				padding: 5px;
+				margin: 5px 0;
+				background-color: #f1f1f1;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+			}
+			
+			#showUserLocation {
+			    margin-left: 10px;
 			}
 		</style>
 	</head>
 	
 	<body>
-		<div>
-			<button id="showUserLocation">현재 위치 조회하기</button>
-		</div>
+		<div class="container">
+            <div class="map_wrap">
+                <div id="map"></div>
+                
+                <div class="search-container">
+                    <input type="text" id="keyword" size="15" placeholder="키워드를 입력해주세요">
+    				<button id= "searchPlaces" type="submit">검색하기</button>
+	                <button id="showUserLocation">현재 위치 조회하기</button>
+                </div>
+                
+                <div class="companyListContainer">
+                    <ul id="companyList" class="companyList"></ul>
+                </div>
+            </div>
+        </div>
 		
-		<div class="map_wrap">
-			<div id="map"></div>	<!-- 맵이 출력될 공간 -->
-		</div>
 		<script>
 			var container = document.getElementById("map");
 			
 			var options = {
 				center : new kakao.maps.LatLng(37.5666612, 126.9783785),
-				level: 3
+				level: 7
 			};
 			
+			var markers = [];
+			
+			// 장소 검색 객체를 생성
+			var ps = new kakao.maps.services.Places();
+			
+			// 지도 생성
 			var map = new kakao.maps.Map(container, options);
+			
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성
+			var zoomControl = new kakao.maps.ZoomControl();
+			
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+			
 			
 			$("#showUserLocation").on("click", function() {
 				console.log("showUserLocation 호출!");
@@ -48,11 +113,18 @@
 						
 						var userLocation = new kakao.maps.LatLng(lat, lon);	// 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성
 						
-						var message = '<div style="padding:5px;">현위치</div>'; // 인포윈도우에 표시될 내용
+						var message = '<div style="padding:5px;">현 위치</div>'; // 인포윈도우에 표시될 내용
+							
+						removeMarker();
 						
 						displayUserMarker(userLocation, message);	// 마커와 인포윈도우를 표시
 						
 						sendLocationToServer(lat, lon);	// 서버로 현재 위치 정보 전송
+						
+						map.setLevel(7);
+						// 지도 중심 좌표를 접속위치로 변경
+						map.setCenter(userLocation);
+						
 					}, function (error){
 						switch (error.code) {
 		  				case error.PERMISSION_DENIED:
@@ -85,7 +157,7 @@
 				var marker = new kakao.maps.Marker({
 					map: map,
 					position: userLocation,
-					image: markerImage,
+					image: markerImage
 				});
 				
 				var iwContent = message,  // 인포윈도우에 표시할 내용
@@ -99,9 +171,6 @@
 				
 				// 인포윈도우를 마커 위에 표시
 				infowindow.open(map, marker);
-				
-				// 지도 중심 좌표를 접속위치로 변경
-				map.setCenter(userLocation);
 			}
 			
 			function sendLocationToServer(lat, lon) {
@@ -118,9 +187,31 @@
 						for (var i = 0; i < companies.length; i++){
 							var company = companies[i];
 							var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
-							var message = '<div style="padding:5px;">' + company.name + '</div>';
+							
+							var message = '<div style="padding:5px;">'
+				                + '<a href="#" class="companyLink">' + company.com_name + '</a><br>'
+				                + '평균 별점: ' + company.avg_star
+				                + '<br>'
+				                + '누적 이용자 수: ' + company.user_total
+				                + '</div>';
+				                
 							displayCompaniesMarker(companyLocation, message);
+							
+							// 화면 왼쪽의 리스트에 업체 이름을 추가합니다.
+				            $("#companyList").append('<li class="companyItem" data-lat="' + company.lat 
+				            		+ '" data-lon="' + company.lon + '">' 
+				            		+ company.com_name 
+				            		+ '</li>');
 						}
+						
+						// 리스트의 각 항목을 클릭했을 때 지도에 해당 업체 마커를 표시합니다.
+				        $(".companyItem").click(function () {
+				            var lat = $(this).data("lat");
+				            var lon = $(this).data("lon");
+				            var companyLocation = new kakao.maps.LatLng(lat, lon);
+				            
+				            map.setCenter(companyLocation);
+				        });
 					},
 					error: function(error){
 						console.error("오류 발생:", error);
@@ -137,7 +228,7 @@
 				var marker = new kakao.maps.Marker({
 					map: map,
 					position: companyLocation,
-					image: markerImage,
+					image: markerImage
 				});
 				
 				var iwContent = message,  // 인포윈도우에 표시할 내용
@@ -151,6 +242,90 @@
 				
 				// 인포윈도우를 마커 위에 표시
 				infowindow.open(map, marker);
+			}
+			
+			
+			
+			
+			
+			$("#searchPlaces").on("click", function() {
+				console.log("searchPlaces 호출!");
+				
+				var keyword = document.getElementById("keyword").value;
+				
+				if (!keyword.replace(/^\s+|\s+$/g, ' ')) {
+					alert("키워드를 입력해주세요!");
+					return false;
+				}
+				
+				removeMarker();
+				
+				$.ajax({
+					url: "getSearchCompanyLocations",
+					type: "POST",
+			        data: { "keyword": keyword },
+			        dataType: "JSON",
+			        success: function(companies) {
+						console.log("업체 위치 정보 요청 완료!");
+						
+						// 검색 결과 목록에 추가된 항목들을 제거
+						removeAllChildNods(document.getElementById("companyList"));
+						
+						// 검색된 장소 위치를 기준으로 지도 범위 재설정
+						// LatLngBounds 객체에 좌표를 추가
+						var bounds = new kakao.maps.LatLngBounds();
+						
+						
+						for (var i = 0; i < companies.length; i++) {
+							var company = companies[i];
+							var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
+							
+							var message = '<div style="padding:5px;">'
+				                + '<a href="#" class="companyLink">' + company.com_name + '</a><br>'
+				                + '평균 별점: ' + company.avg_star
+				                + '<br>'
+				                + '누적 이용자 수: ' + company.user_total
+				                + '</div>';
+				            
+							displayCompaniesMarker(companyLocation, message);
+							
+							// 화면 왼쪽의 리스트에 업체 이름을 추가
+			                $("#companyList").append('<li class="companyItem" data-lat="' + company.lat 
+			                        + '" data-lon="' + company.lon + '">' 
+			                        + company.com_name 
+			                        + '</li>');
+			                        
+			                bounds.extend(companyLocation);
+						}
+						
+						// 리스트의 각 항목을 클릭했을 때 지도에 해당 업체 마커를 표시합니다.
+				        $(".companyItem").click(function () {
+				            var lat = $(this).data("lat");
+				            var lon = $(this).data("lon");
+				            var companyLocation = new kakao.maps.LatLng(lat, lon);
+				            
+				            map.setCenter(companyLocation);
+				        });
+						
+							map.setBounds(bounds);
+					},
+			        error: function(error){
+			            console.error("오류 발생:", error);
+			        }
+				});
+			});
+			
+			function removeAllChildNods(e) {
+				while(e.hasChildNodes()){
+					e.removeChild(e.lastChild);
+				}
+			}
+			
+			function removeMarker() {
+				for ( var i = 0; i < markers.length; i++ ) {
+			        markers[i].setMap(null);
+			    }   
+			    markers = [];
 			}
 		</script>
 	</body>
