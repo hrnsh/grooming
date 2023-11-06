@@ -33,6 +33,7 @@ nav {
 	display: flex;
 	justify-content: space-around;
 	top: 80px;
+	right:0px;
 }
 
 .profileBtn{
@@ -81,7 +82,7 @@ nav {
 .name{
 	position: relative;
 	top: 35px;
-	left: 35px;
+	left: 25px;
 }
 
 main {
@@ -212,16 +213,22 @@ a:visited {
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
 		<div class="profileBox">
-			<button onclick="location.href='./login'" class="logBtn" id="loginBtn" style="display:none"> LOGIN </button>
 			<div class="logoutBox">
-				<div class="name">신민정님</div>
-				<button onclick="location.href='./pfNotiList'" class="logoutNotiBtn">⚫️</button>
-				<button onclick="location.href='./'" class="logoutNotiBtn">로그아웃</button>
-			</div>
-			<div class="btnBox">
-				<button onclick="location.href='./profile'" class="profileBtn" id="profileBtn">프로필</button>
-				<button onclick="location.href='./pfNoteList'" class="profileBtn">쪽지함</button>
-				<button onclick="location.href='./pfWrite'" class="profileBtn">내가 쓴 글</button>
+					<c:choose>
+						<c:when test="${not empty sessionScope.loginId}">
+							<div class="name">${sessionScope.loginId} 님</div>
+							<button onclick="location.href='./pfNotiList?user_id=${sessionScope.loginId}'" class="logoutNotiBtn">⚫️</button>
+							<button onclick="location.href='./logout'" class="logoutNotiBtn">로그아웃</button>
+							<div class="btnBox">
+								<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profileBtn" id="profileBtn">프로필</button>
+								<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profileBtn">쪽지함</button>
+								<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profileBtn">내가 쓴 글</button>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<button onclick="location.href='./login'" class="logBtn" id="loginBtn">LOGIN</button>
+						</c:otherwise>
+					</c:choose>
 			</div>
 		</div>
 	</nav>
@@ -242,7 +249,7 @@ a:visited {
 			<table>
 				<c:forEach items="${rank}" var="info">
 					<tr>
-						<td> <a href="location.href='./locationSearch?id=${member.id}'">${info.com_name}</a></td>
+						<td> <a href="location.href='./locationSearch?user_id=${member.id}'">${info.com_name}</a></td>
 						<td> 누적 이용자 수 : ${info.user_total}</td>
 						<td>
 							별점 :
