@@ -12,6 +12,8 @@
 			#map{
 				height: 922px;
 				width: 100%;
+				position:relative;
+				overflow:hidden;
 			}
 		</style>
 	</head>
@@ -21,8 +23,9 @@
 			<button id="showUserLocation">현재 위치 조회하기</button>
 		</div>
 		
-		<div id="map"></div>	<!-- 맵이 출력될 공간 -->
-		
+		<div class="map_wrap">
+			<div id="map"></div>	<!-- 맵이 출력될 공간 -->
+		</div>
 		<script>
 			var container = document.getElementById("map");
 			
