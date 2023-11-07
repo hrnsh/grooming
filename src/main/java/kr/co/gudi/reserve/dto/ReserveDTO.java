@@ -12,6 +12,55 @@ public class ReserveDTO {
 	private String r_pickaddr;
 	private String r_totalprice;
 	private String r_state;
+	private String t_type;
+	private String t_price;
+	public String getT_type() {
+		return t_type;
+	}
+	public void setT_type(String t_type) {
+		this.t_type = t_type;
+	}
+	public String getT_price() {
+		return t_price;
+	}
+	public void setT_price(String t_price) {
+		this.t_price = t_price;
+	}
+	private double lat;
+	private double lon;
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public double getLon() {
+		return lon;
+	}
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+	public String getA_name() {
+		return a_name;
+	}
+	public void setA_name(String a_name) {
+		this.a_name = a_name;
+	}
+	public String getA_kind() {
+		return a_kind;
+	}
+	public void setA_kind(String a_kind) {
+		this.a_kind = a_kind;
+	}
+	public String getA_spec() {
+		return a_spec;
+	}
+	public void setA_spec(String a_spec) {
+		this.a_spec = a_spec;
+	}
+	private String a_name;	
+	private String a_kind;
+	private String a_spec;
 	public int getR_num() {
 		return r_num;
 	}

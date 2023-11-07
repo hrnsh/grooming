@@ -8,4 +8,7 @@
 		SELECT r_num,com_id,r_start,r_end,r_state FROM reserve
 	</select>	
 	
+	<select id="checkId" resultType="Int">
+		SELECT * FROM company where id=#{param1}
+	</select>
 </mapper>

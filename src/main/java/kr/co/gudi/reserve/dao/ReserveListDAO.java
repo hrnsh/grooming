@@ -8,4 +8,6 @@ public interface ReserveListDAO {
 
 	ArrayList<ReserveDTO> reserveList();
 
+	int checkId(String loginId);
+
 }

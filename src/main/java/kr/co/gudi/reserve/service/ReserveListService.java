@@ -17,5 +17,9 @@ public class ReserveListService {
 		
 		return dao.reserveList();
 	}
+	public int checkId(String loginId) {
+
+		return dao.checkId(loginId);
+	}
 
 }
