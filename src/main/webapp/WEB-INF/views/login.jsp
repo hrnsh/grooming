@@ -26,7 +26,7 @@
 	        <tr>
 	            <th>ID</th>
 	            <th colspan="2">
-	                <input type="text" name="id" value="" placeholder="아이디를 입력 하세요"/>
+	                <input type="text" name="user_id" value="" placeholder="아이디를 입력 하세요"/>
 	            </th>
 	        </tr>
 	        <tr>

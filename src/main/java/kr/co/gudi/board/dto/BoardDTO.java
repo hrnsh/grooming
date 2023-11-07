@@ -11,6 +11,7 @@ public class BoardDTO {
 	private int b_hit;
 	private String b_state;
 	private String b_code;
+	
 	private int b_num;
 	
 	public int getB_num() {
