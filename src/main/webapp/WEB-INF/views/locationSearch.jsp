@@ -74,7 +74,15 @@
                 </div>
                 
                 <div class="companyListContainer">
-                    <ul id="companyList" class="companyList"></ul>
+                    <ul id="companyList" class="companyList">
+                    	<li th:each="company : ${companies}" 
+				            th:data-lat="${company.lat}" th:data-lon="${company.lon}">
+				            <span class="companyLink" th:text="${company.com_name}"></span><br>
+				            <span th:text=" '평균 별점: ' + ${company.avg_star}"></span><br>
+				            <span th:text="'누적 이용자 수: ' + ${company.user_total}"></span>
+				            <span id="distance"></span>
+				        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -201,6 +209,8 @@
 				            $("#companyList").append('<li class="companyItem" data-lat="' + company.lat 
 				            		+ '" data-lon="' + company.lon + '">' 
 				            		+ company.com_name 
+				            		+ '<br>평균 별점: ' + company.avg_star
+				            		+ '<br>누적 이용자 수: ' + company.user_total
 				            		+ '</li>');
 						}
 						
@@ -261,7 +271,7 @@
 				removeMarker();
 				
 				$.ajax({
-					url: "getSearchCompanyLocations",
+					url: "searchCompany",
 					type: "POST",
 			        data: { "keyword": keyword },
 			        dataType: "JSON",
@@ -292,7 +302,9 @@
 							// 화면 왼쪽의 리스트에 업체 이름을 추가
 			                $("#companyList").append('<li class="companyItem" data-lat="' + company.lat 
 			                        + '" data-lon="' + company.lon + '">' 
-			                        + company.com_name 
+			                        + company.com_name
+			                        + '<br>평균 별점: ' + company.avg_star
+				            		+ '<br>누적 이용자 수: ' + company.user_total
 			                        + '</li>');
 			                        
 			                bounds.extend(companyLocation);
