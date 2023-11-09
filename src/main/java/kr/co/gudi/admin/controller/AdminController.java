@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -50,4 +51,28 @@ public class AdminController {
 		logger.info("list put"+result);
 		return result;
 	}
+	
+	@RequestMapping(value="/adLogin")
+	public String adLoginTest() {
+		return "/admin/adLogin";
+	}
+	
+	@RequestMapping(value="adLoginGo", method=RequestMethod.POST)
+	public String adLoginGo(HttpSession session, @RequestParam String ad_id,
+			@RequestParam String ad_pw, Model model) {
+		logger.info(ad_id+"/"+ad_pw);
+		boolean success = service.logingo(ad_id, ad_pw);
+		logger.info("login success : "+success);
+		String page = "/admin/adLogin";
+		
+		if(success) {
+			session.setAttribute("ad_id", ad_id);
+			session.setAttribute("admin", "admin");
+			page = "/admin/adInquiry";
+		}else {
+			model.addAttribute("msg", "관리자 아이디 또는 비밀번호를 확인해 주세요!");
+		}
+		return page;
+	}
+	
 }

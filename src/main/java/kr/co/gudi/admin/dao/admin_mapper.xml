@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-   <mapper namespace="kr.co.gudi.admin.dao.AdminDAO">
-	
+<mapper namespace="kr.co.gudi.admin.dao.AdminDAO">
+	<select id="logingo" resultType="String">
+		SELECT ad_id FROM admin WHERE ad_id =#{param1} AND ad_pw = #{param2}
+	</select>
 </mapper>

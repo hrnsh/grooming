@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-      <mapper namespace="kr.co.gudi.admin.dao.ReportDAO">
+ <mapper namespace="kr.co.gudi.admin.dao.ReportDAO">
+	<select id="reportListCall" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT r.report_num, r.user_id, r.report_type, r.report_date, r.report_content, r.report_state, h.rephis_date 
+			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
+				ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<select id="totalPage" resultType="int">
+		SELECT CEIL(COUNT(report_num)/5) AS pages FROM report
+	</select>
 	
 </mapper>

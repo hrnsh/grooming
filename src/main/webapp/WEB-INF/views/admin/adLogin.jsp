@@ -21,18 +21,18 @@
 <body>
 	<h2>LOGIN</h2>
 	<hr/>
-	<form action="logingo" method="post">
+	<form action="adLoginGo" method="post">
 	    <table>
 	        <tr>
 	            <th style="width:40px;">ID</th>
 	            <th colspan="2">
-	                <input type="text" name="user_id" value="" placeholder="아이디를 입력 하세요"/>
+	                <input type="text" name="ad_id" value="" placeholder="아이디를 입력 하세요"/>
 	            </th>
 	        </tr>
 	        <tr>
 	            <th style="width:40px;">PW</th>
 	            <th colspan="2">
-	                <input type="password" name="pw" value="" placeholder="비밀번호를 입력 하세요"/>
+	                <input type="password" name="ad_pw" value="" placeholder="비밀번호를 입력 하세요"/>
 	            </th>                
 	        </tr>
 	        <tr>
@@ -40,35 +40,15 @@
 	                <input type="submit" value="login"/>
 	            </th>	        
 	        </tr>
-	        <tr>
-	            <th colspan="3">
-	                <input id="regist" type="button" value="회원가입"/>
-	                <input id ="findID" type="button" value="아이디 찾기"/>
-	                <input id ="findPW" type="button" value="비밀번호 찾기"/>
-	            </th>    
-	        </tr>
 	    </table>
 	</form>
 </body>
 <script>
-	$('#regist').on('click',function(){
-		location.href='joinForm';
-	});
-	
-	$('#findID').on('click',function(){
-		location.href='findID';
-	});	
 
-	$('#findPW').on('click',function(){
-		location.href='findPW';
-	});
-	
-	var msg = "${msg}";
-	if(msg != ""){
+	var msg = '${msg}';
+	if(msg != ''){
 		alert(msg);
 	}
-	
-
 
 </script>
 </html>

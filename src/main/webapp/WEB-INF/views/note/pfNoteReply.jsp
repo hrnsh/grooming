@@ -90,7 +90,7 @@ textarea{
 </style>
 </head>
 <body>
-		<nav>
+		<nav class="nav">
 		<div class="logo">
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
