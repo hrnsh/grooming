@@ -3,11 +3,37 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="kr.co.gudi.location.dao.LocationDAO">
-	<select id="getNearbyCompanies" resultType="kr.co.gudi.location.dto.LocationDTO">
+	<select id="getNearbyCompanies" parameterType="map" resultType="kr.co.gudi.location.dto.LocationDTO">
         <![CDATA[
-            SELECT * FROM company 
-            WHERE ABS(lat - #{param1}) < 0.1 
-            AND ABS(lon - #{param2}) < 0.1
+        SELECT com_name, lat, lon, avg_star, user_total,
+               6371 * acos(cos(radians(#{userLat})) * cos(radians(lat))
+               * cos(radians(lon) - radians(#{userLon}))
+               + sin(radians(#{userLat})) * sin(radians(lat))) AS distance
+        FROM company
+        WHERE lat BETWEEN #{swLat} AND #{neLat}
+        AND lon BETWEEN #{swLon} AND #{neLon}
+        HAVING distance <= #{radius}
+        ORDER BY distance;
         ]]>
+    </select>
+    
+    <select id="searchCompany" resultType="kr.co.gudi.location.dto.LocationDTO">
+        SELECT * 
+        	FROM company
+        		WHERE com_name LIKE #{param1}
+    </select>
+    
+    <select id="getCompanyDetail" resultType="kr.co.gudi.location.dto.LocationDTO">
+    	SELECT c.com_name, c.address, c.com_time, c.pickup, m.phone,  c.accept, c.avg_star, c.user_total
+        	FROM company c
+        		LEFT OUTER JOIN member m ON c.user_id = m.user_id
+        	WHERE c.com_name = #{param1}
+    </select>
+    
+    <select id="getTicketPrice" resultType="kr.co.gudi.location.dto.LocationDTO">
+    	SELECT t.t_type, t.t_price
+        	FROM ticket_price t
+        		JOIN company c ON c.com_num = t.com_num
+        	WHERE c.com_name = #{param1}
     </select>
 </mapper>
