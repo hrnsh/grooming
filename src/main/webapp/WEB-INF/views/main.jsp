@@ -56,8 +56,23 @@ nav {
 	font-weight: 700;
 	font-size: inherit;
 	position: absolute;
-	top: 50px;
+	top: 30px;
 	left: 70px;
+}
+
+.adLogBtn{
+	border: none;
+	height: 30px;
+	width: 200px;
+	background-color: rgb(221, 215, 214);
+	padding: 14px 32px;
+	border-radius: 500px;
+	color: black;
+	font-weight: 700;
+	font-size: inherit;
+	position: absolute;
+	top: 100px;
+	color: rgb(158, 158, 158);
 }
 
 .logoutBox {
@@ -102,7 +117,9 @@ main {
 	position: absolute;
 	top: 115px;
 }
-
+button{
+	cursor: pointer;
+}
 .button {
 	height: 50px;
 	width: 150px;
@@ -223,10 +240,12 @@ a:visited {
 								<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profileBtn" id="profileBtn">프로필</button>
 								<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profileBtn">쪽지함</button>
 								<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profileBtn">내가 쓴 글</button>
+								<button onclick="location.href='./adInquirySend?user_id=${sessionScope.loginId}'">문의 보내기</button>
 							</div>
 						</c:when>
 						<c:otherwise>
 							<button onclick="location.href='./login'" class="logBtn" id="loginBtn">LOGIN</button>
+							<button onclick="location.href='./adLogin'" class="adLogBtn" id="loginBtn">admin login</button>
 						</c:otherwise>
 					</c:choose>
 			</div>
@@ -254,6 +273,7 @@ a:visited {
 						<td>
 							별점 :
 							<c:choose>
+								<c:when test="${info.avg_star<=1}">☆☆☆☆☆</c:when>
 								<c:when test="${info.avg_star<=1}">★☆☆☆☆</c:when>
 								<c:when test="${info.avg_star<=2}">★★☆☆☆</c:when>
 								<c:when test="${info.avg_star<=3}">★★★☆☆</c:when>

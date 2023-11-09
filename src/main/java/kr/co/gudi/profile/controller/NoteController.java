@@ -80,6 +80,7 @@ public class NoteController {
 		return "redirect:/pfNoteList";
 	}
 	
+	// 내가 쓴 쪽지 삭제 (리스트에서 숨기기) 
 	@RequestMapping(value="/delSent")
 	@ResponseBody
 	public HashMap<String, Object> delSent(HttpSession session,
@@ -91,6 +92,7 @@ public class NoteController {
 		return result;
 	}
 	
+	// 받은 쪽지 삭제 (리스트에서 숨기기)
 	@RequestMapping(value="/delReceive")
 	@ResponseBody
 	public HashMap<String, Object> delReceive(HttpSession session,
@@ -102,12 +104,14 @@ public class NoteController {
 		return result;
 	}
 	
+	// 내가 쓴 쪽지 상세보기에서 삭제 (리스트에서 숨기기) 
 	@RequestMapping(value="/delNoteSend")
 	public String delNoteSend(@RequestParam String idx) {
 		noteService.delNoteSend(idx);
 		return "/note/pfNoteList";
 	}
 	
+	// 받은 쪽지 상세보기에서 삭제 (리스트에서 숨기기)
 	@RequestMapping(value="/delNoteReceive")
 	public String delNoteReceive(@RequestParam String idx) {
 		noteService.delNoteReceive(idx);
