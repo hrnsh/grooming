@@ -4,11 +4,84 @@
    
  <mapper namespace="kr.co.gudi.reserve.dao.ReserveListDAO">
 	
-	<select id="reserveList" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
-		SELECT r_num,com_id,r_start,r_end,r_state FROM reserve
+	<select id="reserveComList" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT r_num,user_id,r_start,r_end,r_state FROM reserve 
+			where com_id=#{param1}
 	</select>	
 	
-	<select id="checkId" resultType="Int">
-		SELECT * FROM company where id=#{param1}
+	<select id="checkId" resultType="int">
+		SELECT count(*) FROM company where user_id=#{param1}
+	</select>
+	
+	<select id="section" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT r_num,user_id,r_start,r_end,r_state FROM reserve
+			WHERE r_start BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="state" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		select r_num,user_id,r_start,r_end,r_state from reserve
+			where com_id=#{param1} and r_state =#{param2}
+	</select>
+	
+	<select id="all" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		select r_num,user_id,r_start,r_end,r_state from reserve
+			where com_id=#{param1}
+	</select>
+	
+	<select id="detail" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT r.r_num, c.com_name, r.user_id, a.a_name, a.a_gender, a.a_age, a.a_kind, r.r_spec, r.r_start, r.r_end, r.r_pick, r.r_pickaddr, r.r_totalprice, r.r_state, m.phone
+			FROM reserve r 
+			JOIN animal a ON r.user_id = a.user_id AND r.a_num = a.a_num
+			JOIN company c ON r.com_id = c.user_id
+			JOIN member m ON r.user_id = m.user_id
+			WHERE r.r_num = #{param2}
+	</select>
+	
+	<update id="change">
+		UPDATE reserve
+			SET r_state = #{param2}
+			WHERE r_num = #{param1}
+	</update>
+	
+	<insert id="saveReview">
+		INSERT INTO review (user_id, com_id,r_num,rev_subject,rev_star,rev_content)
+			SELECT r.user_id, r.com_id,r.r_num,#{rev_subject},#{rev_star},#{rev_content}
+			FROM reserve r
+			WHERE r.r_num =#{r_num};
+	</insert>
+	
+	<select id="rivDetail" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		select * from review 
+			where r_num = #{param1}
+	</select>
+	
+	<update id="revCancel">
+		UPDATE reserve
+			SET r_state = '취소'
+			WHERE r_num = #{param1}
+	</update>
+	
+	<insert id="saveRevCancel">
+		INSERT INTO cancel(r_num,user_id,c_reason)
+			VALUES(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<select id="cancelReason" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT * FROM cancel 
+			WHERE r_num=#{param1}
+	</select>
+	
+	<insert id="saveReply">
+		INSERT INTO review_reply(rev_num,rrep_content)
+			VALUE(#{param1},#{param2})
+	</insert>
+	
+	<select id="replyDetail" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT review.rev_num, review_reply.*
+			FROM review
+			INNER JOIN review_reply ON review.rev_num = review_reply.rev_num
+			WHERE review.r_num = #{param1}
 	</select>
 </mapper>
+
+

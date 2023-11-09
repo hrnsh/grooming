@@ -70,6 +70,10 @@ public class ReserveService {
 		
 		return dao.p10Price();
 	}
+	public ArrayList<ReserveDTO> revInfo(String com_id) {
+
+		return dao.revInfo(com_id);
+	}
 
 				
 

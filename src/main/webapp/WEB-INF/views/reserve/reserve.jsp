@@ -47,7 +47,9 @@
         type="text/javascript"></script>
 <script>
 
+
 $(function() {
+	
     // 첫 번째 datepicker 초기화
     $("#datepicker1").datepicker();
 
@@ -56,10 +58,30 @@ $(function() {
 });
 	var selectedDate;
 $(function() {
+	$("#datepicker").click(function(){
+		$.ajax({
+            type: "POST",  // 또는 "GET" 등 요청 메서드 선택
+            url: "findRev",  // 컨트롤러 엔드포인트 URL 입력
+            data: {},  // 전송할 데이터 설정
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                // 성공적으로 응답을 받았을 때 처리할 코드
+                console.log("서버 응답: " + JSON.stringify(response));
+           
+            },
+            error: function(error) {
+             
+                console.error("에러 발생: " + JSON.stringify(error));
+            }
+        });
+
+		});
     var reservedDates = ["2023-11-10", "2023-11-15", "2023-11-20"]; // 예약된 날짜 배열
     var enableDays = 90;
     
     $("#datepicker").datepicker({
+    	
       beforeShowDay: function(date) {
         var dateString = $.datepicker.formatDate("yy-mm-dd", date);
         var today = new Date();
@@ -268,11 +290,12 @@ $(function() {
     });
 });
 
+
   </script>
 </head>
 <body>
 	<label for="datepicker">날짜 선택:</label>
-  <input type="text" id="datepicker">
+  <input type="text" id="datepicker" class="dtp">
   
   <div id="revdetail">
     <form action="booking" method="post" display="none">

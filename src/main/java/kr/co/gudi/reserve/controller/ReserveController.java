@@ -31,7 +31,7 @@ public class ReserveController {
 		@RequestMapping(value="/reserve")
 		public ModelAndView home() {
 	        ModelAndView modelAndView = new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정
-	       
+	       	
 	        List<ReserveDTO> dtoList =service.myAni();
 	        List<String> aNameList = new ArrayList<>();
 	        for (ReserveDTO dto : dtoList) {
@@ -153,6 +153,18 @@ public class ReserveController {
 	            selPrice.put("error", "날짜 파싱 오류");
 	        }
 			return selPrice;
+		}
+		
+		@RequestMapping(value="/findRev",method = RequestMethod.POST)
+		@ResponseBody
+		public HashMap<String, Object> findRev(){
+			String com_id="abcd002";
+			ArrayList<ReserveDTO> revInfo = service.revInfo(com_id)	;	
+			HashMap<String, Object> findRev = new HashMap<String, Object>();
+		    findRev.put("findRev", revInfo);
+			
+			logger.info("findRev"+revInfo);
+			return findRev;
 		}
 	}
 
