@@ -10,4 +10,6 @@ public interface AdminDAO {
 
 	ArrayList<AdminDTO> adminlist();
 
+	String logingo(String ad_id, String ad_pw);
+
 }

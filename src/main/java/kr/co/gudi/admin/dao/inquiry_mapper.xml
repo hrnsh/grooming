@@ -3,6 +3,92 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="kr.co.gudi.admin.dao.InquiryDAO">
+	<insert 
+		useGeneratedKeys="true"
+		keyColumn="inq_num"
+		keyProperty="inq_num"
+		id="saveInquiry" parameterType="kr.co.gudi.admin.dto.InquiryDTO">
+		INSERT INTO inquiry (inq_subject, inq_content, user_id)
+			VALUES (#{inq_subject},#{inq_content},#{user_id})
+	</insert>
+	
+	<insert id="savePhoto">
+		INSERT INTO photo (photo_code, photo_n, oriFileName, newFileName)
+			VALUES (#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
 
+	<select id="totalPage" resultType="int">
+		SELECT CEIL(COUNT(inq_num)/5) AS pages FROM inquiry
+	</select>
+	
+	<select id="inquiryListCall" resultType="kr.co.gudi.admin.dto.InquiryDTO"> 
+		SELECT i.inq_num, i.user_id, i.inq_code, i.inq_subject, i.inq_date, i.inq_content, i.inq_state, h.inqhis_date 
+			FROM inquiry i LEFT OUTER JOIN inquiry_history h ON i.inq_num = h.inq_num 
+				ORDER BY i.inq_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<select id="optionListCall" resultType="kr.co.gudi.admin.dto.InquiryDTO">
+		SELECT i.inq_num, i.user_id, i.inq_code, i.inq_subject, i.inq_date, i.inq_content, i.inq_state, h.inqhis_date 
+			FROM inquiry i LEFT OUTER JOIN inquiry_history h ON i.inq_num = h.inq_num
+				WHERE i.inq_state = #{param2}
+			ORDER BY i.inq_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<update id="updateState">
+		UPDATE inquiry SET inq_state = 1 WHERE inq_num = #{param1} AND inq_state=0
+	</update>
+	
+	<select id="newIqDetail" resultType="kr.co.gudi.admin.dto.InquiryDTO">
+		SELECT * FROM inquiry WHERE inq_num=#{param1}
+	</select>
+	
+	<select id="getPhoto" resultType="kr.co.gudi.admin.dto.photoDTO">
+		SELECT * FROM photo WHERE photo_n=#{param1} AND photo_code=#{param2}
+	</select>
+	
+	<insert id="insertIqHistory">
+		INSERT INTO inquiry_history(inq_num, ad_id)
+			VALUES (#{param1},#{param2})
+				ON DUPLICATE KEY UPDATE inq_num = inq_num
+	</insert>
+	
+	<update id="updateIqHis">
+		UPDATE inquiry_history 
+			SET 
+				inqhis_subject = #{param1}, 
+				inqhis_content = #{param2}, 
+				inqhis_date = CURDATE()
+			WHERE inq_num = #{param3}
+	</update>
+	
+	<insert id="sendNote">
+		INSERT INTO note (receiver, sender, note_subject, note_content)
+			VALUES (
+				(SELECT user_id FROM inquiry WHERE inq_num=#{param3}),
+				(SELECT ad_id FROM inquiry_history WHERE inq_num=#{param3}),
+				#{param1},
+				#{param2}				
+			)
+	</insert>
+	
+	<update id="updateInqState">
+		UPDATE inquiry SET inq_state = 2 WHERE inq_num = #{param1}
+	</update>
+	
+	<select id="searchList" resultType="kr.co.gudi.admin.dto.InquiryDTO">
+		SELECT i.inq_num, i.user_id, i.inq_code, i.inq_subject, i.inq_date, i.inq_content, i.inq_state, h.inqhis_date 
+			FROM inquiry i LEFT OUTER JOIN inquiry_history h ON i.inq_num = h.inq_num 
+			WHERE i.user_id LIKE '%${param2}%' OR h.ad_id LIKE '%${param2}%'
+				ORDER BY i.inq_num DESC LIMIT 10  OFFSET #{param1}
+	</select>
 	
 </mapper>
+
+
+<!-- private int inq_num;
+	private String user_id; // member 테이블 user_id 
+	private String inq_code;
+	private String inq_subject;
+	private Date inq_date;
+	private String inq_content;
+	private String inq_state; -->

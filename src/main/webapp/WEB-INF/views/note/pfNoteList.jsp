@@ -12,6 +12,10 @@
 <link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
 <style>
 
+a{
+	color: black;
+}
+
 .nav {
 	height: 150px;
 	display: flex;
@@ -284,9 +288,6 @@ button{
 			<button onclick="delYesReceive()" class="modalBtnYes">예</button>	
 		</div>
 	</main>
-	<footer>
-	
-	</footer>
 </body>
 <script>
 // 로그인 여부에 따른 페이지 권한 설정
@@ -320,11 +321,11 @@ function sentListCall(page){
 		data:{'page':page,'loginId':loginId,'readOptionSent':$('#readOptionSent').val()}, 
 		dataType:'JSON',
 		success: function(data){
-			console.log(data)
+			console.log(data);
 			drawSentList(data);	
 		},
 		error:function(e){
-			console.log(e)
+			console.log(e);
 		}
 	});
 }
@@ -332,7 +333,6 @@ function sentListCall(page){
 function drawSentList(sentList){
 	console.log(sentList);
 	var content='';
-	var loginId = "${sessionScope.loginId}";
 	sentList.list.forEach(function(item,note_num){ 
 		content+='<tr>';
 		content+='<td><input type="checkbox" name="allSentCheck" value="'+item.note_num+'" class="checkReadTd"/></td>';

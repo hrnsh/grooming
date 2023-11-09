@@ -24,4 +24,12 @@ public class AdminService {
 	public ArrayList<AdminDTO> adminlist() {
 		return dao.adminlist();
 	}
+
+	public boolean logingo(String ad_id, String ad_pw) {
+		boolean success = false;
+		if(dao.logingo(ad_id,ad_pw)!=null) {
+			success=true;
+		}
+		return success;
+	}
 }

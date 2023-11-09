@@ -2,7 +2,6 @@ package kr.co.gudi.admin.dto;
 
 public class AdminDTO {
 
-	private int ad_num;
 	private String ad_id;
 	private String ad_pw;
 	private String ad_name;
@@ -10,12 +9,7 @@ public class AdminDTO {
 	private String ad_phone;
 	private String ad_email;
 	
-	public int getAd_num() {
-		return ad_num;
-	}
-	public void setAd_num(int ad_num) {
-		this.ad_num = ad_num;
-	}
+
 	public String getAd_id() {
 		return ad_id;
 	}
