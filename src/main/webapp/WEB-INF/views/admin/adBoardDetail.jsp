@@ -143,55 +143,6 @@ border-radius: 5px;
 	width : 10px;
 
 }
-/* 테스트 */
-#layer_popup{
-    display: none;
-}
-
-#layer_popup + label {
-    display: inline-block;
-    padding: 7px 14px;
-    background: #000;
-    color: #fff;
-}
-
-#layer_bg{
-    display: none;
-    position: absolute; /* 시작 지점을 버튼 위, 0픽셀부터 시작하려고 주는 것*/
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5)
-    }
-    
-   #popup{
-    position: absolute;
-    padding: 15px;
-    box-sizing: border-box;
-    border-radius: 15px;
-    width: 600px;
-    height: 400px;
-    background: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2); /*x y 번짐 색상*/
-    }
-    
-  #popup > h2{
-    margin-bottom: 25px;
-}
-
-#popup > h2 > label{
-    float: right;
-}
-
-#layer_popup:checked + label + #layer_bg{
-
-    display: block;
-}
-
 
 </style>
 </head>
@@ -201,7 +152,7 @@ border-radius: 5px;
 	
 		<tr id="subject">
 			<!-- <th>${bbs.b_subject}</th> -->
-			<td id="first" >${list.b_subject}</td>
+			<td id="first" >${list.adb_subject}</td>
 		</tr>
 		
 		
@@ -211,30 +162,29 @@ border-radius: 5px;
 			<!-- ${bbs.b_hit} -->
 			<div id="user_id">
 			
-			<p>${list.user_id}</p>
+			<p>${list.ad_id}</p>
 			
 			</div>
 			
 			<div id="writedate">
 			
-			<p>${list.b_date}</p>
+			<p>${list.adb_date}</p>
 			
 			
 			</div>
 			
 			<div id="report">
-			<p>
-			<c:if test="${login=='boarduse'||sessionScope.admin=='admin'}">
-			<a id="goreportform">신고</a>
-			</c:if>
-			</p>
+			
+			<p></p>
+			
+			
 			</div>
 			
 			
 			<div id="b_hit">
 			
 			
-			<p>${list.b_hit}</p>
+			<p>${list.adb_hit}</p>
 			
 			
 			</div>
@@ -248,7 +198,7 @@ border-radius: 5px;
 			
 			<td id="content">
 			
-			<pre>${list.b_content}</pre>
+			<pre>${list.adb_content}</pre>
 		<c:if test="${photos.size()>0}">
 		<tr>
 			
@@ -283,11 +233,18 @@ border-radius: 5px;
 		<div id="delete">
 		<p>삭제하기</p>
 		</div>
-		<c:if test="${login=='boarduse'}">
 		<div id="modify">
 		<p>수정하기</p>
 		</div>
 		</c:if>
+		
+		<c:if test="${login=='boarduse'}">
+		<div id="delete">
+		<p>삭제하기</p>
+		</div>
+		<div id="modify">
+		<p>수정하기</p>
+		</div>
 		</c:if>
 		
 <%-- 			<input type="button" onclick="location.href='./list'" value="리스트" />
@@ -330,39 +287,13 @@ border-radius: 5px;
 		</tr>
 
 	</table>
-	<!-- 테스트 -->
-	<input type="checkbox" id="layer_popup">
-		<label for="layer_popup">
-		버튼
-		</label>
-		
-	<div id="layer_bg"> <!--  전체배경(기존 페이지를 안보이게 가려주거나 불투명하게 보이게함)  -->
-        <div id="popup"> 게시글 신고
-            <h2>
-                ${list.b_subject}
-                <label for="layer_popup">X</label>
-            </h2>
-            <textarea rows="" cols=""></textarea>
-        </div>
-    </div>
 </body>
 <script>
 var bnum = ${list.b_num};
 console.log(""+bnum);
 var reply ;
 var showPage=1;
-listCall(showPage);
-
-
-
-
-
-
-
-
-
-
-
+//listCall(showPage);
 
 $("#delete").on('click',function(){
 	
@@ -371,7 +302,7 @@ $("#delete").on('click',function(){
 	var result = confirm("정말로 삭제 하실건가요?");
 	if(result){
 		
-		location.href="boardDelete?bnum=" + '${list.b_num}'+"&user_id=" +'${list.user_id}';
+		location.href="adboardDelete?bnum=" + '${list.b_num}'+"&user_id=" + '${list.ad_id}';
 	   
 	    
 	}else{
@@ -383,7 +314,7 @@ $("#delete").on('click',function(){
 $("#modify").on('click',function(){
 	
 	console.log("수정하기");
-	location.href="boardUpdateForm?bnum="+bnum;
+	location.href="adboardUpdateForm?bnum="+bnum;
 	
 });
 

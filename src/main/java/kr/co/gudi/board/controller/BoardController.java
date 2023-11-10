@@ -52,10 +52,21 @@ public class BoardController {
 
 	
 	@RequestMapping (value = "/boardWrite")
-	public String boardWrite(MultipartFile[] photos, @RequestParam Map<String, String> params) {
+	public String boardWrite(MultipartFile[] photos, @RequestParam Map<String, String> params, HttpSession session) {
 		logger.info("file 갯수 : "+photos.length);
 		logger.info("params : "+params);
-		return service.boardWrite(params,photos);
+		String admin = (String) session.getAttribute("admin");
+		logger.info("admin : "+admin);
+		if(admin!=null) {
+			String user_id = (String) session.getAttribute("ad_id");
+			return service.boardWrite(params,photos,user_id,admin);			
+		}else {
+		
+		
+		String user_id = (String) session.getAttribute("loginId");
+		return service.boardWrite(params,photos,user_id,admin);
+		
+		}
 	}
 	
 	
@@ -67,8 +78,8 @@ public class BoardController {
 	@RequestMapping(value = { "/boardMain" })
 	public String boardMain(HttpSession session, Model model) {
 
-		session.setAttribute("login", "first");//세션 설정
-		Object loginInfo = session.getAttribute("login");
+		
+		Object loginInfo = session.getAttribute("loginId");
 		model.addAttribute("login", loginInfo);
 		return "/board/boardMain";
 
@@ -137,23 +148,23 @@ public class BoardController {
 		logger.info("b_num : "+b_num);
 		String go = "/board/boardDetail";
 		
-		String login = (String) session.getAttribute("login");
-
-		HashMap<String, String> data = service.boardDetail(b_num);
-		model.addAttribute("list", data);
-		
+		String login = (String) session.getAttribute("loginId");
+		model.addAttribute("can",login);
+		service.boardDetail(b_num,model);
+		logger.info("login : "+ login);
 		String boarduse = service.boarduse(b_num);
 		logger.info("체크값 : "+boarduse);
-		if(login.equals(boarduse)) {
-			
-			logger.info("같습니다.");
-			model.addAttribute("login", "boarduse");
-			
-		}else {
-			
-			logger.info("다릅니다.");
+		if(login!=null) {
+			if(login.equals(boarduse)) {
+				
+				logger.info("같습니다.");
+				model.addAttribute("login", "boarduse");
+				
+			}else {
+				
+				logger.info("다릅니다.");
+			}
 		}
-		
 		
 		return go;
 	}
@@ -162,48 +173,65 @@ public class BoardController {
 	
 	
 	
-	
-	
-	@RequestMapping(value = "boardreply")
-	public String boardreply(@RequestParam String bnum, @RequestParam String reply ) {
-		logger.info("댓글 저장 컨트롤러 실행");
-		logger.info("reply"+reply);
-		
-		return "";
+	@RequestMapping (value = "/boardUpdateForm")
+	public String boardUpdate(HttpSession session, @RequestParam String bnum, Model model) {
+		logger.info("bnum"+bnum);
+		BoardDTO re = service.re(bnum);
+		session.setAttribute("bnum",bnum);
+		model.addAttribute("re",re);
+		return "/board/boardUpdate";
 	}
 	
 	
 	
+	  @RequestMapping (value = "/boardUpdate")
+	  public String boardUpdate(MultipartFile[] photos, @RequestParam Map<String, String> params,HttpSession session, Model model) {
+	  
+	  
+	  logger.info("boardUpdate"+session); 
+	  logger.info("boardUpdate"+params);
+	  String bnum = (String) session.getAttribute("bnum");
+	  logger.info("boardUpdate"+bnum);
+	  String uid = (String) session.getAttribute("loginId");
+		return service.boardUpdate(params,photos,bnum,uid);
+	 
+	  }
+
 	
-	
-	
-	
-	
-	@RequestMapping (value = "/boardUpdate")
-	public String boardUpdate(HttpSession session) {
-		
-		return "boardUpdate";
-	}
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
 	@RequestMapping (value = "/boardDelete")
 	public String boardDelete(HttpSession session,@RequestParam int bnum,@RequestParam String user_id) {
 		
-		String login = (String) session.getAttribute("login");
+		String login = (String) session.getAttribute("loginId");
+		String admin = (String) session.getAttribute("ad_id");
 		String path = "redirect:/boardMain";
-		if(login.equals(user_id)) {
+		logger.info("받은값"+bnum);
+		logger.info("받은값2"+user_id);
+		if(login!=user_id||admin!=null) {
 		logger.info("받은값"+bnum);
 		logger.info("받은값2"+user_id);
 		service.boardDelete(bnum);
 		}else {
-			
+			logger.info("삭제실패");
+		}
+		return path;
+	}
+	
+	
+	@RequestMapping (value = "/adboardDelete")
+	public String adboardDelete(HttpSession session,@RequestParam int bnum,@RequestParam String user_id) {
+		
+		String login = (String) session.getAttribute("ad_id");
+		String path = "redirect:/boardMain";
+		if(login.equals(user_id)) {
+		logger.info("받은값"+bnum);
+		logger.info("받은값2"+user_id);
+		service.adboardDelete(bnum);
+		}else {
+			logger.info("삭제실패");
 		}
 		return path;
 	}
