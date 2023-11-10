@@ -155,12 +155,14 @@ reportListCall(showPage);
 // 처리 상태 필터링
 $('#stateOption').change(function(){
 	console.log($(this).val());
+	$('#typeOption').val('all');
 	reportListCall(showPage);
 });
 
 // 분류 필터링
 $('#typeOption').change(function(){
 	console.log($(this).val())
+	$('#stateOption').val('all');
 	reportListCall(showPage);
 });
 
@@ -169,12 +171,12 @@ function reportListCall(page){
 	var ad_id = "${sessionScope.ad_id}";
 	var type = $('#typeOption').val();
 	var typeOption = 0;
-	if(type=='board'){
-		typeOption=1;
-	}else if(type=='review'){
-		typeOption=2;
-	}else if(type=='comment'){
+	if(type=='reserve'){
 		typeOption=3;
+	}else if(type=='review'){
+		typeOption=1;
+	}else if(type=='comment'){
+		typeOption=2;
 	}
 	
 	console.log(typeOption);
@@ -186,7 +188,7 @@ function reportListCall(page){
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
-			drawReportList(data);	
+			drawReportList(data);
 		},
 		error:function(e){
 			console.log(e)

@@ -28,16 +28,19 @@ public class ReportService {
 		
 		list = reportDao.reportListCall(offset);
 		
-		if(!stateOption.equals("all")) {
-			int stOption = 0;
-			if(stateOption.equals("complete")) {
-				stOption=2;
-			}else if(stateOption.equals("inProcess")) {
-				stOption=1;
+		int stOption = 0;
+		if(stateOption.equals("complete")) {
+			stOption=2;
+		}else if(stateOption.equals("inProcess")) {
+			stOption=1;
+		}
+		
+		if(stateOption.equals("all")) {
+			if(typeOption>=0) {
+				list = reportDao.typeListCall(offset, typeOption);
 			}
-			list = reportDao.optionListCall(offset, stOption);
 		}else {
-			list = reportDao.reportListCall(offset);
+			list = reportDao.optionListCall(offset, stOption);				
 		}
 		
 		

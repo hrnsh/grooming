@@ -24,5 +24,7 @@ public interface ReportDAO {
 
 	ArrayList<ReportDTO> optionListCall(int offset, int stOption);
 
+	ArrayList<ReportDTO> typeListCall(int offset, int typeOption);
+
 
 }

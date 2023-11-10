@@ -9,6 +9,7 @@ public class AdminDTO {
 	private String ad_phone;
 	private String ad_email;
 	
+ 
 
 	public String getAd_id() {
 		return ad_id;
