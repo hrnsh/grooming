@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kr.co.gudi.board.dto.BoardDTO;
+import kr.co.gudi.board.dto.adminBoardDTO;
+import kr.co.gudi.photo.dto.photoDTO;
 
 public interface BoardDAO {
 	/*
@@ -14,9 +16,9 @@ public interface BoardDAO {
 
 	ArrayList<BoardDTO> boardList(String filter, int offset, int pagePerNum);
 
-	int maxpage(int pagePerNum, int filter);
+	int maxpage(int pagePerNum, String filter);
 
-	HashMap<String, String> boardDetail(String b_num);
+	BoardDTO boardDetail(String b_num);
 
 	String boarduse(String b_num);
 
@@ -28,8 +30,26 @@ public interface BoardDAO {
 
 	
 	void writeBoard(BoardDTO dto);
+	void adminwriteBoard(adminBoardDTO dto);
 
-	void writePhoto(int idx, String oriFileName, String newFileName);
+	void boardwritePhoto(int idx, String oriFileName, String newFileName);
+
+	ArrayList<photoDTO> getPhoto(String b_num);
+
+	BoardDTO re(String bnum);
+
+	void boardUpdate(BoardDTO dto);
+
+	void adminboardwritePhoto(int idx, String oriFileName, String newFileName);
+
+	void adboardDelete(int bnum);
+
+
+
+
+
+
+
 
 
 	//ArrayList<BoardDTO> dboardList();

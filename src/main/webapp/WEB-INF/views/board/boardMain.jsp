@@ -45,7 +45,7 @@
 	.write{
 	border : 1px solid black;
 	border-collapse: collapse;
-	padding: 20px 30px;
+	padding: 20px 20px;
 	margin-left:75%;
 	margin-right:19%;
 	margin-top: 30px;
@@ -102,7 +102,7 @@ width : 400px;
 }
 
 #us{
-width : 100px;
+width : 120px;
 
 }
 #hit{
@@ -140,7 +140,7 @@ width:120px;
 		                <p><input id="searchval" class="searchval" type="text" name="searchval" value="" placeholder="검색할 내용을 입력해주세요"/><button id="btn">검색</button></p>
 		            </th>
 		<table>
-		<thread>
+			<thread>
 			<tr>
 				<th id="num">글번호</th>
 				<th id="subj">제목</th>
@@ -166,7 +166,7 @@ width:120px;
 			</td>
 			</tr>
 		</table>
-		<c:if test='${login!=null}'>
+		<c:if test="${login!=null || sessionScope.admin=='admin'}">
 			<div class="write">글쓰기</div>
 		</c:if>
 </body>
@@ -178,19 +178,21 @@ var showPage=1;
 var filter = 0;
 var searchtag = "b_subject" ;
 var searchindex = " ";
-	
+	adlistCall();
 	listCall(showPage);
 
 
 $('#userfilter').on('click',function(){
 	filter = 0;
 	document.getElementById("title").innerText="회원게시판";
+	showPage=1;
 	listCall(showPage);
 });
 
 $('#deptfilter').on('click',function(){
 	filter = 2;
 	document.getElementById("title").innerText="업체게시판";
+	showPage=1;
 	listCall(showPage);
 });
 
@@ -208,8 +210,11 @@ $("#searchval").keypress(function(e){
 
 
 
+
+
+
 $("#btn").click(function(){
-	alert("이벤트 감지");
+	
 	var storyLength = $("#searchval").val().length;
 	if(storyLength < 2 ){
 		alert("2자 이상 입력해주세요");
@@ -226,24 +231,64 @@ $("#btn").click(function(){
 });
 
 
-function listCall(page) {
-	
-	$.ajax({
-		type:'post',
-		url:'boardList',
-		data:{"filter":filter,'searchtag':searchtag,'searchindex':searchindex,'pagePerNum':5, 'page':page},
-		dataType:'JSON',
-		success:function(data){//data안들어옴
-			console.log("data들어오나? : "+data.pages);
-			
-			drawlist(data);	
-			
-		},
-		eorror:function(e){
-			console.log(e);
-			
-		}
-	});
+
+
+
+
+
+
+
+
+
+//admin공지글
+
+function adlistCall() {
+		
+		$.ajax({
+			type:'post',
+			url:'adboardList',
+			data:{},
+			dataType:'JSON',
+			success:function(data){//data안들어옴
+				console.log("addata들어오나? : "+data);
+				
+				addrawlist(data);	
+				
+			},
+			eorror:function(e){
+				console.log(e);
+				
+			}
+		});
+	}
+
+
+
+function addrawlist(list){
+
+var content="";
+console.log(list.list);
+//배열의 값을 하나씩빼서 함수를 실행(개별값, 인덱스)
+
+list.list.forEach(function(item,idx){
+	content += '<tr>';
+	content += '<td>'+item.b_num+'</td>';
+	content += '<td>'+"<a href ="+'adpfNoteSend?idx='+item.b_num+">[공지사항] "+item.adb_subject+'</a>'+'</td>';
+	content += '<td>'+item.ad_id+'</td>';
+	content += '<td>'+item.adb_hit+'</td>';
+	// java.sql.Date 는 jsp 에서는 정상동작 되나 js 에서는 밀리세컨드를 반환 한다.
+	// 방법 1. DTO 에서 reg_date 를 String 으로 반환하는 방법
+	// content += '<td>'+item.reg_date+'</td>';
+	// 방법 2. js 에서 직접 변환
+	var date = new Date(item.adb_date);
+	var dateStr = date.toLocaleDateString("ko-KR"); //en-US
+	content += '<td>'+dateStr+'</td>';		
+	content += '</tr>';
+});
+$('#adminlist').empty();
+$('#adminlist').append(content);
+
+
 }
 
 /* 	
@@ -271,13 +316,25 @@ function listCall(page) {
 
 
 
-
-
-
-
-
-
-
+	 function listCall(page) {
+			
+			$.ajax({
+				type:'post',
+				url:'boardList',
+				data:{"filter":filter,'searchtag':searchtag,'searchindex':searchindex,'pagePerNum':5, 'page':page},
+				dataType:'JSON',
+				success:function(data){//data안들어옴
+					console.log("data들어오나? : "+data.pages);
+					
+					drawlist(data);	
+					
+				},
+				eorror:function(e){
+					console.log(e);
+					
+				}
+			});
+		}
 
 
 
@@ -345,10 +402,13 @@ $(".logo").on('click',function(){
 $('#pagePerNum').change(function(e){
 	//페이지당 보여줄 게시물 갯수가 변경되면 페이징 처리 UI를 지우고 다시 그려준다.
 	//안그러면 처음계산한 페이지 값을 그대로 들고있다.
-	$('#pagination').twbsPagination('destroy');
 	listCall(showPage);	
+	$('#pagination').twbsPagination('destroy');
 	
 }); 
+
+
+
 
 
 

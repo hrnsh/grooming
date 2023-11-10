@@ -3,5 +3,44 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="kr.co.gudi.board.dao.BoardReplyDAO">
+
+
+		<insert id="boardReply" parameterType="String">
+		
+		insert into board_reply (b_num ,user_id,brep_date,brep_content,brep_state)values(#{param1},#{param2},now(),#{param3},"1")
+		
+		</insert>
+		
+		<select id="boardrlist" resultType="kr.co.gudi.board.dto.BoardReplyDTO">
+		
+		SELECT *
+		FROM board_reply 
+		WHERE b_num=${param1} AND brep_state = 1 ORDER BY brep_num DESC LIMIT ${param2} OFFSET ${param3}
+		
+		</select>
+		
+		<select id="rmaxpage" resultType="int">
+		SELECT (count(brep_num)/#{param1})
+		FROM board_reply where b_num = #{param2} AND brep_state=1
+		</select>
+		
+		<update id="delre" parameterType="String">
+		
+		UPDATE board_reply SET brep_state = 0 WHERE brep_num = #{param1}
+		
+		</update>
+		
+		<select id="repmodify" resultType="kr.co.gudi.board.dto.BoardReplyDTO">
+		
+		select * from board_reply where brep_num = #{param1}
+		
+		</select>
+		
+		<select id="getreid" resultType="String">
+		
+		select user_id from board_reply where brep_num = #{param1}
+		
+		</select>
+
 	
 </mapper>
