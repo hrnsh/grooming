@@ -9,6 +9,7 @@
 			where com_id=#{param1}
 	</select>	
 	
+	
 	<select id="checkId" resultType="int">
 		SELECT count(*) FROM company where user_id=#{param1}
 	</select>

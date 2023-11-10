@@ -8,6 +8,7 @@
 		SELECT a_name,a_kind,a_spec FROM animal
 	</select>
 	
+	
 	<select id="lat" resultType="Map">
 		SELECT lat,lon FROM company where user_id='abcd001'
 	</select>	
