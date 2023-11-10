@@ -112,8 +112,8 @@ public class AdminBoardService {
 
 
 
-	public void boardUpdate(String sub, String text, String bnum) {
-		dao.boardUpdate(sub,text,bnum);
+	public void boardUpdate(String subject, String editorTxt, String bnum) {
+		dao.boardUpdate(subject,editorTxt,bnum);
 		
 	}
 

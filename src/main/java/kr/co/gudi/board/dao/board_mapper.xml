@@ -114,7 +114,12 @@
 		</update>
 		
 		
-
+		<insert id="boardReport" parameterType="String">
+		
+		insert into report (report_type,inq_date ,report_get ,inq_content ,inq_state ,user_id)
+			values("b",now(),#{param1},#{param2},"0",#{param3})
+		
+		</insert>
 		
 		
 

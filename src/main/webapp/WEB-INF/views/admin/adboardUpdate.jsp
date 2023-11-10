@@ -56,7 +56,7 @@
 <body>
 
 
-<form action="boardUpdate" method="post" enctype="multipart/form-data">
+<form action="adboardUpdate" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
 			<td><input id="subject" type="text" name="subject" maxlength="20" placeholder="제목은20글자만 가능합니다." value="${re.adb_subject}"/></td>
