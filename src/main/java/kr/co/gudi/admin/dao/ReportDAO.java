@@ -10,4 +10,6 @@ public interface ReportDAO {
 
 	ArrayList<ReportDTO> reportListCall(int offset);
 
+	ReportDTO reportDetail(String report_num);
+
 }

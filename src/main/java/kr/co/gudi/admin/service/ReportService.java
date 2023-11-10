@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import kr.co.gudi.admin.dao.ReportDAO;
 import kr.co.gudi.admin.dto.InquiryDTO;
@@ -35,5 +36,12 @@ public class ReportService {
 		}
 		map.put("currPage", p);
 		return map;
+	}
+
+	public void reportDetail(String report_num, String ad_id, Model model) {
+		ReportDTO dto = reportDao.reportDetail(report_num);
+		
+		
+		
 	}
 }
