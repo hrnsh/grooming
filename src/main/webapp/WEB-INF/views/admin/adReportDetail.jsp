@@ -37,7 +37,7 @@ main{
 
 .detailBox{
 	width: 800px;
-	height: 400px;
+	height: 300px;
 	border: 1px solid black;
 	border-radius: 50px;
 	position: relative;
@@ -55,6 +55,7 @@ th, td{
 	height: 50px;
 	border-bottom: 1px solid black;
 	text-align: center;
+	margin-top: 20px;
 }
 
 table{
@@ -69,7 +70,7 @@ table{
 .replyBtn{
 	position: absolute;
 	left: 70%;
-	top: 50%;
+	top: 40%;
 	height: 35px;
 	width: 80px;
 	background-color: rgb(94, 94, 94);
@@ -100,7 +101,7 @@ button{
 		<div class="logo">
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="arrowBtn"> ← </button>
+		<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="arrowBtn"> ← </button>
 	</nav>
 	<main>
 		<div class="profButtonBox">
@@ -126,7 +127,7 @@ button{
 				</tr>	
 				<tr>
 					<td>신고 분류</td>
-					<td>
+					<td colspan="3">
 						<c:choose>
 							<c:when test="${reportDetail.report_type==0}">|&nbsp;&nbsp;&nbsp;게시글</c:when>
 							<c:when test="${reportDetail.report_type==1}">|&nbsp;&nbsp;&nbsp;리뷰</c:when>
@@ -137,7 +138,7 @@ button{
 				</tr>
 				<tr>
 					<td>처리 상태</td>
-					<td>
+					<td colspan="3">
 						<c:choose>
 							<c:when test="${reportDetail.report_state==0}">|&nbsp;&nbsp;&nbsp;미완료</c:when>
 							<c:when test="${reportDetail.report_state==1}">|&nbsp;&nbsp;&nbsp;처리중</c:when>
@@ -147,11 +148,11 @@ button{
 				</tr>
 				<tr>
 					<td>신고 내용</td>
-					<td>${reportDetail.report_content}</td>
+					<td colspan="3">${reportDetail.report_content}</td>
 				</tr>
 				<tr>
 					<td>신고 대상</td>
-					<td><button onclick="reportTarget()">보기</button></td>
+					<td colspan="3"><button onclick="reportTarget()">보기</button></td>
 				</tr>
 			</table>
 			<!--상태가 '2' 이면 처리내역 출력 -->

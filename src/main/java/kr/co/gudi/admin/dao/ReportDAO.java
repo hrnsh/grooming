@@ -12,4 +12,8 @@ public interface ReportDAO {
 
 	ReportDTO reportDetail(String report_num);
 
+	void updateState(String report_num);
+
+	void insertHistory(String report_num, String ad_id);
+
 }

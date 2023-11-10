@@ -115,8 +115,8 @@ public class InquiryService {
 		InquiryDTO newIqDetail = inquiryDao.newIqDetail(inq_num);	
 		
 		// '처리중' 상태 업데이트 
-		String state = newIqDetail.getInq_state();
-		if(state.equals("0")) {
+		int state = newIqDetail.getInq_state();
+		if(state==0) {
 			inquiryDao.updateState(inq_num); 
 		}
 		

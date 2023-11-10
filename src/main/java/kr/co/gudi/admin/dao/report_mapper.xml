@@ -13,4 +13,18 @@
 		SELECT CEIL(COUNT(report_num)/5) AS pages FROM report
 	</select>
 	
+	<select id="reportDetail" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT * FROM report WHERE report_num=#{param1}
+	</select>
+	
+	<update id="updateState">
+		UPDATE report SET report_state = 1 WHERE report_num = #{param1} AND report_state=0
+	</update>
+	
+	<insert id="insertHistory">
+		INSERT INTO report_history(report_num, ad_id)
+			VALUES (#{param1},#{param2})
+				ON DUPLICATE KEY UPDATE report_num = report_num
+	</insert>
+	
 </mapper>

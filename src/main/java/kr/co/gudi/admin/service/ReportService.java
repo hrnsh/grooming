@@ -39,9 +39,19 @@ public class ReportService {
 	}
 
 	public void reportDetail(String report_num, String ad_id, Model model) {
-		ReportDTO dto = reportDao.reportDetail(report_num);
+		// 상세보기 데이터 조회
+		ReportDTO reportDetail = reportDao.reportDetail(report_num);
 		
+		// '처리중' 상태 업데이트
+		int state = reportDetail.getReport_state();
+		if(state==0) {
+			reportDao.updateState(report_num);
+		}
 		
+		// 히스토리 테이블에 데이터 저장
+		reportDao.insertHistory(report_num,ad_id);
 		
+		reportDetail =  reportDao.reportDetail(report_num);
+		model.addAttribute("reportDetail", reportDetail);
 	}
 }

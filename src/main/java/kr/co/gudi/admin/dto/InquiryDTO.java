@@ -10,7 +10,7 @@ public class InquiryDTO {
 	private String inq_subject;
 	private Date inq_date;
 	private String inq_content;
-	private String inq_state;
+	private int inq_state;
 	private Date inqhis_date;
 	
 	
@@ -57,10 +57,10 @@ public class InquiryDTO {
 	public void setInq_content(String inq_content) {
 		this.inq_content = inq_content;
 	}
-	public String getInq_state() {
+	public int getInq_state() {
 		return inq_state;
 	}
-	public void setInq_state(String inq_state) {
+	public void setInq_state(int inq_state) {
 		this.inq_state = inq_state;
 	}
 	

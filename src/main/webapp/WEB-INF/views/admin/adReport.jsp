@@ -195,7 +195,7 @@ function drawReportList(reportList){
 		content+='<td style="text-align: center;">' 
 			if(item.report_state==0){
 				content+='미완료';
-			}else if(item.inq_state==1){
+			}else if(item.report_state==1){
 				content+='처리중';
 			}else{
 				content+='완료';

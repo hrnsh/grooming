@@ -3,6 +3,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace="kr.co.gudi.admin.dao.InquiryDAO">
+	<!-- 문의 보내기 전송시 inquiry 테이블에 insert -->
 	<insert 
 		useGeneratedKeys="true"
 		keyColumn="inq_num"
@@ -11,7 +12,7 @@
 		INSERT INTO inquiry (inq_subject, inq_content, user_id)
 			VALUES (#{inq_subject},#{inq_content},#{user_id})
 	</insert>
-	
+	<!-- 방금 저장된 inq_num 정보를 photo 테이블에 insert -->
 	<insert id="savePhoto">
 		INSERT INTO photo (photo_code, photo_n, oriFileName, newFileName)
 			VALUES (#{param1}, #{param2}, #{param3}, #{param4})
