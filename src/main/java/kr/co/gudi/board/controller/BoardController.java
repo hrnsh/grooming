@@ -235,5 +235,20 @@ public class BoardController {
 		}
 		return path;
 	}
+	
+	
+	
+	@RequestMapping(value = "/boardReport")
+	@ResponseBody
+	public Map<String, Object> boardReport( @RequestParam String bnum, @RequestParam String con, HttpSession session) {
+		logger.info("bnum"+bnum);
+		
+		String user_id = (String) session.getAttribute("loginId");
+		boolean get = service.boardReport(bnum,con,user_id);
+		logger.info("get"+get);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("get", get);
+		return result;
+	}
 
 }

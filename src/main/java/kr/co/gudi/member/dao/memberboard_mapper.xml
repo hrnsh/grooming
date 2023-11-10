@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+ <mapper namespace="kr.co.gudi.member.dao.MemberBoardDAO">
+	
+   <select id="memyBoardList" resultType="kr.co.gudi.member.dto.MemberBoardDTO">
+   
+   		SELECT *
+		FROM board 
+		WHERE user_id = #{param1} AND b_state = 1 ORDER BY b_num DESC LIMIT 5 OFFSET #{param2}
+   
+   </select>
+   
+   <select id="mebmaxpage" resultType="int">
+   
+   		
+		select count(b_num/5) from board where user_id = #{param1} AND b_state = 1 ORDER BY b_num DESC
+   
+   </select>
+   
+   
+   <select id="mebdata" resultType="kr.co.gudi.member.dto.MemberBoardDTO">
+   select * from board where b_num = #{param1} and b_state = 1
+   </select>
+   
+   <update id="mebhit" parameterType="String">
+   
+   update board set b_hit = b_hit + 1 where b_num = #{param1}
+   
+   </update>
+
+   <update id="mebDelList">
+   
+   update board set b_state = "0" where b_num = #{param1}
+   
+   </update>
+   
+   
+   <select id="mebdatefilter" resultType="kr.co.gudi.member.dto.MemberBoardDTO">
+   
+      	SELECT *
+		FROM board 
+		WHERE user_id = "${param1}" AND b_state = 1 AND b_date="${param2}"  ORDER BY b_num DESC LIMIT 5 OFFSET ${param3}
+   
+   </select>
+   
+	
+</mapper>
