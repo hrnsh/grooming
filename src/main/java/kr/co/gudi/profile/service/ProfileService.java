@@ -86,8 +86,16 @@ public class ProfileService {
 		return row;
 	}
 
-	public ArrayList<ProfileDTO> pickuplist(String p_num) {
-		return dao.pickuplist(p_num);
+	public ArrayList<ProfileDTO> pickuplist(String com_num) {
+		return dao.pickuplist(com_num);
+	}
+
+	public int writeticketprice(ArrayList<String> ticketList) {
+		int row = 0;
+		for(String t_type : ticketList) {
+			row += dao.writeticketprice(t_type);
+		}
+		return row;
 	}
 	
 

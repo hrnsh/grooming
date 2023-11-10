@@ -31,6 +31,8 @@ public interface ProfileDAO {
 
 	int writepickupinfo(String com_num, String p_distance, String p_section, String p_price);
 
-	ArrayList<ProfileDTO> pickuplist(String p_num);
+	ArrayList<ProfileDTO> pickuplist(String com_num);
+
+	int writeticketprice(String t_type);
 
 }

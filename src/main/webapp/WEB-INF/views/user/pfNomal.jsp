@@ -237,7 +237,6 @@ console.log("listCall : " + listCall);
 						content += '<tr>';
 						content += '<th>'+"픽업 여부"+'</th>';
 						content += '<th>'+item.pickup+'</th>';
-						content += '<th><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">픽업 정보 입력</button></th>';
 						content += '</tr>';
 						content += '<tr>';
 						content += '<th>'+"총 이용자 수"+'</th>';
@@ -251,7 +250,8 @@ console.log("listCall : " + listCall);
 						content += '<th>'+"주소"+'</th>';
 						content += '<th colspan="2">'+item.address+'</th>';
 						content += '</tr>';
-						
+						content += '<th><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">가격표 보기</button></th>';
+
 					});
 				$('#comlist').empty();
 				$('#comlist').append(content);

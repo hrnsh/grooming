@@ -59,7 +59,21 @@
 	</insert> 
 	
 	<select id="pickuplist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
-		select * from pick_price where com_num=#{param1}
-	</select>
+		SELECT pp.p_distance,pp.p_section,pp.p_price
+		FROM company c
+		JOIN pick_price pp ON c.com_num = pp.com_num
+		WHERE c.com_num = #{param1}
+    </select>
+    
+    <insert id="writeticketlist" parameterType="hashmap">
+    	insert into ticket_price (t_num,com_num,t_price,t_type)
+    	values(#{param1},#{param2},#{param3},#{param4})
+    </insert>
+    
+    <select id="ticketlist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		SELECT tp.t_num, tp.t_price, tp.t_type FROM company c
+		JOIN ticket_price tp ON c.com_num = tp.com_num
+		WHERE c.com_num = #{param1}
+    </select>
 	
 </mapper>

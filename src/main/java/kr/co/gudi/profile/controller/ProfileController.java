@@ -202,16 +202,16 @@ public class ProfileController {
 	
 	@RequestMapping(value="/pickuplistCall")
 	@ResponseBody
-	public HashMap<String, Object> pickuplistCall(HttpSession session, @RequestParam String p_num) {
+	public HashMap<String, Object> pickuplistCall(HttpSession session, @RequestParam String com_num) {
 		
 		HashMap<String, Object>result = new HashMap<String, Object>();
-		logger.info("p_num : " + p_num);
+		logger.info("!!!com_num!!! : " + com_num);
 		
 		if(session.getAttribute("loginId") == null) {
 			result.put("login", false);
 		}else {
 			result.put("login", true);
-			ArrayList<ProfileDTO> pickuplist = service.pickuplist(p_num);
+			ArrayList<ProfileDTO> pickuplist = service.pickuplist(com_num);
 			result.put("pickuplist", pickuplist);
 		}
 		return result;
@@ -225,6 +225,20 @@ public class ProfileController {
 		int row = service.writepickupinfo(params);
 		logger.info("writepickupdistance : " + row);
 		result.put("success", row);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/writeticketprice", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> writeticketprice(@RequestParam(value="ticketList[]") ArrayList<String> ticketList){
+		
+		logger.info("writepickupinfo params : " + ticketList);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		int row = service.writeticketprice(ticketList);
+		result.put("ticketcount : ", row);
+		logger.info("writeticketprice : " + row);
 		
 		return result;
 	}

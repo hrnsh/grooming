@@ -51,7 +51,7 @@ button {
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
-	<h1 style="text-align: center;">업체 수정</h1>
+	<h1 style="text-align: center;">가격표 보기</h1>
 	<table>
 		<tr>
 			<th>
@@ -103,28 +103,15 @@ button {
 		<tr>
 			<th>픽업 가능 거리 (업체 기준 반경)</th>
 			<th colspan="4">
-				<input id='Pdistance' onkeyup='printPdistance()' type="text" name="p_distance" value="" />
+				<input type="text" name="p_distance" value="" /> KM
 			</th>
 		</tr>
 		<tr>
-			<th rowspan="4">구간 별 가격</th>
-		</tr>
+			<th rowspan="3">구간 별 가격</th>
 		<tr>
-			<th colspan="2">구간</th>
-			<th><input id='PdistanceResult' type="text" readonly="readonly" name="p_distance" value="" /></th>
-			<th><input type="text" name="p_section" value="" /></th>
-			<th><input type="text" name="p_price" value="" /></th>
-		</tr>
-		<tr>
-			<th colspan="2">구간 2</th>
-			<th><input id='PdistanceResult' type="text" readonly="readonly" name="p_distance" value="" /></th>
-			<th><input type="text" name="p_section" value="" /></th>
-			<th><input type="text" name="p_price" value="" /></th>
-		</tr>
-		<tr>
-			<th colspan="2">구간 3</th>
-			<th><input id='PdistanceResult' type="text" readonly="readonly" name="p_distance" value="" /></th>
-			<th><input type="text" name="p_section" value="" /></th>
+			<th>구간</th>
+			<th><input type="text" name="p_section" value=""/></th>
+			<th>가격
 			<th><input type="text" name="p_price" value="" /></th>
 		</tr>
 		<tr>
@@ -132,47 +119,45 @@ button {
 				<input type="button" id="writepickupinfo" value="픽업 정보 입력 완료" />
 			</th>
 		</tr>
+		<tr>
+			<th>
+				<label>
+					<input type='checkbox' name="t_type" onclick='toggleTextbox1(this)' value="오전권" /> 오전권
+				</label>
+			</th>
+			<th colspan="4"><input type='text' id="t_price1" name="t_price"	placeholder="가격을 입력해주십시오" value="" disabled /></th>
+		</tr>
+		<tr>
+			<th>
+				<label>
+					<input type='checkbox' name="t_type" onclick='toggleTextbox2(this)' value="오후권" />오후권
+				</label>
+			</th>
+			<th colspan="4"><input type='text' id="t_price2" name="t_price" placeholder="가격을 입력해주십시오" value="" disabled /></th>
+		</tr>
+		<tr>
+			<th>
+				<label>
+					<input type='checkbox' name="t_type" onclick='toggleTextbox3(this)' value="종일권" />종일권
+				</label>
+			</th>
+			<th colspan="4"><input type='text' id="t_price3" name="t_price" placeholder="가격을 입력해주십시오" value="" disabled /></th>
+		</tr>	
 	</table>
+	
+	<table>
+		<tr>
+			<tbody id="pickuplist">
+
+			</tbody>
+	</table>
+	
 </body>
 <script>
-$('#writepickupinfo').on('click',function(){
-	var $com_num = $('input[name="com_num"]');
-	var $p_distance = $('input[name="p_distance"]');
-	var $p_section = $('input[name="p_section"]');
-	var $p_price = $('input[name="p_price"]');
-			 
-	console.log("업체 번호 : " + $com_num.val());
-	console.log("업체 픽업 가능 거리 : " + $p_distance.val());
-
-	
-	var param = {};
-	param.com_num = $com_num.val();
-	param.p_distance = $p_distance.val();
-	param.p_section = $p_section.val();
-	param.p_price = $p_price.val();
-	
-	console.log("픽업 거리 정보 파라메터" + param);
-
-	$.ajax({
-		type:'post',
-		url:'writepickupdistance',
-		data:param,
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			console.log("픽업 정보 등록")
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-});
 
 
-/* 
- pickuplistCall();
- 
- console.log("listCall : " + pickuplistCall);
+pickuplistCall();
+
 
 function pickuplistCall(){
 	var com_num = '${com_num}';
@@ -202,19 +187,88 @@ function drawpickupList(pickuplist){
 	console.log("drawList : " + pickuplist);
 	var content = '';
 	
-	pickuplist.forEach(function(item, p_num){
+	pickuplist.forEach(function(item, com_num){
 		content += '<tr>';
-		content += '<th>'+item.p_num+'</th>';
-		content += '<th>'+item.com_num+'</th>';
-		content += '<th>'+item.p_distance+'</th>';
-		content += '<th>'+item.p_section+'</th>';
-		content += '<th>'+item.p_price+'</th>';
-		content += '<th>';
+		content += '<th>'+item.p_distance+" KM"+'</th>';
+		content += '<th>'+item.p_section+" KM"+'</th>';
+		content += '<th>'+item.p_price+" 원"+'</th>';
+		content += '</tr>';
 	});
 	$('#pickuplist').empty();
 	$('#pickuplist').append(content);
-} */
+}
+
+
+$('#writepickupinfo').on('click',function(){
+	var $com_num = $('input[name="com_num"]');
+	var $p_distance = $('input[name="p_distance"]');
+	var $p_section = $('input[name="p_section"]');
+	var $p_price = $('input[name="p_price"]');
+			 
+	console.log("업체 번호 : " + $com_num.val());
+	console.log("업체 픽업 가능 거리 : " + $p_distance.val());
+
 	
+	var param = {};
+	param.com_num = $com_num.val();
+	param.p_distance = $p_distance.val();
+	param.p_section = $p_section.val();
+	param.p_price = $p_price.val();
+	
+	console.log("픽업 거리 정보 파라메터" + param);
+
+	$.ajax({
+		type:'post',
+		url:'writepickupdistance',
+		data:param,
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			console.log("픽업 정보 등록")
+			pickuplistCall();
+
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+});
+
+ 
+ console.log("listCall : " + pickuplistCall);
+
+ function toggleTextbox1(checkbox) {
+	  const textbox_elem = document.getElementById('t_price1');
+	  textbox_elem.disabled = checkbox.checked ? false : true;
+
+	  if(textbox_elem.disabled) {
+	    textbox_elem.value = null;
+	  }else {
+	    textbox_elem.focus();
+	  }
+	}
+	
+	function toggleTextbox2(checkbox) {
+		  const textbox_elem = document.getElementById('t_price2');
+		  textbox_elem.disabled = checkbox.checked ? false : true;
+
+		  if(textbox_elem.disabled) {
+		    textbox_elem.value = null;
+		  }else {
+		    textbox_elem.focus();
+		  }
+		}
+	
+	function toggleTextbox3(checkbox) {
+		  const textbox_elem = document.getElementById('t_price3');
+		  textbox_elem.disabled = checkbox.checked ? false : true;
+
+		  if(textbox_elem.disabled) {
+		    textbox_elem.value = null;
+		  }else {
+		    textbox_elem.focus();
+		  }
+		}
 
 
 	
