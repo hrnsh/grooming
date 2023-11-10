@@ -15,7 +15,6 @@ textarea {
 	font-size: 16px;
 	padding: 10px;
 }
-
 .modal {
 	display: none;
 	position: fixed;

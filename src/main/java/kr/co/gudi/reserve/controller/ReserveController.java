@@ -37,6 +37,7 @@ public class ReserveController {
 	        for (ReserveDTO dto : dtoList) {
 	            aNameList.add(dto.getA_name());
 	        }
+	        
 	        modelAndView.addObject("aNameList", aNameList);
 	        logger.info("동물 이름: "+aNameList);
 	        return modelAndView;

@@ -34,6 +34,7 @@ public class ReserveListController {
 		int checkId=service.checkId(loginId);
 		logger.info("로그인ID :"+checkId);
 		if(checkId==0) {
+			
 			page = "reserve/reserveList";
 		}else {
 			page="reserve/reserveComList";

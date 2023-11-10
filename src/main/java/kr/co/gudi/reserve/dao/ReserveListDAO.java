@@ -10,6 +10,7 @@ public interface ReserveListDAO {
 	int checkId(String loginId);
 
 	
+	
 
 	ArrayList<ReserveDTO> reserveComList(String loginId);
 
