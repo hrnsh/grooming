@@ -105,7 +105,7 @@ border-radius: 5px;
 	height: 55px
 }
 
-#getreply, #list, #delete, #modify{
+#getreply, #list, #delete, #modify, #rp{
 
 	cursor: pointer;
 
@@ -143,54 +143,55 @@ border-radius: 5px;
 	width : 10px;
 
 }
+
+
+#rp{
+
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 65px;
+	height: 25px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 테스트 */
-#layer_popup{
-    display: none;
-}
+/*popup*/
+.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+/*팝업 박스*/
+.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:375px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
+/*컨텐츠 영역*/
+.popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px; }
+.popup_box .popup_cont h2 {padding:15px 0;color:#333;margin:0;}
+.popup_box .popup_cont p{ border-top: 1px solid #666;padding-top: 30px;}
+/*버튼영역*/
+.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
+.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
+.popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
+.popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
+.popup_box .popup_btn a.close_day {background:#5d5d5d;}
+.popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after{display:none;}
+/*오버레이 뒷배경*/
+.popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
+/*popup*/
+#rpname {padding-left: 100px;}
+#rpbt {border: 1px solid black; border-collapse: collapse; cursor: pointer;}
 
-#layer_popup + label {
-    display: inline-block;
-    padding: 7px 14px;
-    background: #000;
-    color: #fff;
-}
 
-#layer_bg{
-    display: none;
-    position: absolute; /* 시작 지점을 버튼 위, 0픽셀부터 시작하려고 주는 것*/
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5)
-    }
-    
-   #popup{
-    position: absolute;
-    padding: 15px;
-    box-sizing: border-box;
-    border-radius: 15px;
-    width: 600px;
-    height: 400px;
-    background: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2); /*x y 번짐 색상*/
-    }
-    
-  #popup > h2{
-    margin-bottom: 25px;
-}
 
-#popup > h2 > label{
-    float: right;
-}
 
-#layer_popup:checked + label + #layer_bg{
 
-    display: block;
-}
 
 
 </style>
@@ -223,11 +224,13 @@ border-radius: 5px;
 			</div>
 			
 			<div id="report">
+			<div id="rb">
 			<p>
-			<c:if test="${login=='boarduse'||sessionScope.admin=='admin'}">
-			<a id="goreportform">신고</a>
+			<c:if test="${can!=null||sessionScope.admin=='admin'}">
+			<a id="goreportform" href="javascript:openPop()">신고</a>
 			</c:if>
 			</p>
+			</div>
 			</div>
 			
 			
@@ -301,7 +304,7 @@ border-radius: 5px;
 			<c:if test="${can!=null}">
 			<input id="reply" type="text" />
 			
-			<div id="getreply" >
+			<div id="getreply">
 				<p>댓글달기</p>
 			</div>
 			</c:if>
@@ -330,28 +333,96 @@ border-radius: 5px;
 		</tr>
 
 	</table>
-	<!-- 테스트 -->
-	<input type="checkbox" id="layer_popup">
-		<label for="layer_popup">
-		버튼
-		</label>
-		
-	<div id="layer_bg"> <!--  전체배경(기존 페이지를 안보이게 가려주거나 불투명하게 보이게함)  -->
-        <div id="popup"> 게시글 신고
-            <h2>
-                ${list.b_subject}
-                <label for="layer_popup">X</label>
-            </h2>
-            <textarea rows="" cols=""></textarea>
-        </div>
-    </div>
+
+
+
+
+
+
+<div class="popup_layer" id="popup_layer" style="display: none;">
+  <div class="popup_box">
+      <div style="height: 10px; width: 375px; float: top;">
+        <a href="javascript:closePop();"><img src="resources/img/down.png" class="m_header-banner-close" width="30px" height="30px"></a>
+      </div>
+      <!--팝업 컨텐츠 영역-->
+      <div><p id="rpname">게시글 신고</p></div>
+      <div class="popup_cont">
+          <h5>신고 게시글 : ${list.b_subject}</h5>
+          <h5>작성자 : ${list.user_id}</h5>
+		<pre><textarea id="con" rows="" cols="" style= "width: 250px; height: 320px; resize: none;"></textarea></pre>
+      </div>
+      <div id="rpbt">
+      <!--팝업 버튼 영역-->
+<!--       <div class="popup_btn" style="float: bottom; margin-top: 100px;">
+      뭔가 들어가기 -->
+      
+      	버튼
+      </div>
+  </div>
+</div>
+
+
+
+
 </body>
+
+
+
 <script>
 var bnum = ${list.b_num};
 console.log(""+bnum);
 var reply ;
 var showPage=1;
 listCall(showPage);
+
+
+
+
+//팝업 띄우기
+function openPop() {
+    document.getElementById("popup_layer").style.display = "block";
+
+}
+
+//팝업 닫기
+function closePop() {
+    document.getElementById("popup_layer").style.display = "none";
+}
+
+$("#rpbt").on("click",function(){
+	
+	console.log("신고버튼눌림");
+	var con = $("#con").val();
+	
+	
+	
+	$.ajax({
+		type:'post',
+		url:'boardReport',
+		data:{"bnum": ${list.b_num}, "con":con},
+		dataType:'JSON',
+		success:function(data){//data안들어옴
+			console.log("data들어오나? : "+data.bnum);
+			
+			if(data.get==true){
+				alert("신고완료");
+				location.href="boardDetail?b_num=${list.b_num}";
+			}else{
+				alert("신고실패");
+			}	
+			
+		},
+		eorror:function(e){
+			console.log(e);
+			
+		}
+	});
+	
+	
+});
+
+
+
 
 
 

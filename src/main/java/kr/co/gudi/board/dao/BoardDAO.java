@@ -44,6 +44,8 @@ public interface BoardDAO {
 
 	void adboardDelete(int bnum);
 
+	void boardReport(String bnum, String con, String user_id);
+
 
 
 

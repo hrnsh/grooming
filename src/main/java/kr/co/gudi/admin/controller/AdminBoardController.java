@@ -90,15 +90,15 @@ public class AdminBoardController {
 	
 	
 	@RequestMapping (value = "/adboardUpdate")
-	public String adboardUpdate(HttpSession session,@RequestParam String sub,@RequestParam String text) {
+	public String adboardUpdate(HttpSession session,@RequestParam String subject,@RequestParam String editorTxt) {
 		
 		
-		logger.info("adboardUpdate"+sub);
-		logger.info("adboardUpdate"+text);
+		logger.info("adboardUpdate"+subject);
+		logger.info("adboardUpdate"+editorTxt);
 		String bnum = (String) session.getAttribute("bnum");
 		logger.info("adboardUpdate"+bnum);
-		service.boardUpdate(sub,text,bnum);
-		
+		service.boardUpdate(subject,editorTxt,bnum);
+		session.removeAttribute("bnum");
 		return "redirect:/boardMain";
 	}
 	
