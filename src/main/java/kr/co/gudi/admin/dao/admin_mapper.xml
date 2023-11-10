@@ -6,4 +6,21 @@
 	<select id="logingo" resultType="String">
 		SELECT ad_id FROM admin WHERE ad_id =#{param1} AND ad_pw = #{param2}
 	</select>
+	
+	<select id="adminProfile" resultType="kr.co.gudi.admin.dto.AdminDTO">
+		SELECT * FROM admin WHERE ad_id = #{param1}
+	</select>
+	
+	<select id="adminlist" resultType="kr.co.gudi.admin.dto.AdminDTO">
+		select ad_num,ad_id,ad_name,ad_position from admin
+	</select>
+	
+	<update id="adminprofileupdate" parameterType="hashmap">
+		update admin set
+		ad_pw=#{ad_pw}
+		,ad_phone=#{ad_phone}
+		where
+		ad_id=#{ad_id}
+	</update>
+	
 </mapper>
