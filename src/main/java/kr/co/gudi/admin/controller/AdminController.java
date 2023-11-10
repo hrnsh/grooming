@@ -25,13 +25,11 @@ public class AdminController {
 	
 	@Autowired AdminService service;
 	
-	@RequestMapping(value = "/adminProfile")
-	public String adminProfile(@RequestParam String ad_id, Model model) {
+	@RequestMapping(value = "/adProfile")
+	public String adminProfile(@RequestParam String ad_id, Model model, HttpSession session) {
 		AdminDTO dto = service.adminProfile(ad_id);
-		
-		model.addAttribute("admin", dto);
-		logger.info("admin id : " + ad_id);
-		
+		model.addAttribute("admin",dto);
+	
 		return "/admin/adProfile";
 	}
 	
@@ -41,7 +39,7 @@ public class AdminController {
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		logger.info("list접근");
-		if(session.getAttribute("loginId")==null) {
+		if(session.getAttribute("ad_id")==null) {
 			result.put("login", false);
 		}else {
 			result.put("login", true);
@@ -70,9 +68,26 @@ public class AdminController {
 			session.setAttribute("admin", "admin");
 			page = "/admin/adInquiry";
 		}else {
-			model.addAttribute("msg", "관리자 아이디 또는 비밀번호를 확인해 주세요!");
+			model.addAttribute("msg", "!!!관리자 아이디 또는 비밀번호를 확인해 주세요!");
 		}
 		return page;
 	}
+
+	@RequestMapping(value = "/adminprofileUpdateForm")
+	public String adminprofileupdate(Model model, @RequestParam String ad_id) {
+		model.addAttribute("adminProfile", service.adminProfile(ad_id));
+		
+		return "/admin/adUpdate";
+	}
 	
+	@RequestMapping(value = "/adprofileupdate")
+	public String adminupdate(Model model, @RequestParam HashMap<String, String> params) {
+		logger.info("updateParams : " + params);
+		String page = "redirect:/adminprofileUpdateForm?ad_id="+params.get("ad_id");
+		
+		if(service.adminprofileupdate(params)>0) {
+			page="redirect:/adminProfile?ad_id="+params.get("ad_id");
+		}
+		return page;
+	}
 }
