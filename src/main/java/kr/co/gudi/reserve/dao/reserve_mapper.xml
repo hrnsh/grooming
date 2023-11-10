@@ -4,4 +4,57 @@
    
     <mapper namespace="kr.co.gudi.reserve.dao.ReserveDAO">
 	
+	<select id="myAni" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT a_name,a_kind,a_spec FROM animal
+	</select>
+	
+	<select id="lat" resultType="Map">
+		SELECT lat,lon FROM company where user_id='abcd001'
+	</select>	
+	
+	<select id="tPrice" resultType="String">
+	SELECT tp.t_price
+		FROM company cp
+		JOIN ticket_price tp ON cp.com_num = tp.com_num
+		WHERE cp.com_num = 1 and tp.t_type='2'
+	</select>
+	
+	<select id="tAmPrice" resultType="String">
+	SELECT tp.t_price
+		FROM company cp
+		JOIN ticket_price tp ON cp.com_num = tp.com_num
+		WHERE cp.com_num = 1 and tp.t_type='0'
+	</select>
+	
+	<select id="tPmPrice" resultType="String">
+	SELECT tp.t_price
+		FROM company cp
+		JOIN ticket_price tp ON cp.com_num = tp.com_num
+		WHERE cp.com_num = 1 and tp.t_type='1'
+	</select>
+	
+	<select id="p3Price" resultType="String">
+	SELECT pp.p_price
+		FROM company cp
+		JOIN pick_price pp ON cp.com_num = pp.com_num
+		WHERE cp.com_num = 1 and pp.p_section='3'
+	</select>
+	
+	<select id="p5Price" resultType="String">
+	SELECT pp.p_price
+		FROM company cp
+		JOIN pick_price pp ON cp.com_num = pp.com_num
+		WHERE cp.com_num = 1 and pp.p_section='5'
+	</select>
+	
+	<select id="p10Price" resultType="String">
+	SELECT pp.p_price
+		FROM company cp
+		JOIN pick_price pp ON cp.com_num = pp.com_num
+		WHERE cp.com_num = 1 and pp.p_section='10'
+	</select>
+	
+	<select id="revInfo" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT count(*) FROM reserve where com_id=#{param1} 
+	</select>
 </mapper>
