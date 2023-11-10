@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   <mapper namespace="kr.co.gudi.admin.dao.AdminBoardDAO">
+   
+   
+   <select id="admyBoardList" resultType="kr.co.gudi.admin.dto.AdBoardDTO">
+   
+   		SELECT *
+		FROM adminboard 
+		WHERE ad_id = #{param1} AND adb_state = 1 ORDER BY b_num DESC LIMIT 5 OFFSET #{param2}
+   
+   </select>
+   
+   <select id="adbmaxpage" resultType="int">
+   
+   		
+		select count(b_num/5) from adminboard where ad_id = #{param1} AND adb_state = 1 ORDER BY b_num DESC
+   
+   </select>
+   
+   
+   <select id="adbdata" resultType="kr.co.gudi.admin.dto.AdBoardDTO">
+   select * from adminboard where b_num = #{param1} and adb_state = 1
+   </select>
+   
+   <update id="adbhit" parameterType="String">
+   
+   update adminboard set adb_hit = adb_hit + 1 where b_num = #{param1}
+   
+   </update>
+   
+   <select id="ch" resultType="String">
+   
+   select * from admin where ad_id = #{param1}
+   
+   </select>
+   
+   <delete id="adbDelList">
+   
+   update adminboard set adb_state = "0" where b_num = #{param1}
+   
+   </delete>
+   
+   <select id="adbgetPhoto" resultType="kr.co.gudi.photo.dto.photoDTO">
+   
+   select * from photo where photo_code = "adb" and photo_n = #{param1}
+   
+   </select>
+   
+   <select id="adbdatefilter" resultType="kr.co.gudi.admin.dto.AdBoardDTO">
+   
+      	SELECT *
+		FROM adminboard 
+		WHERE ad_id = "${param1}" AND adb_state = 1 AND adb_date="${param2}"  ORDER BY b_num DESC LIMIT 5 OFFSET ${param3}
+   
+   </select>
+   
+   
+   	<select id="re" resultType="kr.co.gudi.admin.dto.AdBoardDTO">
+		
+	select * from adminboard where b_num = #{param1}
+		
+	</select>
+	
+	
+	<update id="boardUpdate" parameterType="String">
+		
+	UPDATE adminboard SET adb_subject = "${param1}", adb_content = "${param2}" WHERE b_num = ${param3}
+		
+	</update>
+   
+   <select id="adboardList" resultType="kr.co.gudi.admin.dto.AdBoardDTO">
+   
+   select * from adminboard where adb_state = 1;
+   
+   </select>
+   
+   
+   
+   </mapper>

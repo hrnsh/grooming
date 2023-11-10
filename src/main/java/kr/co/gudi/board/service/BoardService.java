@@ -11,11 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gudi.board.dao.BoardDAO;
 import kr.co.gudi.board.dto.BoardDTO;
+import kr.co.gudi.board.dto.adminBoardDTO;
+import kr.co.gudi.photo.dto.photoDTO;
 
 @Service
 public class BoardService {
@@ -92,7 +95,9 @@ public class BoardService {
 		ArrayList<BoardDTO> list = dao.boardList(filter, Integer.parseInt(pagePerNum),offset);
 		
 		//만들수 있는 총 페이지수
-		int max = dao.maxpage(Integer.parseInt(pagePerNum),Integer.parseInt(filter));
+		logger.info("filter : "+Integer.parseInt(pagePerNum));
+		logger.info("pagePerNum : "+Integer.parseInt(filter));
+		int max = dao.maxpage(Integer.parseInt(pagePerNum),filter);
 		logger.info("만들 수 있는 총 페이지수 : "+max);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -117,11 +122,20 @@ public class BoardService {
 
 
 
-	public HashMap<String, String> boardDetail(String b_num) {
+	public void boardDetail(String b_num, Model model) {
 
 		
 		hit(b_num);
-		return dao.boardDetail(b_num);
+		BoardDTO bbs = dao.boardDetail(b_num);
+		ArrayList<photoDTO> photos = dao.getPhoto(b_num);
+		
+		logger.info("bbs : "+bbs);
+		logger.info("photos : "+photos);
+		
+		
+		model.addAttribute("list",bbs);
+		model.addAttribute("photos", photos);
+		
 	}
 
 
@@ -151,23 +165,29 @@ public class BoardService {
 
 
 
-	public String boardWrite(Map<String, String> params, MultipartFile[] photos) {
+	public String boardWrite(Map<String, String> params, MultipartFile[] photos, String user_id, String admin) {
 		// bbs 테이블에 insert 한 글의 idx(auto_increment) 값을 가져오기
 		//조건 1. 파라메터는 DTO 형태로 넣어야 한다.
-		BoardDTO dto = new BoardDTO();
-		dto.setB_subject(params.get("B_subject"));
-		dto.setUser_id(params.get("User_id"));
-		dto.setB_content(params.get("B_content"));
-		dao.writeBoard(dto);
+		String page = "redirect:/boardMain";
+		if(admin!=null) {
+		adminBoardDTO dto = new adminBoardDTO();
+		dto.setAdb_subject(params.get("subject"));
+		dto.setAd_id(params.get("user_id"));
+		dto.setAdb_content(params.get("editorTxt"));
+		dto.setAd_id(user_id);
+		logger.info("admin 글저장 : "+admin);
+		
+		logger.info("admin 디티오 : "+dto);
+		dao.adminwriteBoard(dto);
 		// 생성된 pk 가져오기
 		// photo 테이블에도 insert
 		int idx = dto.getB_num();
 		logger.info("idx : "+idx);
-		String page = "redirect:/boardMain";
 		
+		logger.info("dto.getB_num()의 값 : "+dto.getB_num());
 		if (idx>0) {
 			try {
-				saveFile(idx, photos);
+				saveFile(idx, photos,admin);
 				page = "redirect:/boardMain";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -175,15 +195,42 @@ public class BoardService {
 			}
 		}
 		
+		}else {
+		BoardDTO dto = new BoardDTO();
+		dto.setB_subject(params.get("subject"));
+		dto.setUser_id(params.get("user_id"));
+		dto.setB_content(params.get("editorTxt"));
+		dto.setUser_id(user_id);
+		dao.writeBoard(dto);
+		// 생성된 pk 가져오기
+		// photo 테이블에도 insert
+		int idx = dto.getB_num();
+		logger.info("idx : "+idx);
+		
+		logger.info("dto.getB_num()의 값 : "+dto.getB_num());
+		if (idx>0) {
+			try {
+				saveFile(idx, photos,admin);
+				page = "redirect:/boardMain";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
+
+
+		
 		return page;
 	}
 
-	private void saveFile(int idx, MultipartFile[] photos) throws Exception {
+	private void saveFile(int idx, MultipartFile[] photos, String admin) throws Exception {
 		
 		
 		for (MultipartFile photo : photos) {
 			String oriFileName = photo.getOriginalFilename();
 			logger.info("oriFileName : "+oriFileName);
+			logger.info("oriFileName : "+idx+oriFileName);
 			if (!oriFileName.equals("")) {
 				
 				// 1. 파일이름 변경
@@ -196,8 +243,14 @@ public class BoardService {
 				Files.write(path, arr);
 				
 				//3. 파일명, 변경된파일명, idx를 photo 테이블에 추가
-				dao.writePhoto(idx,oriFileName,newFileName);
-				
+				if(admin=="admin") {
+					
+					logger.info("admin 사진저장 : "+admin);
+					dao.adminboardwritePhoto(idx,oriFileName,newFileName);
+				}else {
+					logger.info("admin 사진저장 ");
+				dao.boardwritePhoto(idx,oriFileName,newFileName);
+				}
 				
 			}
 		}
@@ -208,6 +261,75 @@ public class BoardService {
 
 		
 	}
+
+
+
+	public BoardDTO re(String bnum) {
+		// TODO Auto-generated method stub
+		logger.info("re 값 : " + dao.re(bnum));
+		return dao.re(bnum);
+	}
+
+
+
+	 public String boardUpdate(Map<String, String> params, MultipartFile[] photos, String bnum, String uid) {
+
+			// bbs 테이블에 insert 한 글의 idx(auto_increment) 값을 가져오기
+			//조건 1. 파라메터는 DTO 형태로 넣어야 한다.
+			String page = "redirect:/boardMain";
+			
+			
+	
+			BoardDTO dto = new BoardDTO();
+			dto.setB_subject(params.get("subject"));
+			dto.setUser_id(uid);
+			dto.setB_num(Integer.parseInt(bnum));
+			dto.setB_content(params.get("editorTxt"));
+			logger.info(bnum);
+			dto.setB_num(Integer.parseInt(bnum));
+			logger.info("dto값" + dto.getB_subject());
+			logger.info("dto값" + dto.getUser_id());
+			logger.info("dto값" + dto.getB_content());
+			logger.info("dto값" + dto.getUser_id());
+			logger.info("dto값" + dto.getB_num());
+			dao.boardUpdate(dto);
+			// 생성된 pk 가져오기
+			// photo 테이블에도 insert
+			int idx = dto.getB_num();
+			logger.info("idx : "+idx);
+			
+			logger.info("dto.getB_num()의 값 : "+dto.getB_num());
+			if (idx>0) {
+				try {
+					saveFile(idx, photos,uid);
+					page = "redirect:/boardMain";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+
+
+			
+			return page;
+	 
+	 
+	 
+	 }
+
+
+
+
+	public void adboardDelete(int bnum) {
+
+		dao.adboardDelete(bnum);
+		
+	}
+
+
+
+
 
 
 
