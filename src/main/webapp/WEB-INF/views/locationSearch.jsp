@@ -77,12 +77,6 @@
 			#showUserLocation {
 			    margin-left: 10px;
 			}
-			
-			#btn{
-				position: relative;
-				left: 55%;
-				margin: 10px;
-			}
 		</style>
 	</head>
 	
@@ -459,8 +453,8 @@
 						content += '<div id="btn"><button class="contact-btn" data-company="' + item.com_name + '">문의하기</button>';
 			            content += '<button class="reserve-btn" data-company="' + item.com_name + '">예약하기</button></div>';
 						content +='<div">'+item.address+ "<br>";
-						content +="영업시간: " + item.com_time + "<br>";
-						content +="픽업 가능 여부: " + item.pickup + "<br>";
+						content +="영업시간: " + item.com_time + "<brbr>";
+						content +="픽업 가능 여부: " + item.pickup + "<>";
 						content +="전화번호: " + item.phone + "<br>";
 						content +="수용 가능 동물 수: " + item.accept + "<br>";
 						content +="평균 별점: " + item.avg_star + "<br>";
@@ -495,21 +489,23 @@
 			}
 			
 			// 문의하기 버튼 클릭 이벤트
-			$(".contact-btn").on("click", function () {
-			    var companyName = $(this).data("company");
-			    window.location.href = "문의하기페이지의URL?companyName=" + companyName;
+			$(document).on("click", ".contact-btn", function() {
+				console.log("문의하기 이동");
+    		var companyName = $(this).data("company");
+    		window.location.href = "문의하기페이지의URL?companyName=" + companyName;
 			});
 
 			// 예약하기 버튼 클릭 이벤트
-			$(".reserve-btn").on("click",  function () {
-			    var companyName = $(this).data("company");
-			    window.location.href = "reserve?companyName=" + companyName;
+			$(document).on("click", ".reserve-btn", function() {
+				console.log("예약하기 이동");
+   			 var companyName = $(this).data("company");
+    		window.location.href = "reserve?companyName=" + companyName;
 			});
 
 			// 리뷰 보기 버튼 클릭 이벤트
-			$(".review-btn").on("click", function () {
-			    var companyName = $(this).data("company");
-			    window.location.href = "리뷰보기페이지의URL?companyName=" + companyName;
+			$(document).on("click", ".review-btn", function() {
+   			 var companyName = $(this).data("company");
+    		window.location.href = "리뷰보기페이지의URL?companyName=" + companyName;
 			});
 		
 			function showDistance(position, companies) {
