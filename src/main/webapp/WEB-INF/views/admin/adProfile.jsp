@@ -63,35 +63,35 @@ button {
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adWrite?ad_id=${sessionScope.loginId}'"
+					onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'"
 					class="button">내가 쓴 글</button>
 			</th>
 		</tr>
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adUserManage?ad_id=${sessionScope.loginId}'"
+					onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'"
 					class="button">회원 관리</button>
 			</th>
 		</tr>
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adReservationManage?ad_id=${sessionScope.loginId}'"
+					onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'"
 					class="button">회원 예약 관리</button>
 			</th>
 		</tr>
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adInquiry?ad_id=${sessionScope.loginId}'"
+					onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'"
 					class="button">일반 문의 관리</button>
 			</th>
 		</tr>
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adReport?ad_id=${sessionScope.loginId}'"
+					onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'"
 					class="button">신고 문의 관리</button>
 			</th>
 		</tr>
@@ -123,7 +123,7 @@ button {
 			
 		</tr>
 		<tr>
-		<th colspan="2"><button onclick="location.href='adminUpdate?ad_id=${sessionScope.loginId}'" class = "button">프로필 수정</button></th>
+		<th colspan="2"><button onclick="location.href='adminprofileUpdateForm?ad_id=${sessionScope.ad_id}'" class = "button">프로필 수정</button></th>
 		</tr>
 	</table>
 	<div style = "width : 45%; height : 500px; overflow : auto">

@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
+<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
 table, th, td {
 	margin: 10px;
@@ -51,74 +55,46 @@ button {
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
-	<jsp:include page="loginBox.jsp" />
-	<table>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='profile?user_id=${sessionScope.loginId}'"
-					class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"
-					class="button">쪽지함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"
-					class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfNotiList?user_id=${sessionScope.loginId}'"
-					class="button">알림함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'"
-					class="button">신고 내역</button>
-			</th>
-		</tr>
-	</table>
+	<input type="button" value="프로필 수정" onclick="location.href='profileUpdateForm?user_id=${sessionScope.loginId}'"/>
+	<div class="buttonBox">
+		<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="button">내 프로필</button>
+		<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="button">쪽지함</button>
+		<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="button">내가 쓴 글</button>
+		<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="button">신고 내역</button>
+	</div>
+			
 	<table>
 		<tr>
 			<th>ID</th>
-			<th>${member.user_id}</th>
+			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.user_id}"/></th>
 		</tr>
 		<tr>
 			<th>PW</th>
-			<th>${member.pw}</th>
+			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.pw}"/></th>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<th>${member.name}</th>
+			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.name}"/></th>
 		</tr>
 		<tr>
 			<th>e-mail</th>
-			<th>${member.email}</th>
+			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.email}"/></th>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<th>${member.phone}</th>
+			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.phone}"/></th>
 		</tr>
 		<tr>
 			<th>상태</th>
-			<th>${member.state}</th>
+			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.state}"/></th>
 		</tr>
 	</table>
 	
-	<table>
+	
+	<div style = "width : 60%; height : 495px; overflow : auto">
+	<table width = "60%" border = "0" cellspacing = "0" cellpadding = "0" >
 		<tr>
-			<th><input type="button" id="listCall" value="동물 리스트" /></th>
+			<th>번호</th>
 			<th>이름</th>
 			<th>성별</th>
 			<th>나이</th>
@@ -129,11 +105,31 @@ button {
 
 		</tbody>
 	</table>
+	</div>
+	
+		<table>
+		<tr>
+		<tbody id="comlist">
+		
+		</tbody>
+		</tr>
+		</table>
+		
+	<button name="stateupdater" onclick="location.href='comregisterForm?user_id=${sessionScope.loginId}'">업체 등록</button>
+	
+	<input type="button" id="comupdater" value="업체 수정"/>
+	
+	<%-- <button name="comupdater" id = "comupdater" onclick="location.href='pickupinfoForm?com_num=${item.com_num}'">업체 수정</button> --%>
+	
 </body>
 <script>	
+listCall();
+comlistCall();
+
 console.log("listCall : " + listCall);
 	
-	$('#listCall').on('click', function() {
+	function listCall(){
+	/* $('#listCall').on('click', function() { */
 		var user_id = '${sessionScope.loginId}';
 		console.log("profile user_id : " + user_id);
 
@@ -157,27 +153,109 @@ console.log("listCall : " + listCall);
 				console.log(e);
 			}
 		});
-	});
+	};
 	
 	console.log("listCall2 : " + listCall);
-
 	
 	function drawList(list) {
 		console.log("drawList : " + list);
 		var content = '';
-		list	.forEach(function(item, a_num) {
+		list.forEach(function(item, a_num) {
 					content += '<tr>';
 					content += '<th>'+item.a_num+'</th>';
 					content += '<th>'+item.a_name+'</th>';
 					content += '<th>'+item.a_gender+'</th>';
 					content += '<th>'+item.a_age+'</th>';
-					content += '<th>' + item.a_kind + '</th>';
+					content += '<th>';
+					if(item.a_kind=="개"){
+						content += '<img src="resources/img/profiledog.png"/>';
+					}else if(item.a_kind=="고양이"){
+						content += '<img src="resources/img/profilecat.png"/>';
+					}else{
+						content += '<img src="resources/img/profilebird.png"/>';
+					}
+					content += '</th>';					
 					content += '<th>'+item.a_spec+'</th>';
-					content += '<tr>';
+					content += '</tr>';
 				});
 		$('#list').empty();
 		$('#list').append(content);
 	}
 	
+	function comlistCall(){
+			var user_id = '${sessionScope.loginId}';
+			console.log("profile user_id : " + user_id);
+			
+			$.ajax({
+				type : 'get',
+				url : 'comlistCall',
+				data : {
+					'user_id' : user_id
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					if (!data.login) {
+						alert('로그인이 필요한 서비스 입니다.');
+						location.href = './';
+					} else {
+						drawList2(data);
+					}
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		};
+		
+		console.log("comlistCall : " + comlistCall);
+
+		function drawList2(comlist) {
+			console.log("drawList2 : " + comlist.comlist);
+			var content = '';
+			comlist.comlist.forEach(function(item, comlist) {
+						content += '<tr>';
+						content += '<th>'+"번호"+'</th>';
+						content += '<th colspan="2">'+item.com_num+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"아이디"+'</th>';
+						content += '<th colspan="2">'+item.user_id+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"업체 명"+'</th>';
+						content += '<th colspan="2">'+item.com_name+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"영업 시간"+'</th>';
+						content += '<th colspan="2">'+item.com_time+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"수용 가능 수"+'</th>';
+						content += '<th colspan="2">'+item.accept+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"픽업 여부"+'</th>';
+						content += '<th>'+item.pickup+'</th>';
+						content += '<th><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">픽업 정보 입력</button></th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"총 이용자 수"+'</th>';
+						content += '<th colspan="2">'+item.user_total+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"평균 별점"+'</th>';
+						content += '<th colspan="2">'+item.avg_star+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"주소"+'</th>';
+						content += '<th colspan="2">'+item.address+'</th>';
+						content += '</tr>';
+						
+					});
+				$('#comlist').empty();
+				$('#comlist').append(content);
+				
+		}
 </script>
 </html>

@@ -12,4 +12,54 @@
 			select a_name,a_gender,a_age,a_kind,a_spec from animal where user_id = #{param1}
 	</select>
 	
+	<update id="profileupdate" parameterType="hashmap">
+		update member set pw=#{pw},phone=#{phone}
+		where user_id=#{user_id}
+	</update>
+	
+	<select id="updatelist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		select a_num,a_name,a_gender,a_age,a_kind,a_spec from animal 
+		where user_id = #{param1}
+	</select>
+	
+	<delete id="animalprofiledelete">
+		delete from animal where a_num = #{param1}
+	</delete>
+	
+	<insert id="animalregister" parameterType="HashMap">
+		insert into animal(user_id,a_name,a_gender,a_age,a_kind,a_spec)
+		value(#{user_id},#{a_name},#{a_gender},#{a_age},#{a_kind},#{a_spec})
+	</insert>
+	
+	<insert id="comregister" parameterType="HashMap">
+		insert into company (user_id,com_name,address,com_time,accept,pickup)
+		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup})
+	</insert>
+	
+	<update id="userstatedeleter" parameterType="hashmap">
+		update member set state='4' where user_id=#{param1}
+	</update>
+	
+	<select id="userstatechecker" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		select state from member where user_id=#{param1}
+	</select>
+	
+	<update id="userstateupdater" parameterType="hashmap">
+		update member set state='1' where user_id=#{param1}
+	</update>
+	
+	<select id="comlist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		select com_num,user_id,com_name,com_time,accept,pickup,user_total,address,avg_star from company
+		where user_id = #{param1}
+	</select>
+	
+	<insert id="writepickupinfo" parameterType="HashMap">
+		insert into pick_price (com_num,p_distance,p_section,p_price)
+		values(#{param1},#{param2},#{param3},#{param4})
+	</insert> 
+	
+	<select id="pickuplist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		select * from pick_price where com_num=#{param1}
+	</select>
+	
 </mapper>
