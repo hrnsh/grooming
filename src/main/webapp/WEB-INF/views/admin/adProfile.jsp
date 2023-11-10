@@ -52,7 +52,6 @@ button {
 	<div class="logo">
 		<img src="/gudi/resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
-	<jsp:include page="admin_loginBox.jsp" />
 	<table>
 		<tr>
 			<th>
