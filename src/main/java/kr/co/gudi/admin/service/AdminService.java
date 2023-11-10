@@ -1,6 +1,7 @@
 package kr.co.gudi.admin.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,16 @@ public class AdminService {
 
 	public boolean logingo(String ad_id, String ad_pw) {
 		boolean success = false;
-		if(dao.logingo(ad_id,ad_pw)!=null) {
+		String log=dao.logingo(ad_id,ad_pw);
+		logger.info("서비스 로거" + log);
+		if(log!=null) {
 			success=true;
 		}
 		return success;
 	}
+	
+	public int adminprofileupdate(HashMap<String, String> params) {
+		return dao.adminprofileupdate(params);
+	}
 }
+

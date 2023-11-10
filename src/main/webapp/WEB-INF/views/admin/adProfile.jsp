@@ -57,7 +57,7 @@ button {
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adProfile?ad_id=${sessionScope.loginId}'"
+					onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'"
 					class="button">내 프로필</button>
 			</th>
 		</tr>
@@ -154,13 +154,10 @@ adminlistCall();
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
-				if (!data.login) {
-					alert('로그인이 필요한 서비스 입니다.');
-					location.href = './';
-				} else {
-					console.log("어디민 리스트 : "+ data.adminlist);
+				
+					console.log("어드민 리스트 : "+ data.adminlist);
 					drawList(data.adminlist);
-				}
+				
 			},
 			error : function(e) {
 				console.log(e);
