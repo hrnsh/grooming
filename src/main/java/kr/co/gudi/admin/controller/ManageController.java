@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.gudi.admin.dto.ManageDTO;
@@ -24,7 +25,7 @@ public class ManageController {
 		return "admin/adUserManage";
 	}
 	
-	@RequestMapping(value="/adUserManageList")
+	@RequestMapping(value="/adUserManageList",method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object>adUserManageList(){
 		HashMap<String, Object> adList = new HashMap<>();

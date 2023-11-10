@@ -3,6 +3,13 @@ package kr.co.gudi.admin.dto;
 public class ManageDTO {
 	
 	private String user_id;
+	private String name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	private String pw;
 	private String email;
 	private String phone;

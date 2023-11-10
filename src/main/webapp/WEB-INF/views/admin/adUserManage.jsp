@@ -2,11 +2,13 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ page import="java.util.*" %>
 <%@ page import="java.lang.*" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원 관리</title>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
 	<table>
@@ -23,13 +25,13 @@
 	</table>
 </body>
 <script>
-var showPage=1;
-adUserManageListCall(showPage);
+adUserManageListCall()
 
-function adUserManageListCall(page){	
+function adUserManageListCall(){	
 	var loginId = "${sessionScope.loginId}";
+	console.log("여기");
 	$.ajax({
-		type:'get',
+		type:'post',
 		url:'adUserManageList',
 		data:{'loginId':loginId}, 
 		dataType:'JSON',
@@ -50,8 +52,8 @@ function drawAdUserManageList(adUserManageList){
 	adUserManageList.list.forEach(function(item, idx){ 
 		content+='<tr>';
 		content+='<td><a href="adUserManageDetail?idx='+item.user_id+'">'+item.user_id+'</a></td>';
-		content+='<td>'+item.user_name+'</td>';
-		content+='<td>'+item.user_state+'</td>';
+		content+='<td>'+item.name+'</td>';
+		content+='<td>'+item.state+'</td>';
 		content+='</tr>';
 	});
 	$('#adUserManageList').append(content);
