@@ -75,12 +75,12 @@
 		UPDATE inquiry SET inq_state = 2 WHERE inq_num = #{param1}
 	</update>
 	
-<!-- 	<select id="searchList" resultType="kr.co.gudi.admin.dto.InquiryDTO">
+	<select id="searchList" resultType="kr.co.gudi.admin.dto.InquiryDTO">
 		SELECT i.inq_num, i.user_id, i.inq_code, i.inq_subject, i.inq_date, i.inq_content, i.inq_state, h.inqhis_date 
 			FROM inquiry i LEFT OUTER JOIN inquiry_history h ON i.inq_num = h.inq_num 
 			WHERE i.user_id LIKE '%${param2}%' OR h.ad_id LIKE '%${param2}%'
 				ORDER BY i.inq_num DESC LIMIT 10  OFFSET #{param1}
-	</select> -->
+	</select>
 	
 </mapper>
 

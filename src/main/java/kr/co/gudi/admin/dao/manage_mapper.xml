@@ -6,5 +6,26 @@
 	
 	<select id="adList" resultType="kr.co.gudi.admin.dto.ManageDTO">
 		SELECT * FROM member
+			ORDER BY user_id DESC LIMIT 10 OFFSET #{param1}
 	</select>
+	
+	<select id="adStateList" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM member
+			WHERE state=#{param1}
+			ORDER BY user_id DESC LIMIT 10 OFFSET #{param2}
+	</select>
+	
+	<select id="totalPage" resultType="int">
+		SELECT CEIL(COUNT(user_id)/5) AS pages FROM member
+	</select>
+	
+	<select id="manageDetail" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM member
+			WHERE user_id=#{param1}
+	</select>
+	
+	<insert id="saveManage">
+		insert into manage(ad_id,user_id,m_state,m_complet,m_content,m_type)
+		values(#{ad_id},#{user_id},'처리완료',#{m_complet},#{m_content},#{m_type})
+	</insert>
 </mapper>
