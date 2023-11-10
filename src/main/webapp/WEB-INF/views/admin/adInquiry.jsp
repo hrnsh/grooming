@@ -158,10 +158,19 @@ $('#stateOption').change(function(){
 
 function inquiryListCall(page){	
 	var ad_id = "${sessionScope.ad_id}";
+	var option = 0;
+	if($('#stateOption').val()=='complete'){
+		option=2;
+	}else if($('#stateOption').val()=='inProcess'){
+		option=1;
+	}else{
+		option=0;
+	}
+	
 	$.ajax({
 		type:'get',
 		url:'inquiryListCall',
-		data:{'page':page,'ad_id':ad_id, 'stateOption':$('#stateOption').val(), 'searchTxt':$('#search').val()}, 
+		data:{'page':page,'ad_id':ad_id, 'stateOption':$('#stateOption').val(), 'searchTxt':$('#search').val(),'option':option}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
