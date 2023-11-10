@@ -55,8 +55,7 @@
 	</select>
 	
 	<select id="revInfo" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
-		SELECT max(*) FROM reserve where com_id=#{param1} 
-	
+		SELECT count(*) FROM reserve where com_id=#{param1} 
 	</select>
 	
 </mapper>
