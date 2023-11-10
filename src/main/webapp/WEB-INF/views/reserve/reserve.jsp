@@ -47,7 +47,6 @@
         type="text/javascript"></script>
 <script>
 
-
 $(function() {
 	
     // 첫 번째 datepicker 초기화

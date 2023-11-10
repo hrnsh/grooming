@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class ReserveDTO {
 	
+	
 	private int rrep_num;
 	private Date rrep_date;
 	private String rrep_content;

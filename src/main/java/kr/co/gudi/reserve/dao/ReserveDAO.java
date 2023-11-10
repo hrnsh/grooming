@@ -8,6 +8,7 @@ import kr.co.gudi.reserve.dto.ReserveDTO;
 
 public interface ReserveDAO {
 
+	
 	ArrayList<ReserveDTO> cnt();
 
 	List<ReserveDTO> myAni();

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -49,4 +50,183 @@ public class ProfileController {
 		return result;
 	}
 
+	@RequestMapping(value = "/profileUpdateForm")
+	public String profileUpdate(Model model, @RequestParam String user_id) {
+		model.addAttribute("member", service.profile(user_id));
+		
+		return "/user/pfUpdate";
+	}
+	
+	@RequestMapping(value = "/profileupdate")
+	public String profileupdate(Model model, @RequestParam HashMap<String, String> params) {
+		logger.info("updateParams : " + params);
+		String page = "redirect:/profileUpdateForm?user_id="+params.get("user_id");
+		
+		if(service.profileupdate(params)>0) {
+			page = "redirect:/profile?user_id="+params.get("user_id");
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/updatelistCall")
+	@ResponseBody
+	public HashMap<String, Object> updatelistCall(HttpSession session, @RequestParam String user_id) {
+		
+		HashMap<String, Object>result = new HashMap<String, Object>();
+		logger.info("aniamllist id : " + user_id);
+		
+		if(session.getAttribute("loginId") == null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			ArrayList<ProfileDTO> updatelist = service.updatelist(user_id);
+			result.put("updatelist", updatelist);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/animalprofiledelete")
+	@ResponseBody
+	public HashMap<String, Object> animalprofiledelete(HttpSession session, @RequestParam(value="animaldeleteList[]") ArrayList<String> animaldeleteList){
+		
+		logger.info("animaldeleteList : " + animaldeleteList);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId")==null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			int delete_count = service.animalprofiledelete(animaldeleteList);
+			result.put("delete_count", delete_count);
+			logger.info("delcount : " + delete_count);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/animalregisterForm")
+	public String animalregisterForm(Model model, HttpSession session) {
+		String page = "main";
+		if (session.getAttribute("loginId") == null) {
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다");
+		} else {
+				page = "/user/pfanimalregister";
+		}
+		return page;
+	}
+	
+	@RequestMapping(value = "/animalregister")
+	public String animalregister(Model model, HttpSession session, @RequestParam HashMap<String, String> params) {
+		logger.info("동물 등록 params : " + params);
+		String page = "main";
+		
+		if (session.getAttribute("loginId") == null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스입니다");
+			
+		} else {
+			service.animalregister(params);
+			 page = "redirect:/profileUpdateForm?user_id="+params.get("user_id");
+		}
+		return page;
+	}
+	
+	@RequestMapping(value = "/comregisterForm")
+	public String comregister(Model model, HttpSession session, @RequestParam String user_id, @RequestParam HashMap<String, String> params) {
+		logger.info("업체 등록 페이지");
+		String page = "redirect:/profile?user_id="+params.get("user_id");
+		
+		ProfileDTO dto = service.userstatechecker(user_id);
+		logger.info("dto : " + dto);
+		
+		if(dto.getState().equals("1")){
+			logger.info("승인 대기중인 회원입니다");
+			logger.info("statechecker : " + dto.getState());
+			return page;
+		}else if(dto.getState().equals("2")){
+			logger.info("업체 등록된 회원입니다");
+			logger.info("statechecker : " + dto.getState());
+			return page;
+		}else {
+			logger.info("업체 등록 페이지로 이동");
+			logger.info("statechecker : " + dto.getState());
+			page = "/user/pfComRegist";
+		}
+		return page;
+	}
+	
+	@RequestMapping(value = "/comregister")
+	@ResponseBody
+	public HashMap<String, Object> comregister(@RequestParam HashMap<String, String> params){
+		logger.info("comregister params : " + params );
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int row = service.comregister(params);
+		result.put("success", row);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/comlistCall")
+	@ResponseBody
+	public HashMap<String, Object> comlistCall(HttpSession session, @RequestParam String user_id) {
+		
+		HashMap<String, Object>result = new HashMap<String, Object>();
+		logger.info("comllist id : " + user_id);
+		
+		if(session.getAttribute("loginId") == null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			ArrayList<ProfileDTO> comlist = service.comlist(user_id);
+			result.put("comlist", comlist);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/userstatedeleter")
+	@ResponseBody
+	public HashMap<String, Object> userstatedeleter(@RequestParam String user_id, @RequestParam HashMap<String, String> params) {
+		logger.info("userstatedeleter : " + user_id);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int row = service.userstatedeleter(params);
+		result.put("success", row);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/pickupinfoForm")
+	public String pickupinfo(Model model, HttpSession session, @RequestParam String com_num) {
+		logger.info("업체 수정 페이지 : " + com_num);
+		model.addAttribute("com_num",com_num);
+		return "/user/pfpickupinfo";
+	}
+	
+	@RequestMapping(value="/pickuplistCall")
+	@ResponseBody
+	public HashMap<String, Object> pickuplistCall(HttpSession session, @RequestParam String p_num) {
+		
+		HashMap<String, Object>result = new HashMap<String, Object>();
+		logger.info("p_num : " + p_num);
+		
+		if(session.getAttribute("loginId") == null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			ArrayList<ProfileDTO> pickuplist = service.pickuplist(p_num);
+			result.put("pickuplist", pickuplist);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/writepickupdistance", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> writepickupinfo(@RequestParam HashMap<String, String> params){
+		logger.info("writepickupinfo params : " + params);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int row = service.writepickupinfo(params);
+		logger.info("writepickupdistance : " + row);
+		result.put("success", row);
+		
+		return result;
+	}
+	
 }

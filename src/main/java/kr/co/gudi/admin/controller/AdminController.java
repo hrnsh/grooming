@@ -86,7 +86,7 @@ public class AdminController {
 		String page = "redirect:/adminprofileUpdateForm?ad_id="+params.get("ad_id");
 		
 		if(service.adminprofileupdate(params)>0) {
-			page="redirect:/adminProfile?ad_id="+params.get("ad_id");
+			page="redirect:/adProfile?ad_id="+params.get("ad_id");
 		}
 		return page;
 	}
