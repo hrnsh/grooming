@@ -19,7 +19,7 @@ public class ReportService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired ReportDAO reportDao;
 	
-	public Map<String, Object> reportListCall(String ad_id, String page) {
+	public Map<String, Object> reportListCall(String ad_id, String page, String stateOption, int typeOption) {
 		int p = Integer.parseInt(page);
 		int offset = (p - 1) * 10;
 
@@ -27,6 +27,20 @@ public class ReportService {
 		ArrayList<ReportDTO> list = new ArrayList<ReportDTO>();
 		
 		list = reportDao.reportListCall(offset);
+		
+		if(!stateOption.equals("all")) {
+			int stOption = 0;
+			if(stateOption.equals("complete")) {
+				stOption=2;
+			}else if(stateOption.equals("inProcess")) {
+				stOption=1;
+			}
+			list = reportDao.optionListCall(offset, stOption);
+		}else {
+			list = reportDao.reportListCall(offset);
+		}
+		
+		
 		
 		map.put("list", list);
 		int pages = reportDao.totalPage();
@@ -53,5 +67,22 @@ public class ReportService {
 		
 		reportDetail =  reportDao.reportDetail(report_num);
 		model.addAttribute("reportDetail", reportDetail);
+	}
+
+	public ReportDTO callDetail(String report_num) {
+		return reportDao.reportDetail(report_num);
+	}
+
+	public void repAnswerSend(String content, String report_num) {
+		// 히스토리 테이블 업데이트 - 내용, 날짜 추가 
+		reportDao.updateRepHistory(content, report_num);
+		
+		// 신고 답장 쪽지로 보내기
+		reportDao.sendNote(content, report_num);
+		
+		// 신고 리스트 상태 '2' 로 업데이트 
+		reportDao.updateRepState(report_num);
+		
+		logger.info("신고 문의 답장 성공!");
 	}
 }

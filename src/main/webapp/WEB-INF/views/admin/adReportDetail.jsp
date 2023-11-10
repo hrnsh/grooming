@@ -48,20 +48,19 @@ main{
 th, td{
 	border: none;
 	border-collapse: collapse;
-	padding: 5px 10px;
+	padding: 8px 10px;
 }
 
 .topRow{
 	height: 50px;
 	border-bottom: 1px solid black;
 	text-align: center;
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 table{
 	border-collapse: collapse;
 	width: 700px;
-	table-layout: fixed;
 	border: none;
 	position: relative;
 	left: 50px;
@@ -77,7 +76,15 @@ table{
 	border: none;
 	border-radius: 10px;
 	color: white;
-	cursor: pointer;
+}
+
+.targetBtn{
+	height: 20px;
+	width: 50px;
+	background-color: rgb(94, 94, 94);
+	border: none;
+	border-radius: 5px;
+	color: white;
 }
 
 button{
@@ -87,11 +94,13 @@ button{
 .handleBox{
 	position: relative;
 	width: 800px;
-	height: 200px;
+	height: 230px;
 	top: 80px;
 	border: 1px solid black;
 	border-radius: 50px;
 }
+
+
 
 
 </style>
@@ -113,57 +122,57 @@ button{
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		<div class="detailBox">
+			<span style="left: 70px; top:20px; position: relative; font-size:20px; border-bottom:1px solid black;">처리 내역</span>
+			<div style="width:90%; height:80%; position:relative; top: 30px;overflow:scroll;">
 			<table>
-				<tr class="topRow">
-					<td colspan="4" style="text-align:left;">신고 내역</td>
-				</tr>
 				<tr>
-					<td>신고자</td>
-					<td colspan="3">|&nbsp;&nbsp;&nbsp;${reportDetail.user_id}</td>
+					<td style="width: 70px;">신고자</td>
+					<td colspan="3">${reportDetail.user_id}</td>
 				</tr>
 				<tr>
 					<td>신고 일자</td>
-					<td colspan="3">${reportDetail.report_date}</td>
+					<td>${reportDetail.report_date}</td>
 				</tr>	
 				<tr>
 					<td>신고 분류</td>
-					<td colspan="3">
+					<td>
 						<c:choose>
-							<c:when test="${reportDetail.report_type==0}">|&nbsp;&nbsp;&nbsp;게시글</c:when>
-							<c:when test="${reportDetail.report_type==1}">|&nbsp;&nbsp;&nbsp;리뷰</c:when>
-							<c:when test="${reportDetail.report_type==2}">|&nbsp;&nbsp;&nbsp;댓글</c:when>
-							<c:when test="${reportDetail.report_type==3}">|&nbsp;&nbsp;&nbsp;예약</c:when>
+							<c:when test="${reportDetail.report_type==0}">게시글</c:when>
+							<c:when test="${reportDetail.report_type==1}">리뷰</c:when>
+							<c:when test="${reportDetail.report_type==2}">댓글</c:when>
+							<c:when test="${reportDetail.report_type==3}">예약</c:when>
 						</c:choose>
 					</td>
 				</tr>
 				<tr>
 					<td>처리 상태</td>
-					<td colspan="3">
+					<td>
 						<c:choose>
-							<c:when test="${reportDetail.report_state==0}">|&nbsp;&nbsp;&nbsp;미완료</c:when>
-							<c:when test="${reportDetail.report_state==1}">|&nbsp;&nbsp;&nbsp;처리중</c:when>
-							<c:when test="${reportDetail.report_state==2}">|&nbsp;&nbsp;&nbsp;완료</c:when>
+							<c:when test="${reportDetail.report_state==0}">미완료</c:when>
+							<c:when test="${reportDetail.report_state==1}">처리중</c:when>
+							<c:when test="${reportDetail.report_state==2}">완료</c:when>
 						</c:choose>
 					</td>
 				</tr>
 				<tr>
 					<td>신고 내용</td>
-					<td colspan="3">${reportDetail.report_content}</td>
+					<td>${reportDetail.report_content}</td>
 				</tr>
 				<tr>
 					<td>신고 대상</td>
-					<td colspan="3"><button onclick="reportTarget()">보기</button></td>
+					<td><button onclick="reportTarget()" class="targetBtn">보기</button></td>
 				</tr>
 			</table>
+			</div>
 			<!--상태가 '2' 이면 처리내역 출력 -->
 			<c:if test="${reportDetail.report_state==2}">
 				<div class="handleBox">
-					<span style="left: 70px; top:20px; position: relative; font-size:20px;">처리 내역</span>
-						<div style="width:90%; height:120px; position:relative; top: 25px;overflow:scroll;">
-						<table style="border: 1px solid black; width: 92%;">
+					<span style="left: 70px; top:20px; position: relative; font-size:20px; border-bottom:1px solid black;">처리 내역</span>
+						<div style="width:90%; height:140px; position:relative; top: 35px;overflow:scroll;">
+						<table style="width: 92%;">
 							<tr>
-								<td style="width: 80px;">처리 일자</td>
-								<td>날짜 데이터</td>
+								<td style="width: 70px;">처리 일자</td>
+								<td colspan="3">날짜 데이터</td>
 							</tr>
 							<tr>
 								<td>담당자</td>
@@ -193,6 +202,11 @@ var ad_id="${sessionScope.ad_id}";
 if (!ad_id) {
     alert("관리자 권한이 필요한 페이지 입니다.");
     location.href = "./"; 
+}
+
+function reportTarget(){
+	
+	
 }
 
 </script>

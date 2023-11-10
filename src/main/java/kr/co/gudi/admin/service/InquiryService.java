@@ -80,18 +80,17 @@ public class InquiryService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<InquiryDTO> list = new ArrayList<InquiryDTO>();
 		list = inquiryDao.inquiryListCall(offset);
-		int stOption = 0;
-		
-		if (stateOption.equals("all")) {
+
+		if(!stateOption.equals("all")) {
+			int stOption = 0;
+			if(stateOption.equals("complete")) {
+				stOption=2;
+			}else if(stateOption.equals("inProcess")) {
+				stOption=1;
+			}
+			list = inquiryDao.optionListCall(offset, stOption);
+		}else {
 			list = inquiryDao.inquiryListCall(offset);
-		} else if (stateOption.equals("complete")) {
-			stOption = 2;
-			list = inquiryDao.optionListCall(offset, stOption);
-		} else if (stateOption.equals("inProcess")) {
-			stOption = 1;
-			list = inquiryDao.optionListCall(offset, stOption);
-		} else if (stateOption.equals("uncompleted")) {
-			list = inquiryDao.optionListCall(offset, stOption);
 		}
 		
 //		// searchList 함수 실행

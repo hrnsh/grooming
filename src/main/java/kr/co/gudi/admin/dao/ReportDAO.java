@@ -16,4 +16,13 @@ public interface ReportDAO {
 
 	void insertHistory(String report_num, String ad_id);
 
+	void updateRepHistory(String content, String report_num);
+
+	void sendNote(String content, String report_num);
+
+	void updateRepState(String report_num);
+
+	ArrayList<ReportDTO> optionListCall(int offset, int stOption);
+
+
 }

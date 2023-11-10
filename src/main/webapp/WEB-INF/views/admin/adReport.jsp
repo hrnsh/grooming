@@ -152,12 +152,37 @@ if (!ad_id) {
 var showPage=1;
 reportListCall(showPage);
 
+// 처리 상태 필터링
+$('#stateOption').change(function(){
+	console.log($(this).val());
+	reportListCall(showPage);
+});
+
+// 분류 필터링
+$('#typeOption').change(function(){
+	console.log($(this).val())
+	reportListCall(showPage);
+});
+
+
 function reportListCall(page){	
 	var ad_id = "${sessionScope.ad_id}";
+	var type = $('#typeOption').val();
+	var typeOption = 0;
+	if(type=='board'){
+		typeOption=1;
+	}else if(type=='review'){
+		typeOption=2;
+	}else if(type=='comment'){
+		typeOption=3;
+	}
+	
+	console.log(typeOption);
+	
 	$.ajax({
 		type:'get',
 		url:'reportListCall',
-		data:{'page':page,'ad_id':ad_id}, 
+		data:{'page':page,'ad_id':ad_id,'stateOption':$('#stateOption').val(),'typeOption':typeOption}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
@@ -181,7 +206,6 @@ function drawReportList(reportList){
 		var dateStr = date.toLocaleDateString("ko-KR");
 		var hisDate = new Date(item.rephis_date);
 		var hisDateStr = hisDate.toLocaleDateString("ko-KR");
-		console.log(hisDateStr);
 		content+='<td style="text-align: center;">'+dateStr+'</td>';
 		content+='<td style="text-align: center;">'+item.user_id+'</td>';
 		content+='<td style="text-align: center;">'+ad_id+'</td>';
