@@ -42,13 +42,15 @@ h1{
 	border: 1px solid black;
 	border-radius: 50px;
 	position: relative;
-	left: 50px;
-	bottom: 20px;
+	left: 25%;
+	top: 50px;
+	padding: 10px;
 }
 th, td{
 	border: none;
 	border-collapse: collapse;
 	padding: 5px 10px;
+	text-align: left;
 }
 .topRow{
 	height: 50px;
@@ -68,6 +70,7 @@ table{
 button{
 	cursor: pointer;
 }
+
 .sendBtn{
 	position: relative;
 	left: 80%;
@@ -143,18 +146,18 @@ textarea{
 			<img  onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
 		<button onclick="location.href='reserveDetail?r_num=${rev.r_num}'" class="arrowBtn"> ← </button>
-		<h1> 답장하기 </h1>
+		<h1> 쪽지 작성 </h1>
 	</nav>
 	<main>
 		<div class="writeBox">
-		<form id="writeForm" action="writeNote">
+		<form id="writeForm" action="sendNote">
 			<table>
 				<tr>
-					<td>제목 : </td>
-					<td><input type="text" name="subject"/></td>
+					<td style="width:70px;">제목 : </td>
+					<td><input type="text" name="subject" id="subject" style="width: 300px;"/></td>
 				</tr>
 				<tr class="topRow">
-					<td style="width:80px;">받는 이 : </td>
+					<td>받는 사람 : </td>
 					<td>${rev.user_id}</td>
 				</tr>
 				<tr>
@@ -192,7 +195,7 @@ function openModal(){
 	var confirm_modal = document.getElementById('confirm_modal');
 	var modalCheckBtn = document.getElementById('modalCheckBtn');
 	
-	if($('textarea').val()=='' || $(input[name='subject'].val()==''){
+	if($('textarea').val()==''){
 		confirm_modal.style.display="block";
 		modalCheckBtn.onclick=function(){
 			confirm_modal.style.display="none";
