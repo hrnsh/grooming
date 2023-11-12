@@ -17,4 +17,18 @@ public interface ManageDAO {
 
 	void saveManage(HashMap<String, Object> params);
 
+	ArrayList<ManageDTO> adResultList(int offset);
+
+	ArrayList<ManageDTO> adStateResultList(String m_type, int offset);
+
+	ArrayList<ManageDTO> dateFilter(String selectedDate, int offset);
+
+	ArrayList<ManageDTO> idFilter(String ad_id, String user_id, int offset);
+
+	ArrayList<ManageDTO> resultDetail(int m_num);
+
+	ArrayList<ManageDTO> adFilter(String ad_id, int offset);
+
+	void updateMember(HashMap<String, Object> params);
+
 }

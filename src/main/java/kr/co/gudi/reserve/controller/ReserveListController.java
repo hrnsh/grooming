@@ -43,6 +43,16 @@ public class ReserveListController {
 		return page;
 	}
 	
+	@RequestMapping(value="/reserveList")
+	@ResponseBody
+	public HashMap<String, Object> reserveList(HttpSession session,@RequestParam String loginId){
+		HashMap<String, Object> reserveList = new HashMap<>();
+		ArrayList<ReserveDTO> revList=service.reserveList(loginId);
+		reserveList.put("revComList", revList);
+		logger.info("일반리스트: "+reserveList);
+		return reserveList;
+	}
+	
 	@RequestMapping(value="/reserveComList")
 	@ResponseBody
 	public HashMap<String, Object> reserveComList(HttpSession session,@RequestParam String loginId){

@@ -1,6 +1,9 @@
 package kr.co.gudi.admin.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -60,5 +63,53 @@ public class ManageController {
 		logger.info("회원:"+user_id+"/관리자: "+ad_id);
 		service.saveManage(params);
 		return "admin/adUserManage";
+	}
+	
+	@RequestMapping(value="/adUserManageResult")
+	public String adUserManageResult() {
+		return "admin/adUserManageResult";
+	}
+	
+	@RequestMapping(value="/adUserManageResultList",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object>adUserManageResultList(
+			@RequestParam String m_type,@RequestParam String page){
+		HashMap<String, Object> adResultList = new HashMap<>();
+		adResultList=service.adResultList(m_type,page);
+
+		return adResultList;
+	}
+	
+	@RequestMapping(value="/dateFilter",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> dateFilter(@RequestParam String selectedDate
+			,@RequestParam String page){
+		HashMap<String, Object> adResultList = new HashMap<>();
+		logger.info("선택날짜: "+selectedDate);
+		adResultList=service.dateFilter(selectedDate,page);
+		return adResultList;
+	}
+
+	@RequestMapping(value="/idFilter",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> idFilter(@RequestParam String ad_id
+			,@RequestParam String user_id,@RequestParam String page){
+		HashMap<String, Object> adResultList = new HashMap<>();
+		logger.info("ad_id: "+ad_id);
+		logger.info("user_id: "+user_id);
+		logger.info("page: "+page);
+		adResultList=service.idFilter(ad_id,user_id,page);
+		return adResultList;
+	}
+	
+	@RequestMapping(value="/resultDetail",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> resultDetail(@RequestParam int m_num){
+		HashMap<String, Object> resultDetail = new HashMap<String, Object>();
+		ArrayList<ManageDTO>dto= service.resultDetail(m_num);
+		resultDetail.put("resultDetail", dto);
+		logger.info("처리번호: "+m_num);
+		
+		return resultDetail;
 	}
 }

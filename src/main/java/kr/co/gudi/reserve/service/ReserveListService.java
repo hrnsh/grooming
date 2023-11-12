@@ -88,6 +88,11 @@ public class ReserveListService {
 		return dao.replyDetail(idx);
 	}
 
+	public ArrayList<ReserveDTO> reserveList(String loginId) {
+		
+		return dao.reserveList(loginId);
+	}
+
 
 
 

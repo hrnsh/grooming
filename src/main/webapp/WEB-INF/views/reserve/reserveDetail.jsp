@@ -179,8 +179,9 @@ li {
 							<li></li>
 							<li>${rev.r_totalprice}</li>
 							<li>${rev.r_state}</li>
-						</ul> <input type="button" value="리뷰쓰기" onclick="openModal()" /> <input
-						type="button" value="예약취소" onclick="openCancelModal()" /> <input type="button" value="쪽지쓰기" />
+						</ul> <input type="button" value="리뷰쓰기" onclick="openModal()" /> 
+						<input type="button" value="예약취소" onclick="openCancelModal()" /> 
+						<input type="button" value="쪽지쓰기" onclick="location.href='./writeNote?r_num=${rev.r_num}'" />
 					</li>
 				</ul>
 			</li>

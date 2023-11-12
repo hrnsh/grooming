@@ -9,6 +9,10 @@
 			where com_id=#{param1}
 	</select>	
 	
+	<select id="reserveList" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT r_num,user_id,r_start,r_end,r_state FROM reserve 
+			where user_id=#{param1}
+	</select>	
 	
 	<select id="checkId" resultType="int">
 		SELECT count(*) FROM company where user_id=#{param1}

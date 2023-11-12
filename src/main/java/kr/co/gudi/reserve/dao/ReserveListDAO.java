@@ -63,6 +63,11 @@ public interface ReserveListDAO {
 
 
 
+	ArrayList<ReserveDTO> reserveList(String loginId);
+
+
+
+
 
 
 }

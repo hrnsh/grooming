@@ -85,7 +85,7 @@ textarea {
 				<option value="전체">전체</option>
 				<option value="일반">일반</option>
 				<option value="업체">업체</option>
-				<option value="승인대기">승인대기</option>
+				<option value="승인요청">승인요청</option>
 				<option value="정지">정지</option>
 				</select>
 				</th>
@@ -103,6 +103,10 @@ textarea {
 					</nav>					
 				</div>
 			</div>
+			<form action="adUserManageResult">
+				<input type="submit" value="처리내역"/>
+			</form>
+	
 			
 	<!-- detail 모달 -->		
 	<div id="myModal" class="modal">
@@ -257,7 +261,7 @@ function closeModal() {
 
 function saveManage(){
 	confirm("정말로 수정하시겠습니까?");
-	closeModal();
+	modal.style.display = 'none';
 }
 	
 </script>
