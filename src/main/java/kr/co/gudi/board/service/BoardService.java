@@ -329,6 +329,16 @@ public class BoardService {
 
 
 
+	public boolean boardReport(String bnum, String con, String user_id) {
+
+
+		dao.boardReport(bnum,con,user_id);
+		
+		return true;
+	}
+
+
+
 
 
 

@@ -58,4 +58,15 @@
 	<select id="revInfo" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
 		SELECT count(*) FROM reserve where com_id=#{param1} 
 	</select>
+	
+	<insert id="writeNote">
+		INSERT INTO note(receiver, sender, note_subject, note_content)
+			VALUES (
+				#{param4},
+				(SELECT com_id FROM reserve WHERE r_num=#{param1}),
+				#{param2},
+				#{param3}
+			)
+	</insert>
+	
 </mapper>

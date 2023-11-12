@@ -73,30 +73,30 @@ public class InquiryService {
 	}
 
 	// 일반 문의 리스트 호출 
-	public Map<String, Object> inquiryListCall(String page, String ad_id, String stateOption, String searchTxt) {
+	public Map<String, Object> inquiryListCall(String page, String ad_id, String stateOption, String searchTxt, int option) {
 		int p = Integer.parseInt(page);
 		int offset = (p - 1) * 10;
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<InquiryDTO> list = new ArrayList<InquiryDTO>();
-		int option = 0;
-		
-		if (stateOption.equals("all")) {
+		list = inquiryDao.inquiryListCall(offset);
+
+		if(!stateOption.equals("all")) {
+			int stOption = 0;
+			if(stateOption.equals("complete")) {
+				stOption=2;
+			}else if(stateOption.equals("inProcess")) {
+				stOption=1;
+			}
+			list = inquiryDao.optionListCall(offset, stOption);
+		}else {
 			list = inquiryDao.inquiryListCall(offset);
-		} else if (stateOption.equals("complete")) {
-			option = 2;
-			list = inquiryDao.optionListCall(offset, option);
-		} else if (stateOption.equals("inProcess")) {
-			option = 1;
-			list = inquiryDao.optionListCall(offset, option);
-		} else if (stateOption.equals("uncompleted")) {
-			list = inquiryDao.optionListCall(offset, option);
 		}
 		
-		// searchList 함수 실행
-		if(searchTxt!=null) {
-			list = inquiryDao.searchList(offset, searchTxt);
-		}
+//		// searchList 함수 실행
+//		if(searchTxt!=null) {
+//			list = inquiryDao.searchList(offset, searchTxt, option);
+//		}
 		
 		map.put("list", list);
 		int pages = inquiryDao.totalPage();
@@ -114,8 +114,8 @@ public class InquiryService {
 		InquiryDTO newIqDetail = inquiryDao.newIqDetail(inq_num);	
 		
 		// '처리중' 상태 업데이트 
-		String state = newIqDetail.getInq_state();
-		if(state.equals("0")) {
+		int state = newIqDetail.getInq_state();
+		if(state==0) {
 			inquiryDao.updateState(inq_num); 
 		}
 		

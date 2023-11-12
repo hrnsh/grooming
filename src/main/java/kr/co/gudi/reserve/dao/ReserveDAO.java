@@ -28,6 +28,9 @@ public interface ReserveDAO {
 	String p10Price();
 
 	ArrayList<ReserveDTO> revInfo(String com_id);
+
+	void writeNote(String r_num, String subject, String content, String user_id);
+
 }
 
 

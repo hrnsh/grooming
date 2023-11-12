@@ -37,11 +37,11 @@
    
    </select>
    
-   <delete id="adbDelList">
+   <update id="adbDelList">
    
    update adminboard set adb_state = "0" where b_num = #{param1}
    
-   </delete>
+   </update>
    
    <select id="adbgetPhoto" resultType="kr.co.gudi.photo.dto.photoDTO">
    
