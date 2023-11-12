@@ -35,7 +35,7 @@ public class MemberController {
 		logger.info(user_id+"/"+pw);
 		boolean success = service.logingo(user_id,pw)!= null ? true : false;
 		logger.info("login success : "+success);
-		String page = "redirect:/login";
+		String page = "/login";
 		
 		if(success) {
 			session.setAttribute("loginId", user_id);
@@ -45,6 +45,12 @@ public class MemberController {
 		}
 		
 		return page;
+	}
+	
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginId");
+		return "redirect:/";
 	}
 	
 

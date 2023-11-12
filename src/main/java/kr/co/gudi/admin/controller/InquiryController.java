@@ -41,7 +41,7 @@ public class InquiryController {
 		//logger.info("subject/content/photo : " +subject+"/"+content+"/"+photo);
 		String loginId = (String) session.getAttribute("loginId");
 		inquiryService.saveInquiry(photo, subject, content, loginId);
-		return "redirect:/adInquirySend";
+		return "redirect:/pfWrite";
 	} 
 	
 	// 일반 문의 리스트 호출 ajax 

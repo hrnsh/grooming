@@ -163,7 +163,7 @@ textarea{
 
 	<nav class="nav">
 		<div class="logo">
-			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+			<img  onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
 		<button onclick="location.href='adReportDetail?report_num=${reportAnswer.report_num}'" class="arrowBtn"> ← </button>
 		<h1> 답장하기 </h1>
