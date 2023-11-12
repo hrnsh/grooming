@@ -172,9 +172,13 @@ public class ReserveController {
 			return findRev;
 		}
 		
-		
 		@RequestMapping(value="/writeNote")
-		public String writeNote(@RequestParam String r_num, @RequestParam String subject, 
+		public String writeNote() {
+			return "/reserve/writeNote";
+		}
+		
+		@RequestMapping(value="/sendNote")
+		public String sendNote(@RequestParam String r_num, @RequestParam String subject, 
 				@RequestParam String content, HttpSession session) {
 			String user_id = (String) session.getAttribute("loginId");
 			service.writeNote(r_num,subject, content, user_id);
