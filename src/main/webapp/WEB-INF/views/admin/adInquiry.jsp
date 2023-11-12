@@ -82,15 +82,29 @@ a{
 	top: 5%;
 }
 
+.logoutBtn{
+	position: absolute;
+	left: 70%;
+	top: 10%;
+	height: 35px;
+	width: 80px;
+	background-color: rgb(94, 94, 94);
+	border: none;
+	border-radius: 10px;
+	color: white;
+	cursor: pointer;
+}
+
 
 </style>
 </head>
 <body>
 	<nav class="nav">
 		<div class="logo">
-			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
 		<h1>일반 문의 관리</h1>
+		<button onclick="location.href='adLogout'" class="logoutBtn">로그아웃</button>
 	</nav>
 	<main>
 		<div class="profButtonBox">
@@ -147,6 +161,7 @@ if (!ad_id) {
     location.href = "./"; 
 }
 
+
 var showPage=1;
 inquiryListCall(showPage);
 
@@ -158,10 +173,19 @@ $('#stateOption').change(function(){
 
 function inquiryListCall(page){	
 	var ad_id = "${sessionScope.ad_id}";
+	var option = 0;
+	if($('#stateOption').val()=='complete'){
+		option=2;
+	}else if($('#stateOption').val()=='inProcess'){
+		option=1;
+	}else{
+		option=0;
+	}
+	
 	$.ajax({
 		type:'get',
 		url:'inquiryListCall',
-		data:{'page':page,'ad_id':ad_id, 'stateOption':$('#stateOption').val(), 'searchTxt':$('#search').val()}, 
+		data:{'page':page,'ad_id':ad_id, 'stateOption':$('#stateOption').val(), 'searchTxt':$('#search').val(),'option':option}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)

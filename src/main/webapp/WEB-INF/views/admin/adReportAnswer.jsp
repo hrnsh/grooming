@@ -111,6 +111,19 @@ textarea{
 	margin-left:-200px; 
 }
 
+#confirm_modal{
+	display: none; 
+	width:300px; 
+	height:150px; 
+	background: rgb(237, 237, 237); 
+	border:1px solid gray; 
+	text-align:center;
+	position:absolute; 
+	left:80%; 
+	margin-left:-200px; 
+	bottom: 70%;
+}
+
 .modalBtnNo, .modalBtnYes{
 	height: 35px;
 	width: 80px;
@@ -124,6 +137,15 @@ textarea{
 }
 
 .modalBtnYes{
+	background-color: rgb(94, 94, 94);
+}
+
+#modalCheckBtn{
+	height: 35px;
+	width: 80px;
+	color: white;
+	border: none;
+	border-radius: 10px;
 	background-color: rgb(94, 94, 94);
 }
 
@@ -141,9 +163,9 @@ textarea{
 
 	<nav class="nav">
 		<div class="logo">
-			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+			<img  onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<button onclick="location.href='adInquiryDetail?inq_num=${inquiryAnswer.inq_num}'" class="arrowBtn"> ← </button>
+		<button onclick="location.href='adReportDetail?report_num=${reportAnswer.report_num}'" class="arrowBtn"> ← </button>
 		<h1> 답장하기 </h1>
 	</nav>
 	<main>
@@ -156,16 +178,15 @@ textarea{
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		<div class="detailBox">
-		<form id="answerForm" action="inqAnswerSend" method="post">
+		<form id="answerForm" action="repAnswerSend" method="post">
 			<table>
 				<tr class="topRow">
-					<td style="width: 300px;">제목 : <input type="text" class="subjectTxt" name="subject"/></td>
-					<td style="width: 100px;">|&nbsp;&nbsp;&nbsp; <%= formattedDate %></td>
-					<td style="width: 100px;">|&nbsp;&nbsp;&nbsp; ${inquiryAnswer.user_id}</td>
-					<td style="display:none;"><input type="text" name="inq_num" value="${inquiryAnswer.inq_num}"/></td>
+					<td style="text-align:left;width:80px;">받는 사람 : </td>
+					<td style="text-align:left;">${reportAnswer.user_id}</td>
+					<td style="display:none;"><input type="text" name="report_num" value="${reportAnswer.report_num}"/></td>
 				</tr>
 				<tr>
-					<td colspan="3" class="content"><textarea name="content" placeholder="내용을 입력해 주세요."></textarea></td>
+					<td colspan="2" class="content"><textarea name="content" placeholder="내용을 입력해 주세요."></textarea></td>
 				</tr>
 			</table>
 			<input type="button" value="보내기" class="sendBtn" onclick="openModal()"/>
@@ -176,6 +197,11 @@ textarea{
 			<div style="margin:30px 0; font-size:22px;">전송 하시겠습니까?</div>
 			<button id="sendNo" class="modalBtnNo">아니요</button>
 			<button id="sendYes" class="modalBtnYes">예</button>	
+		</div>
+		<!-- 모달 -->
+		<div id="confirm_modal">
+			<div style="margin:30px 0; font-size:22px;">내용을 입력해 주세요.</div>
+			<button id="modalCheckBtn">확인</button>
 		</div>
 	</main>
 </body>
@@ -189,16 +215,27 @@ if (!ad_id) {
 function openModal(){
 	var modal = document.getElementById('send_modal');
 	var yesBtn = document.getElementById('sendYes');
-	var noBtn = document.getElementById('sendNo');
-	modal.style.display = 'block';
+	var noBtn = document.getElementById('sendNo');	
+	var confirm_modal = document.getElementById('confirm_modal');
+	var modalCheckBtn = document.getElementById('modalCheckBtn');
 	
-	noBtn.onclick = function() {
-        modal.style.display = "none";
-    }
-	
-	yesBtn.onclick = function(){
-		document.getElementById('answerForm').submit();
-		alert('전송이 완료 되었습니다!');
+	if($('textarea').val()==''){
+		confirm_modal.style.display="block";
+		modalCheckBtn.onclick=function(){
+			confirm_modal.style.display="none";
+		}
+	}else{
+		modal.style.display="block";
+		
+		noBtn.onclick = function() {
+	        modal.style.display = "none";
+	    }
+		
+		yesBtn.onclick = function(){
+			document.getElementById('answerForm').submit();
+			console.log('form 전송 성공!');
+			alert('전송이 완료 되었습니다!');
+		}
 	}
 }
 

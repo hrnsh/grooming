@@ -240,7 +240,6 @@ a:visited {
 								<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profileBtn" id="profileBtn">프로필</button>
 								<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profileBtn">쪽지함</button>
 								<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profileBtn">내가 쓴 글</button>
-								<button onclick="location.href='./adInquirySend?user_id=${sessionScope.loginId}'">문의 보내기</button>
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -262,7 +261,7 @@ a:visited {
 			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
 			<button onclick="location.href='./booking'" class="button">예약 관리</button>
 			<button onclick="location.href='./boardMain'" class="button">게시판</button>
-			<button onclick="location.href='./adFaqList'" class="button">FAQ</button>
+			<button onclick="location.href='./adInquirySend?user_id=${sessionScope.loginId}'" class="button">문의하기</button>
 		</div>
 		<div class="rankBox">
 			<table>

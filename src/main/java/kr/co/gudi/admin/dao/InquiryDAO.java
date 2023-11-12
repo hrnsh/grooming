@@ -29,9 +29,10 @@ public interface InquiryDAO {
 
 	void updateInqState(String inq_num);
 
-	ArrayList<InquiryDTO> optionListCall(int offset, int option);
+	ArrayList<InquiryDTO> optionListCall(int offset, int stOption);
 
-	ArrayList<InquiryDTO> searchList(int offset, String searchTxt);
+	ArrayList<InquiryDTO> searchList(int offset, String searchTxt, int option);
+
 
 	
 }

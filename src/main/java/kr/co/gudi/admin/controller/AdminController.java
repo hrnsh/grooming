@@ -55,7 +55,7 @@ public class AdminController {
 		return "/admin/adLogin";
 	}
 	
-	@RequestMapping(value="adLoginGo", method=RequestMethod.POST)
+	@RequestMapping(value="/adLoginGo", method=RequestMethod.POST)
 	public String adLoginGo(HttpSession session, @RequestParam String ad_id,
 			@RequestParam String ad_pw, Model model) {
 		logger.info(ad_id+"/"+ad_pw);
@@ -66,9 +66,9 @@ public class AdminController {
 		if(success) {
 			session.setAttribute("ad_id", ad_id);
 			session.setAttribute("admin", "admin");
-			page = "/admin/adInquiry";
+			page = "redirect:/adInquiry";
 		}else {
-			model.addAttribute("msg", "!!!관리자 아이디 또는 비밀번호를 확인해 주세요!");
+			model.addAttribute("msg", "관리자 아이디 또는 비밀번호를 확인해 주세요!");
 		}
 		return page;
 	}
@@ -89,5 +89,12 @@ public class AdminController {
 			page="redirect:/adProfile?ad_id="+params.get("ad_id");
 		}
 		return page;
+	}
+	
+	@RequestMapping(value="/adLogout")
+	public String adLogout(HttpSession session) {
+		session.removeAttribute("admin");
+		session.removeAttribute("ad_id");
+		return "redirect:/";
 	}
 }
