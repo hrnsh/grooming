@@ -37,10 +37,11 @@
                 left: 10px;
                 z-index: 1;
                 background-color: #fff;
-                padding: 5px;
+                padding: 10px;
                 border-radius: 5px;
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                 display: inline-block;
+                height: 3%;
             }
             
             .companyListContainer {
@@ -54,12 +55,13 @@
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                 max-height: 80%;
                 overflow-y: auto;
+                width: 30%
             }
 			
 			.detail-container {
                 position: absolute;
                 top: 110px;
-                left: 260px;
+                left: 31.5%;
                 z-index: 1;
                 background-color: #fff;
                 padding: 10px;
@@ -67,15 +69,49 @@
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                 max-height: 70%;
                 overflow-y: auto;
+                width: 30%;
             }
 
             .company-detail {
-                text-align: center;
+                text-align: left;
                 border: 1px solid black;
             }
 			
+			.review-btn {
+			    position: absolute;
+			    top: 10px;
+			    right: 10px;
+			    z-index: 1;
+			    background-color: #fff;
+			    padding: 5px;
+			    border-radius: 5px;
+			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			}
+			
+			.review-container {
+			    position: absolute;
+			    top: 150px;
+			    left: 63%;
+			    z-index: 1;
+			    background-color: #fff;
+			    padding: 10px;
+			    border-radius: 5px;
+			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			    max-height: 70%;
+			    overflow-y: auto;
+			    width: 30%;
+			}
+			
 			#showUserLocation {
 			    margin-left: 10px;
+			    height: 80%;
+			}
+			#searchPlaces {
+    			height: 80%;
+			}
+			
+			#keyword{
+				height: 80%;
 			}
 		</style>
 	</head>
@@ -98,19 +134,22 @@
                 	</select>
                     <ul id="companyList" class="companyList"></ul>
                 </div>
-                
             </div>
             
             <div class="detail-container">
-                <div class="company-detail" style="text-align:left;"></div>
-                <button class="review-btn" data-company="' + item.com_name + '">리뷰 보기</button>
+                <div class="company-detail"></div>
             </div>
+            
+            <div class="review-container">
+	        	<h3>리뷰</h3>
+	           	<ul id="reviewList"></ul>
+	        </div>
         </div>
 		
 		<script>
 			$(".companyListContainer").hide();
 			$(".detail-container").hide();
-			
+			$(".review-container").hide();
 			
 			var container = document.getElementById("map");
 			
@@ -129,60 +168,63 @@
 			
 			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 			
-			function initMap() {
-				$("#showUserLocation").on("click", function() {
-					console.log("showUserLocation 호출!");
-					
-					// 이전 검색 결과 항목들을 제거
-				    removeAllChildNods(document.getElementById("companyList"));
-				 
-					// 이전 검색 결과를 표시하는 마커들을 제거
-					removeMarker();
-					
-					// HTML5의 geolocation으로 사용할 수 있는지 확인
-					if(navigator.geolocation){
-						// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-						navigator.geolocation.getCurrentPosition(function(position){
-							var lat = position.coords.latitude,	// 위도
-								   lon = position.coords.longitude;	// 경도
-							
-							var userLocation = new kakao.maps.LatLng(lat, lon);	// 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성
-							
-							var message = '<div style="padding:5px;">현 위치</div>'; // 인포윈도우에 표시될 내용
-								
-							displayUserMarker(userLocation, message);	// 마커와 인포윈도우를 표시
-							
-							searchNearbyCompanies(userLocation, 5);	// 반경 5km 내의 업체 검색
-							
-							map.setLevel(7);
-							// 지도 중심 좌표를 접속위치로 변경
-							map.setCenter(userLocation);
-							
-						}, function (error){
-							switch (error.code) {
-			  				case error.PERMISSION_DENIED:
-			  					console.error("사용자가 위치 공유를 거부했습니다.");
-			  					break;
-			  	
-			  				case error.POSITION_UNAVAILABLE:
-			  					console.error("위치 정보를 가져올 수 없습니다.");
-			  					break;
-			  					
-			  				case error.TIMEOUT:
-			  					console.error("시간 초과가 발생했습니다.");
-			  					break;
-			  				
-			  				default:
-			  				      console.error("알 수 없는 오류가 발생했습니다.");
-		  				  	}
-						});
-					} else{	// HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-						alert("GeoLocation을 지원하지 않습니다!!");
-					}    		  
-				});
-			}
 			
-			initMap();
+			$("#showUserLocation").on("click", function() {
+				console.log("showUserLocation 호출!");
+				
+				// 키워드 검색 시 열었던 업체 리스트, 상세보기, 리뷰 리스트 숨기기
+			    $(".companyListContainer").hide();
+			    $(".detail-container").hide();
+			    $(".review-container").hide();
+					
+				// 이전 검색 결과 항목들을 제거
+			 	removeAllChildNods(document.getElementById("companyList"));
+				 
+				// 이전 검색 결과를 표시하는 마커들을 제거
+				removeMarker();
+					
+				// HTML5의 geolocation으로 사용할 수 있는지 확인
+				if(navigator.geolocation){
+						// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+					navigator.geolocation.getCurrentPosition(function(position){
+						var lat = position.coords.latitude,	// 위도
+								lon = position.coords.longitude;	// 경도
+							
+						var userLocation = new kakao.maps.LatLng(lat, lon);	// 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성
+							
+						var message = '<div style="padding:5px;">현 위치</div>'; // 인포윈도우에 표시될 내용
+								
+						displayUserMarker(userLocation, message);	// 마커와 인포윈도우를 표시
+							
+						searchNearbyCompanies(userLocation, 5);	// 반경 5km 내의 업체 검색
+							
+						map.setLevel(7);
+						// 지도 중심 좌표를 접속위치로 변경
+						map.setCenter(userLocation);
+							
+					}, function (error){
+						switch (error.code) {
+			  			case error.PERMISSION_DENIED:
+			  				console.error("사용자가 위치 공유를 거부했습니다.");
+			  				break;
+			  	
+			  			case error.POSITION_UNAVAILABLE:
+			  				console.error("위치 정보를 가져올 수 없습니다.");
+			  				break;
+			  					
+			  			case error.TIMEOUT:
+			  				console.error("시간 초과가 발생했습니다.");
+			  				break;
+			  				
+			  			default:
+			  				console.error("알 수 없는 오류가 발생했습니다.");
+		  				  }
+					});
+				} else{	// HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+					alert("GeoLocation을 지원하지 않습니다!!");
+				}    		  
+			});
+			
 					
 			function displayUserMarker(userLocation, message){
 				var imageSrc = "resources/img/userMarker.png";
@@ -242,6 +284,9 @@
 						
 						if (companies.length > 0) {
 							$(".companyListContainer").show();
+							
+							$(".company-detail").empty();
+							$(".review-container").empty();
 						
 							for (var i = 0; i < companies.length; i++){
 								var company = companies[i];
@@ -263,12 +308,13 @@
 					            displayCompaniesMarker(companyLocation, message);
 					             
 					          	// 화면 왼쪽의 리스트에 업체 정보를 추가
-					            $("#companyList").append('<li class="companyItem" data-lat="' + company.lat +
+					            $("#companyList").append(
+					            	'<li class="companyItem" data-lat="' + company.lat +
 					                '" data-lon="' + company.lon + 
 					                '" data-distance="' + distance +
 					                '" data-rating="' + company.avg_star +
-					                '">' +
-					                company.com_name +
+					                '">' +'<span id="span">'+
+					                company.com_name + '</span>' +
 					                '<br>평균 별점: ' + company.avg_star +
 					                '<br>누적 이용자 수: ' + company.user_total +
 					                '<br>거리: ' + distance + ' km' +
@@ -288,6 +334,9 @@
 					         	console.log(companyName);
 					         
 				                showCompanyDetail(companyName);
+				                
+				            	 // 리뷰 컨테이너를 숨김
+				                $(".review-container").hide();
 					        });
 							
 					        sortCompaniesByDistance();
@@ -359,6 +408,9 @@
 						// 이전 검색 결과를 표시하는 마커들을 제거
 						removeMarker();
 						
+						$(".company-detail").empty();
+						$(".review-container").empty();
+						
 						if (companies.length > 0) {
 							$(".companyListContainer").show();
 							$("#sortDropdown").hide();
@@ -419,6 +471,10 @@
 			        	console.error("AJAX 오류 발생:", status, error);
 			        }
 				});
+				
+				// 새로운 키워드로 검색할 때 업체 상세 정보 창을 숨김
+			    $(".detail-container").hide();
+			    $(".review-container").hide();
 			});
 			
 			function showCompanyDetail(companyName) {
@@ -442,6 +498,25 @@
 							success: function(ticketPrice) {
 								console.log(ticketPrice);
 								drawTicketList(ticketPrice);
+								
+								// 상세 정보가 있는 경우 상세 정보 창을 표시
+			                    $(".detail-container").show();
+			                    $(".review-container").empty(); // 리뷰 창을 초기화
+								
+								// 리뷰 보기 버튼 추가
+					            $(".company-detail").append('<button class="review-btn" data-company="' + companyName + '">리뷰 보기</button>');
+								
+					         	// "리뷰 보기" 버튼 클릭 시 리뷰 가져와 표시
+					            $(".review-btn").on("click", function() {
+									 var companyName = $(this).data("company");
+									console.log("업체 이름: " + companyName);
+									
+									// 리뷰 상세 보기
+									getReview(companyName);
+									
+									// 리뷰 컨테이너를 보이게 함
+								    $(".review-container").show();
+								});
 							},
 							error: function(e) {
 								console.log(e);
@@ -473,7 +548,6 @@
 						content +="수용 가능 동물 수: " + item.accept + "<br>";
 						content +="평균 별점: " + item.avg_star + "<br>";
 						content +="누적 이용자 수: " + item.user_total + "<br>";
-						
 					});
 					
 					$(".company-detail").append(content);
@@ -491,7 +565,7 @@
 					} else if(item.t_type == "1") {
 						content += "오후: " + item.t_price + "<br>";
 					} else{
-						content += "종일: " + item.t_price;
+						content += "종일: " + item.t_price + "<br>";
 					}
 					
 					content += "</div>";
@@ -499,6 +573,56 @@
 				});
 				
 				$(".company-detail").append(content);
+			}
+			
+			function getReview(companyName) {
+				$.ajax({
+					url: "getReviews",
+					type: "POST",
+					data:{"companyName": companyName},
+					dataType:"JSON",
+					success: function(reviews) {
+						console.log("getReview 호출!");
+						
+						displayReviews(reviews);
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			}
+			
+			function displayReviews(reviews) {
+				console.log("displayReviews 호출!");
+				console.log(reviews);
+				
+				var reviewList = $("#reviewList");
+				
+				var content="";
+				
+				reviewList.empty();
+				
+				if(reviews.length > 0) {
+					$(".review-container").show();
+					
+					reviews.forEach(function(item, idx) {
+						var date = new Date(item.rev_date);
+					    var dateStr = date.toLocaleDateString("ko-KR");
+						
+						content += '<strong>작성자:</strong> ' + item.user_id + '<br>';
+						content += '<strong>제목:</strong> ' + item.rev_subject + '<br>';
+						content += '<strong>별점:</strong> ' + item.rev_star + '<br>';
+						content += '<strong>내용:</strong> ' + item.rev_content + '<br>';
+						content += '<strong>작성일:</strong> ' + dateStr + '<br>';
+					});
+						
+					$(".review-container").append(content);
+				
+				} else{
+					// 리뷰가 없을 때 메시지를 표시
+			        content = '<p>리뷰가 존재하지 않습니다.</p>';
+			        $(".review-container").append(content);
+				}
 			}
 			
 			$("#sortDropdown").on("change", function() {
@@ -563,8 +687,7 @@
 
 			// 리뷰 보기 버튼 클릭 이벤트
 			$(document).on("click", ".review-btn", function() {
-   			 var companyName = $(this).data("company");
-    		window.location.href = "리뷰보기페이지의URL?companyName=" + companyName;
+   			 
 			});
 		
 			function showDistance(position, companies) {

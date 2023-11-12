@@ -14,6 +14,7 @@ public class LocationDTO {
 	private String t_price;
 	private double lat;
 	private double lon;
+
 	
 	public String getUser_id() {
 		return user_id;

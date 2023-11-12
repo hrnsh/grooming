@@ -1,9 +1,7 @@
 package kr.co.gudi.location.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.gudi.location.dto.LocationDTO;
 import kr.co.gudi.location.service.LocationService;
+import kr.co.gudi.review.dto.ReviewDTO;
 
 @Controller
 public class LocationController {
@@ -57,5 +56,15 @@ public class LocationController {
     @ResponseBody
     public List<LocationDTO> getTicketPrice(@RequestParam String companyName) {
     	return locationService.getTicketPrice(companyName);
+    }
+    
+    @RequestMapping(value = "/getReviews", method = RequestMethod.POST)
+    @ResponseBody
+    public List<ReviewDTO> getReviews(@RequestParam String companyName){
+    	List<ReviewDTO> reviews = locationService.getReviews(companyName);
+    	
+    	logger.info("업체 이름: "+companyName);
+    	logger.info("리뷰 리스트: "+ reviews);
+    	return reviews;
     }
 }

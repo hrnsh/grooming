@@ -20,7 +20,7 @@
     <select id="searchCompany" resultType="kr.co.gudi.location.dto.LocationDTO">
         SELECT * 
         	FROM company
-        		WHERE com_name LIKE #{param1}
+        	WHERE com_name LIKE #{param1}
     </select>
     
     <select id="getCompanyDetail" resultType="kr.co.gudi.location.dto.LocationDTO">
@@ -35,5 +35,13 @@
         	FROM ticket_price t
         		JOIN company c ON c.com_num = t.com_num
         	WHERE c.com_name = #{param1}
+    </select>
+    
+    <select id="getReviews" resultType="kr.co.gudi.review.dto.ReviewDTO">
+    	SELECT com_id, user_id, rev_subject, rev_star, rev_content, rev_date
+    		FROM review
+    		WHERE com_id =(SELECT user_id 
+    											FROM company 
+    											WHERE com_name= #{param1})
     </select>
 </mapper>
