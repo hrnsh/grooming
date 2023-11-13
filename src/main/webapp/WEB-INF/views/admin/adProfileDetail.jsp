@@ -102,10 +102,6 @@ button {
 			<th>${admin.ad_id}</th>
 		</tr>
 		<tr>
-			<th>PW</th>
-			<th>${admin.ad_pw}</th>
-		</tr>
-		<tr>
 			<th>이름</th>
 			<th>${admin.ad_name}</th>
 		</tr>
@@ -121,11 +117,8 @@ button {
 			<th>직급</th>
 			<th>${admin.ad_position}</th>
 		</tr>
-		<tr>
-			<th colspan="2"><button onclick="location.href='adminprofileUpdateForm?ad_id=${sessionScope.ad_id}'" class = "button">프로필 수정</button></th>
-		</tr>
 	</table>
-		<select id="positionsearch" name="positionsearch">
+		<!-- <select id="positionsearch" name="positionsearch">
 			<option value="Boss">사장</option>
 			<option value="headofdepartment">부장</option>
 			<option value="Teamleader">팀장</option>
@@ -143,7 +136,7 @@ button {
 
 		</tbody>
 	</table>
-	</div>
+	</div> -->
 </body>
 <script>
 adminlistCall();

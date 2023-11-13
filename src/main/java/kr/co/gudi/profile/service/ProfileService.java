@@ -76,11 +76,8 @@ public class ProfileService {
 
 	public int writepickupinfo(HashMap<String, String> params) {
 		int row = 0;
-		
 		logger.info("픽업 정보 등록 : " + params);
-		
 		row = dao.writepickupinfo(params.get("com_num"),params.get("p_distance"),params.get("p_section"),params.get("p_price"));
-		
 		logger.info("픽업 정보 등록 2 : " + row);
 		
 		return row;
@@ -90,13 +87,32 @@ public class ProfileService {
 		return dao.pickuplist(com_num);
 	}
 
-	public int writeticketprice(ArrayList<String> ticketList) {
+	public int writeticketprice(HashMap<String, String> params) {
 		int row = 0;
-		for(String t_type : ticketList) {
-			row += dao.writeticketprice(t_type);
-		}
+		logger.info("예약권 정보 입력 : " + params);
+		row = dao.writeticketprice(params.get("com_num"),params.get("t_price"),params.get("t_type"));
+		
 		return row;
 	}
-	
 
+	public int pickuppricedelete(ArrayList<String> pickuppricedeleteList) {
+		int pickuppricedelete_count = 0;
+		for(String p_num : pickuppricedeleteList) {
+			pickuppricedelete_count += dao.pickuppricedelete(p_num);
+		}
+		return pickuppricedelete_count;
+	}
+
+	public ArrayList<ProfileDTO> ticketlist(String com_num) {
+		return dao.ticketlist(com_num);
+	}
+	
+	public int ticketpricedelete(ArrayList<String> ticketpricedeleteList) {
+		int ticketpricedelete_count = 0;
+		for(String t_num : ticketpricedeleteList) {
+			ticketpricedelete_count += dao.ticketpricedelete(t_num);
+		}
+		return ticketpricedelete_count;
+	}
+	
 }

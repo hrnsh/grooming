@@ -33,6 +33,12 @@ public interface ProfileDAO {
 
 	ArrayList<ProfileDTO> pickuplist(String com_num);
 
-	int writeticketprice(String t_type);
+	int writeticketprice(String com_num, String t_price, String t_type);
+
+	int pickuppricedelete(String p_num);
+
+	ArrayList<ProfileDTO> ticketlist(String com_num);
+
+	int ticketpricedelete(String t_num);
 
 }

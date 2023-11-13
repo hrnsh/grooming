@@ -75,13 +75,6 @@ button {
 		<tr>
 			<th>
 				<button
-					onclick="location.href='pfNotiList?user_id=${sessionScope.loginId}'"
-					class="button">알림함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
 					onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'"
 					class="button">신고 내역</button>
 			</th>

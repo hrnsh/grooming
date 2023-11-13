@@ -39,5 +39,9 @@ public class AdminService {
 	public int adminprofileupdate(HashMap<String, String> params) {
 		return dao.adminprofileupdate(params);
 	}
+
+	public AdminDTO adpfdetail(String ad_id) {
+		return dao.adpfdetail(ad_id);
+	}
 }
 

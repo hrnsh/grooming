@@ -196,7 +196,7 @@ public class ProfileController {
 	@RequestMapping(value = "/pickupinfoForm")
 	public String pickupinfo(Model model, HttpSession session, @RequestParam String com_num) {
 		logger.info("업체 수정 페이지 : " + com_num);
-		model.addAttribute("com_num",com_num);
+		model.addAttribute("com_num", com_num);
 		return "/user/pfpickupinfo";
 	}
 	
@@ -217,7 +217,7 @@ public class ProfileController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/writepickupdistance", method = RequestMethod.POST)
+	@RequestMapping(value = "/writepickupdistance")
 	@ResponseBody
 	public HashMap<String, Object> writepickupinfo(@RequestParam HashMap<String, String> params){
 		logger.info("writepickupinfo params : " + params);
@@ -229,17 +229,68 @@ public class ProfileController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/writeticketprice", method = RequestMethod.POST)
+	@RequestMapping(value = "/pickuppricedelete")
 	@ResponseBody
-	public HashMap<String, Object> writeticketprice(@RequestParam(value="ticketList[]") ArrayList<String> ticketList){
+	public HashMap<String, Object> pickuppricedelete(HttpSession session, @RequestParam(value="pickuppricedeleteList[]") ArrayList<String> pickuppricedeleteList){
 		
-		logger.info("writepickupinfo params : " + ticketList);
+		logger.info("pickuppricedeleteList : " + pickuppricedeleteList);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
-		int row = service.writeticketprice(ticketList);
-		result.put("ticketcount : ", row);
+		if(session.getAttribute("loginId")==null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			int pickuppricedelete_count = service.pickuppricedelete(pickuppricedeleteList);
+			result.put("pickuppricedelete_count", pickuppricedelete_count);
+			logger.info("delcount : " + pickuppricedelete_count);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/writeticketprice")
+	@ResponseBody
+	public HashMap<String, Object> writeticketprice(@RequestParam HashMap<String, String> params){
+		logger.info("writeticketprice params : " + params);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int row = service.writeticketprice(params);
 		logger.info("writeticketprice : " + row);
+		result.put("success", row);
 		
+		return result;
+	}
+	
+	@RequestMapping(value="/ticketlistCall")
+	@ResponseBody
+	public HashMap<String, Object> ticketlistCall(HttpSession session, @RequestParam String com_num) {
+		
+		HashMap<String, Object>result = new HashMap<String, Object>();
+		logger.info("???com_num??? : " + com_num);
+		
+		if(session.getAttribute("loginId") == null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			ArrayList<ProfileDTO> ticketlist = service.ticketlist(com_num);
+			result.put("ticketlist", ticketlist);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/ticketpricedelete")
+	@ResponseBody
+	public HashMap<String, Object> ticketpricedelete(HttpSession session, @RequestParam(value="ticketpricedeleteList[]") ArrayList<String> ticketpricedeleteList){
+		
+		logger.info("ticketpricedeleteList : " + ticketpricedeleteList);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId")==null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			int ticketpricedelete_count = service.ticketpricedelete(ticketpricedeleteList);
+			result.put("ticketpricedelete_count", ticketpricedelete_count);
+			logger.info("delcount : " + ticketpricedelete_count);
+		}
 		return result;
 	}
 	

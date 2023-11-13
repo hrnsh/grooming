@@ -90,4 +90,22 @@ public class AdminController {
 		}
 		return page;
 	}
+	
+	@RequestMapping(value = "/adpfdetail")
+	public String adpfdetail(HttpSession session, Model model, @RequestParam String ad_id) {
+		logger.info("ad_id : " + ad_id);
+		String page = "main";
+		
+		if(session.getAttribute("ad_id")==null) {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}else {
+			AdminDTO dto = service.adpfdetail(ad_id);
+			model.addAttribute("admin",dto);
+			page = "/admin/adProfileDetail";
+			logger.info("adid? : " + ad_id);
+		}
+		
+		return page;
+		
+	}
 }

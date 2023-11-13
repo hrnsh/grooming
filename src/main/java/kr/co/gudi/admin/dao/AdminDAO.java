@@ -15,4 +15,6 @@ public interface AdminDAO {
 	
 	int adminprofileupdate(HashMap<String, String> params);
 
+	AdminDTO adpfdetail(String ad_id);
+
 }
