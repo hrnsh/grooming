@@ -538,6 +538,7 @@ function delYesReceive(){
 
 var selectedDate;
 document.getElementById('datePickerSent').addEventListener('change', handleDateChange);
+
 function handleDateChange() {
     // 변경된 날짜 값을 가져옴
     var selectedDate = document.getElementById('datePickerSent').value;

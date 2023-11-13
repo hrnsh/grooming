@@ -59,4 +59,9 @@ public class PfReportService {
 		
 		return map;
 	}
+
+
+	public ReportDTO reportDetail(String report_num, String user_id) {
+		return pfReportDAO.reportDetail(report_num, user_id);
+	}
 }
