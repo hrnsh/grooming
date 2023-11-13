@@ -75,8 +75,13 @@ public class ReserveService {
 
 		return dao.revInfo(com_id);
 	}
-	public void writeNote(String r_num, String subject, String content, String user_id) {
-		dao.writeNote(r_num,subject,content,user_id);
+
+	public ArrayList<ReserveDTO> findReceiver(int r_num) {
+		
+		return dao.findReceiver(r_num);
+	}
+	public void writeNote(HashMap<String, Object> params) {
+		dao.writeNote(params);	
 	}
 
 				

@@ -53,6 +53,19 @@ public class ReserveDTO {
 	private String r_start;
 	private String r_end;
 	private String r_pick;
+	
+	public String getR_start() {
+		return r_start;
+	}
+	public void setR_start(String r_start) {
+		this.r_start = r_start;
+	}
+	public String getR_end() {
+		return r_end;
+	}
+	public void setR_end(String r_end) {
+		this.r_end = r_end;
+	}
 	private String r_pickaddr;
 	private String r_spec;
 	private int rev_num;
@@ -214,18 +227,7 @@ public class ReserveDTO {
 	public void setA_num(int a_num) {
 		this.a_num = a_num;
 	}
-	public String getR_start() {
-		return r_start;
-	}
-	public void setR_start(String r_start) {
-		this.r_start = r_start;
-	}
-	public String getR_end() {
-		return r_end;
-	}
-	public void setR_end(String r_end) {
-		this.r_end = r_end;
-	}
+	
 	public String getR_pick() {
 		return r_pick;
 	}

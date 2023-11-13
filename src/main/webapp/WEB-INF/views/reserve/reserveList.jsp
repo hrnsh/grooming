@@ -54,7 +54,7 @@ table,th, td{
 		<thead>
 			<tr>
 				<th class="r_num">예약번호</th>
-				<th class="user_id">회원ID</th>
+				<th class="user_id">업체ID</th>
 				<th class="r_start">시작 날짜</th>
 				<th class="r_end">종료 날짜</th>
 				<th class="r_state">상태</th>
@@ -71,6 +71,14 @@ table,th, td{
 		<option value="이용완료">이용완료</option>
 		<option value="취소">취소</option>
 	</select>
+	<div id="paging">	
+				<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공-->
+				<div class="container">									
+					<nav aria-label="Page navigation" style="text-align:center">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>					
+				</div>
+			</div>
 </body>
 <script>
 //로그인 여부에 따른 페이지 권한 설정
@@ -89,7 +97,7 @@ function reserveListCall(page){
 	$.ajax({
 		type:'get',
 		url:'reserveList',
-		data:{'loginId':loginId}, 
+		data:{'loginId':loginId,'page':page}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log("초기 리스트"+data)
@@ -108,13 +116,26 @@ function drawReserveList(reserveList){
 	reserveList.revComList.forEach(function(item, idx){ 
 		content+='<tr>';
 		content+='<td><a href="reserveDetail?idx='+item.r_num+'">'+item.r_num+'</a></td>';
-		content+='<td>'+item.user_id+'</td>';
+		content+='<td>'+item.com_id+'</td>';
 		content+='<td>'+item.r_start+'</td>';
 		content+='<td>'+item.r_end+'</td>';
 		content+='<td>'+item.r_state+'</td>';	
 		content+='</tr>';
 	});
 	$('#reserveList').append(content);
+	$('#pagination').twbsPagination({
+		startPage:reserveList.currPage, // 보여줄 페이지
+		totalPages:reserveList.pages,// 총 페이지 수(총갯수/페이지당보여줄게시물수) : 서버에서 계산해서 가져와야함
+		visiblePages:5,//[1][2][3][4][5]
+		onPageClick:function(e,page){ // 번호 클릭시 실행할 내용
+			//console.log(e);
+			if(showPage != page){
+				console.log(page);
+				showPage = page; // 클릭해서 다른 페이지를 보여주게 되면 현재 보고 있는 페이지 번호도 변경해 준다.
+				reserveListCall(page);
+			}
+		}
+	});
 }
 	
 	

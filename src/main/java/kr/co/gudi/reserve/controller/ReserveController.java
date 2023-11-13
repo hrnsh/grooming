@@ -13,9 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -173,15 +172,23 @@ public class ReserveController {
 		}
 		
 		@RequestMapping(value="/writeNote")
-		public String writeNote() {
+		public String writeNote(@RequestParam String r_num,Model model) {
+			logger.info("r_num: "+r_num);
+			// 보낸사람 받는사람 찾기
+			int r_num1=Integer.parseInt(r_num);
+			ArrayList<ReserveDTO> findReceiver=service.findReceiver(r_num1);
+			model.addAttribute("rev",findReceiver);
+			logger.info("못가져왔나?:"+findReceiver);
 			return "/reserve/writeNote";
 		}
 		
 		@RequestMapping(value="/sendNote")
-		public String sendNote(@RequestParam String r_num, @RequestParam String subject, 
-				@RequestParam String content, HttpSession session) {
+		public String sendNote(@RequestParam HashMap<String, Object> params
+				, HttpSession session) {
 			String user_id = (String) session.getAttribute("loginId");
-			service.writeNote(r_num,subject, content, user_id);
+			params.put("sender", user_id);
+			logger.info("받아온 데이터: "+params);
+			service.writeNote(params);
 			return "redirect:/reserveDetail";
 		}
 	}

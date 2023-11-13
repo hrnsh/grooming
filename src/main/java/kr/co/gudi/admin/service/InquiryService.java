@@ -93,10 +93,6 @@ public class InquiryService {
 			list = inquiryDao.inquiryListCall(offset);
 		}
 		
-//		// searchList 함수 실행
-//		if(searchTxt!=null) {
-//			list = inquiryDao.searchList(offset, searchTxt, option);
-//		}
 		
 		map.put("list", list);
 		int pages = inquiryDao.totalPage();

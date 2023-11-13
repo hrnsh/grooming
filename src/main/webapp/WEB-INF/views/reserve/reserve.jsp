@@ -56,6 +56,7 @@ $(function() {
     $("#datepicker2").datepicker();
 });
 	var selectedDate;
+	
 $(function() {
 	$("#datepicker").click(function(){
 		$.ajax({
@@ -67,38 +68,31 @@ $(function() {
             success: function(response) {
                 // 성공적으로 응답을 받았을 때 처리할 코드
                 console.log("서버 응답: " + JSON.stringify(response));
-           
-            },
-            error: function(error) {
-             
-                console.error("에러 발생: " + JSON.stringify(error));
-            }
-        });
-
-		});
-    var reservedDates = ["2023-11-10", "2023-11-15", "2023-11-20"]; // 예약된 날짜 배열
-    var enableDays = 90;
+                //예약 데이터 저장
+                var reservedDates = response;        
+    			var enableDays = 90;
     
-    $("#datepicker").datepicker({
-    	
-      beforeShowDay: function(date) {
-        var dateString = $.datepicker.formatDate("yy-mm-dd", date);
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
+   			 $("#datepicker").datepicker({  	
+     			 beforeShowDay: function(date) {
+       			 var dateString = $.datepicker.formatDate("yy-mm-dd", date);
+       			 var today = new Date();
+       			 today.setHours(0, 0, 0, 0);
+        		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-        if (date < today || date > maxDate) {
-            // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
-            return [false, "", "선택불가능"];
-          }
+       			 if (date < today || date > maxDate) {
+           			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
+            	return [false, "", "선택불가능"];
+         		 }
+				
+       			// reservedDates 배열에서 해당 날짜의 예약 건수 가져오기
+                 var reservationCount = getReservationCount(dateString, reservedDates);
+                 if (reservationCount >= 10) {
+                     // 예약 건수가 10개 이상인 경우 선택 불가능하게 만듦
+                     return [false, "", "10개 이상 예약됨"];
+                 }
 
-          if ($.inArray(dateString, reservedDates) !== -1) {
-            // 예약된 날짜일 경우 표시
-            return [false, "reserved-date", "예약됨"];
-          }
-
-          // 나머지 날짜는 선택 가능
-          return [true, "", ""];
+         		 // 나머지 날짜는 선택 가능
+        		  return [true, "", ""];
         },
         onSelect: function(dateText, inst) {
             $("#revdetail").show();
@@ -109,6 +103,22 @@ $(function() {
             selectedDate = $("#datepicker").datepicker("getDate");
         }
     });
+            },
+            error: function(error) {
+                console.error("에러 발생: " + JSON.stringify(error));
+            }
+        });
+    });
+});
+
+function getReservationCount(date, reservedDates) {
+    for (var i = 0; i < reservedDates.length; i++) {
+        if (date === reservedDates[i].formatted_date) {
+            return reservedDates[i].reservation_count;
+        }
+    }
+    return 0; // 예약 데이터가 없을 경우 0을 반환
+}
 
     // Apm 버튼 클릭 시 다음 날짜를 입력하도록 처리
     $("#Apm").click(function() {
@@ -143,7 +153,7 @@ $(function() {
         $("#s_ticket").val("amOption"); // 시작 시간을 09:00으로 설정
         $("#e_ticket").val("pmOption"); // 종료 시간을 14:00으로 설정
     });
-});
+
 
 // 이용권 val값
 var ticket;
@@ -222,10 +232,13 @@ function sendDataToServer(latitude, longitude) {
             }else{
             	pick=response.pick;
             	$("p#ticketPrice").append("+픽업 가격 :"+response.pick);
+            	$("#tp").val(pick);
             	if(ticket!=null){
             	$("p#ticketPrice").append("=총 이용금액 :"+(ticket+pick));
+            	$("#tp").val(ticket+pick);
             	}else{
             		$("p#ticketPrice").append("=총 이용금액 :"+(allTicket+pick));
+            		$("#tp").val(allTicket+pick);
             	}
             }
         },
@@ -241,7 +254,7 @@ $(document).ready(function() {
 });
 
 function addrShow() {
-    var valueCheck = $('input[name=pick]:checked').val(); 
+    var valueCheck = $('input[name=r_pick]:checked').val(); 
     console.log(valueCheck);
     if (valueCheck == "예") {
         $(".radio-value-detail").prop('disabled', false);
@@ -251,7 +264,7 @@ function addrShow() {
 }
 
 // 라디오 버튼의 변경 이벤트에 addrShow() 함수 연결
-$('input[name=pick]').change(function() {
+$('input[name=r_pick]').change(function() {
     addrShow();
 });
 var allTicket;
@@ -280,6 +293,7 @@ $(function() {
                 console.log("서버 응답: " + response);
                 allTicket =(response.dayTicket+response.timeTicket);
                 $("p#ticketPrice").text("이용권 금액 : " +allTicket );
+                $("#tp").val(allTicket);
             },
             error: function(error) {
                 // 요청이 실패했을 때 처리할 코드
@@ -332,7 +346,7 @@ $(function() {
 				<tr>
 					<th>반려 동물</th>
 					<th>
-					<select id="dropdownMenu">
+					<select id="dropdownMenu" name="ani">
 							<c:forEach var="option" items="${aNameList}">
 								<option value="${option}">${option}</option>
 							</c:forEach>
@@ -340,16 +354,16 @@ $(function() {
 				</tr>
 				<tr>
 					<th>요청사항</th>
-					<th><textarea style="resize: none"></textarea></th>
+					<th><textarea style="resize: none" name="r_spec"></textarea></th>
 				</tr>
 				<tr>
 				<th>픽업 서비스</th>
-				<th><input type="radio"  name="pick" value="예" onchange="addrShow()" />예 <input
-					type="radio" name="pick" value="아니오" checked  onchange="addrShow()"/>아니오</th>
+				<th><input type="radio"  name="r_pick" value="예" onchange="addrShow()" />예 <input
+					type="radio" name="r_pick" value="아니오" checked  onchange="addrShow()"/>아니오</th>
 			</tr>	
 			<tr>
 				<th>주소</th>
-				<th><input type="text" onclick="showMap()" class="radio-value-detail" id="addr_kakao" name="addr" readonly></th>
+				<th><input type="text" onclick="showMap()" class="radio-value-detail" id="addr_kakao" name="r_pickaddr" readonly></th>
 			</tr>
 			<tr>
 				<th></th>
@@ -358,6 +372,7 @@ $(function() {
 			<tr>
 				<th colspan="2">
 				<p id="ticketPrice">이용권 금액 :</p>
+				<input type="hidden" id="tp" name="r_totalprice"/>
 				</th>
 			</tr>	
 			<tr>

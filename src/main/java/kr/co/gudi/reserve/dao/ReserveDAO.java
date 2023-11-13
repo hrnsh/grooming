@@ -29,7 +29,9 @@ public interface ReserveDAO {
 
 	ArrayList<ReserveDTO> revInfo(String com_id);
 
-	void writeNote(String r_num, String subject, String content, String user_id);
+	ArrayList<ReserveDTO> findReceiver(int r_num);
+
+	void writeNote(HashMap<String, Object> params);
 
 }
 
