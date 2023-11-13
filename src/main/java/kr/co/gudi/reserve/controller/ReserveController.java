@@ -1,5 +1,6 @@
 package kr.co.gudi.reserve.controller;
 
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,13 +29,17 @@ import kr.co.gudi.admin.dto.InquiryDTO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
 import kr.co.gudi.reserve.service.ReserveService;
 
-
 @Controller
 public class ReserveController {
 		Logger logger = LoggerFactory.getLogger(getClass());
 		@Autowired ReserveService service;
-		
+
 		@RequestMapping(value="/reserve")
+
+		public String reserve() {
+			return "reserve/reserve";
+		}
+
 		public ModelAndView home() {
 	        ModelAndView modelAndView = new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정
 	       	
