@@ -40,7 +40,9 @@
 	</update>
 	
 	<select id="newIqDetail" resultType="kr.co.gudi.admin.dto.InquiryDTO">
-		SELECT * FROM inquiry WHERE inq_num=#{param1}
+		SELECT i.*, h.inqhis_date, h.ad_id, h.inqhis_subject, h.inqhis_content
+			FROM inquiry i LEFT OUTER JOIN inquiry_history h ON i.inq_num = h.inq_num 
+				WHERE i.inq_num = #{param1}
 	</select>
 	
 	<select id="getPhoto" resultType="kr.co.gudi.admin.dto.photoDTO">

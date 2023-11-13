@@ -104,7 +104,6 @@ a{
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
 		<h1>일반 문의 관리</h1>
-		<button onclick="location.href='adLogout'" class="logoutBtn">로그아웃</button>
 	</nav>
 	<main>
 		<div class="profButtonBox">

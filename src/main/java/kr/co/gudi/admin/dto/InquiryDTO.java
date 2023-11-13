@@ -11,9 +11,30 @@ public class InquiryDTO {
 	private Date inq_date;
 	private String inq_content;
 	private int inq_state;
+	
 	private Date inqhis_date;
+	private String ad_id;
+	private String inqhis_subject;
+	private String inqhis_content;
 	
-	
+	public String getAd_id() {
+		return ad_id;
+	}
+	public void setAd_id(String ad_id) {
+		this.ad_id = ad_id;
+	}
+	public String getInqhis_subject() {
+		return inqhis_subject;
+	}
+	public void setInqhis_subject(String inqhis_subject) {
+		this.inqhis_subject = inqhis_subject;
+	}
+	public String getInqhis_content() {
+		return inqhis_content;
+	}
+	public void setInqhis_content(String inqhis_content) {
+		this.inqhis_content = inqhis_content;
+	}
 	public Date getInqhis_date() {
 		return inqhis_date;
 	}
