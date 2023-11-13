@@ -64,5 +64,14 @@
 		UPDATE note SET receive_hidden=1 WHERE note_num=#{param1}
 	</update>
 	
+	<select id="dateFilter" resultType="kr.co.gudi.profile.dto.NoteDTO">
+		SELECT n.* FROM note n
+			JOIN member m ON n.sender = m.user_id
+				WHERE m.user_id = #{param1}
+			  		AND n.sent_hidden = 0
+			  		AND n.note_date = #{param2}
+			ORDER BY n.note_num DESC LIMIT 10 OFFSET #{param3}
+    </select>
+	
 </mapper>
 	

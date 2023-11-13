@@ -66,7 +66,8 @@ $('#overlayId').on('click', function(){
 		error : function(e){
 		}
 	});
-
+});
+	
 var overlayEmailChk = false;
 var $email;
 

@@ -31,6 +31,7 @@ public interface ReserveDAO {
 
 	void writeNote(String r_num, String subject, String content, String user_id);
 
+
 }
 
 

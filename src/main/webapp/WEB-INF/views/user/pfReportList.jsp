@@ -144,40 +144,28 @@ if (!loginId) {
 }
 
 var showPage=1;
-reportListCall(showPage);
+pfReportListCall(showPage);
 
 // 처리 상태 필터링
 $('#stateOption').change(function(){
 	console.log($(this).val());
 	$('#typeOption').val('all');
-	reportListCall(showPage);
+	pfReportListCall(showPage);
 });
 
 // 분류 필터링
 $('#typeOption').change(function(){
 	console.log($(this).val())
 	$('#stateOption').val('all');
-	reportListCall(showPage);
+	pfReportListCall(showPage);
 });
 
 
-function pfReportListCall(page){	
-	var type = $('#typeOption').val();
-	var typeOption = 0;
-	if(type=='reserve'){
-		typeOption=3;
-	}else if(type=='review'){
-		typeOption=1;
-	}else if(type=='comment'){
-		typeOption=2;
-	}
-	
-	console.log(typeOption);
-	
+function pfReportListCall(page){
 	$.ajax({
 		type:'get',
 		url:'pfReportListCall',
-		data:{'page':page,'stateOption':$('#stateOption').val(),'typeOption':typeOption}, 
+		data:{'page':page,'stateOption':$('#stateOption').val(),'typeOption':$('#typeOption').val()}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
@@ -191,9 +179,7 @@ function pfReportListCall(page){
 
 function drawReportList(reportList){
 	console.log(reportList);
-	var content='';
-	var ad_id = "${sessionScope.loginId}";
-	
+	var content='';	
 	reportList.list.forEach(function(item,idx){ 
 		content+='<tr>';
 		content+='<td style="text-align: center;"><a href="pfReportDetail?report_num='+item.report_num+'">'+item.report_num+'</a></td>';
@@ -202,10 +188,16 @@ function drawReportList(reportList){
 		var hisDate = new Date(item.rephis_date);
 		var hisDateStr = hisDate.toLocaleDateString("ko-KR");
 		content+='<td style="text-align: center;">'+dateStr+'</td>';
-		content+='<td style="text-align: center;">'+item.ad_id+'</td>';
+		content+='<td style="text-align: center;">';
+			if(item.ad_id==null){
+				content+='확인중';
+			}else{
+				content+=item.ad_id;
+			}
+		content+='</td>';
 		content+='<td style="text-align: center;">'
-			if(hisDateStr=='Invalid Date'){
-				content+=dateStr;
+			if(item.rephis_date=='Invalid Date'||item.rephis_date==null){
+				content+='확인중';
 			}else{
 				content+=hisDateStr;
 			}

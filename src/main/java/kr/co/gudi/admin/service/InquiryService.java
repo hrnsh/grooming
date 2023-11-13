@@ -27,7 +27,6 @@ public class InquiryService {
 	@Autowired InquiryDAO inquiryDao;
 	
 	private String root = "/Users/amy/yurini/img/";
-	private InquiryDTO dto = new InquiryDTO();
 	
 	// 일반 문의 보내기 & 테이블에 저장 
 	public void saveInquiry(MultipartFile photo, String subject, 
@@ -93,10 +92,12 @@ public class InquiryService {
 			list = inquiryDao.inquiryListCall(offset);
 		}
 		
+//		ArrayList<InquiryDTO> list2 = new ArrayList<InquiryDTO>();
 //		// searchList 함수 실행
 //		if(searchTxt!=null) {
-//			list = inquiryDao.searchList(offset, searchTxt, option);
+//			list2 = inquiryDao.searchList(offset, searchTxt, option);
 //		}
+//		map.put("list", list2);
 		
 		map.put("list", list);
 		int pages = inquiryDao.totalPage();

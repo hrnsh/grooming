@@ -75,7 +75,7 @@ public class ReserveService {
 
 		return dao.revInfo(com_id);
 	}
-	public void writeNote(String r_num, String subject, String content, String user_id) {
+	public void sendNote(String r_num, String subject, String content, String user_id) {
 		dao.writeNote(r_num,subject,content,user_id);
 	}
 
