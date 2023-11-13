@@ -10,10 +10,26 @@ public class ReportDTO {
 	private Date report_date;
 	private String report_content;
 	private int report_state;
+	
+	private int reqhis_num;
 	private Date rephis_date;
 	private String rephis_content;
+	private String ad_id;
 	
 	
+	
+	public String getAd_id() {
+		return ad_id;
+	}
+	public void setAd_id(String ad_id) {
+		this.ad_id = ad_id;
+	}
+	public int getReqhis_num() {
+		return reqhis_num;
+	}
+	public void setReqhis_num(int reqhis_num) {
+		this.reqhis_num = reqhis_num;
+	}
 	public Date getRephis_date() {
 		return rephis_date;
 	}

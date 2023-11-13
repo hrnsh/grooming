@@ -59,7 +59,7 @@
 		SELECT count(*) FROM reserve where com_id=#{param1} 
 	</select>
 	
-	<insert id="writeNote">
+	<insert id="sendNote">
 		INSERT INTO note(receiver, sender, note_subject, note_content)
 			VALUES (
 				#{param4},
@@ -68,5 +68,6 @@
 				#{param3}
 			)
 	</insert>
+	
 	
 </mapper>

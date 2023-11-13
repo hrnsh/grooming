@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.gudi.admin.dto.InquiryDTO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
 import kr.co.gudi.reserve.service.ReserveService;
 
@@ -177,16 +179,11 @@ public class ReserveController {
 			return findRev;
 		}
 		
-		@RequestMapping(value="/writeNote")
-		public String writeNote() {
-			return "/reserve/writeNote";
-		}
-		
 		@RequestMapping(value="/sendNote")
 		public String sendNote(@RequestParam String r_num, @RequestParam String subject, 
 				@RequestParam String content, HttpSession session) {
 			String user_id = (String) session.getAttribute("loginId");
-			service.writeNote(r_num,subject, content, user_id);
+			service.sendNote(r_num,subject, content, user_id);
 			return "redirect:/reserveDetail";
 		}
 	}

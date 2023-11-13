@@ -31,7 +31,7 @@ public class ReportController {
 	@RequestMapping(value="/reportListCall")
 	@ResponseBody
 	public Map<String, Object> reportListCall(@RequestParam String ad_id, @RequestParam String page,
-			@RequestParam String stateOption,@RequestParam int typeOption){
+			@RequestParam String stateOption,@RequestParam String typeOption){
 		logger.info("신고 문의 리스트 호출 성공!");
 		return reportService.reportListCall(ad_id,page,stateOption,typeOption);
 	}

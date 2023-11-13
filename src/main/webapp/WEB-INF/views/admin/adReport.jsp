@@ -169,22 +169,11 @@ $('#typeOption').change(function(){
 
 function reportListCall(page){	
 	var ad_id = "${sessionScope.ad_id}";
-	var type = $('#typeOption').val();
-	var typeOption = 0;
-	if(type=='reserve'){
-		typeOption=3;
-	}else if(type=='review'){
-		typeOption=1;
-	}else if(type=='comment'){
-		typeOption=2;
-	}
-	
-	console.log(typeOption);
-	
+
 	$.ajax({
 		type:'get',
 		url:'reportListCall',
-		data:{'page':page,'ad_id':ad_id,'stateOption':$('#stateOption').val(),'typeOption':typeOption}, 
+		data:{'page':page,'ad_id':ad_id,'stateOption':$('#stateOption').val(),'typeOption':$('#typeOption').val()}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
