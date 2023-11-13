@@ -31,6 +31,22 @@ public interface ProfileDAO {
 
 	int writepickupinfo(String com_num, String p_distance, String p_section, String p_price);
 
-	ArrayList<ProfileDTO> pickuplist(String p_num);
+	ArrayList<ProfileDTO> pickuplist(String com_num);
+
+	int writeticketprice(String com_num, String t_price, String t_type);
+
+	int pickuppricedelete(String p_num);
+
+	ArrayList<ProfileDTO> ticketlist(String com_num);
+
+	int ticketpricedelete(String t_num);
+
+	static void savecompic(ProfileDTO dto) {
+		
+	}
+
+	static void savePhoto(String code, int num, String oriFileName, String newFileName) {
+		
+	}
 
 }

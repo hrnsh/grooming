@@ -59,7 +59,39 @@
 	</insert> 
 	
 	<select id="pickuplist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
-		select * from pick_price where com_num=#{param1}
-	</select>
+		SELECT pp.p_num, pp.p_distance,pp.p_section,pp.p_price
+		FROM company c
+		JOIN pick_price pp ON c.com_num = pp.com_num
+		WHERE c.com_num = #{param1}
+    </select>
+    
+    <insert id="writeticketprice" parameterType="hashmap">
+    	insert into ticket_price (com_num,t_price,t_type)
+		values(#{param1},#{param2},#{param3})
+    </insert>
+    
+    <select id="ticketlist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		SELECT tp.t_num, tp.t_price, tp.t_type FROM company c
+		JOIN ticket_price tp ON c.com_num = tp.com_num
+		WHERE c.com_num = #{param1}
+    </select>
+    
+    <delete id="pickuppricedelete">
+		delete from pick_price where p_num = #{param1}
+	</delete>
+	
+	<delete id="ticketpricedelete">
+		delete from ticket_price where t_num = #{param1}
+	</delete>
+	
+	<insert id="savePhoto">
+		INSERT INTO photo (photo_code, photo_n, oriFileName, newFileName)
+			VALUES (#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	
+	<insert useGeneratedKeys="true" keyColumn="Com_num" keyProperty="Com_num" id="savecompic" parameterType="kr.co.gudi.admin.dto.InquiryDTO">
+		INSERT INTO company (user_id)
+			VALUES (#{user_id})
+	</insert>
 	
 </mapper>

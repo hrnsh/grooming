@@ -19,7 +19,7 @@ public class ProfileDTO {
 	private int com_num;
 	private String com_name;
 	private String com_time;
-	private int accept;
+	private String accept;
 	private String pickup;
 	private int user_total;
 	private String address;
@@ -147,11 +147,11 @@ public class ProfileDTO {
 	public void setCom_time(String com_time) {
 		this.com_time = com_time;
 	}
-	public int getAccept() {
+	public String getAccept() {
 		return accept;
 	}
-	public void setAccept(int accept) {
-		this.accept = accept;
+	public void setAccept(String string) {
+		this.accept = string;
 	}
 	public String getPickup() {
 		return pickup;

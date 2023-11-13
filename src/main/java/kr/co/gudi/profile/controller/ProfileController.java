@@ -2,6 +2,7 @@ package kr.co.gudi.profile.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gudi.profile.dto.ProfileDTO;
 import kr.co.gudi.profile.service.ProfileService;
@@ -154,16 +156,32 @@ public class ProfileController {
 		return page;
 	}
 	
-	@RequestMapping(value = "/comregister")
-	@ResponseBody
-	public HashMap<String, Object> comregister(@RequestParam HashMap<String, String> params){
-		logger.info("comregister params : " + params );
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		int row = service.comregister(params);
-		result.put("success", row);
-		
-		return result;
-	}
+//	@RequestMapping(value = "/comregister")
+//	@ResponseBody
+//	public HashMap<String, Object> comregister(@RequestParam HashMap<String, String> params){
+//		logger.info("comregister params : " + params );
+//		HashMap<String, Object> result = new HashMap<String, Object>();
+//		int row = service.comregister(params);
+//		result.put("success", row);
+//		
+//		return result;
+//	}
+	
+//	@RequestMapping(value = "/comregister")
+//	public String comregister(MultipartFile photos, @RequestParam Map<String, String> params) {
+//		logger.info("params : " + params);
+//		return service.comregister(params, photos);
+//	}
+	
+//	@RequestMapping(value = "/comregister")
+//	public String comregister(@RequestParam HashMap<String, String> params, MultipartFile photo, HttpSession session) throws Exception {
+//		
+//		String loginId = (String)session.getAttribute("loginId");
+//		ProfileDTO dto = service.comregister(photo);
+//	
+//		return  "redirect:/profile?user_id="+params.get("user_id");
+//
+//	}
 	
 	@RequestMapping(value="/comlistCall")
 	@ResponseBody
@@ -179,6 +197,8 @@ public class ProfileController {
 			ArrayList<ProfileDTO> comlist = service.comlist(user_id);
 			result.put("comlist", comlist);
 		}
+		
+		
 		return result;
 	}
 	
@@ -196,28 +216,28 @@ public class ProfileController {
 	@RequestMapping(value = "/pickupinfoForm")
 	public String pickupinfo(Model model, HttpSession session, @RequestParam String com_num) {
 		logger.info("업체 수정 페이지 : " + com_num);
-		model.addAttribute("com_num",com_num);
+		model.addAttribute("com_num", com_num);
 		return "/user/pfpickupinfo";
 	}
 	
 	@RequestMapping(value="/pickuplistCall")
 	@ResponseBody
-	public HashMap<String, Object> pickuplistCall(HttpSession session, @RequestParam String p_num) {
+	public HashMap<String, Object> pickuplistCall(HttpSession session, @RequestParam String com_num) {
 		
 		HashMap<String, Object>result = new HashMap<String, Object>();
-		logger.info("p_num : " + p_num);
+		logger.info("!!!com_num!!! : " + com_num);
 		
 		if(session.getAttribute("loginId") == null) {
 			result.put("login", false);
 		}else {
 			result.put("login", true);
-			ArrayList<ProfileDTO> pickuplist = service.pickuplist(p_num);
+			ArrayList<ProfileDTO> pickuplist = service.pickuplist(com_num);
 			result.put("pickuplist", pickuplist);
 		}
 		return result;
 	}
 	
-	@RequestMapping(value = "/writepickupdistance", method = RequestMethod.POST)
+	@RequestMapping(value = "/writepickupdistance")
 	@ResponseBody
 	public HashMap<String, Object> writepickupinfo(@RequestParam HashMap<String, String> params){
 		logger.info("writepickupinfo params : " + params);
@@ -227,6 +247,93 @@ public class ProfileController {
 		result.put("success", row);
 		
 		return result;
+	}
+	
+	@RequestMapping(value = "/pickuppricedelete")
+	@ResponseBody
+	public HashMap<String, Object> pickuppricedelete(HttpSession session, @RequestParam(value="pickuppricedeleteList[]") ArrayList<String> pickuppricedeleteList){
+		
+		logger.info("pickuppricedeleteList : " + pickuppricedeleteList);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId")==null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			int pickuppricedelete_count = service.pickuppricedelete(pickuppricedeleteList);
+			result.put("pickuppricedelete_count", pickuppricedelete_count);
+			logger.info("delcount : " + pickuppricedelete_count);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/writeticketprice")
+	@ResponseBody
+	public HashMap<String, Object> writeticketprice(@RequestParam HashMap<String, String> params){
+		logger.info("writeticketprice params : " + params);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int row = service.writeticketprice(params);
+		logger.info("writeticketprice : " + row);
+		result.put("success", row);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/ticketlistCall")
+	@ResponseBody
+	public HashMap<String, Object> ticketlistCall(HttpSession session, @RequestParam String com_num) {
+		
+		HashMap<String, Object>result = new HashMap<String, Object>();
+		logger.info("???com_num??? : " + com_num);
+		
+		if(session.getAttribute("loginId") == null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			ArrayList<ProfileDTO> ticketlist = service.ticketlist(com_num);
+			result.put("ticketlist", ticketlist);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/ticketpricedelete")
+	@ResponseBody
+	public HashMap<String, Object> ticketpricedelete(HttpSession session, @RequestParam(value="ticketpricedeleteList[]") ArrayList<String> ticketpricedeleteList){
+		
+		logger.info("ticketpricedeleteList : " + ticketpricedeleteList);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId")==null) {
+			result.put("login", false);
+		}else {
+			result.put("login", true);
+			int ticketpricedelete_count = service.ticketpricedelete(ticketpricedeleteList);
+			result.put("ticketpricedelete_count", ticketpricedelete_count);
+			logger.info("delcount : " + ticketpricedelete_count);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/nomalLogout")
+	public String adLogout(HttpSession session) {
+		session.removeAttribute("loginId");
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/compicregistForm")
+	public String adInquirySend(Model model, @RequestParam String com_num) {
+		logger.info("업체 사진 등록 : " + com_num);
+		model.addAttribute("com_num",com_num);
+		return "/user/compicregistForm";
+	}
+	
+	@RequestMapping(value = "/compicregist", method = RequestMethod.POST)
+	public String compicregist(MultipartFile photo, HttpSession session, Model model, @RequestParam String com_num) throws Exception{
+		String loginId = (String) session.getAttribute("loginId");
+		service.savecompic(photo, loginId);
+		model.addAttribute("com_num", com_num);
+		
+		return "redirect:/pickupinfoForm";
 	}
 	
 }
