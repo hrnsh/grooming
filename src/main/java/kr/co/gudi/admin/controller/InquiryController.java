@@ -41,16 +41,17 @@ public class InquiryController {
 		//logger.info("subject/content/photo : " +subject+"/"+content+"/"+photo);
 		String loginId = (String) session.getAttribute("loginId");
 		inquiryService.saveInquiry(photo, subject, content, loginId);
-		return "redirect:/adInquirySend";
+		return "redirect:/pfWrite";
 	} 
 	
 	// 일반 문의 리스트 호출 ajax 
 	@RequestMapping(value="/inquiryListCall")
 	@ResponseBody
 	public Map<String, Object> inquiryListCall(@RequestParam String page,
-			@RequestParam String ad_id, @RequestParam String stateOption, @RequestParam String searchTxt) {
+			@RequestParam String ad_id, @RequestParam String stateOption, @RequestParam String searchTxt,
+			@RequestParam int option) {
 		logger.info("일반 문의 리스트 호출 성공");
-		return inquiryService.inquiryListCall(page, ad_id, stateOption, searchTxt);
+		return inquiryService.inquiryListCall(page, ad_id, stateOption, searchTxt,option);
 	}
 	
 	// 일반 신규 문의 상세보기

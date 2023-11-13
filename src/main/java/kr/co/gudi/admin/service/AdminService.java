@@ -29,7 +29,6 @@ public class AdminService {
 	public boolean logingo(String ad_id, String ad_pw) {
 		boolean success = false;
 		String log=dao.logingo(ad_id,ad_pw);
-		logger.info("서비스 로거" + log);
 		if(log!=null) {
 			success=true;
 		}

@@ -84,28 +84,22 @@ a{
 		<div class="logo">
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<h1>신고 문의 관리</h1>
+		<h1>신고 내역</h1>
 	</nav>
 	<main>
 		<div class="profButtonBox">
-			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
-			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
-			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
-			<button onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 예약 관리</button>
-			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
-			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
+			<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
+			<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profButton">쪽지함</button>
+			<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='./pfNotiList?user_id=${sessionScope.loginId}'" class="profButton">알림함</button>
+			<button onclick="location.href='./pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 		</div>
 		<div class="reportBox">
-			<div class="searchBox">
-				<input type="text"/> 
-				<button onclick="searchId()">검색</button>
-			</div>
 				<table>
 					<thead>
 						<tr>
 							<th style="width:50px;">번호</th>
 							<th style="width:120px;">접수 일자</th>
-							<th style="width:70px;">신고자</th>
 							<th style="width:70px;">담당자</th>
 							<th style="width:120px;">처리 일자</th>
 							<th style="width:40px;">
@@ -143,9 +137,9 @@ a{
 	</main>
 </body>
 <script>
-var ad_id="${sessionScope.ad_id}";
-if (!ad_id) {
-    alert("관리자 권한이 필요한 페이지 입니다.");
+var loginId="${sessionScope.loginId}";
+if (!loginId) {
+    alert("로그인이 필요한 서비스 입니다.");
     location.href = "./"; 
 }
 
@@ -167,8 +161,7 @@ $('#typeOption').change(function(){
 });
 
 
-function reportListCall(page){	
-	var ad_id = "${sessionScope.ad_id}";
+function pfReportListCall(page){	
 	var type = $('#typeOption').val();
 	var typeOption = 0;
 	if(type=='reserve'){
@@ -183,8 +176,8 @@ function reportListCall(page){
 	
 	$.ajax({
 		type:'get',
-		url:'reportListCall',
-		data:{'page':page,'ad_id':ad_id,'stateOption':$('#stateOption').val(),'typeOption':typeOption}, 
+		url:'pfReportListCall',
+		data:{'page':page,'stateOption':$('#stateOption').val(),'typeOption':typeOption}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
@@ -199,18 +192,17 @@ function reportListCall(page){
 function drawReportList(reportList){
 	console.log(reportList);
 	var content='';
-	var ad_id = "${sessionScope.ad_id}";
+	var ad_id = "${sessionScope.loginId}";
 	
 	reportList.list.forEach(function(item,idx){ 
 		content+='<tr>';
-		content+='<td style="text-align: center;"><a href="adReportDetail?report_num='+item.report_num+'">'+item.report_num+'</a></td>';
+		content+='<td style="text-align: center;"><a href="pfReportDetail?report_num='+item.report_num+'">'+item.report_num+'</a></td>';
 		var date = new Date(item.report_date);
 		var dateStr = date.toLocaleDateString("ko-KR");
 		var hisDate = new Date(item.rephis_date);
 		var hisDateStr = hisDate.toLocaleDateString("ko-KR");
 		content+='<td style="text-align: center;">'+dateStr+'</td>';
-		content+='<td style="text-align: center;">'+item.user_id+'</td>';
-		content+='<td style="text-align: center;">'+ad_id+'</td>';
+		content+='<td style="text-align: center;">'+item.ad_id+'</td>';
 		content+='<td style="text-align: center;">'
 			if(hisDateStr=='Invalid Date'){
 				content+=dateStr;
@@ -251,7 +243,7 @@ function drawReportList(reportList){
 			if(showPage != page){ 
 				console.log(page);	
 				showPage=page; 
-				reportListCall(page);
+				pfReportListCall(page);
 			}
 		}
 	});

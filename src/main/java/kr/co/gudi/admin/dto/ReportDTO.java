@@ -10,8 +10,22 @@ public class ReportDTO {
 	private Date report_date;
 	private String report_content;
 	private int report_state;
+	private Date rephis_date;
+	private String rephis_content;
 	
 	
+	public Date getRephis_date() {
+		return rephis_date;
+	}
+	public void setRephis_date(Date rephis_date) {
+		this.rephis_date = rephis_date;
+	}
+	public String getRephis_content() {
+		return rephis_content;
+	}
+	public void setRephis_content(String rephis_content) {
+		this.rephis_content = rephis_content;
+	}
 	public int getReport_num() {
 		return report_num;
 	}

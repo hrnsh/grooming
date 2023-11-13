@@ -92,7 +92,7 @@ textarea{
 <body>
 		<nav class="nav">
 		<div class="logo">
-			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
 		<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="arrowBtn"> ← </button>
 		<h1>쪽지 보내기</h1>

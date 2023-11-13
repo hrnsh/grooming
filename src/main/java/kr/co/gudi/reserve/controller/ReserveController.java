@@ -8,10 +8,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -166,6 +170,19 @@ public class ReserveController {
 			
 			logger.info("findRev"+revInfo);
 			return findRev;
+		}
+		
+		@RequestMapping(value="/writeNote")
+		public String writeNote() {
+			return "/reserve/writeNote";
+		}
+		
+		@RequestMapping(value="/sendNote")
+		public String sendNote(@RequestParam String r_num, @RequestParam String subject, 
+				@RequestParam String content, HttpSession session) {
+			String user_id = (String) session.getAttribute("loginId");
+			service.writeNote(r_num,subject, content, user_id);
+			return "redirect:/reserveDetail";
 		}
 	}
 
