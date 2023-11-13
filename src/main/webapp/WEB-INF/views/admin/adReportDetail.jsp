@@ -201,8 +201,27 @@ if (!ad_id) {
 }
 
 function reportTarget(){
+	var reportType = "${reportDetail.report_type}";
+    var reportGet = "${reportDetail.report_get}";
 	
-	
+	 // 각 게시물 타입에 따라 URL 생성
+    var targetUrl = generateTargetUrl(reportType, reportGet);
+	 
+    window.location.href = targetUrl;
+}
+
+function generateTargetUrl(reportType, reportGet) {
+	// 각 게시물 타입에 따라 URL 생성
+    var baseUrl = "./";
+    
+    switch (reportType) {
+	    case "0":  // 게시글
+	        return baseUrl + "boardDetail?b_num=" + reportGet;
+	    case "1":  // 리뷰
+	        return baseUrl + "reviewDetail?rev_num=" + reportGet;
+	    case "2":  // 예약
+	        return baseUrl + "reserveDetail?=r_num" + reportGet;
+	}
 }
 
 </script>

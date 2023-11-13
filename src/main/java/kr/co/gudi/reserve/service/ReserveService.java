@@ -25,8 +25,8 @@ public class ReserveService {
 		
 		return dao.myAni(user_id);
 	}
-	public HashMap<String, Object> lat() {
-		return dao.lat();
+	public HashMap<String, Object> lat(String com_id) {
+		return dao.lat(com_id);
 	}
 	public double calDis(double latitude, double longitude, double comLat, double comLon) {
 		double EARTH_RADIUS = 6371; // 지구 반지름 (단위: km)

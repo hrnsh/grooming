@@ -7,6 +7,7 @@ public class ReportDTO {
 	private int report_num;
 	private String user_id;
 	private String report_type;
+	private int report_get;
 	private Date report_date;
 	private String report_content;
 	private int report_state;
@@ -59,6 +60,12 @@ public class ReportDTO {
 	}
 	public void setReport_type(String report_type) {
 		this.report_type = report_type;
+	}
+	public int getReport_get() {
+		return report_get;
+	}
+	public void setReport_get(int report_get) {
+		this.report_get = report_get;
 	}
 	public Date getReport_date() {
 		return report_date;

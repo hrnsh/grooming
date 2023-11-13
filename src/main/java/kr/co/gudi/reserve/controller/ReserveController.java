@@ -52,16 +52,7 @@ public class ReserveController {
 			return "reserve/reserve";
 		}
 
-		/*
-		 * public ModelAndView home(HttpSession session) { ModelAndView modelAndView =
-		 * new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정 String user_id=
-		 * (String) session.getAttribute("loginId"); List<ReserveDTO> dtoList
-		 * =service.myAni(user_id); List<String> aNameList = new ArrayList<>(); for
-		 * (ReserveDTO dto : dtoList) { aNameList.add(dto.getA_name()); }
-		 * 
-		 * modelAndView.addObject("aNameList", aNameList);
-		 * logger.info("동물 이름: "+aNameList); return modelAndView; }
-		 */
+
 		
 		@RequestMapping(value="/revDis",method = RequestMethod.POST)
 		@ResponseBody
@@ -70,7 +61,7 @@ public class ReserveController {
 			double latitude = requestData.get("latitude");
 			double longitude = requestData.get("longitude");
 			logger.info("받아온 위도: " + latitude + ", 경도: " + longitude);
-			revInfo =service.lat();
+			revInfo =service.lat(com_id);
 			logger.info("업체경도:"+revInfo);
 
 			Object latObject = revInfo.get("lat");
