@@ -88,4 +88,8 @@ public class ReserveService {
 		
 		return dao.findCom_id(companyName);				
 	}
+	public int findAcc(String com_id) {
+		
+		return dao.findAcc(com_id);
+	}
 }

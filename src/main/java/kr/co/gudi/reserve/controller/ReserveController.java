@@ -49,6 +49,7 @@ public class ReserveController {
 			com_id=service.findCom_id(companyName);
 			logger.info("업체명과같은 id: "+com_id);
 			model.addAttribute("com_id",com_id);
+			model.addAttribute("companyName",companyName);
 			return "reserve/reserve";
 		}
 
@@ -173,8 +174,10 @@ public class ReserveController {
 			logger.info("어떤업체?: "+com_id);
 			ArrayList<ReserveDTO> revInfo = service.revInfo(com_id)	;	
 			HashMap<String, Object> findRev = new HashMap<String, Object>();
-		    findRev.put("findRev", revInfo);
-			
+		    int findAcc = service.findAcc(com_id);
+		    logger.info("수용가능수: "+findAcc);
+			findRev.put("findRev", revInfo);
+			findRev.put("findAcc", findAcc);
 			logger.info("findRev"+revInfo);
 			return findRev;
 		}

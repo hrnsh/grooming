@@ -113,16 +113,14 @@ div{text-align: center;}
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7f33f996b442a5d86588bc9173489c3&libraries=services"
         type="text/javascript"></script>
 <script>
-
 var selectedDate;
-
-$(function() {
-	$("#datepicker1").datepicker();
+/* $(function() {
+    $("#datepicker1").datepicker();
 	$("#datepicker2").datepicker();
-});
+ }); */
 	
 $(function() {
-	$("#datepicker").click(function(){
+	$("#datepicker,#datepicker1,#datepicker2").click(function(){
 		$.ajax({
             type: "POST",  // 또는 "GET" 등 요청 메서드 선택
             url: "findRev",  // 컨트롤러 엔드포인트 URL 입력
@@ -130,21 +128,13 @@ $(function() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-            	var findRevArray = Array.isArray(response.findRev) ? response.findRev : [response.findRev];
-
-                var reservedDates = findRevArray.map(function(item) {
-                    // formatted_date를 'yy-mm-dd' 형식으로 변환
-                    return {
-                        formatted_date: $.datepicker.formatDate("yy-mm-dd", new Date(item.formatted_date)),
-                        reservation_count: item.reservation_count
-                    };
-                });		
-                console.log("나와:" + JSON.stringify(reservedDates));
+            	 var findRevArray = Array.isArray(response.findRev) ? response.findRev : [response.findRev];
+                 var accept = response.findAcc;              
             	 var enableDays = 90;
             	 
-   			 $("#datepicker").datepicker({  	
+            	console.log("수용"+accept);
+   			 $("#datepicker,#datepicker1,#datepicker2").datepicker({  	
      			 beforeShowDay: function(date) {
-     				 console.log("비포쇼데이");
        			 var dateString = $.datepicker.formatDate("yy-mm-dd", date);
        			 var today = new Date();
        			 today.setHours(0, 0, 0, 0);
@@ -156,10 +146,10 @@ $(function() {
          		 }
 				
        			// reservedDates 배열에서 해당 날짜의 예약 건수 가져오기
-                 var reservationCount = getReservationCount(dateString, reservedDates);
+                 var reservationCount = getReservationCount(dateString, findRevArray);
                 console.log("뭐라고말좀해봐"+reservationCount); 
-       			if (reservationCount >= 5) {
-                     // 예약 건수가 10개 이상인 경우 선택 불가능하게 만듦
+       			if (reservationCount >= accept) {
+                     // 예약 건수가 accept개 이상인 경우 선택 불가능하게 만듦
                      return [false, "", "예약됨"];
                  }
 
@@ -172,7 +162,8 @@ $(function() {
             $("#datepicker1").val(dateText);
             $("#datepicker2").val(dateText);
             // 여기에 선택된 날짜에 대한 추가적인 처리 로직을 추가할 수 있습니다.
-            selectedDate = $("#datepicker").datepicker("getDate");
+           selectedDate = dateText;
+           console.log("선택날짜: " + selectedDate);
         }
     });
             },
@@ -192,71 +183,73 @@ function getReservationCount(date, reservedDates) {
     return 0; // 예약 데이터가 없을 경우 0을 반환
 }
 
+// 이용권종류 버튼 이벤트
+var ticket;
+
+$(document).ready(function() {
+    // 버튼 클릭 이벤트 핸들러
+    $("#Am, #Pm, #Apm").click(function() {
+        // 버튼의 value 값을 가져오기
+        var buttonValue = $(this).val();
+        
+        // AJAX 요청 보내기
+        $.ajax({
+            type: "POST",  
+            url: "tPrice",  
+            data: JSON.stringify({ "buttonValue": buttonValue }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                console.log("서버 응답: " + response);
+                console.log("이용권 가격:" + response.ticket);
+                // 이용권 가격을 표시할 <p> 태그에 동적으로 내용을 넣기
+                ticket = response.ticket;
+                $("p#ticketPrice").text("이용권 금액 : " + response.ticket);
+                
+                // 여기서 추가적인 처리 로직을 수행할 수 있습니다.
+                // 예를 들면, 이용권에 따른 특별한 동작을 수행하는 등
+            },
+            error: function(error) {
+                console.error("에러 발생: " + JSON.stringify(error));
+            }
+        });
+    });
+
+
     // Apm 버튼 클릭 시 다음 날짜를 입력하도록 처리
     $("#Apm").click(function() {
-        var selectedDate = $("#datepicker").datepicker("getDate");
-        if (selectedDate !== null) {
-            selectedDate.setDate(selectedDate.getDate() + 1);
-            $("#datepicker2").datepicker("setDate", selectedDate);
-        }      	      
+        // #datepicker2에 설정된 날짜 가져오기
+        var currentDate = $("#datepicker2").datepicker("getDate");
+        // 내일로 설정
+        if (currentDate !== null) {
+            currentDate.setDate(currentDate.getDate() + 1);
+            $("#datepicker2").datepicker("setDate", currentDate);
+        }
     });
- 
+
     // 이용권 선택 버튼 클릭 시 클래스 추가
     $("#Am, #Pm").click(function() {
         if (selectedDate !== null) {
-            // 선택된 날짜가 있다면 해당 날짜로 설정
             $("#datepicker2").datepicker("setDate", selectedDate);
         }
     });
 
     // 이용권 선택
     $("#Am").click(function() {
-        // 원하는 드롭박스 옵션 값으로 변경
-        $("#s_ticket").val("amOption"); // 시작 시간을 09:00으로 설정
-        $("#e_ticket").val("amOption"); // 종료 시간을 09:00으로 설정
+        $("#s_ticket").val("amOption");
+        $("#e_ticket").val("amOption");
     });
     $("#Pm").click(function() {
-        // 원하는 드롭박스 옵션 값으로 변경
-        $("#s_ticket").val("pmOption"); // 시작 시간을 14:00으로 설정
-        $("#e_ticket").val("pmOption"); // 종료 시간을 14:00으로 설정
+        $("#s_ticket").val("pmOption");
+        $("#e_ticket").val("pmOption");
     });
     $("#Apm").click(function() {
-        // 원하는 드롭박스 옵션 값으로 변경
-        $("#s_ticket").val("amOption"); // 시작 시간을 09:00으로 설정
-        $("#e_ticket").val("pmOption"); // 종료 시간을 14:00으로 설정
-    });
-
-
-// 이용권 val값
-var ticket;
-$(document).ready(function() {
-    // 버튼 클릭 이벤트 핸들러
-    $("#Am,#Pm,#Apm").click(function() {
-        // 버튼의 value 값을 가져오기
-        var buttonValue = $(this).val();
-        
-        // AJAX 요청 보내기
-        $.ajax({
-            type: "POST",  // 또는 "GET" 등 요청 메서드 선택
-            url: "tPrice",  // 컨트롤러 엔드포인트 URL 입력
-            data: JSON.stringify({ "buttonValue": buttonValue }),  // 전송할 데이터 설정
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                // 성공적으로 응답을 받았을 때 처리할 코드
-                console.log("서버 응답: " + response);
-                console.log("이용권 가격:"+ response.ticket);
-             // 이용권 가격을 표시할 <p> 태그에 동적으로 내용을 넣기
-           ticket = response.ticket;
-                $("p#ticketPrice").text("이용권 금액 : " + response.ticket);
-            },
-            error: function(error) {
-                // 요청이 실패했을 때 처리할 코드
-                console.error("에러 발생: " + JSON.stringify(error));
-            }
-        });
+        $("#s_ticket").val("amOption");
+        $("#e_ticket").val("apmOption");
     });
 });
+
+    	
 
 //주소API id="addr_kakao"
 function showMap(){
@@ -375,7 +368,19 @@ $(function() {
     });
 });
 
-
+//뒤로가기
+var companyName="${companyName}";
+function goBack() {
+            window.history.back();
+        }
+//뒤로 간 페이지에서 실행할 함수
+function showCompanyDetail(companyName) {
+	console.log('회사 상세 정보 표시: ' + companyName);
+}
+window.addEventListener('popstate', function (event) {
+    // 뒤로 간 페이지에서 실행할 함수 호출
+    showCompanyDetail(event.state && event.state.companyName);
+});
   </script>
 </head>
 <body>
@@ -401,7 +406,7 @@ $(function() {
   
   <div id="revdetail">
     <form action="booking" method="post">
-    <a href="">업체명</a><br>   
+    <a href="#" onclick="goBack()">${companyName}</a><br>   
     &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="Am" value="오전권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Pm" value="오후권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Apm" value="종일권" />

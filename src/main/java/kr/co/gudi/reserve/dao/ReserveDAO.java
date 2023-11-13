@@ -35,6 +35,8 @@ public interface ReserveDAO {
 
 	String findCom_id(String companyName);
 
+	int findAcc(String com_id);
+
 
 }
 

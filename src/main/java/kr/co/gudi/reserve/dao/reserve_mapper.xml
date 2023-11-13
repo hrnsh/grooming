@@ -98,6 +98,10 @@ ORDER BY formatted_date;
 		SELECT * FROM reserve
 			WHERE r_num = #{param1}
 	</select>
-
+	
+	<select id="findAcc" resultType="int">
+		SELECT accept FROM company
+			WHERE user_id=#{param1}
+	</select>
 	
 </mapper>
