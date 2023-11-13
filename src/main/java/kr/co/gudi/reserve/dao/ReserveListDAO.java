@@ -12,17 +12,14 @@ public interface ReserveListDAO {
 	
 	
 
-	ArrayList<ReserveDTO> reserveComList(String loginId);
+	ArrayList<ReserveDTO> reserveComList(String loginId, int offset);
 
 
 
-	ArrayList<ReserveDTO> section(String formattedDate1, String formattedDate2);
+	ArrayList<ReserveDTO> all(String loginId, String stateFilter, String page);
 
 
-	ArrayList<ReserveDTO> all(String loginId, String stateFilter);
-
-
-	ArrayList<ReserveDTO> state(String loginId, String stateFilter);
+	ArrayList<ReserveDTO> state(String loginId, String stateFilter, int offset);
 
 
 
@@ -61,6 +58,38 @@ public interface ReserveListDAO {
 	ArrayList<ReserveDTO> replyDetail(int idx);
 
 
+
+
+	ArrayList<ReserveDTO> reserveList(String loginId, int offset);
+
+
+
+
+	int totalPage();
+
+
+
+
+	ArrayList<ReserveDTO> all(String loginId, String stateFilter, int offset);
+
+
+
+
+	ArrayList<ReserveDTO> section(String loginId, String formattedDate1, String formattedDate2, int offset);
+
+
+
+
+	String findAni(String loginId, String ani);
+
+
+
+	void saveReserve(HashMap<String, Object> params);
+
+
+
+
+	String chkDetail(String loginId, int idx);
 
 
 

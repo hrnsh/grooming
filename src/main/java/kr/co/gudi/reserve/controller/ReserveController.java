@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.metadata.PostgresCallMetaDataProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,26 +32,36 @@ import kr.co.gudi.reserve.service.ReserveService;
 public class ReserveController {
 		Logger logger = LoggerFactory.getLogger(getClass());
 		@Autowired ReserveService service;
-
+		
+		String com_id="";
 		@RequestMapping(value="/reserve")
-
-		public String reserve() {
+		public String reserve(@RequestParam String companyName
+				,Model model,HttpSession session) {
+			String user_id=(String) session.getAttribute("loginId");
+			List<ReserveDTO> dtoList=service.myAni(user_id);
+			List<String> aNameList = new ArrayList<>(); 
+			for(ReserveDTO dto : dtoList) {
+				aNameList.add(dto.getA_name()); 
+				}
+			model.addAttribute("aNameList",aNameList);
+			logger.info("동물정보: "+aNameList);
+			logger.info("업체명: "+companyName);
+			com_id=service.findCom_id(companyName);
+			logger.info("업체명과같은 id: "+com_id);
+			model.addAttribute("com_id",com_id);
 			return "reserve/reserve";
 		}
 
-		public ModelAndView home() {
-	        ModelAndView modelAndView = new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정
-	       	
-	        List<ReserveDTO> dtoList =service.myAni();
-	        List<String> aNameList = new ArrayList<>();
-	        for (ReserveDTO dto : dtoList) {
-	            aNameList.add(dto.getA_name());
-	        }
-	        
-	        modelAndView.addObject("aNameList", aNameList);
-	        logger.info("동물 이름: "+aNameList);
-	        return modelAndView;
-	    }
+		/*
+		 * public ModelAndView home(HttpSession session) { ModelAndView modelAndView =
+		 * new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정 String user_id=
+		 * (String) session.getAttribute("loginId"); List<ReserveDTO> dtoList
+		 * =service.myAni(user_id); List<String> aNameList = new ArrayList<>(); for
+		 * (ReserveDTO dto : dtoList) { aNameList.add(dto.getA_name()); }
+		 * 
+		 * modelAndView.addObject("aNameList", aNameList);
+		 * logger.info("동물 이름: "+aNameList); return modelAndView; }
+		 */
 		
 		@RequestMapping(value="/revDis",method = RequestMethod.POST)
 		@ResponseBody
@@ -170,7 +179,7 @@ public class ReserveController {
 		@RequestMapping(value="/findRev",method = RequestMethod.POST)
 		@ResponseBody
 		public HashMap<String, Object> findRev(){
-			String com_id="abcd002";
+			logger.info("어떤업체?: "+com_id);
 			ArrayList<ReserveDTO> revInfo = service.revInfo(com_id)	;	
 			HashMap<String, Object> findRev = new HashMap<String, Object>();
 		    findRev.put("findRev", revInfo);
@@ -178,12 +187,27 @@ public class ReserveController {
 			logger.info("findRev"+revInfo);
 			return findRev;
 		}
+
+		@RequestMapping(value="/writeNote")
+		public String writeNote(@RequestParam String r_num,Model model) {
+			logger.info("r_num: "+r_num);
+			// 보낸사람 받는사람 찾기
+			int r_num1=Integer.parseInt(r_num);
+			ArrayList<ReserveDTO> findReceiver=service.findReceiver(r_num1);
+			model.addAttribute("rev",findReceiver);
+			logger.info("못가져왔나?:"+findReceiver);
+			return "/reserve/writeNote";
+		}
 		
 		@RequestMapping(value="/sendNote")
-		public String sendNote(@RequestParam String r_num, @RequestParam String subject, 
-				@RequestParam String content, HttpSession session) {
+		public String sendNote(@RequestParam HashMap<String, Object> params
+				, HttpSession session) {
 			String user_id = (String) session.getAttribute("loginId");
-			service.sendNote(r_num,subject, content, user_id);
+
+			params.put("sender", user_id);
+			logger.info("받아온 데이터: "+params);
+			service.writeNote(params);
+
 			return "redirect:/reserveDetail";
 		}
 	}

@@ -6,5 +6,74 @@
 	
 	<select id="adList" resultType="kr.co.gudi.admin.dto.ManageDTO">
 		SELECT * FROM member
+			ORDER BY user_id DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<select id="adStateList" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM member
+			WHERE state=#{param1}
+			ORDER BY user_id DESC LIMIT 10 OFFSET #{param2}
+	</select>
+	
+	<select id="totalPage" resultType="int">
+		SELECT CEIL(COUNT(user_id)/5) AS pages FROM member
+	</select>
+	
+	<select id="manageDetail" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM member
+			WHERE user_id=#{param1}
+	</select>
+	
+	<insert id="saveManage">
+		insert into manage(ad_id,user_id,m_state,m_complet,m_content,m_type)
+		values(#{ad_id},#{user_id},'처리완료',#{m_complet},#{m_content},#{m_type})
+	</insert>
+	
+	<update id="updateMember">
+		update member
+			set state = #{state}
+				where user_id =#{user_id}
+	</update>
+	
+	<select id="adResultList" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM manage
+			ORDER BY m_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<select id="adStateResultList" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM manage
+			WHERE m_type=#{param1}
+			ORDER BY m_num DESC LIMIT 10 OFFSET #{param2}
+	</select>
+	
+	<select id="dateFilter" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM manage
+			WHERE m_date=#{param1}
+			ORDER BY m_num DESC LIMIT 10 OFFSET #{param2}
+	</select>
+	
+	<select id="idFilter" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM manage
+			WHERE (ad_id LIKE CONCAT('%', #{param1}, '%')
+          		 OR ad_id LIKE CONCAT(#{param1}, '%')
+          		 OR ad_id LIKE CONCAT('%', #{param1}))
+         	 	 AND (user_id LIKE CONCAT('%', #{param2}, '%')
+                 OR user_id LIKE CONCAT(#{param2}, '%')
+                 OR user_id LIKE CONCAT('%', #{param2}))
+			ORDER BY m_num DESC LIMIT 10 OFFSET #{param3}
+	</select>
+
+	<select id="adFilter" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		SELECT * FROM manage
+			WHERE ad_id LIKE CONCAT('%', #{param1}, '%')
+          		 OR ad_id LIKE CONCAT(#{param1}, '%')
+          		 OR ad_id LIKE CONCAT('%', #{param1})
+			ORDER BY m_num DESC LIMIT 10 OFFSET #{param2}
+	</select>
+	
+	<select id="resultDetail" resultType="kr.co.gudi.admin.dto.ManageDTO">
+		select m.*,m2.name from manage m
+			join member m2 on m.user_id = m2.user_id 
+			where m.m_num = #{param1}
 	</select>
 </mapper>

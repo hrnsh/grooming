@@ -21,9 +21,9 @@ public class ReserveService {
 		
 		return dao.cnt();
 	}
-	public List<ReserveDTO> myAni() {
+	public List<ReserveDTO> myAni(String user_id) {
 		
-		return dao.myAni();
+		return dao.myAni(user_id);
 	}
 	public HashMap<String, Object> lat() {
 		return dao.lat();
@@ -75,10 +75,17 @@ public class ReserveService {
 
 		return dao.revInfo(com_id);
 	}
-	public void sendNote(String r_num, String subject, String content, String user_id) {
-		dao.writeNote(r_num,subject,content,user_id);
+
+
+	public ArrayList<ReserveDTO> findReceiver(int r_num) {
+		
+		return dao.findReceiver(r_num);
 	}
-
-				
-
+	public void writeNote(HashMap<String, Object> params) {
+		dao.writeNote(params);	
+	}
+	public String findCom_id(String companyName) {
+		
+		return dao.findCom_id(companyName);				
+	}
 }
