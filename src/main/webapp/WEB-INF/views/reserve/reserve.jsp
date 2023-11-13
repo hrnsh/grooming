@@ -316,6 +316,7 @@ $(function() {
     &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="Am" value="오전권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Pm" value="오후권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Apm" value="종일권" />
+	<input type="hidden" id="com_id" name="com_id" value="'${com_id}'" />
     <table>
 			<tr>
 				<th>예약 시작 시간</th>

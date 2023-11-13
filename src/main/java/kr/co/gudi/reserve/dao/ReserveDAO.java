@@ -33,6 +33,8 @@ public interface ReserveDAO {
 
 	void writeNote(HashMap<String, Object> params);
 
+	String findCom_id(String companyName);
+
 }
 
 

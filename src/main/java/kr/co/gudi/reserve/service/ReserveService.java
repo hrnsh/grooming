@@ -83,6 +83,10 @@ public class ReserveService {
 	public void writeNote(HashMap<String, Object> params) {
 		dao.writeNote(params);	
 	}
+	public String findCom_id(String companyName) {
+		
+		return dao.findCom_id(companyName);
+	}
 
 				
 

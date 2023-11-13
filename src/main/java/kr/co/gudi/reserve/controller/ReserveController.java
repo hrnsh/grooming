@@ -30,10 +30,15 @@ import kr.co.gudi.reserve.service.ReserveService;
 public class ReserveController {
 		Logger logger = LoggerFactory.getLogger(getClass());
 		@Autowired ReserveService service;
-
+		
+		
 		@RequestMapping(value="/reserve")
-
-		public String reserve() {
+		public String reserve(@RequestParam String companyName
+				,Model model) {
+			logger.info("업체명: "+companyName);
+			String com_id=service.findCom_id(companyName);
+			logger.info("업체명과같은 id: "+com_id);
+			model.addAttribute("com_id",com_id);
 			return "reserve/reserve";
 		}
 

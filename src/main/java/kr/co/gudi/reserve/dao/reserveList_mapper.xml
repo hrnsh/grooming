@@ -10,7 +10,7 @@
 	
 	<insert id="saveReserve">
 		INSERT INTO reserve(user_id,com_id,a_num,r_start,r_end,r_pick,r_pickaddr,r_totalprice,r_spec)
-			VALUES(#{user_id},'abcd002',#{a_num},#{r_start},#{r_end},#{r_pick},#{r_pickaddr},
+			VALUES(#{user_id},#{com_id},#{a_num},#{r_start},#{r_end},#{r_pick},#{r_pickaddr},
 			#{r_totalprice},#{r_spec})
 	</insert>
 	

@@ -8,6 +8,10 @@
 		SELECT a_name,a_kind,a_spec FROM animal
 	</select>
 	
+	<select id="findCom_id" resultType="String">
+		SELECT user_id FROM company
+			WHERE com_name=#{param1}
+	</select>
 	
 	<select id="lat" resultType="Map">
 		SELECT lat,lon FROM company where user_id='abcd001'
