@@ -213,7 +213,13 @@ function drawInquiryList(inquiryList){
 		content+='<td style="text-align: center;">'+dateStr+'</td>';
 		content+='<td style="text-align: center;">'+item.user_id+'</td>';
 		content+='<td style="text-align: center;">'+ad_id+'</td>';
-		content+='<td style="text-align: center;">'+hisDateStr+'</td>';
+		content+='<td style="text-align: center;">'
+			if(hisDateStr=='Invalid Date'||item.inqhis_date==null){
+				content+='확인중';
+			}else{
+				content+=hisDateStr;
+			}
+		content+='</td>';
 		content+='<td style="text-align: center;">' 
 			if(item.inq_state==0){
 				content+='미완료';
