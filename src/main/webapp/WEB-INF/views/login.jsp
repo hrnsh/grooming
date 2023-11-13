@@ -4,7 +4,7 @@
 <html>
 <head>
 <style>
-    table, th, td{
+/*     table, th, td{
         border: 1px solid black;
         border-collapse: collapse;
         padding: 5px 10px;
@@ -12,7 +12,101 @@
     
     input[type="submit"]{
     	height: 30px;
-    }    
+    }     */
+   
+   		body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            position: relative;
+            bottom: 240px;
+            left: 200px;
+            font-size: 30px;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            right: 50px;
+            position: relative;
+            padding: 30px; 
+            width: 350px; 
+        }
+
+        table {
+            width: 100%;
+            padding: 10px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 12px; /* 조정된 부분: 높이를 조절하려면 이 값을 조정하세요 */
+            margin-top: 10px; /* 조정된 부분: 상단 여백을 조절하려면 이 값을 조정하세요 */
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            width: 100%;
+            background-color: rgb(243, 208, 204);
+            color: rgb(115, 112, 112);
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 14px; /* 조정된 부분: 높이를 조절하려면 이 값을 조정하세요 */
+        }
+
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: rgb(227, 156, 147);
+        }
+
+        #regist,
+        #findID,
+        #findPW {
+            background-color: rgb(224, 224, 224);
+            color: rgb(115, 112, 112);
+            border: none;
+            padding: 8px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            padding: 12px 16px; /* 조정된 부분: 높이와 너비를 조절하려면 이 값을 조정하세요 */
+        }
+
+        #regist:hover,
+        #findID:hover,
+        #findPW:hover {
+            background-color: rgb(163, 161, 161);
+        }
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -20,7 +114,6 @@
 </head>
 <body>
 	<h2>LOGIN</h2>
-	<hr/>
 	<form action="logingo" method="post">
 	    <table>
 	        <tr>
@@ -35,7 +128,7 @@
 	                <input type="password" name="pw" value="" placeholder="비밀번호를 입력 하세요"/>
 	            </th>                
 	        </tr>
-	        <tr>
+	        <tr style="margin-top: 20px;">
 	            <th colspan="2">
 	                <input type="submit" value="login"/>
 	            </th>	        
