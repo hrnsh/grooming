@@ -202,7 +202,6 @@ button{
 			<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profButton">쪽지함</button>
 			<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profButton">내가 쓴 글</button>
-			<button onclick="location.href='./pfNotiList?user_id=${sessionScope.loginId}'" class="profButton">알림함</button>
 			<button onclick="location.href='./pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 		</div>
 		<!-- 내가 쓴 쪽지 -->
@@ -534,6 +533,31 @@ function delYesReceive(){
 			console.log(e)
 		}
 	});
+}
+
+
+var selectedDate;
+document.getElementById('datePickerSent').addEventListener('change', handleDateChange);
+function handleDateChange() {
+    // 변경된 날짜 값을 가져옴
+    var selectedDate = document.getElementById('datePickerSent').value;
+
+    // 콘솔에 로그 출력
+    console.log('날짜가 변경되었습니다:', selectedDate);
+    
+    $.ajax({
+        type: "get",
+        url: "dateFilter", // 여기에 실제 컨트롤러의 URL을 입력하세요.
+        data: { "selectedDate": selectedDate,"page":page},
+        dataType:'JSON',
+        success: function (data) {
+            console.log("Data sent successfully:", data);
+            sentListCall(data);
+        },
+        error: function (error) {
+            console.error("Error sending data:", error);
+        }
+    });  
 }
 
 

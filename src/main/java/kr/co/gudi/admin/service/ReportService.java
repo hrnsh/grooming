@@ -19,7 +19,7 @@ public class ReportService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired ReportDAO reportDao;
 	
-	public Map<String, Object> reportListCall(String ad_id, String page, String stateOption, int typeOption) {
+	public Map<String, Object> reportListCall(String ad_id, String page, String stateOption, String typeOption) {
 		int p = Integer.parseInt(page);
 		int offset = (p - 1) * 10;
 
@@ -35,9 +35,20 @@ public class ReportService {
 			stOption=1;
 		}
 		
+		int tpOption = 0;
+		if(typeOption.equals("review")){
+			tpOption=1;
+		}else if(typeOption.equals("comment")){
+			tpOption=2;
+		}else if(typeOption.equals("reserve")){
+			tpOption=3;
+		}
+		
 		if(stateOption.equals("all")) {
-			if(typeOption>=0) {
-				list = reportDao.typeListCall(offset, typeOption);
+			if(typeOption.equals("all")) {
+				list = reportDao.reportListCall(offset);
+			}else {
+				list = reportDao.typeListCall(offset, tpOption);
 			}
 		}else {
 			list = reportDao.optionListCall(offset, stOption);				

@@ -118,6 +118,15 @@ public class NoteController {
 		return "/note/pfNoteList";
 	}
 	
+	@RequestMapping(value="/dateFilter")
+	@ResponseBody
+	public Map<String, Object> dateFilter(@RequestParam String selectedDate,
+			@RequestParam String page) {
+		Map<String, Object> map = noteService.dateFilter(selectedDate,page);
+		logger.info("date : "+selectedDate);
+		return map;
+	}
+	
 	
 	
 }
