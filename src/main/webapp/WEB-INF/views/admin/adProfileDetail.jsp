@@ -180,7 +180,7 @@ adminlistCall();
 
 	$(".logo").on('click',function(){
 		
-		location.href='./';
+		location.href='./adProfile?ad_id=${sessionScope.ad_id}';
 		
 	});
 	
