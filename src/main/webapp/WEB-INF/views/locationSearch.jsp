@@ -304,13 +304,15 @@
 							
 							$(".company-detail").empty();
 							$(".review-container").empty();
+							
+							var companyName = $(this).find("span").text();
 						
 							for (var i = 0; i < companies.length; i++){
 								var company = companies[i];
 								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
 								var message = '<div style="padding:5px;">'
-					                + '<a href="#" class="companyLink">' + company.com_name + '</a><br>'
+					                + '<a href="javascript:void(0);" onclick="showCompanyDetail(' + company.com_name + ') return false;" class="companyLink">' + company.com_name + '</a><br>'
 					                + '평균 별점: ' + company.avg_star
 					                + '<br>'
 					                + '누적 이용자 수: ' + company.user_total
@@ -398,8 +400,6 @@
 			    kakao.maps.event.addListener(marker, 'click', function() {
 			        infowindow.open(map, marker);
 			    });
-			 	
-			    
 			}
 			
 			
@@ -443,7 +443,7 @@
 								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
 								var message = '<div style="padding:5px;">'
-					                + '<a href="#" class="companyLink">' + company.com_name + '</a><br>'
+					                + '<a href="javascript:void(0);" onclick="showCompanyDetail('+ company.com_name +')" class="companyLink">' + company.com_name + '</a><br>'
 					                + '평균 별점: ' + company.avg_star
 					                + '<br>'
 					                + '누적 이용자 수: ' + company.user_total
@@ -505,7 +505,7 @@
 					data: {"companyName": companyName},
 					dataType: "JSON",
 					success: function(companyDetail) {
-						console.log(companyDetail);
+						console.log("companyDetail: " + companyDetail);
 						
 						// 기존에 있던 내용을 비워줌
 			            $(".company-detail").empty();
@@ -518,7 +518,7 @@
 							data: {"companyName": companyName},
 							dataType: "JSON",
 							success: function(ticketPrice) {
-								console.log(ticketPrice);
+								console.log("ticketPrice: " + ticketPrice);
 								drawTicketList(ticketPrice);
 								
 								// 상세 정보가 있는 경우 상세 정보 창을 표시
