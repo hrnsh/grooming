@@ -88,7 +88,7 @@ border-radius: 5px;
 	border-collapse: collapse;
 	float: left;
 	border-radius: 5px;
-	padding: 0px 40px;
+	padding: 0px 30px;
 }
 
 #delete {
@@ -119,7 +119,7 @@ border-radius: 5px;
 
 #ucon{
 
-	width: 500px;
+	width: 400px;
 
 }
 
@@ -189,6 +189,20 @@ border-radius: 5px;
 #rpbt {border: 1px solid black; border-collapse: collapse; cursor: pointer;}
 
 
+#conp {
+
+	float: none;
+	
+
+
+}
+
+
+#getreply{
+
+	padding-left: 10px;
+
+}
 
 
 
@@ -253,18 +267,18 @@ border-radius: 5px;
 			
 			<pre>${list.b_content}</pre>
 		<c:if test="${photos.size()>0}">
-		<tr>
-			
-			<td>
+		
+			<tr>
+			<td >
 			<c:forEach items="${photos}" var="photo">
 			
-			<img src="/photo/${photo.newFileName}" width="500" alt="${photo.oriFileName}">
+			<img src="/photo/${photo.newFileName}" width="200" alt="${photo.oriFileName}">
 			
 			</c:forEach>
 			
 			
-		</td>
-		</tr>		
+			</td>
+				</tr>
 		</c:if> 
 			
 			</td>
@@ -299,19 +313,19 @@ border-radius: 5px;
  --%>
 		</th>
 		</tr>
-				<tr>
-			<td>
-			<c:if test="${can!=null}">
-			<input id="reply" type="text" />
+			<tr>
+				<td>
+					<c:if test="${can!=null}">
+					<input id="reply" type="text" />
+					
+					<div id="getreply">
+						<p>댓글달기</p>
+					</div>
+					</c:if>
+				</td>
+				<!-- <td>${bbs.content}</td> -->
 			
-			<div id="getreply">
-				<p>댓글달기</p>
-			</div>
-			</c:if>
-			</td>
-			<!-- <td>${bbs.content}</td> -->
-			
-		</tr>
+			</tr>
 
 		<thead>
 		<tr id="mb">
@@ -459,13 +473,16 @@ $("#modify").on('click',function(){
 });
 
 
+
 $("#getreply").on("click", function(){
 	reply = $("#reply").val();
 	console.log($("#reply").val());
 	location.href="boardreply?bnum=" + ${list.b_num}+'&reply='+reply;
 	
-	
+
 });
+
+
 
 	$("#list").on('click',function(){
 		
@@ -570,6 +587,7 @@ function rere (){
 	
 }
 	
+
 
 
 </script>

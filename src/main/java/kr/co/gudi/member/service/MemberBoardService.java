@@ -48,7 +48,7 @@ public class MemberBoardService {
 				
 				map.put("currPage", p);
 				
-				map.put("pages", max/5+1);
+				map.put("pages", max/5);
 				logger.info("list : "+list);
 				map.put("list", list);
 				
