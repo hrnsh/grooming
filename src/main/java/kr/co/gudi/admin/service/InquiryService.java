@@ -92,14 +92,14 @@ public class InquiryService {
 			list = inquiryDao.inquiryListCall(offset);
 		}
 		
-		ArrayList<InquiryDTO> list2 = new ArrayList<InquiryDTO>();
-		// searchList 함수 실행
-		if(searchTxt!=null) {
-			list2 = inquiryDao.searchList(offset, searchTxt, option);
-		}
+//		ArrayList<InquiryDTO> list2 = new ArrayList<InquiryDTO>();
+//		// searchList 함수 실행
+//		if(searchTxt!=null) {
+//			list2 = inquiryDao.searchList(offset, searchTxt, option);
+//		}
+//		map.put("list", list2);
 		
 		map.put("list", list);
-		map.put("list", list2);
 		int pages = inquiryDao.totalPage();
 		map.put("pages", pages);
 		if (p > pages) {
