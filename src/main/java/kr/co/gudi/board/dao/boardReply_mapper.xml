@@ -7,7 +7,7 @@
 
 		<insert id="boardReply" parameterType="String">
 		
-		insert into board_reply (b_num ,user_id,brep_date,brep_content,brep_state)values(#{param1},#{param2},now(),#{param3},"1")
+		insert into board_reply (b_num ,user_id,brep_date,brep_content,brep_state)values(#{param1},#{param2},now(),#{param3},1)
 		
 		</insert>
 		

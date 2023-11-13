@@ -52,19 +52,33 @@ public class BoardController {
 
 	
 	@RequestMapping (value = "/boardWrite")
-	public String boardWrite(MultipartFile[] photos, @RequestParam Map<String, String> params, HttpSession session) {
+	public String boardWrite(Model model ,MultipartFile[] photos, @RequestParam Map<String, String> params, HttpSession session) {
 		logger.info("file 갯수 : "+photos.length);
 		logger.info("params : "+params);
 		String admin = (String) session.getAttribute("admin");
 		logger.info("admin : "+admin);
-		if(admin!=null) {
-			String user_id = (String) session.getAttribute("ad_id");
-			return service.boardWrite(params,photos,user_id,admin);			
+		logger.info("params : "+ params.get("subject"));
+		if(params.get("subject").equals("")) {
+			model.addAttribute("msg","제목을 써주세요.");
+			return "/board/boardWrite";
 		}else {
+			
+			if(params.get("editorTxt").equals("")) {
+				model.addAttribute("msg","내용을 써주세요.");
+				return "/board/boardWrite";
+			}else {
 		
-		
-		String user_id = (String) session.getAttribute("loginId");
-		return service.boardWrite(params,photos,user_id,admin);
+				if(admin!=null) {
+					String user_id = (String) session.getAttribute("ad_id");
+					return service.boardWrite(params,photos,user_id,admin);			
+				}else {
+				
+				
+				String user_id = (String) session.getAttribute("loginId");
+				return service.boardWrite(params,photos,user_id,admin);
+				
+				}
+			}
 		
 		}
 	}

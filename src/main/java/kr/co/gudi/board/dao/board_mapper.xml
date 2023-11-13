@@ -116,8 +116,8 @@
 		
 		<insert id="boardReport" parameterType="String">
 		
-		insert into report (report_type,inq_date ,report_get ,inq_content ,inq_state ,user_id)
-			values("b",now(),#{param1},#{param2},"0",#{param3})
+		insert into report (report_type,report_date ,report_get ,report_content ,report_state ,user_id)
+			values(0,now(),#{param1},#{param2},0,#{param3})
 		
 		</insert>
 		
