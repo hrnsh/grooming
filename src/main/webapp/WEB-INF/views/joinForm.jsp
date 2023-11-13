@@ -102,7 +102,7 @@
     <input type = "password" name = "pw" placeholder="비밀번호를 입력해주세요"/>
     
     <p/>전화번호
-    <input type = "text" name = "phone" placeholder="'-'없이 입력해주세요"/>
+    <input type = "text" name = "phone" placeholder="'-' 없이 입력해주세요"/>
     
     <p/>이메일
     <input type = "email" name = "email" placeholder="이메일을 입력해주세요"/>
