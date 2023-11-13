@@ -120,5 +120,11 @@ button {
 	
 </body>
 <script>
+$(".logo").on('click',function(){
+	
+	location.href='./';
+	
+});
+
 </script>
 </html>

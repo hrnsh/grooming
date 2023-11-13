@@ -96,15 +96,10 @@ button {
 			</th>
 		</tr>
 	</table>
-		<button onclick="location.href='adLogout'" class="logoutBtn">로그아웃</button>
 	<table>
 		<tr>
 			<th>ID</th>
 			<th>${admin.ad_id}</th>
-		</tr>
-		<tr>
-			<th>PW</th>
-			<th>${admin.ad_pw}</th>
 		</tr>
 		<tr>
 			<th>이름</th>
@@ -122,20 +117,14 @@ button {
 			<th>직급</th>
 			<th>${admin.ad_position}</th>
 		</tr>
-		<tr>
-			<th colspan="2"><button onclick="location.href='adminprofileUpdateForm?ad_id=${sessionScope.ad_id}'" class = "button">프로필 수정</button></th>
-		</tr>
 	</table>
-	
-		<select id="positionSearchOption">
-			<option value="사장">사장</option>
-			<option value="부장">부장</option>
-			<option value="팀장">팀장</option>
-			<option value="대리">대리</option>
-			<option value="사원">사원</option>
+		<!-- <select id="positionsearch" name="positionsearch">
+			<option value="Boss">사장</option>
+			<option value="headofdepartment">부장</option>
+			<option value="Teamleader">팀장</option>
+			<option value="AssistantManager">대리</option>
+			<option value="Employee">사원</option>
 		</select>
-		
-		
 	<div style = "width : 45%; height : 500px; overflow : auto">
 	<table width = "45%" border = "0" cellspacing = "0" cellpadding = "0" >
 		<tr>
@@ -146,19 +135,13 @@ button {
 		<tbody id="adminlist">
 
 		</tbody>
-		<tbody id="adminSearchList">
-
-		</tbody>
 	</table>
-	</div>
+	</div> -->
 </body>
 <script>
+adminlistCall();
 
-
-
-adminlistCall(); // 하나에 다 하자 ***대공사 예정***
-/* adminSearchListCall(); */
-
+	
 	function adminlistCall(){
 		$.ajax({
 			type : 'get',
@@ -193,61 +176,8 @@ adminlistCall(); // 하나에 다 하자 ***대공사 예정***
 		$('#adminlist').append(content);
 	}
 	
-	var position = null;
-	
-	
-	
-	$('#positionSearchOption').change(function() {
-		console.log($(this).val());
-		position = $(this).val();
-		console.log("position : " + position);
-		adminSearchListCall();
+	console.log(adminlistCall);
 
-	});
-	
-	
-
-	function adminSearchListCall() {
-		var ad_position = position;
-		
-		console.log("ad_position!!! : " + ad_position);
-		
-		$.ajax({
-			type:'get',
-			url:'adminSearchList',
-			data:{'positionSearchOption':$('#positionSearchOption').val()},
-				dataType:'JSON',
-				success:function(data){
-					console.log("어드민 검색 리스트 : "+ data.adminSearchList);
-					drawadminSearchList(data);
-
-				},
-				error:function(e){
-					console.log(e)
-				}
-			});
-		}
-	
-	function drawadminSearchList(adminSearchList) {
-		console.log("!!!adminSearchList : "+adminSearchList.adminSearchList);
-		
-		var content='';
-		
-		adminSearchList.adminSearchList.forEach(function(item, positionSearchOption){
-			content += '<tr>';
-			content += '<th>'+item.ad_id+'</th>';
-			content += '<th>'+item.ad_name+'</th>';
-			content += '<th>'+item.ad_position+'</th>';
-			content += '<th><button id="adpfdetail" onclick='+'"location.href='+"'adpfdetail?ad_id="+item.ad_id+"'"+'">상세보기</button></th>';
-			content += '<tr>';
-	
-		});
-		
-		$('#adminSearchList').empty();
-		$('#adminSearchList').append(content);
-	
-	}
-	
 	$(".logo").on('click',function(){
 		
 		location.href='./';
