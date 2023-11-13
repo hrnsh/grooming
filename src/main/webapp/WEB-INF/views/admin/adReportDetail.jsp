@@ -122,7 +122,7 @@ button{
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		<div class="detailBox">
-			<span style="left: 70px; top:20px; position: relative; font-size:20px; border-bottom:1px solid black;">처리 내역</span>
+			<span style="left: 70px; top:20px; position: relative; font-size:20px; border-bottom:1px solid black;">신고 내역</span>
 			<div style="width:90%; height:80%; position:relative; top: 30px;overflow:scroll;">
 			<table>
 				<tr>
@@ -172,19 +172,15 @@ button{
 						<table style="width: 92%;">
 							<tr>
 								<td style="width: 70px;">처리 일자</td>
-								<td colspan="3">날짜 데이터</td>
+								<td colspan="3">${reportDetail.rephis_date}</td>
 							</tr>
 							<tr>
 								<td>담당자</td>
-								<td>이름</td>
-							</tr>
-							<tr>
-								<td>제목</td>
-								<td>라라라랄</td>
+								<td>${reportDetail.ad_id}</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">처리 내용</td>
-								<td>내용! </td>
+								<td>${reportDetail.rephis_content}</td>
 							</tr>
 						</table>
 						</div>

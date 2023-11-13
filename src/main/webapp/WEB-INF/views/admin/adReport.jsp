@@ -201,8 +201,8 @@ function drawReportList(reportList){
 		content+='<td style="text-align: center;">'+item.user_id+'</td>';
 		content+='<td style="text-align: center;">'+ad_id+'</td>';
 		content+='<td style="text-align: center;">'
-			if(hisDateStr=='Invalid Date'){
-				content+=dateStr;
+			if(hisDateStr=='Invalid Date'||item.rephis_date==null){
+				content+='확인중';
 			}else{
 				content+=hisDateStr;
 			}
