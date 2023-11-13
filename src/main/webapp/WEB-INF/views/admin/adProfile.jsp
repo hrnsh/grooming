@@ -153,7 +153,11 @@ button {
 	</div>
 </body>
 <script>
-
+$(".logo").on('click',function(){
+	
+	location.href='./adProfile?ad_id=${sessionScope.ad_id}';
+	
+});
 
 
 adminlistCall(); // 하나에 다 하자 ***대공사 예정***
@@ -248,11 +252,9 @@ adminlistCall(); // 하나에 다 하자 ***대공사 예정***
 	
 	}
 	
-	$(".logo").on('click',function(){
-		
-		location.href='./';
-		
-	});
+
+	
+	
 	
 </script>
 </html>

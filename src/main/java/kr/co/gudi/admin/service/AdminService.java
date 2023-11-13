@@ -2,7 +2,6 @@ package kr.co.gudi.admin.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +18,7 @@ public class AdminService {
 	
 	@Autowired AdminDAO dao;
 
+	
 	public AdminDTO adminProfile(String ad_id) {
 		return dao.adminProfile(ad_id);
 	}

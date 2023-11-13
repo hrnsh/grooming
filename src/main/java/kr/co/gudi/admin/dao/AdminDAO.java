@@ -3,10 +3,13 @@ package kr.co.gudi.admin.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import kr.co.gudi.admin.dto.AdminDTO;
 
 public interface AdminDAO {
 
+	
 	AdminDTO adminProfile(String ad_id);
 
 	ArrayList<AdminDTO> adminlist();
