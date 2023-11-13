@@ -88,7 +88,7 @@
 			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 			}
 			
-			.review-container {
+			.review {
 			    position: absolute;
 			    top: 150px;
 			    left: 63%;
@@ -142,17 +142,16 @@
                 <div class="company-detail"></div>
             </div>
             
-            <div class="review-container">
-            	<button id="closeReviewList">닫기</button>
-	        	<h3>리뷰</h3>
-	           	<ul id="reviewList"></ul>
-	        </div>
+            <div class="review">
+            	<button id="closeReview-container">닫기</button>
+            	<div class="review-container"></div>
+            </div>
         </div>
 		
 		<script>
 			$(".companyListContainer").hide();
 			$(".detail-container").hide();
-			$(".review-container").hide();
+			$(".review").hide();
 			
 			// 각 섹션에 닫기 기능 추가
 		    $("#closeCompanyList").on("click", function () {
@@ -164,8 +163,8 @@
 		        $(".detail-container").hide();
 		    });
 
-		    $("#closeReviewList").on("click", function () {
-		        $(".review-container").hide();
+		    $("#closeReview-container").on("click", function () {
+		        $(".review").hide();
 		    });
 			
 			var container = document.getElementById("map");
@@ -192,8 +191,7 @@
 				// 키워드 검색 시 열었던 업체 리스트, 상세보기, 리뷰 리스트 숨기기
 			    $(".companyListContainer").hide();
 			    $(".detail-container").hide();
-			    $(".review-container").hide();
-					
+			    $(".review").hide();
 				// 이전 검색 결과 항목들을 제거
 			 	removeAllChildNods(document.getElementById("companyList"));
 				 
@@ -304,15 +302,13 @@
 							
 							$(".company-detail").empty();
 							$(".review-container").empty();
-							
-							var companyName = $(this).find("span").text();
 						
 							for (var i = 0; i < companies.length; i++){
 								var company = companies[i];
 								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
 								var message = '<div style="padding:5px;">'
-					                + '<a href="javascript:void(0);" onclick="showCompanyDetail(' + company.com_name + ') return false;" class="companyLink">' + company.com_name + '</a><br>'
+					                + company.com_name + '<br>'
 					                + '평균 별점: ' + company.avg_star
 					                + '<br>'
 					                + '누적 이용자 수: ' + company.user_total
@@ -355,7 +351,7 @@
 				                showCompanyDetail(companyName);
 				                
 				            	 // 리뷰 컨테이너를 숨김
-				                $(".review-container").hide();
+				                $(".review").hide();
 					        });
 							
 					        sortCompaniesByDistance();
@@ -443,7 +439,7 @@
 								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
 								var message = '<div style="padding:5px;">'
-					                + '<a href="javascript:void(0);" onclick="showCompanyDetail('+ company.com_name +')" class="companyLink">' + company.com_name + '</a><br>'
+					                + company.com_name + '<br>'
 					                + '평균 별점: ' + company.avg_star
 					                + '<br>'
 					                + '누적 이용자 수: ' + company.user_total
@@ -493,7 +489,7 @@
 				
 				// 새로운 키워드로 검색할 때 업체 상세 정보 창을 숨김
 			    $(".detail-container").hide();
-			    $(".review-container").hide();
+			    $(".review").hide();
 			});
 			
 			function showCompanyDetail(companyName) {
@@ -505,7 +501,7 @@
 					data: {"companyName": companyName},
 					dataType: "JSON",
 					success: function(companyDetail) {
-						console.log("companyDetail: " + companyDetail);
+						console.log(companyDetail);
 						
 						// 기존에 있던 내용을 비워줌
 			            $(".company-detail").empty();
@@ -518,7 +514,7 @@
 							data: {"companyName": companyName},
 							dataType: "JSON",
 							success: function(ticketPrice) {
-								console.log("ticketPrice: " + ticketPrice);
+								console.log(ticketPrice);
 								drawTicketList(ticketPrice);
 								
 								// 상세 정보가 있는 경우 상세 정보 창을 표시
@@ -563,13 +559,13 @@
 						content +='<h2>'+item.com_name+'</h2>';
 						content += '<div id="btn"><button class="contact-btn" data-company="' + item.com_name + '">문의하기</button>';
 			            content += '<button class="reserve-btn" data-company="' + item.com_name + '">예약하기</button></div>';
-						content +='<div">'+item.address+ "<br>";
+						content +='<div>'+item.address+ "<br>";
 						content +="영업시간: " + item.com_time + "<br>";
 						content +="픽업 가능 여부: " + item.pickup + "<br>";
 						content +="전화번호: " + item.phone + "<br>";
 						content +="수용 가능 동물 수: " + item.accept + "<br>";
 						content +="평균 별점: " + item.avg_star + "<br>";
-						content +="누적 이용자 수: " + item.user_total + "<br>";
+						content +="누적 이용자 수: " + item.user_total + "<br></div>";
 					});
 					
 					$(".company-detail").append(content);
@@ -618,29 +614,31 @@
 				console.log("displayReviews 호출!");
 				console.log(reviews);
 				
-				var reviewList = $("#reviewList");
+				var reviewList = $(".review-container");
 				
 				var content="";
 				
 				reviewList.empty();
 				
 				if(reviews.length > 0) {
-					$(".review-container").show();
+					$(".review").show();
 					
 					reviews.forEach(function(item, idx) {
 						var date = new Date(item.rev_date);
 					    var dateStr = date.toLocaleDateString("ko-KR");
-						
-						content += '<strong>작성자:</strong> ' + item.user_id + '<br>';
+					    
+					   
+						content += '<div><strong>작성자:</strong> ' + item.user_id + '<br>';
 						content += '<strong>제목:</strong> ' + item.rev_subject + '<br>';
 						content += '<strong>별점:</strong> ' + item.rev_star + '<br>';
 						content += '<strong>내용:</strong> ' + item.rev_content + '<br>';
-						content += '<strong>작성일:</strong> ' + dateStr + '<br>';
+						content += '<strong>작성일:</strong> ' + dateStr + '<br></div>';
 					});
 						
 					$(".review-container").append(content);
 				
 				} else{
+					$(".review").show();
 					// 리뷰가 없을 때 메시지를 표시
 			        content = '<p>리뷰가 존재하지 않습니다.</p>';
 			        $(".review-container").append(content);
