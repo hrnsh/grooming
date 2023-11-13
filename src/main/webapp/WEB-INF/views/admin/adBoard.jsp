@@ -5,12 +5,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
-<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
-<link rel="stylesheet" href="resources/css/adminprofileCommon.css" type="text/css">
+<link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
+
 <style>
 
 .nav {
@@ -195,6 +194,19 @@ button {
 	align-items: left;
 }
 
+.profButton {
+
+	font-size: 20px;
+	text-align: center;
+
+}
+
+.nav {
+	height: 150px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 40px;
+}
 
 </style>
 </head>
@@ -205,50 +217,15 @@ button {
 		</div>
 	</nav>
 
-	<table>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adProfile?ad_id=${sessionScope.loginId}'"
-					class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adWrite?ad_id=${sessionScope.loginId}'"
-					class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adUserManage?ad_id=${sessionScope.loginId}'"
-					class="button">회원 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adReservationManage?ad_id=${sessionScope.loginId}'"
-					class="button">회원 예약 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adInquiry?ad_id=${sessionScope.loginId}'"
-					class="button">일반 문의 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adReport?ad_id=${sessionScope.loginId}'"
-					class="button">신고 문의 관리</button>
-			</th>
-		</tr>
-	</table>
+	<main>
+		<div class="profButtonBox">
+			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
+			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
+			<button onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 예약 관리</button>
+			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
+			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
+		</div>
 		
 		<div class="sentListBox">
 			<div class="sentListContent">
@@ -282,9 +259,7 @@ button {
 		</div>
 		<!-- 모달 -->
 
-	<footer>
-	
-	</footer>
+</main>
 </body>
 <script>
 var dday = 0;

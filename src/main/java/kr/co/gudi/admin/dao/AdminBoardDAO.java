@@ -26,9 +26,11 @@ public interface AdminBoardDAO {
 
 	AdBoardDTO re(String bnum);
 
-	void boardUpdate(String subject, String editorTxt, String bnum);
-
 	ArrayList<AdBoardDTO> adboardList();
+
+	void adboardUpdate(AdBoardDTO dto);
+
+	void adminboardwritePhoto(int idx, String oriFileName, String newFileName);
 
 	
 

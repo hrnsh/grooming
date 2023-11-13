@@ -65,9 +65,9 @@
 	</select>
 	
 	
-	<update id="boardUpdate" parameterType="String">
-		
-	UPDATE adminboard SET adb_subject = "${param1}", adb_content = "${param2}" WHERE b_num = ${param3}
+	<update id="adboardUpdate" parameterType="kr.co.gudi.admin.dto.AdBoardDTO">
+	
+	UPDATE adminboard SET adb_subject = "${adb_subject}", adb_content = "${adb_content}" WHERE b_num = ${b_num}
 		
 	</update>
    
@@ -77,6 +77,12 @@
    
    </select>
    
+   	<insert id="adminboardwritePhoto" parameterType="String">
+		
+		insert into photo (photo_code,photo_n,oriFileName,newFileName)
+			values("adb",${param1},"${param2}","${param3}")
+		
+	</insert>
    
    
    </mapper>

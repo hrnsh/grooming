@@ -1,5 +1,8 @@
 package kr.co.gudi.admin.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gudi.admin.dao.AdminBoardDAO;
 import kr.co.gudi.admin.dto.AdBoardDTO;
@@ -20,6 +24,8 @@ public class AdminBoardService {
 	@Autowired AdminBoardDAO dao;
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
+	private String root = "C:/upload/";
 
 	public Map<String, Object> admyBoardList(String page, String loginId, String date) {
 		
@@ -112,10 +118,92 @@ public class AdminBoardService {
 
 
 
-	public void boardUpdate(String subject, String editorTxt, String bnum) {
-		dao.boardUpdate(subject,editorTxt,bnum);
-		
-	}
+	 public String adboardUpdate(Map<String, String> params, MultipartFile[] photos, String bnum, String uid) {
+
+			// bbs 테이블에 insert 한 글의 idx(auto_increment) 값을 가져오기
+			//조건 1. 파라메터는 DTO 형태로 넣어야 한다.
+			String page = "redirect:/boardMain";
+			
+			
+	
+			AdBoardDTO dto = new AdBoardDTO();
+			dto.setAdb_subject(params.get("subject"));
+			dto.setAd_id(uid);
+			dto.setB_num(Integer.parseInt(bnum));
+			dto.setAdb_content(params.get("editorTxt"));
+			logger.info(bnum);
+			dto.setB_num(Integer.parseInt(bnum));
+			logger.info("dto값" + dto.getAdb_subject());
+			logger.info("dto값" + dto.getAd_id());
+			logger.info("dto값" + dto.getAdb_content());
+			logger.info("dto값" + dto.getAd_id());
+			logger.info("dto값" + dto.getB_num());
+			dao.adboardUpdate(dto);
+			// 생성된 pk 가져오기
+			// photo 테이블에도 insert
+			int idx = dto.getB_num();
+			logger.info("idx : "+idx);
+			
+			logger.info("dto.getB_num()의 값 : "+dto.getB_num());
+			if (idx>0) {
+				try {
+					saveFile(idx, photos,uid);
+					page = "redirect:/boardMain";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+
+
+			
+			return page;
+	 
+	 
+	 
+	 }
+	
+	
+		private void saveFile(int idx, MultipartFile[] photos, String admin) throws Exception {
+			
+			
+			for (MultipartFile photo : photos) {
+				String oriFileName = photo.getOriginalFilename();
+				logger.info("oriFileName : "+oriFileName);
+				logger.info("oriFileName : "+idx+oriFileName);
+				if (!oriFileName.equals("")) {
+					
+					// 1. 파일이름 변경
+					String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+					String newFileName = System.currentTimeMillis()+ext;
+					
+					// 2. 파일 저장
+					byte[] arr = photo.getBytes();
+					Path path = Paths.get(root+newFileName);
+					Files.write(path, arr);
+					
+					//3. 파일명, 변경된파일명, idx를 photo 테이블에 추가
+					
+						
+						logger.info("admin 사진저장 : "+admin);
+						dao.adminboardwritePhoto(idx,oriFileName,newFileName);
+					
+					
+				}
+			}
+			
+			
+			
+			
+
+			
+		}
+	
+	
+	
+	
+	
 
 	public Map<String, Object> adboardList() {
 		

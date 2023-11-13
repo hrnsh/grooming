@@ -210,7 +210,6 @@ button{
 			<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profButton">쪽지함</button>
 			<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profButton">내가 쓴 글</button>
-			<button onclick="location.href='./pfNotiList?user_id=${sessionScope.loginId}'" class="profButton">알림함</button>
 			<button onclick="location.href='./pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 		</div>
 		
@@ -222,7 +221,7 @@ button{
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="allSent" class="checkCol"/></th>
+							<th><input type="checkbox" id="allSent" class="checkCol"/>선택</th>
 							<th class="subjectCol">제목</th>
 							<th class="dateCol">날짜</th>
 							<th class="idCol">조회수</th>
