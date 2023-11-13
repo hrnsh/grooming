@@ -64,7 +64,7 @@
 	border : 1px solid black;
 	border-collapse: collapse;
 	padding: 10px 40px;
-	margin-left:19%;
+	margin-left:11%;
 	font-size : 30px;
 	float: left;
 	border-radius: 5px;
@@ -120,14 +120,22 @@ width:120px;
 
 }
 
+.nav {
+	height: 150px;
+	display: flex;
+	justify-content: space-between;
+	padding-right: 1500px;
+	padding-top: 30px;
+}
+
 </style>
 </head>
 <body>
-
+	<nav class="nav">
 		<div class="logo">
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-
+	</nav>
 	<div id="userfilter" >회원글</div>
 	<div id="deptfilter">업체글</div>
 	<h3 id="title">회원게시판</h3>

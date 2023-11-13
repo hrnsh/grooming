@@ -29,6 +29,8 @@ body{
 	    margin-right:auto;
 		padding-top: 90px;
 		padding-bottom: 90px;
+		
+		
 
 }
 
@@ -75,9 +77,10 @@ float: left;
 
 #content{
 
-border: 1px solid gray;
+border-top: 1px solid black;
+border-left: 1px solid black;
+border-right: 1px solid black;
 border-collapse: collapse;
-height: 800px;
 border-radius: 5px;
 
 }
@@ -108,7 +111,7 @@ border-radius: 5px;
 #getreply, #list, #delete, #modify{
 
 	cursor: pointer;
-
+	
 
 }
 #uid,#ucon,#ure{
@@ -143,6 +146,17 @@ border-radius: 5px;
 	width : 10px;
 
 }
+
+#conp{
+
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-collapse: collapse;
+
+}
+
+
 
 </style>
 </head>
@@ -199,22 +213,23 @@ border-radius: 5px;
 			<td id="content">
 			
 			<pre>${list.adb_content}</pre>
+			</td>
 		<c:if test="${photos.size()>0}">
 		<tr>
 			
-			<td>
+			<td id="conp">
 			<c:forEach items="${photos}" var="photo">
 			
-			<img src="/photo/${photo.newFileName}" width="500" alt="${photo.oriFileName}">
+			<img src="/photo/${photo.newFileName}" width="200" alt="${photo.oriFileName}">
 			
 			</c:forEach>
 			
 			
-		</td>
+			</td>
 		</tr>		
 		</c:if> 
 			
-			</td>
+			
 			
 		</tr>
 		

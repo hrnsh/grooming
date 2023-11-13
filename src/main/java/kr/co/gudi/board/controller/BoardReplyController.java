@@ -24,14 +24,17 @@ public class BoardReplyController {
 	
 	
 	@RequestMapping(value = "boardreply")
-	public String boardreply(@RequestParam String bnum, @RequestParam String reply, HttpSession session ) {
+	public String boardreply(@RequestParam String bnum, @RequestParam String reply, HttpSession session,Model model ) {
 		logger.info("댓글 저장 컨트롤러 실행");
 		logger.info("reply : "+reply);
 		logger.info("bnum : "+bnum);
 		logger.info("bnum : "+session);
+		if(reply.equals("")) {
+			model.addAttribute("msg","댓글 내용을 적어주세요.");
+		}else {
 		String id = (String) session.getAttribute("loginId");
 		service.boardReply(bnum,id,reply);
-		
+		}
 		
 		return "redirect:/boardDetail?b_num="+bnum;
 	}
