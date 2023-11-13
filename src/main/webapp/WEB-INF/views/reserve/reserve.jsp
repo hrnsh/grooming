@@ -66,12 +66,15 @@ $(function() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                // 성공적으로 응답을 받았을 때 처리할 코드
-                console.log("서버 응답: " + JSON.stringify(response));
-                //예약 데이터 저장
-                var reservedDates = response;        
-    			var enableDays = 90;
-    
+            	 var reservedDates = response.findRev.map(function(item) {
+                     // formatted_date를 'yy-mm-dd' 형식으로 변환
+                     return {
+                         formatted_date: $.datepicker.formatDate("yy-mm-dd", new Date(item.formatted_date)),
+                         reservation_count: item.reservation_count
+                     };
+                 });
+    		
+            	 var enableDays = 90;
    			 $("#datepicker").datepicker({  	
      			 beforeShowDay: function(date) {
        			 var dateString = $.datepicker.formatDate("yy-mm-dd", date);
@@ -86,9 +89,10 @@ $(function() {
 				
        			// reservedDates 배열에서 해당 날짜의 예약 건수 가져오기
                  var reservationCount = getReservationCount(dateString, reservedDates);
-                 if (reservationCount >= 10) {
+                console.log("뭐라고말좀해봐"+reservationCount); 
+       			if (reservationCount >= 5) {
                      // 예약 건수가 10개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "10개 이상 예약됨"];
+                     return [false, "", "예약됨"];
                  }
 
          		 // 나머지 날짜는 선택 가능
@@ -311,12 +315,12 @@ $(function() {
   <input type="text" id="datepicker" class="dtp">
   
   <div id="revdetail">
-    <form action="booking" method="post" display="none">
+    <form action="booking" method="post">
     <a href="">업체명</a><br>   
     &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="Am" value="오전권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Pm" value="오후권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Apm" value="종일권" />
-	<input type="hidden" id="com_id" name="com_id" value="'${com_id}'" />
+	<input type="hidden" id="com_id" name="com_id" value="${com_id}" />
     <table>
 			<tr>
 				<th>예약 시작 시간</th>

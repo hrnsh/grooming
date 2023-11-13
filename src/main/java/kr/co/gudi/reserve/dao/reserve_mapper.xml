@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="lat" resultType="Map">
-		SELECT lat,lon FROM company where user_id='abcd001'
+		SELECT lat,lon FROM company where user_id=#{param1}
 	</select>	
 	
 	<select id="tPrice" resultType="String">
@@ -62,19 +62,24 @@
 	
 	<select id="revInfo" resultType="hashmap" parameterType="string">
     <![CDATA[
-        SELECT dates.date as formatted_date, COUNT(reserve.r_num) as reservation_count
-        FROM (
-            SELECT DISTINCT DATE_ADD(MIN(DATE(r_start)), INTERVAL a.a DAY) as date
-            FROM reserve
-            CROSS JOIN (
-                SELECT 0 as a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-            ) as a
-            WHERE com_id = #{param1}
-            GROUP BY a.a
-        ) as dates
-        LEFT JOIN reserve ON DATE(dates.date) BETWEEN DATE(reserve.r_start) AND DATE(reserve.r_end) AND reserve.com_id = #{param1}
-        GROUP BY dates.date
-        ORDER BY dates.date;
+        SELECT
+    date_range.date AS formatted_date,
+    COUNT(reserve.r_num) AS reservation_count
+FROM (
+    SELECT DISTINCT
+        DATE_ADD(STR_TO_DATE(r_start, '%Y-%m-%d'), INTERVAL a.a DAY) AS date
+    FROM reserve
+    CROSS JOIN (
+        SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+    ) AS a
+    WHERE com_id = #{param1}
+    AND STR_TO_DATE(r_start, '%Y-%m-%d') BETWEEN CURDATE() AND CURDATE() + INTERVAL 89 DAY
+) AS date_range
+LEFT JOIN reserve
+    ON date_range.date BETWEEN STR_TO_DATE(reserve.r_start, '%Y-%m-%d') AND STR_TO_DATE(reserve.r_end, '%Y-%m-%d')
+    AND reserve.com_id = #{param1}
+GROUP BY date_range.date
+ORDER BY formatted_date;
     ]]>
 </select>
 	

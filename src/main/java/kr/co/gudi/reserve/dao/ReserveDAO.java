@@ -13,7 +13,7 @@ public interface ReserveDAO {
 
 	List<ReserveDTO> myAni(String user_id);
 
-	HashMap<String, Object> lat();
+	HashMap<String, Object> lat(String com_id);
 
 	String tPrice();
 
