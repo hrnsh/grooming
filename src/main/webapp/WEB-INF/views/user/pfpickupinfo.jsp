@@ -364,5 +364,11 @@ function ticketpricedelete(){
 	});
 }
  
+$(".logo").on('click',function(){
+	
+	location.href='./';
+	
+});
+ 
 </script>
 </html>

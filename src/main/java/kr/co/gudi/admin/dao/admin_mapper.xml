@@ -15,12 +15,12 @@
 		select ad_id,ad_name,ad_position from admin
 	</select>
 	
+	<select id="adminSearchList" resultType="kr.co.gudi.admin.dto.AdminDTO">
+		select ad_id,ad_name,ad_position from admin where ad_position = #{param1}
+	</select>
+	
 	<update id="adminprofileupdate" parameterType="hashmap">
-		update admin set
-		ad_pw=#{ad_pw}
-		,ad_phone=#{ad_phone}
-		where
-		ad_id=#{ad_id}
+		update admin set	ad_pw=#{ad_pw},ad_phone=#{ad_phone} where	ad_id=#{ad_id}
 	</update>
 	
 	<select id="adpfdetail" resultType="kr.co.gudi.admin.dto.AdminDTO">

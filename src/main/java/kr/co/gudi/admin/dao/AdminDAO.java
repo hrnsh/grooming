@@ -17,4 +17,7 @@ public interface AdminDAO {
 
 	AdminDTO adpfdetail(String ad_id);
 
+	ArrayList<AdminDTO> adminSearchList(String positionSearchOption);
+
+
 }

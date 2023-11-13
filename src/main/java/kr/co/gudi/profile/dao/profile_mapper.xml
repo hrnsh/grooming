@@ -84,4 +84,14 @@
 		delete from ticket_price where t_num = #{param1}
 	</delete>
 	
+	<insert id="savePhoto">
+		INSERT INTO photo (photo_code, photo_n, oriFileName, newFileName)
+			VALUES (#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	
+	<insert useGeneratedKeys="true" keyColumn="Com_num" keyProperty="Com_num" id="savecompic" parameterType="kr.co.gudi.admin.dto.InquiryDTO">
+		INSERT INTO company (user_id)
+			VALUES (#{user_id})
+	</insert>
+	
 </mapper>

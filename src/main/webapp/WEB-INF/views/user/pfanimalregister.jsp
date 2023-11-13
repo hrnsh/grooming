@@ -191,6 +191,11 @@ console.log("listCall : " + listCall);
 		$('#list').append(content);
 	}
 	
+	$(".logo").on('click',function(){
+		
+		location.href='./';
+		
+	});
 
 </script>
 </html>

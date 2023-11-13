@@ -2,6 +2,7 @@ package kr.co.gudi.profile.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gudi.profile.dto.ProfileDTO;
 import kr.co.gudi.profile.service.ProfileService;
@@ -154,16 +156,32 @@ public class ProfileController {
 		return page;
 	}
 	
-	@RequestMapping(value = "/comregister")
-	@ResponseBody
-	public HashMap<String, Object> comregister(@RequestParam HashMap<String, String> params){
-		logger.info("comregister params : " + params );
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		int row = service.comregister(params);
-		result.put("success", row);
-		
-		return result;
-	}
+//	@RequestMapping(value = "/comregister")
+//	@ResponseBody
+//	public HashMap<String, Object> comregister(@RequestParam HashMap<String, String> params){
+//		logger.info("comregister params : " + params );
+//		HashMap<String, Object> result = new HashMap<String, Object>();
+//		int row = service.comregister(params);
+//		result.put("success", row);
+//		
+//		return result;
+//	}
+	
+//	@RequestMapping(value = "/comregister")
+//	public String comregister(MultipartFile photos, @RequestParam Map<String, String> params) {
+//		logger.info("params : " + params);
+//		return service.comregister(params, photos);
+//	}
+	
+//	@RequestMapping(value = "/comregister")
+//	public String comregister(@RequestParam HashMap<String, String> params, MultipartFile photo, HttpSession session) throws Exception {
+//		
+//		String loginId = (String)session.getAttribute("loginId");
+//		ProfileDTO dto = service.comregister(photo);
+//	
+//		return  "redirect:/profile?user_id="+params.get("user_id");
+//
+//	}
 	
 	@RequestMapping(value="/comlistCall")
 	@ResponseBody
@@ -179,6 +197,8 @@ public class ProfileController {
 			ArrayList<ProfileDTO> comlist = service.comlist(user_id);
 			result.put("comlist", comlist);
 		}
+		
+		
 		return result;
 	}
 	
@@ -292,6 +312,28 @@ public class ProfileController {
 			logger.info("delcount : " + ticketpricedelete_count);
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/nomalLogout")
+	public String adLogout(HttpSession session) {
+		session.removeAttribute("loginId");
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/compicregistForm")
+	public String adInquirySend(Model model, @RequestParam String com_num) {
+		logger.info("업체 사진 등록 : " + com_num);
+		model.addAttribute("com_num",com_num);
+		return "/user/compicregistForm";
+	}
+	
+	@RequestMapping(value = "/compicregist", method = RequestMethod.POST)
+	public String compicregist(MultipartFile photo, HttpSession session, Model model, @RequestParam String com_num) throws Exception{
+		String loginId = (String) session.getAttribute("loginId");
+		service.savecompic(photo, loginId);
+		model.addAttribute("com_num", com_num);
+		
+		return "redirect:/pickupinfoForm";
 	}
 	
 }

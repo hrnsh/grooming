@@ -41,4 +41,12 @@ public interface ProfileDAO {
 
 	int ticketpricedelete(String t_num);
 
+	static void savecompic(ProfileDTO dto) {
+		
+	}
+
+	static void savePhoto(String code, int num, String oriFileName, String newFileName) {
+		
+	}
+
 }

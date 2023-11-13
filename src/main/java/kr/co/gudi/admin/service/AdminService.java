@@ -2,6 +2,7 @@ package kr.co.gudi.admin.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,5 +43,12 @@ public class AdminService {
 	public AdminDTO adpfdetail(String ad_id) {
 		return dao.adpfdetail(ad_id);
 	}
+
+	public ArrayList<AdminDTO> adminSearchList(String positionSearchOption) {
+		return dao.adminSearchList(positionSearchOption);
+	}
+
+
+
 }
 

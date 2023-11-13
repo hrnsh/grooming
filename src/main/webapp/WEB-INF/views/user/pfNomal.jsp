@@ -62,6 +62,8 @@ button {
 		<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="button">내가 쓴 글</button>
 		<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="button">신고 내역</button>
 	</div>
+	
+		<button onclick="location.href='nomalLogout'" class="logoutBtn">로그아웃</button>
 			
 	<table>
 		<tr>
@@ -127,7 +129,6 @@ comlistCall();
 console.log("listCall : " + listCall);
 	
 	function listCall(){
-	/* $('#listCall').on('click', function() { */
 		var user_id = '${sessionScope.loginId}';
 		console.log("profile user_id : " + user_id);
 
@@ -256,5 +257,12 @@ console.log("listCall : " + listCall);
 				$('#comlist').append(content);
 				
 		}
+		
+		$(".logo").on('click',function(){
+			
+			location.href='./';
+			
+		});
+		
 </script>
 </html>

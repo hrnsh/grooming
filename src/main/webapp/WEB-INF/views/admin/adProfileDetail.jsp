@@ -178,6 +178,12 @@ adminlistCall();
 	
 	console.log(adminlistCall);
 
+	$(".logo").on('click',function(){
+		
+		location.href='./';
+		
+	});
+	
 </script>
 </html>
 

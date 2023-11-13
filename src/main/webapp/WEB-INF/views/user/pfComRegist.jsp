@@ -114,15 +114,24 @@ button {
 				<input type="radio" name="pickup" value="N" />픽업 불가능
 			</th>
 		</tr>
+		</table>
 		
+		
+		<form action="compicregistForm" method="post" enctype="multipart/form-data">
+		<table>
 		<tr>
 			<th>사진 등록</th>
-			<th colspan="4"></th>
+			<th colspan="4">
+				<input type="file" name="photo" class="fileBtn"/>
+				<input type="submit" value="보내기" class="sendBtn" />
+			</th>
 		</tr>
-	</table>
+		</table>
+		</form>
 </body>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	
+
 	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 	function sample4_execDaumPostcode() {
 		new daum.Postcode(
@@ -225,6 +234,11 @@ button {
 	});
 	
 	
+	$(".logo").on('click',function(){
+		
+		location.href='./';
+		
+	});
 	
 </script>
 </html>

@@ -250,5 +250,11 @@ function drawList(updatelist) {
 	$('#updatelist').append(content);
 }
 
+$(".logo").on('click',function(){
+	
+	location.href='./';
+	
+});
+
 </script>
 </html>
