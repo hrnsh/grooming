@@ -5,14 +5,88 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <style>
-    table, th, td{
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding: 5px 10px;
-    }
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="button"],
+        input[type="submit"] {
+            width: 100%;
+            background-color: rgb(243, 208, 204);
+            color: rgb(115, 112, 112);
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="button"]:hover,
+        input[type="submit"]:hover {
+            background-color: rgb(227, 156, 147);
+        }
+
+        .label1,
+        .label2 {
+            color: #e74c3c;
+        }
+        
+        .arrowBtn{
+        	position: absolute;
+			right: 930px;
+			top: 60px;
+			
+			background-color: rgb(243, 208, 204);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
 </style>
 </head>
 <body>
+	<button onclick="location.href='./login'" class="arrowBtn"> ← </button>
    <form action="join" method = "post">
    <h2>Welcome 돌봐주개!</h2>
 	
@@ -32,7 +106,6 @@
     
     <p/>이메일
     <input type = "email" name = "email" placeholder="이메일을 입력해주세요"/>
-    <input type = "button" id = "overlayEmail" value="이메일 중복확인"/>
     <p/><span class="label2"></span>
 
      <br/>
@@ -67,10 +140,7 @@ $('#overlayId').on('click', function(){
 		}
 	});
 });
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/master
+
 var overlayEmailChk = false;
 var $email;
 

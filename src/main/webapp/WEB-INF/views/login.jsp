@@ -4,16 +4,6 @@
 <html>
 <head>
 <style>
-/*     table, th, td{
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding: 5px 10px;
-    }
-    
-    input[type="submit"]{
-    	height: 30px;
-    }     */
-   
    		body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -32,6 +22,7 @@
             bottom: 240px;
             left: 200px;
             font-size: 30px;
+            top: -200px;
         }
 
         form {
@@ -44,6 +35,7 @@
             position: relative;
             padding: 30px; 
             width: 350px; 
+            top: 40px;
         }
 
         table {
@@ -107,12 +99,28 @@
         #findPW:hover {
             background-color: rgb(163, 161, 161);
         }
+        
+        .arrowBtn{
+        	position: absolute;
+			right: 705px;
+			top: 50px;
+			
+			background-color: rgb(243, 208, 204);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
+	<button onclick="location.href='./'" class="arrowBtn"> ← </button>
 	<h2>LOGIN</h2>
 	<form action="logingo" method="post">
 	    <table>

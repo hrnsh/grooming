@@ -26,8 +26,6 @@ public interface NoteDAO {
 	
 	NoteDTO callDetail(String idx);
 
-	void sendNote(Map<String, String> params, String sender);
-
 	void sendNote(String subject, String content, String receiver, String sender);
 
 	int delSent(String idx);
