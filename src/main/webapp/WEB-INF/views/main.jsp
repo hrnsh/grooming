@@ -259,7 +259,7 @@ a:visited {
 		</div>
 		<div class="buttonAll">
 			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
-			<button onclick="location.href='./reserve'" class="button">예약 관리</button>
+			<button onclick="location.href='./revList'" class="button">예약 관리</button>
 			<button onclick="location.href='./boardMain'" class="button">게시판</button>
 			<button onclick="location.href='./adInquirySend?user_id=${sessionScope.loginId}'" class="button">문의하기</button>
 		</div>

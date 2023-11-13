@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gudi.admin.dto.AdBoardDTO;
 import kr.co.gudi.admin.service.AdminBoardService;
@@ -90,17 +91,17 @@ public class AdminBoardController {
 	
 	
 	@RequestMapping (value = "/adboardUpdate")
-	public String adboardUpdate(HttpSession session,@RequestParam String subject,@RequestParam String editorTxt) {
-		
-		
-		logger.info("adboardUpdate"+subject);
-		logger.info("adboardUpdate"+editorTxt);
-		String bnum = (String) session.getAttribute("bnum");
-		logger.info("adboardUpdate"+bnum);
-		service.boardUpdate(subject,editorTxt,bnum);
-		session.removeAttribute("bnum");
-		return "redirect:/boardMain";
-	}
+	public String adboardUpdate(MultipartFile[] photos, @RequestParam Map<String, String> params,HttpSession session, Model model) {
+		  
+		  
+		  logger.info("boardUpdate"+session); 
+		  logger.info("boardUpdate"+params);
+		  String bnum = (String) session.getAttribute("bnum");
+		  logger.info("boardUpdate"+bnum);
+		  String uid = (String) session.getAttribute("loginId");
+			return service.adboardUpdate(params,photos,bnum,uid);
+		 
+		  }
 	
 	@RequestMapping (value = "/adboardList")
 	@ResponseBody

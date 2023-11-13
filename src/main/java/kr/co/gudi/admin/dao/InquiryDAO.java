@@ -31,7 +31,6 @@ public interface InquiryDAO {
 
 	ArrayList<InquiryDTO> optionListCall(int offset, int stOption);
 
-	ArrayList<InquiryDTO> searchList(int offset, String searchTxt, int option);
 
 
 	
