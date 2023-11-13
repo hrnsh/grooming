@@ -121,12 +121,10 @@ public class NoteController {
 	@RequestMapping(value="/dateFilter")
 	@ResponseBody
 	public Map<String, Object> dateFilter(@RequestParam String selectedDate,
-			@RequestParam String page) {
-		Map<String, Object> map = noteService.dateFilter(selectedDate,page);
-		logger.info("date : "+selectedDate);
-		return map;
+			@RequestParam String page, @RequestParam String loginId){
+		logger.info(selectedDate);
+		return noteService.dateFilter(selectedDate, page, loginId);
+		
 	}
-	
-	
 	
 }

@@ -307,10 +307,10 @@ $('#readOptionSent').change(function(){
 });
 
 // 내가 쓴 쪽지 날짜 필터링 
-/* $('#datePickerSent').on('change',function(){
-	console.log($(this).val());
+var selectedDate;
+$('#datePickerSent').on('change',function(){
 	sentListCall(showPage);
-}); */
+});
 
 function sentListCall(page){	
 	var loginId = "${sessionScope.loginId}";
@@ -541,25 +541,21 @@ document.getElementById('datePickerSent').addEventListener('change', handleDateC
 function handleDateChange() {
     // 변경된 날짜 값을 가져옴
     var selectedDate = document.getElementById('datePickerSent').value;
-
-    // 콘솔에 로그 출력
-    console.log('날짜가 변경되었습니다:', selectedDate);
-    
+    var loginId = "${sessionScope.loginId}";
     $.ajax({
         type: "get",
         url: "dateFilter", // 여기에 실제 컨트롤러의 URL을 입력하세요.
-        data: { "selectedDate": selectedDate,"page":page},
+        data: {"selectedDate":selectedDate,"page":showPage,"loginId":loginId},
         dataType:'JSON',
         success: function (data) {
-            console.log("Data sent successfully:", data);
-            sentListCall(data);
+            console.log(data);
+            drawSentList(data);
         },
         error: function (error) {
-            console.error("Error sending data:", error);
+            console.error(error);
         }
     });  
 }
-
 
 </script>
 </html>

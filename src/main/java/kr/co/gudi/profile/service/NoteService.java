@@ -27,6 +27,7 @@ public class NoteService {
 			
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArrayList<NoteDTO> list = new ArrayList<NoteDTO>();
+		
 		if(readOptionSent.equals("all")){
 			list = noteDao.sentList(offset, loginId);
 		}else if (readOptionSent.equals("read")) {
@@ -34,6 +35,8 @@ public class NoteService {
 		} else if (readOptionSent.equals("unread")) {
 			list = noteDao.sentListUnread(offset, loginId);
 		}
+		
+		
 		map.put("list", list);
 		// 만들 수 있는 총 페이지 수 / 페이지 당 게시글 수
 		// select COUNT(idx)/ppn from bbs;
@@ -122,14 +125,14 @@ public class NoteService {
 		noteDao.delReceive(idx);
 	}
 
-	public Map<String, Object> dateFilter(String selectedDate, String page) {
+	public Map<String, Object> dateFilter(String selectedDate, String page, String loginId) {
 		// parameter 값은 String으로 받아와서 int로 변환한다.
 				int p = Integer.parseInt(page);
 				// offset 구하기
 				int offset = (p - 1) * 5;
 
 				Map<String, Object> map = new HashMap<String, Object>();
-				ArrayList<NoteDTO> list = noteDao.dateFilter(selectedDate,page);
+				ArrayList<NoteDTO> list = noteDao.dateFilter(loginId,selectedDate,offset);
 				
 				map.put("list", list);
 				// 만들 수 있는 총 페이지 수 / 페이지 당 게시글 수
@@ -142,7 +145,7 @@ public class NoteService {
 					p = pages;
 				}
 				map.put("currPage", p);
-
+				logger.info("list : "+ list);
 				return map;
 	}
 

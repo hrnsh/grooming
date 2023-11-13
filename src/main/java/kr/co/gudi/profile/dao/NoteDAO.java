@@ -34,6 +34,6 @@ public interface NoteDAO {
 
 	int delReceive(String idx);
 
-	ArrayList<NoteDTO> dateFilter(String selectedDate, String page);
+	ArrayList<NoteDTO> dateFilter(String loginId, String selectedDate, int offset);
 
 }
