@@ -84,10 +84,12 @@ public interface ReserveListDAO {
 
 
 
-
 	void saveReserve(HashMap<String, Object> params);
 
 
+
+
+	String chkDetail(String loginId, int idx);
 
 
 

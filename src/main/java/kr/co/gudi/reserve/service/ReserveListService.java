@@ -89,8 +89,11 @@ public class ReserveListService {
 
 
 	public ArrayList<ReserveDTO> detail(String loginId, int idx) {
-		
-		return dao.detail(loginId,idx);
+		String chk=dao.chkDetail(loginId,idx);
+		logger.info("픽업여부: "+chk);
+		ArrayList<ReserveDTO>dto=new ArrayList<ReserveDTO>();
+		dto=dao.detail(loginId,idx);
+		return dto;
 	}
 
 	public void change(int r_num, String selState) {

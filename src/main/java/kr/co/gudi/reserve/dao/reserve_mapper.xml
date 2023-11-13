@@ -88,9 +88,11 @@
 			)
 	</insert>
 	
+
 	<select id="findReceiver" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
 		SELECT * FROM reserve
 			WHERE r_num = #{param1}
 	</select>
+
 	
 </mapper>

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.gudi.admin.dto.InquiryDTO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
 import kr.co.gudi.reserve.service.ReserveService;
 
@@ -34,7 +36,15 @@ public class ReserveController {
 		String com_id="";
 		@RequestMapping(value="/reserve")
 		public String reserve(@RequestParam String companyName
-				,Model model) {
+				,Model model,HttpSession session) {
+			String user_id=(String) session.getAttribute("loginId");
+			List<ReserveDTO> dtoList=service.myAni(user_id);
+			List<String> aNameList = new ArrayList<>(); 
+			for(ReserveDTO dto : dtoList) {
+				aNameList.add(dto.getA_name()); 
+				}
+			model.addAttribute("aNameList",aNameList);
+			logger.info("동물정보: "+aNameList);
 			logger.info("업체명: "+companyName);
 			com_id=service.findCom_id(companyName);
 			logger.info("업체명과같은 id: "+com_id);
@@ -177,7 +187,7 @@ public class ReserveController {
 			logger.info("findRev"+revInfo);
 			return findRev;
 		}
-		
+
 		@RequestMapping(value="/writeNote")
 		public String writeNote(@RequestParam String r_num,Model model) {
 			logger.info("r_num: "+r_num);
@@ -193,9 +203,11 @@ public class ReserveController {
 		public String sendNote(@RequestParam HashMap<String, Object> params
 				, HttpSession session) {
 			String user_id = (String) session.getAttribute("loginId");
+
 			params.put("sender", user_id);
 			logger.info("받아온 데이터: "+params);
 			service.writeNote(params);
+
 			return "redirect:/reserveDetail";
 		}
 	}

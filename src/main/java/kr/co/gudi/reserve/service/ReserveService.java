@@ -76,6 +76,7 @@ public class ReserveService {
 		return dao.revInfo(com_id);
 	}
 
+
 	public ArrayList<ReserveDTO> findReceiver(int r_num) {
 		
 		return dao.findReceiver(r_num);
@@ -85,9 +86,6 @@ public class ReserveService {
 	}
 	public String findCom_id(String companyName) {
 		
-		return dao.findCom_id(companyName);
+		return dao.findCom_id(companyName);				
 	}
-
-				
-
 }

@@ -22,8 +22,8 @@
 	</update>
 	
 	<insert id="insertHistory">
-		INSERT INTO report_history(report_num, ad_id)
-			VALUES (#{param1},#{param2})
+		INSERT INTO report_history(report_num, ad_id, rephis_date)
+			VALUES (#{param1},#{param2},CURDATE())
 				ON DUPLICATE KEY UPDATE report_num = report_num
 	</insert>
 	
@@ -46,7 +46,7 @@
 	</insert>
 	
 	<update id="updateRepState">
-		UPDATE report SET report_state = 2 WHERE report_num = #{param1}
+		UPDATE report SET report_state = 2 WHERE report_num = #{param1} AND report_state=1
 	</update>
 	
 	<select id="optionListCall" resultType="kr.co.gudi.admin.dto.ReportDTO">

@@ -54,14 +54,39 @@
 			ORDER BY r_num DESC LIMIT 10 OFFSET #{param3}
 	</select>
 	
-	<select id="detail" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
-		SELECT r.r_num, c.com_name, r.user_id, a.a_name, a.a_gender, a.a_age, a.a_kind, r.r_spec, r.r_start, r.r_end, r.r_pick, r.r_pickaddr, r.r_totalprice, r.r_state, m.phone
-			FROM reserve r 
-			JOIN animal a ON r.user_id = a.user_id AND r.a_num = a.a_num
-			JOIN company c ON r.com_id = c.user_id
-			JOIN member m ON r.user_id = m.user_id
-			WHERE r.r_num = #{param2}
+	<select id="chkDetail" resultType="String">
+		SELECT r_pick FROM reserve
+			WHERE r_num=#{param2}
 	</select>
+	
+	<select id="detail" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT
+    r.r_num,
+    c.com_name,
+    r.user_id,
+    a.a_name,
+    a.a_gender,
+    a.a_age,
+    a.a_kind,
+    r.r_spec,
+    r.r_start,
+    r.r_end,
+    r.r_pick,
+    r.r_totalprice,
+    r.r_state,
+    m.phone
+FROM
+    reserve r
+LEFT JOIN
+    animal a ON r.user_id = a.user_id AND r.a_num = a.a_num
+LEFT JOIN
+    company c ON r.com_id = c.user_id
+LEFT JOIN
+    member m ON r.user_id = m.user_id
+WHERE
+    r.r_num = #{param2}
+	</select>
+	
 	
 	<update id="change">
 		UPDATE reserve

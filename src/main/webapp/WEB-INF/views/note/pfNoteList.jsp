@@ -202,7 +202,6 @@ button{
 			<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profButton">쪽지함</button>
 			<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profButton">내가 쓴 글</button>
-			<button onclick="location.href='./pfNotiList?user_id=${sessionScope.loginId}'" class="profButton">알림함</button>
 			<button onclick="location.href='./pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 		</div>
 		<!-- 내가 쓴 쪽지 -->
@@ -308,10 +307,10 @@ $('#readOptionSent').change(function(){
 });
 
 // 내가 쓴 쪽지 날짜 필터링 
-/* $('#datePickerSent').on('change',function(){
-	console.log($(this).val());
+var selectedDate;
+$('#datePickerSent').on('change',function(){
 	sentListCall(showPage);
-}); */
+});
 
 function sentListCall(page){	
 	var loginId = "${sessionScope.loginId}";
@@ -536,6 +535,27 @@ function delYesReceive(){
 	});
 }
 
+
+var selectedDate;
+document.getElementById('datePickerSent').addEventListener('change', handleDateChange);
+function handleDateChange() {
+    // 변경된 날짜 값을 가져옴
+    var selectedDate = document.getElementById('datePickerSent').value;
+    var loginId = "${sessionScope.loginId}";
+    $.ajax({
+        type: "get",
+        url: "dateFilter", // 여기에 실제 컨트롤러의 URL을 입력하세요.
+        data: {"selectedDate":selectedDate,"page":showPage,"loginId":loginId},
+        dataType:'JSON',
+        success: function (data) {
+            console.log(data);
+            drawSentList(data);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });  
+}
 
 </script>
 </html>

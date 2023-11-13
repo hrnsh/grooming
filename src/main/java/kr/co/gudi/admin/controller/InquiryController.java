@@ -28,7 +28,7 @@ public class InquiryController {
 		return "/admin/adInquiry";
 	}
 	
-	// 문의 보내기 페이지 이동 - FAQ 의  문의 보내기 버튼이랑 연결해야 함 
+	// 문의 보내기 페이지 이동
 	@RequestMapping(value="/adInquirySend")
 	public String adInquirySend() {
 		return "/admin/adInquirySend";

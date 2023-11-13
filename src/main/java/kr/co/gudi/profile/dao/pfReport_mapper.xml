@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.gudi.profile.dao.PfReportDAO">
+	<select id="reportListCall" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT r.report_num, r.report_type, r.report_date, r.report_state, h.rephis_date, h.ad_id
+			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
+				WHERE r.user_id = #{param2}
+			ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<select id="totalPage" resultType="int">
+		SELECT CEIL(COUNT(report_num)/5) AS pages FROM report
+	</select>
+	
+	
+	<select id="optionListCall" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT r.report_num, r.report_type, r.report_date, r.report_state, h.rephis_date, h.ad_id
+			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
+				WHERE r.report_state = #{param2} AND r.user_id = #{param3}
+			ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+	
+	<select id="typeListCall" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT r.report_num, r.report_type, r.report_date, r.report_state, h.rephis_date, h.ad_id
+			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
+				WHERE r.report_type = #{param2}	AND r.user_id = #{param3}
+			ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param1}
+	</select>
+</mapper>

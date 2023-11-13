@@ -174,9 +174,10 @@ public class ReserveListController {
 				r_num=idx;
 				String loginId=(String) session.getAttribute("loginId");
 				logger.info("예약번호 :"+idx);
+				
 				ArrayList<ReserveDTO> detail = service.detail(loginId,idx);
+				logger.info("예약정보 회원:"+detail);
 				model.addAttribute("detail",detail);
-			
 				ArrayList<ReserveDTO> rivdetail = service.rivDetail(idx);
 				model.addAttribute("review",rivdetail);
 				
@@ -198,11 +199,21 @@ public class ReserveListController {
 			}
 			
 			@RequestMapping(value="/saveReview")
-			public String saveReview(@RequestParam HashMap<String, Object> params) {											
+			public String saveReview(@RequestParam HashMap<String, Object> params
+					,HttpSession session) {											
 				logger.info("리뷰 정보: "+params);
 				service.saveReview(params);
-				
-				return "reserve/reserveComList";
+				String page="";
+				String loginId=(String) session.getAttribute("loginId");
+				int checkId=service.checkId(loginId);
+				logger.info("로그인ID :"+checkId);
+			
+				if(checkId==0) {			
+					page = "reserve/reserveList";
+				}else {
+					page="reserve/reserveComList";
+				}
+				return page;
 			}
 			
 			@RequestMapping(value="/revCancel")
@@ -211,15 +222,34 @@ public class ReserveListController {
 				service.revCancel(r_num);
 				service.saveRevCancel(r_num,loginId,c_reason);
 				
-				return "reserve/reserveComList";
+				String page="";
+				int checkId=service.checkId(loginId);
+				logger.info("로그인ID :"+checkId);
+			
+				if(checkId==0) {			
+					page = "reserve/reserveList";
+				}else {
+					page="reserve/reserveComList";
+				}
+				return page;
 			}
 			
 			@RequestMapping(value="/saveReply")
 			public String saveReply(@RequestParam int rev_num,@RequestParam String rrep_content
-					,Model model) {
+					,Model model,HttpSession session) {
 				logger.info("리뷰번호: "+rev_num);
 				service.saveReply(rev_num,rrep_content);				
-				return "reserve/reserveComList";
+				String page="";
+				String loginId=(String) session.getAttribute("loginId");
+				int checkId=service.checkId(loginId);
+				logger.info("로그인ID :"+checkId);
+			
+				if(checkId==0) {			
+					page = "reserve/reserveList";
+				}else {
+					page="reserve/reserveComList";
+				}
+				return page;
 			}
 }
 

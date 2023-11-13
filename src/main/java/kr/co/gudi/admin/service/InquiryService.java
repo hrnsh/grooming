@@ -27,7 +27,6 @@ public class InquiryService {
 	@Autowired InquiryDAO inquiryDao;
 	
 	private String root = "/Users/amy/yurini/img/";
-	private InquiryDTO dto = new InquiryDTO();
 	
 	// 일반 문의 보내기 & 테이블에 저장 
 	public void saveInquiry(MultipartFile photo, String subject, 

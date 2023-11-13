@@ -67,6 +67,10 @@ $('#overlayId').on('click', function(){
 		}
 	});
 });
+<<<<<<< HEAD
+=======
+	
+>>>>>>> origin/master
 var overlayEmailChk = false;
 var $email;
 

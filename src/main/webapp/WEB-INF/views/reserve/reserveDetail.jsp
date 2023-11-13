@@ -350,7 +350,7 @@ $(document).ready(function() {
 	function saveReview() {
 		confirm("정말로 작성하시겠습니까?");
 		console.log('리뷰 내용:', reviewText);
-		closeModal();
+		modal.style.display = 'none';
 	}
 
 	$('.starRev span').click(function() {
