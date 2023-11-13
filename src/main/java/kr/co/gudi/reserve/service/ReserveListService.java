@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.gudi.admin.dto.ManageDTO;
 import kr.co.gudi.reserve.dao.ReserveDAO;
 import kr.co.gudi.reserve.dao.ReserveListDAO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
@@ -23,29 +24,76 @@ public class ReserveListService {
 		return checkId;
 	}
 
-	public ArrayList<ReserveDTO> reserveComList(String loginId) {
-		
-		return dao.reserveComList(loginId);
+	public HashMap<String, Object> reserveComList(String loginId, String page) {
+		int p = Integer.parseInt(page);		
+
+		int offset = (p-1)*10;		
+		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		list =dao.reserveComList(loginId,offset);
+		map.put("revComList",list);
+		int pages = dao.totalPage();
+		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if(p>pages) {
+			p=pages;
+		}
+		map.put("currPage", p);
+	
+		return map;
 	}
 
-	public ArrayList<ReserveDTO> section(String formattedDate1, String formattedDate2) {
-		
-		return dao.section(formattedDate1,formattedDate2);
+
+
+	public HashMap<String, Object> all(String loginId, String stateFilter,String page) {
+		int p = Integer.parseInt(page);		
+
+		int offset = (p-1)*10;		
+		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		list = dao.all(loginId,stateFilter,offset);
+		map.put("revComList",list);
+		int pages = dao.totalPage();
+		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if(p>pages) {
+			p=pages;
+		}
+		map.put("currPage", p);
+	
+		return map;
 	}
 
-	public ArrayList<ReserveDTO> all(String loginId, String stateFilter) {
+	public HashMap<String, Object> state(String loginId, String stateFilter,String page) {
+		int p = Integer.parseInt(page);		
 
-		return dao.all(loginId,stateFilter);
+		int offset = (p-1)*10;		
+		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		list = dao.state(loginId,stateFilter,offset);
+		map.put("revComList",list);
+		logger.info("상태리스트 :"+list);
+		int pages = dao.totalPage();
+		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if(p>pages) {
+			p=pages;
+		}
+		map.put("currPage", p);
+	
+		return map;
 	}
 
-	public ArrayList<ReserveDTO> state(String loginId, String stateFilter) {
-
-		return dao.state(loginId,stateFilter);
-	}
 
 	public ArrayList<ReserveDTO> detail(String loginId, int idx) {
-		
-		return dao.detail(loginId,idx);
+		String chk=dao.chkDetail(loginId,idx);
+		logger.info("픽업여부: "+chk);
+		ArrayList<ReserveDTO>dto=new ArrayList<ReserveDTO>();
+		dto=dao.detail(loginId,idx);
+		return dto;
 	}
 
 	public void change(int r_num, String selState) {
@@ -86,6 +134,61 @@ public class ReserveListService {
 	public ArrayList<ReserveDTO> replyDetail(int idx) {
 		
 		return dao.replyDetail(idx);
+	}
+
+	public HashMap<String, Object> reserveList(String loginId, String page) {
+		
+		int p = Integer.parseInt(page);		
+
+		int offset = (p-1)*10;		
+		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		list = dao.reserveList(loginId,offset);
+			
+		map.put("revComList",list);
+		
+		int pages = dao.totalPage();
+		logger.info("페이징수:"+pages);
+		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if(p>pages) {
+			p=pages;
+		}
+		map.put("currPage", p);
+		return map;
+	}
+
+	public HashMap<String, Object> section(String loginId, String formattedDate1, String formattedDate2, String page) {
+		int p = Integer.parseInt(page);	
+		int offset = (p-1)*10;		
+		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		list = dao.section(loginId,formattedDate1,formattedDate2,offset);
+		logger.info("시작: "+formattedDate1);
+		logger.info("끝: "+formattedDate2);
+		map.put("revComList",list);
+		int pages = dao.totalPage();
+		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if(p>pages) {
+			p=pages;
+		}
+		map.put("currPage", p);
+	
+		return map;
+	}
+
+	public String findAni(String loginId, String ani) {
+		
+		return dao.findAni(loginId,ani);
+	}
+
+	public void saveReserve(HashMap<String, Object> params) {
+		dao.saveReserve(params);
+		
 	}
 
 

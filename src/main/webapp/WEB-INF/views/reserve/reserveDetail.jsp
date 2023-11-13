@@ -179,8 +179,11 @@ li {
 							<li></li>
 							<li>${rev.r_totalprice}</li>
 							<li>${rev.r_state}</li>
-						</ul> <input type="button" value="리뷰쓰기" onclick="openModal()" /> <input
-						type="button" value="예약취소" onclick="openCancelModal()" /> <input type="button" value="쪽지쓰기" onclick="location.href='./writeNote?r_num=${rev.r_num}'"/>
+
+						</ul> <input type="button" value="리뷰쓰기" onclick="openModal()" /> 
+						<input type="button" value="예약취소" onclick="openCancelModal()" /> 
+						<input type="button" value="쪽지쓰기" onclick="location.href='./writeNote?r_num=${rev.r_num}'" />
+
 					</li>
 				</ul>
 			</li>
@@ -347,7 +350,7 @@ $(document).ready(function() {
 	function saveReview() {
 		confirm("정말로 작성하시겠습니까?");
 		console.log('리뷰 내용:', reviewText);
-		closeModal();
+		modal.style.display = 'none';
 	}
 
 	$('.starRev span').click(function() {

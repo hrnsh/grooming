@@ -141,32 +141,39 @@ textarea{
 </style>
 </head>
 <body>
+
 	<nav class="nav">
 		<div class="logo">
 			<img  onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<button onclick="location.href='reserveDetail?r_num=${rev.r_num}'" class="arrowBtn"> ← </button>
+		<c:forEach items="${rev}" var="rev">
+		<button id="detailGO" onclick="location.href='reserveDetail?idx=${rev.r_num}'" class="arrowBtn"> ← </button>
+		</c:forEach>
 		<h1> 쪽지 작성 </h1>
 	</nav>
 	<main>
 		<div class="writeBox">
 		<form id="writeForm" action="sendNote">
+		<c:forEach items="${rev}" var="rev">
 			<table>
 				<tr>
-					<td style="width:70px;">제목 : </td>
+					<td style="width:70px;">제목</td>
+					<td style="display:none;"><input type="text" name="r_num" value="${rev.r_num}"/></td>
 					<td><input type="text" name="subject" id="subject" style="width: 300px;"/></td>
 				</tr>
 				<tr class="topRow">
-					<td>받는 사람 : </td>
-					<td>${rev.user_id}</td>
+					<td>받는 사람</td>
+					<td><input type="text" readonly name="receiver" value="${rev.com_id}"/></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="content"><textarea name="content" placeholder="내용을 입력해 주세요."></textarea></td>
 				</tr>
 			</table>
 			<input type="button" value="보내기" class="sendBtn" onclick="openModal()"/>
+		</c:forEach>
 		</form>
 		</div>
+
 		<!-- 모달 -->
 		<div id="send_modal">
 			<div style="margin:30px 0; font-size:22px;">전송 하시겠습니까?</div>
@@ -181,6 +188,7 @@ textarea{
 	</main>
 </body>
 <script>
+
 var loginId="${sessionScope.loginId}";
 if (!loginId) {
     alert("로그인이 필요한 서비스 입니다.");
@@ -211,6 +219,7 @@ function openModal(){
 			document.getElementById('writeForm').submit();
 			console.log('form 전송 성공!');
 			alert('전송이 완료 되었습니다!');
+			location.href='./revList';
 		}
 	}
 }
