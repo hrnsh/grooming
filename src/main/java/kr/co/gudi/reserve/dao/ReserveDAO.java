@@ -11,7 +11,7 @@ public interface ReserveDAO {
 	
 	ArrayList<ReserveDTO> cnt();
 
-	List<ReserveDTO> myAni();
+	List<ReserveDTO> myAni(String user_id);
 
 	HashMap<String, Object> lat();
 

@@ -31,30 +31,27 @@ public class ReserveController {
 		Logger logger = LoggerFactory.getLogger(getClass());
 		@Autowired ReserveService service;
 		
-		
+		String com_id="";
 		@RequestMapping(value="/reserve")
 		public String reserve(@RequestParam String companyName
 				,Model model) {
 			logger.info("업체명: "+companyName);
-			String com_id=service.findCom_id(companyName);
+			com_id=service.findCom_id(companyName);
 			logger.info("업체명과같은 id: "+com_id);
 			model.addAttribute("com_id",com_id);
 			return "reserve/reserve";
 		}
 
-		public ModelAndView home() {
-	        ModelAndView modelAndView = new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정
-	       	
-	        List<ReserveDTO> dtoList =service.myAni();
-	        List<String> aNameList = new ArrayList<>();
-	        for (ReserveDTO dto : dtoList) {
-	            aNameList.add(dto.getA_name());
-	        }
-	        
-	        modelAndView.addObject("aNameList", aNameList);
-	        logger.info("동물 이름: "+aNameList);
-	        return modelAndView;
-	    }
+		/*
+		 * public ModelAndView home(HttpSession session) { ModelAndView modelAndView =
+		 * new ModelAndView("reserve/reserve"); // JSP 페이지 이름 지정 String user_id=
+		 * (String) session.getAttribute("loginId"); List<ReserveDTO> dtoList
+		 * =service.myAni(user_id); List<String> aNameList = new ArrayList<>(); for
+		 * (ReserveDTO dto : dtoList) { aNameList.add(dto.getA_name()); }
+		 * 
+		 * modelAndView.addObject("aNameList", aNameList);
+		 * logger.info("동물 이름: "+aNameList); return modelAndView; }
+		 */
 		
 		@RequestMapping(value="/revDis",method = RequestMethod.POST)
 		@ResponseBody
@@ -172,7 +169,7 @@ public class ReserveController {
 		@RequestMapping(value="/findRev",method = RequestMethod.POST)
 		@ResponseBody
 		public HashMap<String, Object> findRev(){
-			String com_id="abcd002";
+			logger.info("어떤업체?: "+com_id);
 			ArrayList<ReserveDTO> revInfo = service.revInfo(com_id)	;	
 			HashMap<String, Object> findRev = new HashMap<String, Object>();
 		    findRev.put("findRev", revInfo);

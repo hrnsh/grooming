@@ -21,9 +21,9 @@ public class ReserveService {
 		
 		return dao.cnt();
 	}
-	public List<ReserveDTO> myAni() {
+	public List<ReserveDTO> myAni(String user_id) {
 		
-		return dao.myAni();
+		return dao.myAni(user_id);
 	}
 	public HashMap<String, Object> lat() {
 		return dao.lat();
