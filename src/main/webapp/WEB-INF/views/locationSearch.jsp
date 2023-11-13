@@ -128,6 +128,7 @@
                 </div>
                 
                 <div class="companyListContainer">
+                	<button id="closeCompanyList">닫기</button>
                 	<select id="sortDropdown">
                 		<option value="distance">거리순</option>
                 		<option value="rating">평균 별점순</option>
@@ -137,10 +138,12 @@
             </div>
             
             <div class="detail-container">
+            	<button id="closeCompanyDetail">닫기</button>
                 <div class="company-detail"></div>
             </div>
             
             <div class="review-container">
+            	<button id="closeReviewList">닫기</button>
 	        	<h3>리뷰</h3>
 	           	<ul id="reviewList"></ul>
 	        </div>
@@ -150,6 +153,20 @@
 			$(".companyListContainer").hide();
 			$(".detail-container").hide();
 			$(".review-container").hide();
+			
+			// 각 섹션에 닫기 기능 추가
+		    $("#closeCompanyList").on("click", function () {
+		        $(".companyListContainer").hide();
+		        removeMarker(); // 업체 리스트를 닫을 때 마커도 삭제하려면 해당 함수를 호출
+		    });
+
+		    $("#closeCompanyDetail").on("click", function () {
+		        $(".detail-container").hide();
+		    });
+
+		    $("#closeReviewList").on("click", function () {
+		        $(".review-container").hide();
+		    });
 			
 			var container = document.getElementById("map");
 			
@@ -381,6 +398,8 @@
 			    kakao.maps.event.addListener(marker, 'click', function() {
 			        infowindow.open(map, marker);
 			    });
+			 	
+			    
 			}
 			
 			
@@ -487,6 +506,9 @@
 					dataType: "JSON",
 					success: function(companyDetail) {
 						console.log(companyDetail);
+						
+						// 기존에 있던 내용을 비워줌
+			            $(".company-detail").empty();
 						
 						drawList(companyDetail);
 						
