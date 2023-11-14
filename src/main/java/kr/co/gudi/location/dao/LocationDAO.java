@@ -14,10 +14,12 @@ public interface LocationDAO{
 
 	List<LocationDTO> getCompanyDetail(String companyName);
 
-	List<LocationDTO> getTicketPrice(String companyName);
+	//List<LocationDTO> getTicketPrice(String companyName);
 
 	List<ReviewDTO> getReviews(String companyName);
 
 	void sendNoteToCom(String subject, String content, String receiver, String sender);
+
+	List<ReviewDTO> AverageReviews(String companyName);
 	
 }
