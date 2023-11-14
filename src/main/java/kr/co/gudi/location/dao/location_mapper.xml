@@ -30,12 +30,12 @@
         	WHERE c.com_name = #{param1}
     </select>
     
-    <select id="getTicketPrice" resultType="kr.co.gudi.location.dto.LocationDTO">
+    <!-- <select id="getTicketPrice" resultType="kr.co.gudi.location.dto.LocationDTO">
     	SELECT t.t_type, t.t_price
         	FROM ticket_price t
         		JOIN company c ON c.com_num = t.com_num
         	WHERE c.com_name = #{param1}
-    </select>
+    </select> -->
     
     <select id="getReviews" resultType="kr.co.gudi.review.dto.ReviewDTO">
     	SELECT com_id, user_id, rev_subject, rev_star, rev_content, rev_date

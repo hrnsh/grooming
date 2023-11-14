@@ -10,7 +10,7 @@
 		
 		<style>
 			#map{
-				height: 98vh;
+				height: 98.3vh;
 				width: 100%;
 				position: relative;
 				overflow: hidden;
@@ -84,8 +84,9 @@
 				border: none;
 				border-radius: 5px;
 				color: white;
-				width: 45px;
-				height: 25px;
+				width: 66px;
+			    height: 25px;
+			    margin-right: 5px;
             }
             
             .reserve-btn{
@@ -93,13 +94,15 @@
 				border: none;
 				border-radius: 5px;
 				color: white;
-				width: 45px;
+				width: 66px;
 				height: 25px;
             }
 
             .company-detail {
                 text-align: left;
                 background-color: #f1f1f1;
+                position: relative;
+    			bottom: 20px;
             }
 			
 			.review-btn {
@@ -109,12 +112,15 @@
 				color: white;
 				height: 25px;
 				position: absolute;
+				width: 380px;
+				margin: 3px 0px 1px 0px;
+    			right: 1px;
 			}
 			
 			.review {
 			    position: absolute;
-			    top: 205px;
-			    left: 760px;
+			    top: 206px;
+    			left: 760px;
 			    z-index: 1;
 			    background-color: rgba(255,255,255,0.7);
 			    padding: 10px;
@@ -122,7 +128,11 @@
 			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 			    max-height: 70%;
 			    overflow-y: auto;
-			    width: 30%;
+			    width: 425px;
+			}
+			
+			.review-container{
+				background-color: #f1f1f1;
 			}
 			
 			#showUserLocation,  #searchPlaces{
@@ -157,7 +167,7 @@
 				width: 45px;
 				height: 25px;
 				position: absolute;
-				left: 250px;
+				left: 235px;
 				top: 10px;
 			}
 			
@@ -169,7 +179,7 @@
 				width: 45px;
 				height: 25px;
 				position: absolute;
-				top: 20px;
+				top: 15px;
     			right: 25px;
 			}
 			
@@ -180,6 +190,8 @@
 				color: white;
 				height: 25px;
 				position: absolute;
+				right: 15px;
+    			top: 5px;
 			}
 			
 			#showUserLocation{
@@ -229,8 +241,8 @@
             </div>
             
             <div class="detail-container">
-            	<button id="closeCompanyDetail">닫기</button>
                 <div class="company-detail"></div>
+            	<button id="closeCompanyDetail">닫기</button>
             </div>
             
             <div class="review">
@@ -434,6 +446,9 @@
 					            var lon = $(this).data("lon");
 					            var companyLocation = new kakao.maps.LatLng(lat, lon);
 					            
+				            	 // 리뷰 컨테이너를 숨김
+				                $(".review").hide();
+					            
 					            map.setCenter(companyLocation);
 					            
 					        	 // 업체 상세 정보를 가져와서 표시
@@ -442,8 +457,6 @@
 					         
 				                showCompanyDetail(companyName);
 				                
-				            	 // 리뷰 컨테이너를 숨김
-				                $(".review").hide();
 					        });
 							
 					        sortCompaniesByDistance();
@@ -560,6 +573,8 @@
 					            var lon = $(this).data("lon");
 					            var companyLocation = new kakao.maps.LatLng(lat, lon);
 					            
+					            $(".review").hide();
+					            
 					            map.setCenter(companyLocation);
 					            
 					         	// 업체 상세 정보를 가져와서 표시
@@ -589,7 +604,7 @@
 				
 				$.ajax({
 					url: "getCompanyDetail",
-					type: "get",
+					type: "POST",
 					data: {"companyName": companyName},
 					dataType: "JSON",
 					success: function(companyDetail) {
@@ -599,7 +614,7 @@
 			            $(".company-detail").empty();
 						
 						drawList(companyDetail);
-						
+						/*
 						$.ajax({
 							url: "getTicketPrice",
 							type: "POST",
@@ -608,7 +623,7 @@
 							success: function(ticketPrice) {
 								console.log(ticketPrice);
 								drawTicketList(ticketPrice);
-								
+								*/
 								// 상세 정보가 있는 경우 상세 정보 창을 표시
 			                    $(".detail-container").show();
 			                    $(".review-container").empty(); // 리뷰 창을 초기화
@@ -620,6 +635,7 @@
 					            $(".review-btn").on("click", function() {
 									 var companyName = $(this).data("company");
 									console.log("업체 이름: " + companyName);
+									$(".review-container").empty(); // 리뷰 창을 초기화
 									
 									// 리뷰 상세 보기
 									getReview(companyName);
@@ -627,11 +643,13 @@
 									// 리뷰 컨테이너를 보이게 함
 								    $(".review-container").show();
 								});
+					         	/*
 							},
 							error: function(e) {
 								console.log(e);
 							}
 						});
+						*/
 					},
 					error: function(e){
 						console.log(e);
@@ -648,16 +666,17 @@
 					$(".detail-container").show();
 					
 					companyDetail.forEach(function(item,idx){
-						content +='<h2>'+item.com_name+'</h2>';
+						content +='<h2 style="position: relative; top: 10px;">'+item.com_name+'</h2>';
 						content += '<div id="btn"><button class="contact-btn" data-company="' + item.com_name + '">문의하기</button>';
 			            content += '<button class="reserve-btn" data-company="' + item.com_name + '">예약하기</button></div>';
 						content +='<div>'+item.address+ "<br>";
-						content +="영업시간: " + item.com_time + "<br>";
-						content +="픽업 가능 여부: " + item.pickup + "<br>";
-						content +="전화번호: " + item.phone + "<br>";
-						content +="수용 가능 동물 수: " + item.accept + "<br>";
-						content +="평균 별점: " + item.avg_star + "<br>";
-						content +="누적 이용자 수: " + item.user_total + "<br></div>";
+						content +="영업시간 : " + item.com_time + "<br>";
+						content +="픽업 가능 여부 : " + item.pickup + "<br>";
+						content +="전화번호 : " + item.phone + "<br>";
+						content +="수용 가능 동물 수 : " + item.accept + "<br>";
+						content +="평균 별점 : " + item.avg_star + "<br>";
+						content +="누적 이용자 수 : " + item.user_total + "<br>";
+						content += "가격 : " + item.price + "</div>";
 					});
 					
 					$(".company-detail").append(content);
@@ -665,7 +684,7 @@
 		            $(".detail-container").hide();
 				}
 			}
-			
+			/*
 			function drawTicketList(ticketPrice) {
 				var content = "";
 				
@@ -684,7 +703,7 @@
 				
 				$(".company-detail").append(content);
 			}
-			
+			*/
 			function getReview(companyName) {
 				$.ajax({
 					url: "getReviews",

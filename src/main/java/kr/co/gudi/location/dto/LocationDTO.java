@@ -10,8 +10,9 @@ public class LocationDTO {
 	private String address;
 	private int avg_star;
 	private String phone;
-	private String t_type;
-	private String t_price;
+	private String price;
+	//private String t_type;
+	//private String t_price;
 	private double lat;
 	private double lon;
 
@@ -82,6 +83,7 @@ public class LocationDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	/*
 	public String getT_type() {
 		return t_type;
 	}
@@ -93,5 +95,12 @@ public class LocationDTO {
 	}
 	public void setT_price(String t_price) {
 		this.t_price = t_price;
+	}
+	*/
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
 	}
 }

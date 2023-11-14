@@ -26,11 +26,11 @@ public class LocationService{
 	public List<LocationDTO> getCompanyDetail(String companyName) {
 		return locationDao.getCompanyDetail(companyName);
 	}
-
+	/*
 	public List<LocationDTO> getTicketPrice(String companyName) {
 		return locationDao.getTicketPrice(companyName);
 	}
-
+	*/
 	public List<ReviewDTO> getReviews(String companyName) {
 		return locationDao.getReviews(companyName);
 	}

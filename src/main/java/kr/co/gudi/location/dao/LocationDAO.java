@@ -14,7 +14,7 @@ public interface LocationDAO{
 
 	List<LocationDTO> getCompanyDetail(String companyName);
 
-	List<LocationDTO> getTicketPrice(String companyName);
+	//List<LocationDTO> getTicketPrice(String companyName);
 
 	List<ReviewDTO> getReviews(String companyName);
 
