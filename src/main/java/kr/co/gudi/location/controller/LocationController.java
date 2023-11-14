@@ -44,7 +44,7 @@ public class LocationController {
     	return locationService.searchCompany(keyword);
     }
     
-    @RequestMapping(value = "/getCompanyDetail", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCompanyDetail", method = RequestMethod.POST)
     @ResponseBody
     public List<LocationDTO> getCompanyDetail(@RequestParam String companyName) {
     	List<LocationDTO> companyDetail = locationService.getCompanyDetail(companyName);
@@ -92,7 +92,7 @@ public class LocationController {
     @RequestMapping(value = "/AverageReviews", method = RequestMethod.POST)
     @ResponseBody
     public List<ReviewDTO> AverageReviews(@RequestParam String companyName) {
-    	logger.info("companyName"+companyName);
+    	logger.info("업체 이름: "+companyName);
     	List<ReviewDTO> reviewList = locationService.AverageReviews(companyName);
     	
     	logger.info("reviewList: "+reviewList);
