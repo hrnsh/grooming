@@ -70,7 +70,6 @@ public class AdminController {
 			session.setAttribute("ad_id", ad_id);
 			session.setAttribute("admin", "admin");
 			page = "redirect:/adProfile?ad_id="+ad_id;
-
 		}else {
 			model.addAttribute("msg", "관리자 아이디 또는 비밀번호를 확인해 주세요!");
 		}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import kr.co.gudi.admin.dto.InquiryDTO;
 import kr.co.gudi.admin.dto.photoDTO;
+import kr.co.gudi.profile.dto.NoteDTO;
 
 public interface InquiryDAO {
 
@@ -30,6 +31,10 @@ public interface InquiryDAO {
 	void updateInqState(String inq_num);
 
 	ArrayList<InquiryDTO> optionListCall(int offset, int stOption);
+
+	ArrayList<InquiryDTO> inquiryDatePickSend(String selectedDate, int offset);
+
+	ArrayList<InquiryDTO> inquiryDatePickHandle(String selectedDate, int offset);
 
 
 

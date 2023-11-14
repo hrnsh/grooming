@@ -107,7 +107,6 @@ button{
 			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
 			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
-			<button onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 예약 관리</button>
 			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
@@ -145,19 +144,19 @@ button{
 						<table style="border: 1px solid black; width: 92%;">
 							<tr>
 								<td style="width: 80px;">처리 일자</td>
-								<td>날짜 데이터</td>
+								<td>${newIqDetail.inqhis_date}</td>
 							</tr>
 							<tr>
 								<td>담당자</td>
-								<td>이름</td>
+								<td>${newIqDetail.ad_id}</td>
 							</tr>
 							<tr>
 								<td>제목</td>
-								<td>라라라랄</td>
+								<td>${newIqDetail.inqhis_subject}</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">처리 내용</td>
-								<td>내용! </td>
+								<td>${newIqDetail.inqhis_content}</td>
 							</tr>
 						</table>
 						</div>

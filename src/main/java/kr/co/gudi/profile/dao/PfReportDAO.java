@@ -14,4 +14,6 @@ public interface PfReportDAO {
 
 	ArrayList<ReportDTO> optionListCall(int offset, int stOption, String user_id);
 
+	ReportDTO reportDetail(String report_num, String user_id);
+
 }
