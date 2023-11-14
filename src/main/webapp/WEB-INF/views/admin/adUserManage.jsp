@@ -88,15 +88,16 @@ table{
 }
 
 .modal-content{
-	width: 900px;
-	height: 500px;
+	width: 800px;
+	height: 600px;
 	left: 20%;
 	top: 15%;
 	border: 1px solid rgb(94, 94, 94);
 }
 
 form{
-	height: 500px;
+	height: 600px;
+	width: 800px;
 }
 
 .close{
