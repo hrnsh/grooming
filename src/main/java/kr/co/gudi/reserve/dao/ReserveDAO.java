@@ -15,7 +15,7 @@ public interface ReserveDAO {
 
 	HashMap<String, Object> lat(String com_id);
 
-	String tPrice();
+	String tPrice(String com_id);
 
 	String tAmPrice();
 
@@ -34,6 +34,10 @@ public interface ReserveDAO {
 	void writeNote(HashMap<String, Object> params);
 
 	String findCom_id(String companyName);
+
+	int findAcc(String com_id);
+
+	String findPick(String com_id);
 
 
 }

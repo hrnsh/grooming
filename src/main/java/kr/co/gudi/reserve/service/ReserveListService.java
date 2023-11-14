@@ -96,9 +96,13 @@ public class ReserveListService {
 		return dto;
 	}
 
-	public void change(int r_num, String selState) {
+	public void change(int r_num, String selState, String loginId) {
+		if(selState.equals("이용완료")) {
+			dao.change(r_num,selState);
+			dao.plus(loginId);
+		}else {
 		dao.change(r_num,selState);
-		
+		}
 	}
 
 	public void saveReview(HashMap<String, Object> params) {
@@ -188,6 +192,16 @@ public class ReserveListService {
 
 	public void saveReserve(HashMap<String, Object> params) {
 		dao.saveReserve(params);
+		
+	}
+
+	public int auto(String loginId) {
+		
+		return dao.auto(loginId);
+	}
+
+	public void reviewDel(int rev_num) {
+		dao.reviewDel(rev_num);
 		
 	}
 

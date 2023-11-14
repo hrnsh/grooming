@@ -19,13 +19,11 @@
 	</select>	
 	
 	<select id="tPrice" resultType="String">
-	SELECT tp.t_price
-		FROM company cp
-		JOIN ticket_price tp ON cp.com_num = tp.com_num
-		WHERE cp.com_num = 1 and tp.t_type='2'
+		SELECT price FROM company
+			WHERE user_id=#{param1}
 	</select>
 	
-	<select id="tAmPrice" resultType="String">
+	<!-- <select id="tAmPrice" resultType="String">
 	SELECT tp.t_price
 		FROM company cp
 		JOIN ticket_price tp ON cp.com_num = tp.com_num
@@ -37,7 +35,7 @@
 		FROM company cp
 		JOIN ticket_price tp ON cp.com_num = tp.com_num
 		WHERE cp.com_num = 1 and tp.t_type='1'
-	</select>
+	</select> -->
 	
 	<select id="p3Price" resultType="String">
 	SELECT pp.p_price
@@ -98,6 +96,15 @@ ORDER BY formatted_date;
 		SELECT * FROM reserve
 			WHERE r_num = #{param1}
 	</select>
-
+	
+	<select id="findAcc" resultType="int">
+		SELECT accept FROM company
+			WHERE user_id=#{param1}
+	</select>
+	
+	<select id="findPick" resultType="String">
+		select pickup from company 
+			where user_id=#{param1}
+	</select>
 	
 </mapper>

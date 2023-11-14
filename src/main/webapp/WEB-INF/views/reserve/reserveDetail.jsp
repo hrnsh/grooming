@@ -155,13 +155,17 @@ ul.inner_box {
 				<th>
 					<p>예약 정보</p>
 				</th>
-				<th><select id="changeState" name="selState">
+				<c:if test="${auto}>0">
+				<th>
+				<select id="changeState" name="selState">
 						<option value="예약완료">예약완료</option>
 						<option value="이용중">이용중</option>
 						<option value="이용완료">이용완료</option>
 						<option value="취소">취소</option>
-				</select></th>
+				</select>
+				</th>
 				<th><input type="submit" value="수정" /></th>
+			</c:if>
 			</tr>
 		</table>
 	</form>
@@ -217,10 +221,12 @@ ul.inner_box {
 							<li>${rev.r_totalprice}</li>
 							<li>${rev.r_state}</li>
 
-						</ul> <input type="button" value="리뷰쓰기" onclick="openModal()" /> 
+						</ul> 
+						<c:if test="${auto==0}">
+						<input type="button" value="리뷰쓰기" onclick="openModal()" />
+						</c:if>						 
 						<input type="button" value="예약취소" onclick="openCancelModal()" /> 
 						<input type="button" value="쪽지쓰기" onclick="location.href='./writeNote?r_num=${rev.r_num}'" />
-
 					</li>
 				</ul>
 			</li>
@@ -309,8 +315,19 @@ ul.inner_box {
 				</td>
 				</tr>
 				<tr>
+					<c:if test="${auto>0}">
 					<td><input type="button" value="댓글작성" onclick="showCommentTextArea()"/></td>
+					</c:if>
+					<c:if test="${auto==0}">
+					<td><form action="reviewDel">
+					<c:forEach items="${review}" var="riv">							
+							<input type="hidden" name="rev_num" value="${riv.rev_num}">
+					</c:forEach>
+					<input type="submit" value="리뷰삭제"/>
+					</form></td>
+					</c:if>
 				</tr>
+					
 			</table>
 		</div>
 	</c:forEach>
@@ -376,7 +393,16 @@ $(document).ready(function() {
 	var cancelModal = document.getElementById('cancelModal');
 
 	function openModal() {
-		modal.style.display = 'block';
+		var reviewSize = "${review.size()}";
+		console.log("리뷰체크"+reviewSize);
+		
+		if(reviewSize>0){
+			alert("리뷰는 한번만 작성할 수 있습니다.");
+		}else{
+			console.log("리뷰없음");
+			modal.style.display = 'block';
+		}
+		
 	}
 
 	function closeModal() {
