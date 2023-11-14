@@ -26,20 +26,16 @@ public class LocationService{
 	public List<LocationDTO> getCompanyDetail(String companyName) {
 		return locationDao.getCompanyDetail(companyName);
 	}
-	/*
+
 	public List<LocationDTO> getTicketPrice(String companyName) {
 		return locationDao.getTicketPrice(companyName);
 	}
-	*/
+
 	public List<ReviewDTO> getReviews(String companyName) {
 		return locationDao.getReviews(companyName);
 	}
 
 	public void sendNoteToCom(String subject, String content, String receiver, String sender) {
 		locationDao.sendNoteToCom(subject, content, receiver, sender);
-	}
-
-	public List<ReviewDTO> AverageReviews(String companyName) {
-		return locationDao.AverageReviews(companyName);
 	}
 }

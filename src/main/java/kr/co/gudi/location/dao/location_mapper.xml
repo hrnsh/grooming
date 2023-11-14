@@ -5,7 +5,7 @@
 <mapper namespace="kr.co.gudi.location.dao.LocationDAO">
 	<select id="getNearbyCompanies" parameterType="map" resultType="kr.co.gudi.location.dto.LocationDTO">
         <![CDATA[
-        SELECT com_name, lat, lon, user_total,
+        SELECT com_name, lat, lon, avg_star, user_total,
                6371 * acos(cos(radians(#{userLat})) * cos(radians(lat))
                * cos(radians(lon) - radians(#{userLon}))
                + sin(radians(#{userLat})) * sin(radians(lat))) AS distance
@@ -24,18 +24,18 @@
     </select>
     
     <select id="getCompanyDetail" resultType="kr.co.gudi.location.dto.LocationDTO">
-    	SELECT c.com_name, c.address, c.com_time, c.pickup, m.phone,  c.accept, c.user_total
+    	SELECT c.com_name, c.address, c.com_time, c.pickup, m.phone,  c.accept, c.avg_star, c.user_total
         	FROM company c
         		LEFT OUTER JOIN member m ON c.user_id = m.user_id
         	WHERE c.com_name = #{param1}
     </select>
     
-    <!-- <select id="getTicketPrice" resultType="kr.co.gudi.location.dto.LocationDTO">
+    <select id="getTicketPrice" resultType="kr.co.gudi.location.dto.LocationDTO">
     	SELECT t.t_type, t.t_price
         	FROM ticket_price t
         		JOIN company c ON c.com_num = t.com_num
         	WHERE c.com_name = #{param1}
-    </select> -->
+    </select>
     
     <select id="getReviews" resultType="kr.co.gudi.review.dto.ReviewDTO">
     	SELECT com_id, user_id, rev_subject, rev_star, rev_content, rev_date
@@ -51,12 +51,4 @@
             	(SELECT user_id FROM member WHERE user_id = #{param3}),
             	#{param4})
 	</insert>
-	
-	<select id="AverageReviews" resultType="kr.co.gudi.review.dto.ReviewDTO">
-		SELECT rev_star	
-			FROM review
-				WHERE com_id =(SELECT user_id 
-    											FROM company 
-    											WHERE com_name= #{param1})
-	</select>
 </mapper>
