@@ -37,6 +37,8 @@ public interface ReserveDAO {
 
 	int findAcc(String com_id);
 
+	String findPick(String com_id);
+
 
 }
 

@@ -104,4 +104,9 @@ ORDER BY formatted_date;
 			WHERE user_id=#{param1}
 	</select>
 	
+	<select id="findPick" resultType="String">
+		select pickup from company 
+			where user_id=#{param1}
+	</select>
+	
 </mapper>

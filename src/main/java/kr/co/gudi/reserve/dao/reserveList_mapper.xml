@@ -94,6 +94,12 @@ WHERE
 			WHERE r_num = #{param1}
 	</update>
 	
+	<update id="plus">
+		update company
+   			set user_total = user_total+1
+   			where user_id = #{param1}
+	</update>
+	
 	<insert id="saveReview">
 		INSERT INTO review (user_id, com_id,r_num,rev_subject,rev_star,rev_content)
 			SELECT r.user_id, r.com_id,r.r_num,#{rev_subject},#{rev_star},#{rev_content}

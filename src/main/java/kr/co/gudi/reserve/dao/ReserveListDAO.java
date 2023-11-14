@@ -94,4 +94,9 @@ public interface ReserveListDAO {
 
 
 
+	void plus(String loginId);
+
+
+
+
 }

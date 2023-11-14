@@ -191,10 +191,12 @@ public class ReserveListController {
 			}
 			
 			@RequestMapping(value="/change")
-			public String change(@RequestParam String selState) {
+			public String change(@RequestParam String selState,
+					HttpSession session) {
 				logger.info("예약번호2: "+r_num);
 				logger.info("상태값 : "+selState);
-				service.change(r_num,selState);
+				String loginId=(String) session.getAttribute("loginId");
+				service.change(r_num,selState,loginId);
 				return "reserve/reserveComList";
 			}
 			

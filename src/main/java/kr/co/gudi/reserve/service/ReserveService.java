@@ -92,4 +92,8 @@ public class ReserveService {
 		
 		return dao.findAcc(com_id);
 	}
+	public String findPick(String com_id) {
+		
+		return dao.findPick(com_id);
+	}
 }

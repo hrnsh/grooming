@@ -322,7 +322,14 @@ function addrShow() {
     var valueCheck = $('input[name=r_pick]:checked').val(); 
     console.log(valueCheck);
     if (valueCheck == "예") {
+        var findPick = "${findPick}";
+        // '아니오'인 경우에만 처리
+        if (findPick === '아니오') {
+            alert('픽업 서비스를 지원하지 않는 업체입니다.');
+            $('input[name=r_pick][value="아니오"]').prop('checked', true);
+          }else{
         $(".radio-value-detail").prop('disabled', false);
+          }
     } else {
         $(".radio-value-detail").prop('disabled', true);
     }
@@ -381,6 +388,7 @@ window.addEventListener('popstate', function (event) {
     // 뒤로 간 페이지에서 실행할 함수 호출
     showCompanyDetail(event.state && event.state.companyName);
 });
+
   </script>
 </head>
 <body>

@@ -40,14 +40,22 @@ public class ReserveController {
 			String user_id=(String) session.getAttribute("loginId");
 			List<ReserveDTO> dtoList=service.myAni(user_id);
 			List<String> aNameList = new ArrayList<>(); 
+			List<String> aKindList = new ArrayList<>(); 
 			for(ReserveDTO dto : dtoList) {
-				aNameList.add(dto.getA_name()); 
+				aNameList.add(dto.getA_name());
 				}
+			for(ReserveDTO dto : dtoList) {
+				aKindList.add(dto.getA_kind());
+			}
+			model.addAttribute("aKindList",aKindList);
+			logger.info("동물종류: "+aKindList);
 			model.addAttribute("aNameList",aNameList);
 			logger.info("동물정보: "+aNameList);
 			logger.info("업체명: "+companyName);
 			com_id=service.findCom_id(companyName);
 			logger.info("업체명과같은 id: "+com_id);
+			String findPick=service.findPick(com_id);
+			model.addAttribute("findPick",findPick);
 			model.addAttribute("com_id",com_id);
 			model.addAttribute("companyName",companyName);
 			return "reserve/reserve";
