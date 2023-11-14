@@ -10,7 +10,7 @@
 <style>
 table, th, td {
 	margin: 10px;
-	border-bottom: 1px solid black;
+	border: 1px solid black;
 	border-collapse: collapse;
 	padding: 5px 10px;
 	height: 80px;
@@ -70,17 +70,12 @@ button {
 		</tr>
 		<tr>
 			<th>
-				<button onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'" class="button">회원 예약 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
 				<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="button">일반 문의 관리</button>
 			</th>
 		</tr>
 		<tr>
 			<th>
-				<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="button">일반 문의 관리</button>
+				<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="button">신고 문의 관리</button>
 			</th>
 		</tr>
 	</table>

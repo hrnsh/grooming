@@ -167,11 +167,12 @@ public class ProfileController {
 //		return result;
 //	}
 	
-//	@RequestMapping(value = "/comregister")
-//	public String comregister(MultipartFile photos, @RequestParam Map<String, String> params) {
-//		logger.info("params : " + params);
-//		return service.comregister(params, photos);
-//	}
+	@RequestMapping(value = "/comregister")
+	public String comregister(MultipartFile photos, @RequestParam Map<String, String> params) {
+		logger.info("params : " + params);
+		logger.info("file : " + photos);
+		return service.comregister(params, photos);
+	}
 	
 //	@RequestMapping(value = "/comregister")
 //	public String comregister(@RequestParam HashMap<String, String> params, MultipartFile photo, HttpSession session) throws Exception {
@@ -320,20 +321,20 @@ public class ProfileController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/compicregistForm")
-	public String adInquirySend(Model model, @RequestParam String com_num) {
-		logger.info("업체 사진 등록 : " + com_num);
-		model.addAttribute("com_num",com_num);
-		return "/user/compicregistForm";
-	}
-	
-	@RequestMapping(value = "/compicregist", method = RequestMethod.POST)
-	public String compicregist(MultipartFile photo, HttpSession session, Model model, @RequestParam String com_num) throws Exception{
-		String loginId = (String) session.getAttribute("loginId");
-		service.savecompic(photo, loginId);
-		model.addAttribute("com_num", com_num);
-		
-		return "redirect:/pickupinfoForm";
-	}
+//	@RequestMapping(value="/compicregistForm")
+//	public String adInquirySend(Model model, @RequestParam String com_num) {
+//		logger.info("업체 사진 등록 : " + com_num);
+//		model.addAttribute("com_num",com_num);
+//		return "/user/compicregistForm";
+//	}
+//	
+//	@RequestMapping(value = "/compicregist", method = RequestMethod.POST)
+//	public String compicregist(MultipartFile photo, HttpSession session, Model model, @RequestParam String com_num) throws Exception{
+//		String loginId = (String) session.getAttribute("loginId");
+//		service.savecompic(photo, loginId);
+//		model.addAttribute("com_num", com_num);
+//		
+//		return "redirect:/pickupinfoForm";
+//	}
 	
 }
