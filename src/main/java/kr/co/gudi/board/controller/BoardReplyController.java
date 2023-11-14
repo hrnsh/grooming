@@ -57,7 +57,9 @@ public class BoardReplyController {
 		logger.info("list_num : "+list_num);
 		String real = service.getreid(list_num);
 		String login = (String) session.getAttribute("loginId");
-		if(real.equals(login)) {
+		String admin = (String) session.getAttribute("ad_id");
+		
+		if(real.equals(login)||admin!=null) {
 		
 		service.delre(list_num);
 		
