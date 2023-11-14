@@ -1,6 +1,7 @@
 package kr.co.gudi.member.controller;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
@@ -31,19 +32,21 @@ public class MemberController {
 	@RequestMapping(value = "/logingo", method = RequestMethod.POST)
 	public String logingo(Model model, HttpSession session,
 			@RequestParam String user_id, @RequestParam String pw) {
-		
-		logger.info(user_id+"/"+pw);
-		boolean success = service.logingo(user_id,pw)!= null ? true : false;
-		logger.info("login success : "+success);
 		String page = "/login";
-		
-		if(success) {
-			session.setAttribute("loginId", user_id);
-			page = "redirect:/";
+		logger.info(user_id+"/"+pw);
+		if(user_id!="" && pw!="") {
+			boolean success = service.logingo(user_id,pw)!= null ? true : false;
+			logger.info("login success : "+success);
+			
+			if(success) {
+				session.setAttribute("loginId", user_id);
+				page = "redirect:/";
+			}else {
+				model.addAttribute("msg", "아이디 또는 비밀번호를 확인해 주세요.");
+			}
 		}else {
-			model.addAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
+			model.addAttribute("msg", "아이디 또는 비밀번호를 입력해 주세요.");
 		}
-		
 		return page;
 	}
 	
@@ -61,13 +64,17 @@ public class MemberController {
 	
 	@RequestMapping(value="/dofindID", method=RequestMethod.POST)
 	public String dofindID(@RequestParam String name, @RequestParam String email, Model model) {
-		String user_Id = service.dofindID(name,email);
 		String page = "/findID";
-		if(user_Id != null) {
-			model.addAttribute("msg", "회원님의 아이디는 '"+user_Id+"' 입니다.");
-			page="login";
+		if(name!="" && email!="") {
+			String user_Id = service.dofindID(name,email);
+			if(user_Id != null) {
+				model.addAttribute("msg", "회원님의 아이디는 '"+user_Id+"' 입니다.");
+				page="login";
+			}else {
+				model.addAttribute("msg", "아이디를 찾을 수 없습니다. 이름 또는 이메일을 확인해 주세요.");
+			}
 		}else {
-			model.addAttribute("msg", "이름 또는 이메일을 확인해 주세요.");
+			model.addAttribute("msg", "이름 또는 이메일을 입력해 주세요.");
 		}
 		return page;
 	}
@@ -78,17 +85,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/dofindPW", method=RequestMethod.POST)
-	public String dofindPW(@RequestParam String name, @RequestParam String user_id, @RequestParam String email, Model model, HttpSession session) {
+	public String dofindPW(@RequestParam String name, @RequestParam String user_id, 
+			@RequestParam String email, Model model) {
 		logger.info("name,user_id,email " + name,user_id,email);
-		String pw = service.dofindPW(name, user_id, email);
 		String page = "findPW";
-		if(pw != null) {
-			model.addAttribute("msg", "회원님의 비밀 번호는 '"+pw+"' 입니다.");
-			page="login";
-		}else {
-			model.addAttribute("msg", "비밀번호를 찾을 수 없습니다.");
-		}
 		
+		if(name!="" && user_id!="" && email!="") {
+			String pw = service.dofindPW(name, user_id, email);
+			if(pw != null) {
+				model.addAttribute("msg", "회원님의 비밀 번호는 '"+pw+"' 입니다.");
+				page="login";
+			}else {
+				model.addAttribute("msg", "비밀번호를 찾을 수 없습니다. 이름, 아이디, 또는 이메일을 확인해 주세요.");
+			}
+		}else {
+			model.addAttribute("msg", "이름, 아이디, 또는 이메일을 입력해 주세요.");
+		}
 		return page;
 	}
 	
@@ -103,10 +115,12 @@ public class MemberController {
 	@ResponseBody
 	public HashMap<String, Object> overlayId(@RequestParam String user_id) {
 		logger.info("user"+user_id);
-		boolean use = service.overlayId(user_id);
-		logger.info("사용 가능 여부 : "+use);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("use", use);
+		if(user_id!="") {
+			boolean use = service.overlayId(user_id);
+			logger.info("사용 가능 여부 : "+use);
+			map.put("use", use);
+		}
 		return map;
 	}
 	

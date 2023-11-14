@@ -101,8 +101,7 @@
         }
         
         .arrowBtn{
-        	position: absolute;
-			right: 705px;
+        	position: relative;
 			top: 50px;
 			
 			background-color: rgb(243, 208, 204);
@@ -117,13 +116,13 @@
         
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
 	<button onclick="location.href='./'" class="arrowBtn"> ← </button>
 	<h2>LOGIN</h2>
-	<form action="logingo" method="post">
+	<form action="logingo" id="logingo" method="post">
 	    <table>
 	        <tr>
 	            <th style="width:40px;">ID</th>
@@ -169,6 +168,7 @@
 	if(msg != ""){
 		alert(msg);
 	}
+
 	
 
 

@@ -72,7 +72,7 @@ public class InquiryService {
 	}
 
 	// 일반 문의 리스트 호출 
-	public Map<String, Object> inquiryListCall(String page, String ad_id, String stateOption, String searchTxt, int option) {
+	public Map<String, Object> inquiryListCall(String page, String ad_id, String stateOption, int option) {
 		int p = Integer.parseInt(page);
 		int offset = (p - 1) * 10;
 

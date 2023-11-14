@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title> 돌봐주개 </title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <style>
 nav {

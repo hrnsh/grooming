@@ -33,6 +33,27 @@ public class ReserveDTO {
 	public void setRrep_state(String rrep_state) {
 		this.rrep_state = rrep_state;
 	}
+	private int ac_num;
+	private String ac_kind;
+	public int getAc_num() {
+		return ac_num;
+	}
+	public void setAc_num(int ac_num) {
+		this.ac_num = ac_num;
+	}
+	public String getAc_kind() {
+		return ac_kind;
+	}
+	public void setAc_kind(String ac_kind) {
+		this.ac_kind = ac_kind;
+	}
+	public int getCom_num() {
+		return com_num;
+	}
+	public void setCom_num(int com_num) {
+		this.com_num = com_num;
+	}
+	private int com_num;
 	private int r_num;
 	private String user_id;
 	private String com_id;

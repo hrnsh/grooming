@@ -16,15 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.gudi.admin.dto.InquiryDTO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
 import kr.co.gudi.reserve.service.ReserveService;
 
@@ -40,15 +37,24 @@ public class ReserveController {
 			String user_id=(String) session.getAttribute("loginId");
 			List<ReserveDTO> dtoList=service.myAni(user_id);
 			List<String> aNameList = new ArrayList<>(); 
+			List<String> aKindList = new ArrayList<>(); 
 			for(ReserveDTO dto : dtoList) {
-				aNameList.add(dto.getA_name()); 
+				aNameList.add(dto.getA_name());
 				}
+			for(ReserveDTO dto : dtoList) {
+				aKindList.add(dto.getA_kind());
+			}
+			model.addAttribute("aKindList",aKindList);
+			logger.info("동물종류: "+aKindList);
 			model.addAttribute("aNameList",aNameList);
 			logger.info("동물정보: "+aNameList);
 			logger.info("업체명: "+companyName);
 			com_id=service.findCom_id(companyName);
 			logger.info("업체명과같은 id: "+com_id);
+			String findPick=service.findPick(com_id);
+			model.addAttribute("findPick",findPick);
 			model.addAttribute("com_id",com_id);
+			model.addAttribute("companyName",companyName);
 			return "reserve/reserve";
 		}
 
@@ -96,54 +102,39 @@ public class ReserveController {
 			return revInfo;
 		}
 		
-		@RequestMapping(value="/tPrice",method = RequestMethod.POST)
-		@ResponseBody
-		public HashMap<String, Object> tPrice(@RequestBody HashMap<String, String> requestData){
-			HashMap<String, Object> tPrice = new HashMap<>();
-			String button = requestData.get("buttonValue");
-			logger.info("이용권 종류:"+button);
-			if(button.equals("종일권")) {
-				int ticket= Integer.parseInt(service.tPrice());
-				logger.info("티켓가격:"+ticket);
-				tPrice.put("ticket", ticket);
-			}
-			if(button.equals("오전권")) {
-				int ticket= Integer.parseInt(service.tAmPrice());
-				logger.info("티켓가격:"+ticket);
-				tPrice.put("ticket", ticket);
-			}
-			if(button.equals("오후권")) {
-				int ticket= Integer.parseInt(service.tPmPrice());
-				logger.info("티켓가격:"+ticket);
-				tPrice.put("ticket", ticket);
-			}
-			return tPrice;
-		}
+		/*
+		 * @RequestMapping(value="/tPrice",method = RequestMethod.POST)
+		 * 
+		 * @ResponseBody public HashMap<String, Object> tPrice(@RequestBody
+		 * HashMap<String, String> requestData){ HashMap<String, Object> tPrice = new
+		 * HashMap<>(); String button = requestData.get("buttonValue");
+		 * logger.info("이용권 종류:"+button); if(button.equals("종일권")) { int ticket=
+		 * Integer.parseInt(service.tPrice()); logger.info("티켓가격:"+ticket);
+		 * tPrice.put("ticket", ticket); } if(button.equals("오전권")) { int ticket=
+		 * Integer.parseInt(service.tAmPrice()); logger.info("티켓가격:"+ticket);
+		 * tPrice.put("ticket", ticket); } if(button.equals("오후권")) { int ticket=
+		 * Integer.parseInt(service.tPmPrice()); logger.info("티켓가격:"+ticket);
+		 * tPrice.put("ticket", ticket); } return tPrice; }
+		 */
 		
 		@RequestMapping(value="/selPrice",method = RequestMethod.POST)
 		@ResponseBody
 		public HashMap<String, Object> selPrice(@RequestParam String date1,
-				@RequestParam String date2,@RequestParam String time1,
-				@RequestParam String time2){
+				@RequestParam String date2){
 			HashMap<String, Object> selPrice = new HashMap<>();
 			logger.info("시작일"+date1);
-			logger.info("시작시간"+time1);
 			logger.info("종료일"+date2);
-			logger.info("시작시간"+time2);
 			
-			if(time1.equals("amOption")&&time2.equals("amOption")) {
-				int timeTicket= Integer.parseInt(service.tAmPrice());
-				selPrice.put("timeTicket", timeTicket);
-			}
-			if(time1.equals("amOption")&&time2.equals("pmOption")) {
-				int timeTicket= Integer.parseInt(service.tAmPrice())+
-						Integer.parseInt(service.tPmPrice());	
-				selPrice.put("timeTicket", timeTicket);
-			}
-			if(time1.equals("pmOption")&&time2.equals("pmOption")){
-				int timeTicket= Integer.parseInt(service.tPmPrice());
-				selPrice.put("timeTicket", timeTicket);
-			}
+			/*
+			 * if(time1.equals("amOption")&&time2.equals("amOption")) { int timeTicket=
+			 * Integer.parseInt(service.tAmPrice()); selPrice.put("timeTicket", timeTicket);
+			 * } if(time1.equals("amOption")&&time2.equals("pmOption")) { int timeTicket=
+			 * Integer.parseInt(service.tAmPrice())+ Integer.parseInt(service.tPmPrice());
+			 * selPrice.put("timeTicket", timeTicket); }
+			 * if(time1.equals("pmOption")&&time2.equals("pmOption")){ int timeTicket=
+			 * Integer.parseInt(service.tPmPrice()); selPrice.put("timeTicket", timeTicket);
+			 * }
+			 */
 			String startDateString = date1;
 	        String endDateString = date2;
 	        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); // 날짜 형식 지정
@@ -157,7 +148,7 @@ public class ReserveController {
 	            long dayDifference = timeDifference / (1000 * 60 * 60 * 24);
 	         
 	            logger.info("일 차이 :"+dayDifference);
-	            int dayTicket= (int) (Integer.parseInt(service.tPrice())*dayDifference);
+	            int dayTicket= (int) (Integer.parseInt(service.tPrice(com_id))*(dayDifference+1));
 	            selPrice.put("dayTicket", dayTicket);
 	        } catch (ParseException e) {
 	            // 날짜 파싱 실패 시 예외 처리
@@ -173,8 +164,10 @@ public class ReserveController {
 			logger.info("어떤업체?: "+com_id);
 			ArrayList<ReserveDTO> revInfo = service.revInfo(com_id)	;	
 			HashMap<String, Object> findRev = new HashMap<String, Object>();
-		    findRev.put("findRev", revInfo);
-			
+		    int findAcc = service.findAcc(com_id);
+		    logger.info("수용가능수: "+findAcc);
+			findRev.put("findRev", revInfo);
+			findRev.put("findAcc", findAcc);
 			logger.info("findRev"+revInfo);
 			return findRev;
 		}
@@ -190,16 +183,16 @@ public class ReserveController {
 			return "/reserve/writeNote";
 		}
 		
-		@RequestMapping(value="/sendNote")
-		public String sendNote(@RequestParam HashMap<String, Object> params
+		@RequestMapping(value="/revNote")
+		public String revNote(@RequestParam HashMap<String, Object> params
 				, HttpSession session) {
 			String user_id = (String) session.getAttribute("loginId");
-
+			logger.info("들어왔니?");
 			params.put("sender", user_id);
 			logger.info("받아온 데이터: "+params);
 			service.writeNote(params);
  
-			return "redirect:/reserveDetail";
+			return "./";
 		}
 	}
 

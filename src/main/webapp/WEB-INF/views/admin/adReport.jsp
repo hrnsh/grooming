@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>신고 문의 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
@@ -85,8 +85,8 @@ a{
 }
 
 #reportDatePickSend{
-	position: relative;	
-	left: 29%;
+	position: relative;
+	left: 14%;	
 }
 
 #reportDatePickHandle{
@@ -112,7 +112,7 @@ a{
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		<div class="reportBox">
-			<span class="searchBox">
+			<span class="searchBox" style="display:none;">
 				<input type="text"/> 
 				<button onclick="searchId()">검색</button>
 			</span>
@@ -196,6 +196,29 @@ function sendDateChange() {
     $.ajax({
         type: "get",
         url: "reportDatePickSend", 
+        data: {"selectedDate":selectedSendDate,"page":showPage},
+        dataType:'JSON',
+        success: function (data) {
+            console.log(data);
+            drawReportList(data);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });  
+}
+
+
+//처리 날짜 필터링 
+var selectedSendDate;
+document.getElementById('reportDatePickHandle').addEventListener('change', handleDateChange);
+
+function handleDateChange() {
+    // 변경된 날짜 값을 가져옴
+    var selectedSendDate = document.getElementById('reportDatePickHandle').value;
+    $.ajax({
+        type: "get",
+        url: "reportDatePickHandle", 
         data: {"selectedDate":selectedSendDate,"page":showPage},
         dataType:'JSON',
         success: function (data) {

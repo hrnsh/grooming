@@ -48,8 +48,8 @@ public class ReserveService {
 
         return distance;
     }
-	public String tPrice() {
-		return dao.tPrice();
+	public String tPrice(String com_id) {
+		return dao.tPrice(com_id);
 	}
 	public String tAmPrice() {
 		
@@ -87,5 +87,13 @@ public class ReserveService {
 	public String findCom_id(String companyName) {
 		
 		return dao.findCom_id(companyName);				
+	}
+	public int findAcc(String com_id) {
+		
+		return dao.findAcc(com_id);
+	}
+	public String findPick(String com_id) {
+		
+		return dao.findPick(com_id);
 	}
 }

@@ -16,8 +16,12 @@
             height: 100vh;
         }
 
-        .arrowBtn {
-            background-color: rgb(243, 208, 204);
+        .arrowBtn{
+        	position: relative;
+			top: 280px;
+    		right: 250px;
+    		
+			background-color: rgb(243, 208, 204);
             color: white;
             border: none;
             padding: 12px;
@@ -26,6 +30,7 @@
             font-size: 16px;
             margin-bottom: 20px;
         }
+
 
         h2 {
             text-align: center;
@@ -72,12 +77,12 @@
         
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호 찾기</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
 	<button onclick="location.href='./login'" class="arrowBtn"> ← </button>
-   <h2>비밀번호 찾기</h2>
+    <h2>비밀번호 찾기</h2>
     <form action="dofindPW" method="post">
         <label for="name">이름:</label>
         <input type="text" id="name" name="name" placeholder="이름을 입력해주세요"><br>

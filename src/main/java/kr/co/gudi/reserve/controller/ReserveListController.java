@@ -174,7 +174,9 @@ public class ReserveListController {
 				r_num=idx;
 				String loginId=(String) session.getAttribute("loginId");
 				logger.info("예약번호 :"+idx);
-				
+				int auto=service.auto(loginId);
+				logger.info("업체회원?:"+auto);
+				model.addAttribute("auto",auto);
 				ArrayList<ReserveDTO> detail = service.detail(loginId,idx);
 				logger.info("예약정보 회원:"+detail);
 				model.addAttribute("detail",detail);
@@ -187,14 +189,17 @@ public class ReserveListController {
 				ArrayList<ReserveDTO> replyDetail = service.replyDetail(idx);
 				model.addAttribute("replyDetail",replyDetail);
 				
+				
 				return "reserve/reserveDetail";
 			}
 			
 			@RequestMapping(value="/change")
-			public String change(@RequestParam String selState) {
+			public String change(@RequestParam String selState,
+					HttpSession session) {
 				logger.info("예약번호2: "+r_num);
 				logger.info("상태값 : "+selState);
-				service.change(r_num,selState);
+				String loginId=(String) session.getAttribute("loginId");
+				service.change(r_num,selState,loginId);
 				return "reserve/reserveComList";
 			}
 			
@@ -250,6 +255,13 @@ public class ReserveListController {
 					page="reserve/reserveComList";
 				}
 				return page;
+			}
+			
+			@RequestMapping(value="/reviewDel")
+			public String reviewDel(@RequestParam int rev_num) {
+				logger.info("리뷰번호: "+ rev_num);
+				service.reviewDel(rev_num);
+				return "reserve/reserveList";
 			}
 }
 

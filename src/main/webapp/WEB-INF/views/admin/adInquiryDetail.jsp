@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title> 일반 문의 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 
@@ -76,7 +76,6 @@ table{
 	border: none;
 	border-radius: 10px;
 	color: white;
-	cursor: pointer;
 }
 
 button{

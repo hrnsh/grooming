@@ -44,7 +44,7 @@ public class LocationController {
     	return locationService.searchCompany(keyword);
     }
     
-    @RequestMapping(value = "/getCompanyDetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/getCompanyDetail", method = RequestMethod.GET)
     @ResponseBody
     public List<LocationDTO> getCompanyDetail(@RequestParam String companyName) {
     	List<LocationDTO> companyDetail = locationService.getCompanyDetail(companyName);

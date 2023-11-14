@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>신고 문의 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 
@@ -61,6 +61,7 @@ th, td{
 table{
 	border-collapse: collapse;
 	width: 700px;
+	table-layout: fixed;
 	border: none;
 	position: relative;
 	left: 50px;
@@ -130,11 +131,11 @@ button{
 				</tr>
 				<tr>
 					<td>신고 일자</td>
-					<td>${reportDetail.report_date}</td>
+					<td colspan="3">${reportDetail.report_date}</td>
 				</tr>	
 				<tr>
 					<td>신고 분류</td>
-					<td>
+					<td colspan="3">
 						<c:choose>
 							<c:when test="${reportDetail.report_type==0}">게시글</c:when>
 							<c:when test="${reportDetail.report_type==1}">리뷰</c:when>
@@ -145,7 +146,7 @@ button{
 				</tr>
 				<tr>
 					<td>처리 상태</td>
-					<td>
+					<td colspan="3">
 						<c:choose>
 							<c:when test="${reportDetail.report_state==0}">미완료</c:when>
 							<c:when test="${reportDetail.report_state==1}">처리중</c:when>
@@ -155,11 +156,11 @@ button{
 				</tr>
 				<tr>
 					<td>신고 내용</td>
-					<td>${reportDetail.report_content}</td>
+					<td colspan="3">${reportDetail.report_content}</td>
 				</tr>
 				<tr>
 					<td>신고 대상</td>
-					<td><button onclick="reportTarget()" class="targetBtn">보기</button></td>
+					<td colspan="3"><button onclick="reportTarget()" class="targetBtn">보기</button></td>
 				</tr>
 			</table>
 			</div>
@@ -170,16 +171,16 @@ button{
 						<div style="width:90%; height:140px; position:relative; top: 35px;overflow:scroll;">
 						<table style="width: 92%;">
 							<tr>
-								<td style="width: 70px;">처리 일자</td>
+								<td style="width: 80px;">처리 일자</td>
 								<td colspan="3">${reportDetail.rephis_date}</td>
 							</tr>
 							<tr>
 								<td>담당자</td>
-								<td>${reportDetail.ad_id}</td>
+								<td colspan="3">${reportDetail.ad_id}</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">처리 내용</td>
-								<td>${reportDetail.rephis_content}</td>
+								<td colspan="3">${reportDetail.rephis_content}</td>
 							</tr>
 						</table>
 						</div>

@@ -70,4 +70,14 @@ public class ReportController {
 		
 	}
 	
+	
+	// 처리 날짜 필터링 기능 
+	@RequestMapping(value="/reportDatePickHandle")
+	@ResponseBody
+	public Map<String, Object> reportDatePickHandle(@RequestParam String selectedDate,
+			@RequestParam String page){
+		logger.info(selectedDate);
+		return reportService.reportDatePickHandle(selectedDate, page);
+		
+	}
 }
