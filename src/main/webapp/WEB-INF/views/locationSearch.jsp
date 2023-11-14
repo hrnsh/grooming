@@ -10,7 +10,7 @@
 		
 		<style>
 			#map{
-				height: 98vh;
+				height: 98.3vh;
 				width: 100%;
 				position: relative;
 				overflow: hidden;
@@ -84,10 +84,9 @@
 				border: none;
 				border-radius: 5px;
 				color: white;
-				width: 70px;
-				height: 25px;
-				position: relative;
-				margin-right: 5px;
+				width: 66px;
+			    height: 25px;
+			    margin-right: 5px;
             }
             
             .reserve-btn{
@@ -95,14 +94,15 @@
 				border: none;
 				border-radius: 5px;
 				color: white;
-				width: 70px;
+				width: 66px;
 				height: 25px;
-				position: relative;
             }
 
             .company-detail {
                 text-align: left;
                 background-color: #f1f1f1;
+                position: relative;
+    			bottom: 20px;
             }
 			
 			.review-btn {
@@ -112,12 +112,15 @@
 				color: white;
 				height: 25px;
 				position: absolute;
+				width: 380px;
+				margin: 3px 0px 1px 0px;
+    			right: 1px;
 			}
 			
 			.review {
 			    position: absolute;
-			    top: 205px;
-			    left: 760px;
+			    top: 206px;
+    			left: 760px;
 			    z-index: 1;
 			    background-color: rgba(255,255,255,0.7);
 			    padding: 10px;
@@ -125,7 +128,11 @@
 			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 			    max-height: 70%;
 			    overflow-y: auto;
-			    width: 30%;
+			    width: 425px;
+			}
+			
+			.review-container{
+				background-color: #f1f1f1;
 			}
 			
 			#showUserLocation,  #searchPlaces{
@@ -160,7 +167,7 @@
 				width: 45px;
 				height: 25px;
 				position: absolute;
-				left: 250px;
+				left: 235px;
 				top: 10px;
 			}
 			
@@ -172,7 +179,7 @@
 				width: 45px;
 				height: 25px;
 				position: absolute;
-				top: 45px;
+				top: 15px;
     			right: 25px;
 			}
 			
@@ -183,6 +190,8 @@
 				color: white;
 				height: 25px;
 				position: absolute;
+				right: 15px;
+    			top: 5px;
 			}
 			
 			#showUserLocation{
@@ -232,8 +241,8 @@
             </div>
             
             <div class="detail-container">
-            	<button id="closeCompanyDetail">닫기</button>
                 <div class="company-detail"></div>
+            	<button id="closeCompanyDetail">닫기</button>
             </div>
             
             <div class="review">
@@ -397,69 +406,60 @@
 							
 							$(".company-detail").empty();
 							$(".review-container").empty();
-							
-							// 모든 업체에 대한 정보를 비동기적으로 가져와서 처리
-							var promises = companies.map(function(company) {
-								return new Promise(function(resolve) {
-									// 업체의 평균 별점을 계산
-									calculateAverageReview(company.com_name, function(avgStar) {
-										var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
-										
-										var message = '<div style="padding:5px;">'
-							                + company.com_name + '<br>'
-							                + '평균 별점: ' + avgStar
-							                + '<br>'
-							                + '누적 이용자 수: ' + company.user_total + "</br>";
-							                
-										// 업체와 사용자 간의 거리 계산
-							            var distance = calculateDistance(userLocation.getLat(), userLocation.getLng(), company.lat, company.lon);
-										
-							         	// 거리를 메시지에 추가
-						                message += '거리: ' + distance + ' km' + '</div>';
-							             
-							            displayCompaniesMarker(companyLocation, message);
-							             
-							          	// 화면 왼쪽의 리스트에 업체 정보를 추가
-							            $("#companyList").append(
-							            	'<li class="companyItem" data-lat="' + company.lat +
-							                '" data-lon="' + company.lon + 
-							                '" data-distance="' + distance +
-							                '" data-rating="' + company.avg_star +
-							                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
-							                company.com_name + '</span>' +
-							                '<br>평균 별점: ' + avgStar +
-							                '<br>누적 이용자 수: ' + company.user_total +
-							                '<br>거리: ' + distance + ' km' +
-							                '</li>');
-							          	
-							            resolve(); // Promise를 완료
-									});
-								});
-							});
-							
-							// 모든 Promise가 완료될 때까지 기다린 후 정렬 수행
-							Promise.all(promises).then(function() {
+						
+							for (var i = 0; i < companies.length; i++){
+								var company = companies[i];
+								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
-								// 리스트의 각 항목을 클릭했을 때 지도에 해당 업체 마커를 표시합니다.
-						        $(".companyItem").click(function () {
-						            var lat = $(this).data("lat");
-						            var lon = $(this).data("lon");
-						            var companyLocation = new kakao.maps.LatLng(lat, lon);
-						            
-						            map.setCenter(companyLocation);
-						            
-						        	 // 업체 상세 정보를 가져와서 표시
-					                var companyName = $(this).find("span").text();
-						         	console.log("업체 리스트에서 클릭한 업체 이름 : "+companyName);
-						         
-					                showCompanyDetail(companyName);
+								var message = '<div style="padding:5px;">'
+					                + company.com_name + '<br>'
+					                + '평균 별점: ' + company.avg_star
+					                + '<br>'
+					                + '누적 이용자 수: ' + company.user_total
+					                + '</div>';
+					            
+					             // 업체와 사용자 간의 거리 계산
+					            var distance = calculateDistance(userLocation.getLat(), userLocation.getLng(), company.lat, company.lon);
 					                
-					            	 // 리뷰 컨테이너를 숨김
-					                $(".review").hide();
-						        });
-								
-						        sortCompaniesByDistance();
-							});
+					         	// 거리를 메시지에 추가
+				                message += '거리: ' + distance + ' km';
+					             
+					            displayCompaniesMarker(companyLocation, message);
+					             
+					          	// 화면 왼쪽의 리스트에 업체 정보를 추가
+					            $("#companyList").append(
+					            	'<li class="companyItem" data-lat="' + company.lat +
+					                '" data-lon="' + company.lon + 
+					                '" data-distance="' + distance +
+					                '" data-rating="' + company.avg_star +
+					                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
+					                company.com_name + '</span>' +
+					                '<br>평균 별점: ' + company.avg_star +
+					                '<br>누적 이용자 수: ' + company.user_total +
+					                '<br>거리: ' + distance + ' km' +
+					                '</li>');
+							}
+							
+							// 리스트의 각 항목을 클릭했을 때 지도에 해당 업체 마커를 표시합니다.
+					        $(".companyItem").click(function () {
+					            var lat = $(this).data("lat");
+					            var lon = $(this).data("lon");
+					            var companyLocation = new kakao.maps.LatLng(lat, lon);
+					            
+				            	 // 리뷰 컨테이너를 숨김
+				                $(".review").hide();
+					            
+					            map.setCenter(companyLocation);
+					            
+					        	 // 업체 상세 정보를 가져와서 표시
+				                var companyName = $(this).find("span").text();
+					         	console.log(companyName);
+					         
+				                showCompanyDetail(companyName);
+				                
+					        });
+							
+					        sortCompaniesByDistance();
 						} else {
 							$(".companyListContainer").hide();
 						}
@@ -538,60 +538,53 @@
 							// 검색된 장소 위치를 기준으로 지도 범위 재설정
 							// LatLngBounds 객체에 좌표를 추가
 							var bounds = new kakao.maps.LatLngBounds();
-							
-							// 모든 업체에 대한 정보를 비동기적으로 가져와서 처리
-			                var promises = companies.map(function(company) {
-								return new Promise(function(resolve) {
-									// 업체의 평균 별점을 계산
-			                        calculateAverageReview(company.com_name, function(avgStar) {
-			                        	var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
-			                        	
-										var message = '<div style="padding:5px;">'
-							                + company.com_name + '<br>'
-							                + '평균 별점: ' + avgStar
-							                + '<br>'
-							                + '누적 이용자 수: ' + company.user_total
-							                + '</div>';
-			                        	
-										displayCompaniesMarker(companyLocation, message);
-										
-										// 화면 왼쪽의 리스트에 업체 정보를 추가
-							            $("#companyList").append(
-							            		'<li class="companyItem" data-lat="' + company.lat +
-							                '" data-lon="' + company.lon + 
-							                '" data-rating="' + avgStar +
-							                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
-							                company.com_name + '</span>' +
-							                '<br>평균 별점: ' + avgStar +
-							                '<br>누적 이용자 수: ' + company.user_total +
-							                '</li>'); 
-							                
-							            bounds.extend(companyLocation);
-									});
-								});
-							});
-							
-			             // 모든 Promise가 완료될 때까지 기다린 후 정렬 수행
-			                Promise.all(promises).then(function() {
-								map.setBounds(bounds);
+
+							for (var i = 0; i < companies.length; i++) {
+								var company = companies[i];
+								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
-								// 리스트의 각 항목을 클릭했을 때 지도에 해당 업체 마커를 표시
-						        $(".companyItem").click(function () {
-						            var lat = $(this).data("lat");
-						            var lon = $(this).data("lon");
-						            var companyLocation = new kakao.maps.LatLng(lat, lon);
-						            
-						            map.setCenter(companyLocation);
-						            
-						         	// 업체 상세 정보를 가져와서 표시
-					                var companyName = $(this).find("span").text();
-						         	console.log(companyName);
-						         
-					                showCompanyDetail(companyName);
-						        });
+								var message = '<div style="padding:5px;">'
+					                + company.com_name + '<br>'
+					                + '평균 별점: ' + company.avg_star
+					                + '<br>'
+					                + '누적 이용자 수: ' + company.user_total
+					                + '</div>';
+					            
+								displayCompaniesMarker(companyLocation, message);
 								
-						        sortCompaniesByRating();
-							});
+								// 화면 왼쪽의 리스트에 업체 정보를 추가
+					            $("#companyList").append(
+					            		'<li class="companyItem" data-lat="' + company.lat +
+					                '" data-lon="' + company.lon + 
+					                '" data-rating="' + company.avg_star +
+					                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
+					                company.com_name + '</span>' +
+					                '<br>평균 별점: ' + company.avg_star +
+					                '<br>누적 이용자 수: ' + company.user_total +
+					                '</li>'); 
+					                
+					            bounds.extend(companyLocation);
+							}
+							map.setBounds(bounds);
+							
+							// 리스트의 각 항목을 클릭했을 때 지도에 해당 업체 마커를 표시
+					        $(".companyItem").click(function () {
+					            var lat = $(this).data("lat");
+					            var lon = $(this).data("lon");
+					            var companyLocation = new kakao.maps.LatLng(lat, lon);
+					            
+					            $(".review").hide();
+					            
+					            map.setCenter(companyLocation);
+					            
+					         	// 업체 상세 정보를 가져와서 표시
+				                var companyName = $(this).find("span").text();
+					         	console.log(companyName);
+					         
+				                showCompanyDetail(companyName);
+					        });
+							
+					        sortCompaniesByRating();
 						} else{
 							$(".companyListContainer").hide();
 						}
@@ -621,7 +614,6 @@
 			            $(".company-detail").empty();
 						
 						drawList(companyDetail);
-						
 						/*
 						$.ajax({
 							url: "getTicketPrice",
@@ -632,7 +624,6 @@
 								console.log(ticketPrice);
 								drawTicketList(ticketPrice);
 								*/
-								
 								// 상세 정보가 있는 경우 상세 정보 창을 표시
 			                    $(".detail-container").show();
 			                    $(".review-container").empty(); // 리뷰 창을 초기화
@@ -644,13 +635,13 @@
 					            $(".review-btn").on("click", function() {
 									 var companyName = $(this).data("company");
 									console.log("업체 이름: " + companyName);
+									$(".review-container").empty(); // 리뷰 창을 초기화
 									
 									// 리뷰 상세 보기
 									getReview(companyName);
 									
 									// 리뷰 컨테이너를 보이게 함
 								    $(".review-container").show();
-									
 								});
 					         	/*
 							},
@@ -667,8 +658,6 @@
 			}
 			
 			function drawList(companyDetail){
-				console.log("drawList 호출!!");
-				console.log("drawList : "+companyDetail);
 				var content="";
 				
 				$(".company-detail").empty();
@@ -677,65 +666,24 @@
 					$(".detail-container").show();
 					
 					companyDetail.forEach(function(item,idx){
-						
-						calculateAverageReview(item.com_name, function(avgStar) {
-							console.log("업체 상세 보기 안의 평균 별점 : " + avgStar);
-							
-							content +='<h2>'+item.com_name+'</h2>';
-							content += '<div id="btn"><button class="contact-btn" data-company="' + item.com_name + '">문의하기</button>';
-				            content += '<button class="reserve-btn" data-company="' + item.com_name + '">예약하기</button></div>';
-							content +='<div>'+item.address+ "<br>";
-							content +="영업시간: " + item.com_time + "<br>";
-							content +="픽업 가능 여부: " + item.pickup + "<br>";
-							content +="전화번호: " + item.phone + "<br>";
-							content +="수용 가능 동물 수: " + item.accept + "<br>";
-							content +="평균 별점: " + avgStar + "<br>";
-							content +="누적 이용자 수: " + item.user_total + "<br>";
-							content += "가격 : " + item.price +"<br> </div>";
-							
-							$(".company-detail").append(content);
-						});
+						content +='<h2 style="position: relative; top: 10px;">'+item.com_name+'</h2>';
+						content += '<div id="btn"><button class="contact-btn" data-company="' + item.com_name + '">문의하기</button>';
+			            content += '<button class="reserve-btn" data-company="' + item.com_name + '">예약하기</button></div>';
+						content +='<div>'+item.address+ "<br>";
+						content +="영업시간 : " + item.com_time + "<br>";
+						content +="픽업 가능 여부 : " + item.pickup + "<br>";
+						content +="전화번호 : " + item.phone + "<br>";
+						content +="수용 가능 동물 수 : " + item.accept + "<br>";
+						content +="평균 별점 : " + item.avg_star + "<br>";
+						content +="누적 이용자 수 : " + item.user_total + "<br>";
+						content += "가격 : " + item.price + "</div>";
 					});
+					
+					$(".company-detail").append(content);
 				} else {
 		            $(".detail-container").hide();
 				}
 			}
-			
-			function calculateAverageReview(companyName, callback) {
-				console.log("calculateAverageReview 호출!!");
-				
-				console.log("업체 이름: "+companyName);
-				var totalStars = 0;
-			    var totalReviews = 0;
-			    
-			    $.ajax({
-			    	url: "AverageReviews",
-			    	type: "POST",
-			    	data: {"companyName": companyName},
-			    	dataType: "JSON",
-			    	async: false,
-			    	success: function(response) {
-			    		console.log(response);
-			    		
-						for(var i = 0; i < response.length; i++){
-							totalStars += parseInt(response[i].rev_star);
-							totalReviews++;
-						}
-						
-						// 리뷰가 하나라도 있는 경우에만 평균을 계산하고 반환
-			            if(totalReviews > 0) {
-			                var avgStar = totalStars / totalReviews;
-			                callback(avgStar); // 콜백 함수 호출
-			            } else {
-			                callback(0); // 리뷰가 없는 경우 0을 전달
-			            }
-					},
-					error: function(error) {
-						console.log("리뷰 정보 가져오기 실패!! : ", error);
-					}
-			    });
-			}
-			
 			/*
 			function drawTicketList(ticketPrice) {
 				var content = "";
@@ -756,7 +704,6 @@
 				$(".company-detail").append(content);
 			}
 			*/
-			
 			function getReview(companyName) {
 				$.ajax({
 					url: "getReviews",
@@ -867,6 +814,11 @@
 				console.log("예약하기 이동");
    			 var companyName = $(this).data("company");
     		window.location.href = "reserve?companyName=" + companyName;
+			});
+
+			// 리뷰 보기 버튼 클릭 이벤트
+			$(document).on("click", ".review-btn", function() {
+   			 
 			});
 		
 			function showDistance(position, companies) {

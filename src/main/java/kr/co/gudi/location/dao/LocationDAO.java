@@ -19,7 +19,5 @@ public interface LocationDAO{
 	List<ReviewDTO> getReviews(String companyName);
 
 	void sendNoteToCom(String subject, String content, String receiver, String sender);
-
-	List<ReviewDTO> AverageReviews(String companyName);
 	
 }
