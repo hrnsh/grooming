@@ -11,201 +11,78 @@
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 
 <style>
-
 .nav {
-	height: 150px;
-	display: flex;
-	justify-content: space-between;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
 }
 
-.container{
-	max-width: 450px;
-	left: 30px;
+.logo {
+    position: relative;
+    right: 23%;
 }
 
-.logo{
+h1{
 	position: relative;
-	right: 43%;
+	right: 18%;
+	top: 55px;
+	font-size: 35px;
 }
 
-main{
-	max-width: 100%;
+table {
+	width: 100%;
+    margin-top: 20px;
+    float: left;
+    margin-right: 20px;
+    border-collapse: collapse;
+    table-layout:fixed;
+    border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
 }
 
-table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
+th, td {
+    border: 1px solid rgb(163, 161, 161);
+    padding: 8px;
+    text-align: center;
 }
 
-th{
-	 text-align: center;
-}
-
-table{	
-	width: 500px;
-	table-layout: fixed;
-}
-
-#readOptionSent, #readOptionReceive{
+.listBox{
+	width: 800px;
+	height: 530px;
 	position: relative;
-	left: 310px;
-	margin-bottom: 5px;
+	left: 10px;
+	bottom: 20px;
 }
 
-.datePicker , #search{
-	position: relative;
-	left: 330px;
-}
-
-.subjectCol{
-	width: 190px;
-	min-width:190px;
-	max-width: 190px;
-}
-
-.subjectColTd{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-}
-
-.idCol{
-	width: 100px;
-	min-width:100px;
-	max-width: 100px;
-}
-
-.dateCol{
-	width: 125px;
-	min-width:125px;
-	max-width: 125px;
-}
-
-.readCol{
-	width: 50px;
-	min-width:50px;
-	max-width: 50px;
-}
-
-.checkCol{
-	width: 15px;
-	min-width:15px;
-	max-width: 15px;
-}
-
-.checkReadTd{
-	text-align: center;
-}
-
-.sentListBox{
-	width: 40%;
-	height: 450px;
-	border: 1px solid black;
-	border-radius: 50px;
-	align-items: center;
-	position: relative;
-	left: 90px;
-}
-
-.sentListContent{
-	margin: 30px;
-}
-
-.delBtn{
+.boardBtn, .delBtn{
 	height: 35px;
-	width: 55px;
+	width: 80px;
 	background-color: rgb(94, 94, 94);
 	border: none;
 	border-radius: 10px;
 	color: white;
 	position: relative;
 	top: 30px;
-	left: 80%;
 }
 
-
-.receiveBox{
-	width: 40%;
-	height: 450px;
-	border: 1px solid black;
-	border-radius: 50px;
-	align-items: center;
+#paging{
 	position: relative;
-	left: 120px;
+	top: 50px;
+	right: 190px;
 }
 
-.receiveContent{
-	margin: 30px;
+.datePicker{
+	position: relative;
+	left: 580px;
+	top: 10px;
 }
 
-button{
-	cursor: pointer;
-}
-
-#del_modal, #del_modal_receive{
-	display: none; 
-	width:300px; 
-	height:150px; 
-	background: rgb(237, 237, 237); 
-	border:1px solid gray; 
-	text-align:center;
-}
-
-#del_modal{
-	position:absolute; 
-	left:50%; 
-	top:-120px; 
-	margin-left:-200px; 
-}
-
-#del_modal_receive{
-	position:absolute; 
-	left:50%; 
-	top:-120px; 
-	margin-left:200px; 
-}
-
-
-.modalBtnNo, .modalBtnYes{
-	height: 35px;
-	width: 80px;
-	color: white;
-	border: none;
-	border-radius: 10px;
-}
-
-.modalBtnNo{
-	background-color: gray;
-}
-
-.modalBtnYes{
-	background-color: rgb(94, 94, 94);
-}
-
-.logo{
-
-	cursor: pointer;
-
-}
-button {
-	float: left;
-	display: flex;
-	align-items: left;
-}
-
-.profButton {
-
-	font-size: 20px;
-	text-align: center;
-
-}
-
-.nav {
-	height: 150px;
-	display: flex;
-	justify-content: space-between;
-	margin-top: 40px;
+#search{
+	position: relative;
+	left: 580px;
+	top: 10px;
 }
 
 </style>
@@ -215,6 +92,7 @@ button {
 		<div class="logo">
 			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
+		<h1>내가 쓴 글</h1>
 	</nav>
 
 	<main>
@@ -222,32 +100,32 @@ button {
 			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
 			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
-			<button onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 예약 관리</button>
 			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		
-		<div class="sentListBox">
-			<div class="sentListContent">
-				<h1>내가 쓴 글</h1>
+		<div class="listBox">
 				<input type="date" id="datePicker" class="datePicker"/>
 				<input id="search" type="submit" value="검색">
+				<div>
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox" id="allSent" class="checkCol"/></th>
-							<th class="subjectCol">제목</th>
-							<th class="dateCol">날짜</th>
-							<th class="idCol">조회수</th>
-							
+							<th style="width:80px;"><input type="checkbox" id="allSent"/></th>
+							<th style="width:480px;">제목</th>
+							<th>날짜</th>
+							<th style="width:80px;">조회수</th>
 						</tr>
 					</thead>
 					<tbody id="sentList">
 						
 					</tbody>
 				</table>
-				<button onclick="location.href='./boardMain'">게시판 가기</button>
-				<button onclick="del_modal()" class="delBtn">삭제</button>
+				</div>
+				<div>
+					<button onclick="location.href='./boardMain'" class="boardBtn">게시판 가기</button>
+					<button onclick="del_modal()" class="delBtn">삭제</button>
+				</div>
 				<div id="paging" class="pagingBox">
 					<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공함-->
 					<div class="container">
@@ -257,9 +135,6 @@ button {
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- 모달 -->
-
 </main>
 </body>
 <script>
@@ -400,13 +275,6 @@ $('#datePicker').change(function(e){
 	
 }); 
 
-
-$(".logo").on("click", function(){
-	
-	console.log("logo클릭");
-	location.href="./";
-	
-});
 
 
 </script>
