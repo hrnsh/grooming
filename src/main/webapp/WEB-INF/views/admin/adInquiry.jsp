@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>일반 문의 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
@@ -91,25 +91,12 @@ a{
 
 #inquiryDatePickSend{
 	position: relative;	
-	left: 29%;
+	left: 47%;
 }
 
 #inquiryDatePickHandle{
 	position: relative;	
-	left: 43%;
-}
-
-.logoutBtn{
-	position: absolute;
-	left: 70%;
-	top: 10%;
-	height: 35px;
-	width: 80px;
-	background-color: rgb(94, 94, 94);
-	border: none;
-	border-radius: 10px;
-	color: white;
-	cursor: pointer;
+	left: 61%;
 }
 
 
@@ -131,7 +118,8 @@ a{
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		<div class="inquiryBox">
-			<span class="searchBox">
+			<!-- 검색바 숨김 처리 -->
+			<span class="searchBox" style="display:none;">
 				<input type="text" id="search"/> 
 				<button onclick="searchId()" id="searchBtn">검색</button>
 			</span>
@@ -249,7 +237,7 @@ function inquiryListCall(page){
 	$.ajax({
 		type:'get',
 		url:'inquiryListCall',
-		data:{'page':page,'ad_id':ad_id, 'stateOption':$('#stateOption').val(), 'searchTxt':$('#search').val(),'option':option}, 
+		data:{'page':page,'ad_id':ad_id, 'stateOption':$('#stateOption').val(),'option':option}, 
 		dataType:'JSON',
 		success: function(data){
 			console.log(data)
@@ -312,7 +300,7 @@ function drawInquiryList(inquiryList){
 	});
 }
 
-// 검색 기능 
+/* // 검색 기능 
 function searchId(){
 	inquiryListCall(showPage);
 }
@@ -327,7 +315,7 @@ $("#search").keypress(function(e){
 	if(e.keyCode && e.keyCode == 13){
 		  e.preventDefault();	
 	}
-});
+}); */
 
 
 </script>

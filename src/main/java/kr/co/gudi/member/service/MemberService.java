@@ -38,7 +38,6 @@ public class MemberService {
 
 
 	public String logingo(String user_id, String pw) {
-		boolean success = false;
 		return dao.logingo(user_id,pw);
 	}
 
