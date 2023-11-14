@@ -120,22 +120,166 @@ width:120px;
 
 }
 
-.nav {
-	height: 150px;
-	display: flex;
-	justify-content: space-between;
-	padding-right: 1500px;
-	padding-top: 30px;
+
+  .nav {
+  	width:1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
 }
+
+.logo img {
+    cursor: pointer;
+}
+
+.iconAll{
+	width:100px;
+    text-align: center;
+}
+
+/* gpt */
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      margin-bottom:50px;
+    }
+
+    #userfilter, #deptfilter{
+      text-align: center;
+      padding: 15px;
+      background-color: rgb(243, 208, 204);
+      color: black;
+      padding-left: 30px;
+      padding-right: 30px;
+      margin-bottom: 30px;
+      border-radius: 5px
+    }
+    
+        #userfilter:hover, #deptfilter:hover{
+      text-align: center;
+      padding: 15px;
+      padding-left: 30px;
+      padding-right: 30px;
+      background-color: gray;
+      color: #fff;
+      margin-bottom: 30px;
+      border-radius: 5px
+    }
+
+    #title {
+      text-align: center;
+      padding: 10px;
+      background-color: rgb(243, 208, 204);
+      color: black;
+      margin-bottom: 20px;
+      margin-left: 950px;
+      border-radius: 5px
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      background-color: #fff;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    #num, #subj, #us, #hit, #da {
+      background-color: rgb(243, 208, 204);
+      color: black;
+    }
+
+    #searchpath, #searchval {
+      padding: 8px;
+      margin-right: 10px;
+    }
+
+    #btn {
+      padding: 8px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    #btn:hover {
+      background-color: #2980b9;
+    }
+
+    .container {
+      margin-top: 20px;
+    }
+
+    .pagination {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pagination li {
+      display: inline;
+      margin: 0;
+    }
+
+    .pagination li a, .pagination li span {
+      padding: 8px;
+      margin: 4px;
+      border: 1px solid #ddd;
+      text-decoration: none;
+      color: #3498db;
+      cursor: pointer;
+    }
+
+    .pagination li a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .write {
+      padding: 20px;
+      width: 120px;
+      background-color: rgb(243, 208, 204);
+      color: black;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .write:hover {
+      background-color: rgb(163, 161, 161);
+    }
+
 
 </style>
 </head>
 <body>
-	<nav class="nav">
+
+	
+		<nav class="nav">
 		<div class="logo">
-			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width="150" height="120"/>
+		</div>	
+		<div class="iconAll">
+			<img src="resources/img/mapIcon.jpg" alt="mapIcon" width=100 height=100/>
+			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
 		</div>
-	</nav>
+		<div class="iconAll">
+			<img src="resources/img/calendarIcon.jpg" alt="calendarIcon" width=100 height=100/>
+			<button onclick="location.href='./revList'" class="button">예약 관리</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/boardIcon.jpg" alt="boardIcon" width=100 height=100/>
+			<button onclick="location.href='./boardMain'" class="button">게시판</button>
+		</div>
+		</nav>
 	<div id="userfilter" >회원글</div>
 	<div id="deptfilter">업체글</div>
 	<h3 id="title">회원게시판</h3>

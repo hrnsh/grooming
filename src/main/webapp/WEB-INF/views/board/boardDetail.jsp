@@ -16,153 +16,6 @@
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
 
-table{
-width: 1000px;
-padding : 5px 10px;
-	margin-left:auto; 
-    margin-right:auto;
-
-}
-
-body{
-		margin-left:auto; 
-	    margin-right:auto;
-		padding-top: 90px;
-		padding-bottom: 90px;
-
-}
-
-#subject {
-	
-	border-bottom : 1px solid black;
-	border-collapse: collapse;
-
-}
-
-#first{
-
-	border-bottom : 1px solid black;
-	font-size: 30px;
-}
-
-#user_id{
-
-	border-right: 1px solid black; 
-	float: left;
-	padding: 0px 20px;
-	
-}
-#writedate{
-border-right: 1px solid black; 
-	float: left;
-	padding: 0px 20px;
-}
-
-#report{
-
-border-right: 1px solid black;
-padding: 0px 20px;
-margin-left: 55%; 
-float: left;
-
-
-}
-
-#b_hit{
-padding: 0px 20px;
-float: left;
-}
-
-#content{
-
-border: 1px solid gray;
-border-collapse: collapse;
-height: 800px;
-border-radius: 5px;
-
-}
-
-#getreply, #list , #delete, #modify{
-
-	border: 1px solid black;
-	border-collapse: collapse;
-	float: left;
-	border-radius: 5px;
-	padding: 0px 30px;
-}
-
-#delete {
-
-	margin-left: 58%;
-
-}
-
-#reply{
-
-	margin-top : 30px;
-	float:left;
-	width : 500px;
-	height: 55px
-}
-
-#getreply, #list, #delete, #modify, #rp{
-
-	cursor: pointer;
-
-
-}
-#uid,#ucon,#ure{
-	float : left;
-	border-left : 1px solid black;
-	border-collapse: collapse;
-}
-
-#ucon{
-
-	width: 400px;
-
-}
-
-#uid{
-
-	width: 100px;
-
-}
-
-#r, #d{
-	float : left;
-	border-radius: 5px;
-	border : 1px solid black;
-	border-collapse: collapse;
-	cursor: pointer;
-
-}
-
-# pagination {
-
-	width : 10px;
-
-}
-
-
-#rp{
-
-	border: 1px solid black;
-	border-collapse: collapse;
-	width: 65px;
-	height: 25px;
-
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -188,7 +41,11 @@ border-radius: 5px;
 #rpname {padding-left: 100px;}
 #rpbt {border: 1px solid black; border-collapse: collapse; cursor: pointer;}
 
+#ured {
 
+	background-color: rgb(94, 94, 94);
+
+}
 #conp {
 
 	float: none;
@@ -204,19 +61,169 @@ border-radius: 5px;
 
 }
 
+/* chatGPT */
+
+ body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px auto;
+      background-color: #fff;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    #subject {
+      background-color: rgb(243, 208, 204);
+      color: black;
+      
+    }
+
+    #user_id, #writedate, #report, #b_hit {
+      margin-bottom: 10px;
+    }
+
+    #content {
+      white-space: pre-wrap;
+      padding: 15px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+      display: block;
+    }
+
+    #list, #delete, #modify, #getreply {
+      padding: 10px;
+      background-color: rgb(163, 161, 161);
+      color: white;
+      cursor: pointer;
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    #list:hover, #delete:hover, #modify:hover, #getreply:hover {
+      background-color: rgb(94, 94, 94);
+      
+      border-radius: 5px;
+      
+      
+    }
+    
+    #delete{
+    
+    margin-left: 900px;
+    
+    
+    }
 
 
+    .popup_layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
 
+    .popup_box {
+      width: 375px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
 
+    #rpbt {
+      text-align: center;
+    }
+    
+      #user_id, #writedate, #report, #b_hit {
+    display: inline-block;
+    margin-right: 50px;
+  }
+
+  #report, #goreportform {
+    text-decoration: none;
+    color: #3498db;
+    cursor: pointer;
+  }
+
+  #report:hover, #goreportform:hover {
+    text-decoration: underline;
+  }
+  
+    #uid, #ucon, #ure, #ured {
+    display: inline-block;
+    margin-left: 190px;
+  }
+  
+  #ucon{
+  
+  	width: 100px;
+  
+  }
+
+  #ured, #d {
+    cursor: pointer;
+    color: #3498db;
+  }
+
+  #ured:hover, #d:hover {
+    text-decoration: underline;
+  }
+  
+    .nav {
+  	width:1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo img {
+    cursor: pointer;
+}
+
+.iconAll{
+	width:100px;
+    text-align: center;
+}
+
+# rb{
+
+	margin-left: 400px;
+
+}
 </style>
 </head>
 <body>
+
 	
 	<table>
 	
 		<tr id="subject">
 			<!-- <th>${bbs.b_subject}</th> -->
-			<td id="first" >${list.b_subject}</td>
+			<td id="first" style='font-size: 50px'>${list.b_subject}</td>
 		</tr>
 		
 		
@@ -251,7 +258,7 @@ border-radius: 5px;
 			<div id="b_hit">
 			
 			
-			<p>${list.b_hit}</p>
+			<p>조회수 : ${list.b_hit}</p>
 			
 			
 			</div>
@@ -307,10 +314,7 @@ border-radius: 5px;
 		</c:if>
 		</c:if>
 		
-<%-- 			<input type="button" onclick="location.href='./list'" value="리스트" />
-			<input type="button" onclick="location.href='./del?idx=${bbs.idx}'" value="삭제" />
-			<input type="button" onclick="location.href='./updateForm?idx=${bbs.idx}'" value="수정" />
- --%>
+
 		</th>
 		</tr>
 			<tr>
@@ -527,16 +531,12 @@ $("#getreply").on("click", function(){
 
 	list.list.forEach(function(item,idx){
 		content += '<tr>';
-		content += '<td id="uid">'+item.user_id+'</td>';
-		content += '<td id="ucon" name ="ucon">'+item.brep_content+'</td>';
-		// java.sql.Date 는 jsp 에서는 정상동작 되나 js 에서는 밀리세컨드를 반환 한다.
-		// 방법 1. DTO 에서 reg_date 를 String 으로 반환하는 방법
-		// content += '<td>'+item.reg_date+'</td>';
-		// 방법 2. js 에서 직접 변환
+		content += '<td id="uid">'+'<div>'+item.user_id+'</div>';
+		content += '<div id="ucon" name ="ucon">'+item.brep_content+'</div>';
 		var date = new Date(item.brep_date);
 		var dateStr = date.toLocaleDateString("ko-KR"); //en-US
-		content += '<td id="ure">'+dateStr+'</td>';	
-		content += '<td >'+'<div id="ure">'+'<div id="d" onclick='+"'location.href="+'"boardReplyDelete?bnum='+item.b_num+'&list_num='+item.brep_num+'"'+"'>"+'삭제하기</div>'+'</td>';
+		content += '<div id="ure">'+dateStr+'</div>';	
+		content += '<div id="ured">'+'<div id="d" onclick='+"'location.href="+'"boardReplyDelete?bnum='+item.b_num+'&list_num='+item.brep_num+'"'+"'>"+'삭제하기</div>'+'</td>';
 		content += '</tr>';
 		
 		console.log(content);
