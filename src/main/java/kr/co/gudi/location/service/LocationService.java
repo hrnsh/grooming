@@ -34,4 +34,8 @@ public class LocationService{
 	public List<ReviewDTO> getReviews(String companyName) {
 		return locationDao.getReviews(companyName);
 	}
+
+	public void sendNoteToCom(String subject, String content, String receiver, String sender) {
+		locationDao.sendNoteToCom(subject, content, receiver, sender);
+	}
 }

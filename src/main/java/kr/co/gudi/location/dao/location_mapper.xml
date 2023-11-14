@@ -44,4 +44,11 @@
     											FROM company 
     											WHERE com_name= #{param1})
     </select>
+    
+    <insert id="sendNoteToCom">
+		INSERT INTO note (note_subject, note_content, receiver, sender)
+			VALUES (#{param1}, #{param2}, 
+            	(SELECT user_id FROM member WHERE user_id = #{param3}),
+            	#{param4})
+	</insert>
 </mapper>

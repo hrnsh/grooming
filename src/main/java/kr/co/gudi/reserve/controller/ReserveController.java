@@ -209,7 +209,7 @@ public class ReserveController {
 			params.put("sender", user_id);
 			logger.info("받아온 데이터: "+params);
 			service.writeNote(params);
-
+ 
 			return "redirect:/reserveDetail";
 		}
 	}

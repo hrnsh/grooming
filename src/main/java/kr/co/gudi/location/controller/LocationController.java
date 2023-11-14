@@ -3,6 +3,8 @@ package kr.co.gudi.location.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +68,22 @@ public class LocationController {
     	logger.info("업체 이름: "+companyName);
     	logger.info("리뷰 리스트: "+ reviews);
     	return reviews;
+    }
+    
+    @RequestMapping(value = "/locationNote")
+    public String locationNote(@RequestParam String companyName,
+    		Model model) {
+    	model.addAttribute("companyName", companyName);
+    	return "locationNote";
+    }
+    
+    @RequestMapping(value="/sendNoteToCom", method=RequestMethod.POST)
+    public String sendNoteToCom(@RequestParam String subject, @RequestParam String content, 
+			@RequestParam String receiver, HttpSession session) {
+    	logger.info("제목: "+subject+", 내용: "+content+", 수신자: "+receiver);
+    	String sender = (String) session.getAttribute("loginId");
+    	
+    	locationService.sendNoteToCom(subject, content, receiver, sender);
+    	return "redirect:/locationSearch";
     }
 }

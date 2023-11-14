@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="reportDetail" resultType="kr.co.gudi.admin.dto.ReportDTO">
-		SELECT r.report_num, r.user_id, r.report_content, r.report_type, r.report_date, r.report_state, h.rephis_date, h.ad_id, h.rephis_content, h.rephis_date
+		SELECT r.report_get, r.report_num, r.user_id, r.report_content, r.report_type, r.report_date, r.report_state, h.rephis_date, h.ad_id, h.rephis_content, h.rephis_date
 			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
 				WHERE r.report_num = #{param1};
 	</select>
