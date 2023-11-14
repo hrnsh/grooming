@@ -96,7 +96,7 @@ button {
 		<tr>
 			<th>픽업 가능 거리 (업체 기준 반경)</th>
 			<th colspan="4">
-				<input type="text" name="p_distance" value="" /> KM
+				<input type="text" name="p_distance" value="10" readonly="readonly" /> KM
 			</th>
 		</tr>
 		<tr>
@@ -111,7 +111,7 @@ button {
 				<input type="button" id="writepickupinfo" value="픽업 정보 입력 완료" />
 			</th>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<th>이용권 가격</th>
 			<th colspan="2">
 				<input type='radio' name="t_type" value="오전권" />오전권
@@ -124,7 +124,7 @@ button {
 			<th colspan="5" style="text-align: center;">
 				<input type="button" id="writeticketprice" value="예약권 정보 입력 완료" />
 			</th>
-		</tr>
+		</tr> -->
 	</table>
 	
 	<table>
@@ -138,7 +138,7 @@ button {
 			
 	</table>
 	
-	<table>
+	<!-- <table>
 		<tr>
 			<th colspan="5"><input type="button" id="ticketpricedelete" onclick = "ticketpricedelete()" value="예약권 가격표 삭제"/></th>
 		</tr>
@@ -146,7 +146,7 @@ button {
 			<tbody id="ticketlist">
 
 			</tbody>
-	</table>
+	</table> -->
 	
 </body>
 <script>

@@ -49,7 +49,7 @@
 	</update>
 	
 	<select id="comlist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
-		select com_num,user_id,com_name,com_time,accept,pickup,user_total,address,avg_star from company
+		select com_num,user_id,com_name,com_time,accept,pickup,user_total,address,avg_star,price from company
 		where user_id = #{param1}
 	</select>
 	
@@ -90,8 +90,8 @@
 	</insert>
 	
 	<insert useGeneratedKeys="true" keyColumn="com_num" keyProperty="com_num" id="comregister" parameterType="kr.co.gudi.profile.dto.ProfileDTO">
-		insert into company (user_id,com_name,address,com_time,accept,pickup)
-		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup})
+		insert into company (user_id,com_name,address,com_time,accept,pickup,price)
+		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup},#{price})
 	</insert>
 	
 </mapper>

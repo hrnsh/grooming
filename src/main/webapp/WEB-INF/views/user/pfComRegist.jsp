@@ -93,12 +93,14 @@ button {
 		</tr>
 		<tr>
 			<th>주소지</th>
-			<th colspan="3">
-				<input type="text" id="sample4_postcode" placeholder="우편번호"> 
-				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
-				<br>
-				<input type="text" id="sample4_jibunAddress" name="address" placeholder="지번주소">
-				<span id="guide" style="color: #999; display: none"></span>
+			<th colspan="3"><input type="text" id="sample4_postcode" placeholder="우편번호"> 
+			<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+			<br>
+			<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+			<input type="text" id="sample4_jibunAddress" name="address" placeholder="지번주소">
+			<span id="guide" style="color: #999; display: none"></span>
+			<input type="text" id="sample4_detailAddress" placeholder="상세주소" />
+			<input type="text" id="sample4_extraAddress" placeholder="참고항목">
 			</th>
 		</tr>
 		<tr>
@@ -115,7 +117,11 @@ button {
 				<input type="radio" id="pickup" name="pickup" value="Y" />픽업 가능
 				<input type="radio" id="pickup" name="pickup" value="N" />픽업 불가능
 			</th>
-		</tr>		
+		</tr>
+		<tr>
+			<th>가격</th>
+			<th colspan="3"><input type="text" id="price" name="price" value="" /></th>
+		</tr>
 		<tr>
 			<th>사진 등록</th>
 			<th colspan="4">
@@ -191,11 +197,29 @@ button {
 	
 	
 	$('#btnChk').click(function(){
-		if ($("#a_age").val() == "") {	
-			alert("이름을 정확히 입력해주세요");
-			location.href='profileUpdateForm?user_id=${sessionScope.loginId}';
+		if ($("#com_name").val() == "") {
+			alert("업체 이름을 입력해주세요");
+			location.href='comregisterForm?user_id=${sessionScope.loginId}';
+			}else if($("#sample4_jibunAddress").val() == ""){
+				alert("업체 주소를 입력해주세요");
+				location.href='comregisterForm?user_id=${sessionScope.loginId}';
+			}else if($("#com_time").val() == ""){
+				alert("영업 시간을 입력해주세요");
+				location.href='comregisterForm?user_id=${sessionScope.loginId}';
+			}else if($("#accept").val() == ""){
+				alert("수용 가능 수를 입력해주세요");
+				location.href='comregisterForm?user_id=${sessionScope.loginId}';
+			}else if($("#pickup").val() == ""){
+				alert("픽업 여부를 입력해주세요");
+				location.href='comregisterForm?user_id=${sessionScope.loginId}';
+			}else if($("#price").val() == ""){
+				alert("픽업 여부를 입력해주세요");
+				location.href='comregisterForm?user_id=${sessionScope.loginId}';
+			}else if($("#photos").val() == ""){
+				alert("사진을 입력해주세요");
+				location.href='comregisterForm?user_id=${sessionScope.loginId}';
 			}else{
-				document.animalsub.submit();
+				document.comsub.submit();
 				}
 		});
 	

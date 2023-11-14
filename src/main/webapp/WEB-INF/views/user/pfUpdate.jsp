@@ -7,7 +7,79 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
+
 <style>
+main {
+      margin-top: 50px;
+    }
+
+ nav {
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+    .logo {
+	margin-left: 50px;
+	right: 0px;
+}
+
+    .logo img {
+      width: 150px;
+      height: 120px;
+      cursor: pointer;
+    }
+
+   h1 {
+      margin: 0;
+    }
+
+    table {
+      width: 450px;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="submit"],
+    input[type="button"],
+    input[type="checkbox"] {
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+    }
+
+    #allchecker {
+      cursor: pointer;
+    }
+
+    #updatelist {
+      max-height: 700px;
+      overflow: auto;
+    }
+
+    #userstatedeleter,
+    #animalprofiledelete {
+      margin-top: 20px;
+    }
+
 table, th, td {
 	margin: 10px;
 	border-bottom: 1px solid black;
@@ -45,46 +117,42 @@ button {
 	border: solid;
 	float: left;
 }
+
+.profButtonBox{
+	width: 20px;
+	position: absolute;
+	top: 10px;
+	display:flex;
+	left: 50px;
+	flex-direction: column;
+}
+
+.profButtonBox {
+      display: flex;
+      margin-top: 10px;
+    }
+    
 </style>
 </head>
 <body>
+
+<nav class="nav">
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
 	<h1 style="text-align: center;">프로필 수정</h1>
-	<table>
-		<tr>
-			<th>
-				<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"
-					class="button">쪽지함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"
-					class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'"
-					class="button">신고 내역</button>
-			</th>
-		</tr>
-	</table>
+</nav>
+	
+
+	<main>
+	<div class="profButtonBox">
+				<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="profButton">내 프로필</button>
+				<button onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'" class="profButton">쪽지함</button>
+				<button onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'" class="profButton">내가 쓴 글</button>
+				<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
+	</div>
 	
 		<form action="profileupdate" method="post">
-		
-		<input type="submit" value="수정 완료" />
-	
 		<table>
 			<tr>
 				<th>ID</th>
@@ -110,17 +178,22 @@ button {
 				<th>상태</th>
 				<th><input style="border: none; background: transparent;" type="text" name="state" readonly="readonly" value="${member.state}"/></th>
 			</tr>
+			<tr>
+				<th colspan="3" style="text-align: center;"><input type="button" id="userstatedeleter" value="회원 탈퇴"/><input type="submit" value="수정 완료" /></th>
+				
+			</tr>
 		</table>
 	</form>
 	
-	<input type="button" id="userstatedeleter" value="회원 탈퇴"/>
 	
+	
+	
+	<div>
+	<input type="submit" value="수정 완료" />
 	<input type="button" id="animalprofiledelete" onclick = "del()" value="삭제"/>
-	
-	<button	onclick="location.href='animalregisterForm?user_id=${sessionScope.loginId}'" class="button">동물 등록</button>
-	
-	<div style = "width : 50%; height : 700px; overflow : auto">
-	<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" >
+	<input type="button" onclick="location.href='animalregisterForm?user_id=${sessionScope.loginId}'" class="button" value="동물 등록"/>
+	<div style = "width : 600px; height : 600px; overflow : auto">
+	<table>
 		<tr>
 			<th><input type="checkbox" id = "allchecker"/></th>
 			<th>번호</th>
@@ -135,6 +208,9 @@ button {
 		</tbody>
 	</table>
 	</div>
+	</div>
+		</main>
+	
 	
 </body>
 <script>

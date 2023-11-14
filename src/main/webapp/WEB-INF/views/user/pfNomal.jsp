@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
 
 <style>
-/* gpt */
 
 .logo {
 	margin-left: 50px;
@@ -113,7 +112,7 @@ body {
 }
 
     table {
-      width:400px;
+      width:450px;
       height:500px;
       margin: 20px;
       border-collapse: collapse;
@@ -131,7 +130,9 @@ body {
       background-color: #f2f2f2;
     }
 
-   
+	::-webkit-scrollbar {
+  		display: none;
+	}
 
 </style>
 </head>
@@ -187,7 +188,7 @@ body {
 	<div style = "width : 500px; height : 500px; overflow : auto">
 	<table>
 		<tr>
-			<th>번호</th>
+			<!-- <th>번호</th> -->
 			<th>이름</th>
 			<th>성별</th>
 			<th>나이</th>
@@ -249,7 +250,7 @@ console.log("listCall : " + listCall);
 		var content = '';
 		list.forEach(function(item, a_num) {
 					content += '<tr>';
-					content += '<th>'+item.a_num+'</th>';
+					/* content += '<th>'+item.a_num+'</th>'; */
 					content += '<th>'+item.a_name+'</th>';
 					content += '<th>'+item.a_gender+'</th>';
 					content += '<th>'+item.a_age+'</th>';
@@ -336,6 +337,10 @@ console.log("listCall : " + listCall);
 						content += '<tr>';
 						content += '<th>'+"주소"+'</th>';
 						content += '<th colspan="2">'+item.address+'</th>';
+						content += '</tr>';
+						content += '<tr>';
+						content += '<th>'+"가격"+'</th>';
+						content += '<th colspan="2">'+item.price+'</th>';
 						content += '</tr>';
 						content += '<tr>';
 						content += '<th colspan = "2"><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">가격표 보기</button></th>';
