@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 관리</title>
+<title>처리 내역</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -150,6 +150,7 @@ table{
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 <nav class="nav">
 		<div class="logo">
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
@@ -163,6 +164,9 @@ table{
 			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
+=======
+<p>처리 내역</p>
+>>>>>>> origin/master
 	<tr>
 		<th>관리자ID</th>
 		<td><input type="text" id="selAd_id"/></td>

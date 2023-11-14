@@ -80,6 +80,25 @@ table{
 	border-radius: 10px;
 	color: white;
 }
+
+.modal{
+	width: 900px;
+	height: 500px;
+	left: 20%;
+	top: 15%;
+	border: 1px solid rgb(94, 94, 94);
+}
+
+form{
+	height: 500px;
+}
+
+.close{
+	font-size: 40px;
+	right: 10px;
+	position: relative;
+}
+
 </style>
 </head>
 <body>
