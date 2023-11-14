@@ -4,7 +4,7 @@
 <html>
 <head>
 <style>
-    body {
+    	body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
@@ -20,7 +20,7 @@
             color: #333;
             position: relative;
             bottom: 240px;
-            left: 570px;
+            left: 150px;
             font-size: 30px;
             top: -160px;
         }
@@ -31,7 +31,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 400px;
-            right: 550px;
+            right: 150px;
             position: relative;
             padding: 30px; 
             width: 350px; 
@@ -101,9 +101,8 @@
         }
         
         .arrowBtn{
-        	position: absolute;
-			right: 750px;
-			top: 80px;
+        	position: relative;
+			top: 50px;
 			
 			background-color: rgb(243, 208, 204);
             color: white;
@@ -114,15 +113,15 @@
             font-size: 16px;
             margin-bottom: 20px;
         }
+        
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 로그인</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
 	<button onclick="location.href='./'" class="arrowBtn"> ← </button>
 	<h2>ADMIN LOGIN</h2>
-	<hr/>
 	<form action="adLoginGo" method="post">
 	    <table>
 	        <tr>

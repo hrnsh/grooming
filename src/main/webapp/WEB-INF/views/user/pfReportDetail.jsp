@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>신고 내역</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 
@@ -122,7 +122,7 @@ table{
 				</tr>
 				<tr>
 					<td>신고 내용</td>
-					<td>${reportDetail.report_content}</td>
+					<td style="background-color:blue;">${reportDetail.report_content}</td>
 				</tr>
 			</table>
 			</div>

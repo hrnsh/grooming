@@ -72,4 +72,11 @@
 				ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param2}
 	</select>
 	
+		<select id="reportDatePickHandle" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT r.report_num, r.user_id, r.report_type, r.report_date, r.report_content, r.report_state, h.rephis_date
+			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
+				WHERE h.rephis_date = #{param1}
+				ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param2}
+	</select>
+	
 </mapper>

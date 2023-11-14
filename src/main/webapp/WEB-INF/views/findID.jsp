@@ -20,7 +20,7 @@
             color: #333;
             position: relative;
             bottom: 180px;
-            left: 150px;
+            left: 160px;
         }
 
         form {
@@ -64,9 +64,7 @@
         }
         
         .arrowBtn{
-        	position: absolute;
-			left: 670px;
-			bottom: 550px;
+        	position: relative;
 			
 			background-color: rgb(243, 208, 204);
             color: white;
@@ -101,7 +99,7 @@
         
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디 찾기</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
