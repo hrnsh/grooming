@@ -77,13 +77,6 @@ button {
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'"
-					class="button">회원 예약 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
 					onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'"
 					class="button">일반 문의 관리</button>
 			</th>
@@ -180,7 +173,7 @@ adminlistCall();
 
 	$(".logo").on('click',function(){
 		
-		location.href='./';
+		location.href='./adProfile?ad_id=${sessionScope.ad_id}';
 		
 	});
 	

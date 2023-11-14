@@ -48,10 +48,13 @@ button {
 </style>
 </head>
 <body>
+
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
+	
 	<h1 style="text-align: center;">업체 등록</h1>
+	
 	<table>
 		<tr>
 			<th>
@@ -74,8 +77,12 @@ button {
 			</th>
 		</tr>
 	</table>
-
-	<input type="button" id="comregister" value="등록 완료" />
+	
+	<form action="comregister" method="post" enctype="multipart/form-data">
+	
+	<button>등록 완료</button>
+	
+	<!-- <input type="button" id="comregister" value="등록 완료" /> -->
 
 	<table style="text-align: left;">
 		<tr>
@@ -113,17 +120,11 @@ button {
 				<input type="radio" name="pickup" value="Y" />픽업 가능
 				<input type="radio" name="pickup" value="N" />픽업 불가능
 			</th>
-		</tr>
-		</table>
-		
-		
-		<form action="compicregistForm" method="post" enctype="multipart/form-data">
-		<table>
+		</tr>		
 		<tr>
 			<th>사진 등록</th>
 			<th colspan="4">
-				<input type="file" name="photo" class="fileBtn"/>
-				<input type="submit" value="보내기" class="sendBtn" />
+				<input type="file" name="photos" class="fileBtn"/>
 			</th>
 		</tr>
 		</table>
@@ -194,7 +195,7 @@ button {
 	}
 	
 	
-	$('#comregister').on('click',function(){
+	/* $('#comregister').on('click',function(){
 		var $user_id = $('input[name="user_id"]');
 		var $com_name = $('input[name="com_name"]');
 		var $address = $('input[name="address"]');
@@ -231,7 +232,7 @@ button {
 			}
 		});
 		
-	});
+	}); */
 	
 	
 	$(".logo").on('click',function(){

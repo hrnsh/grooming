@@ -18,12 +18,15 @@ public interface ProfileDAO {
 	int animalprofiledelete(String a_num);
 
 	int animalregister(HashMap<String, String> params);
-
-	int comregister(HashMap<String, String> params);
+	
+	// --- 회원 업체 등록 --- //
+	void saveFile(int com_num, String oriFileName, String newFileName);
+	int comregister(ProfileDTO dto);
+	// ------------------ //
+	
+	int userstateupdater(String user_id, String state);
 
 	ProfileDTO userstatechecker(String user_id);
-
-	int userstateupdater(String user_id, String state);
 
 	ArrayList<ProfileDTO> comlist(String user_id);
 
@@ -41,12 +44,6 @@ public interface ProfileDAO {
 
 	int ticketpricedelete(String t_num);
 
-	static void savecompic(ProfileDTO dto) {
-		
-	}
 
-	static void savePhoto(String code, int num, String oriFileName, String newFileName) {
-		
-	}
 
 }

@@ -31,10 +31,10 @@
 		value(#{user_id},#{a_name},#{a_gender},#{a_age},#{a_kind},#{a_spec})
 	</insert>
 	
-	<insert id="comregister" parameterType="HashMap">
+	<!-- <insert id="comregister" parameterType="HashMap">
 		insert into company (user_id,com_name,address,com_time,accept,pickup)
 		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup})
-	</insert>
+	</insert> -->
 	
 	<update id="userstatedeleter" parameterType="hashmap">
 		update member set state='4' where user_id=#{param1}
@@ -84,14 +84,14 @@
 		delete from ticket_price where t_num = #{param1}
 	</delete>
 	
-	<insert id="savePhoto">
+	<insert id="saveFile">
 		INSERT INTO photo (photo_code, photo_n, oriFileName, newFileName)
-			VALUES (#{param1}, #{param2}, #{param3}, #{param4})
+			VALUES ('cp', #{param1}, #{param2}, #{param3})
 	</insert>
 	
-	<insert useGeneratedKeys="true" keyColumn="Com_num" keyProperty="Com_num" id="savecompic" parameterType="kr.co.gudi.admin.dto.InquiryDTO">
-		INSERT INTO company (user_id)
-			VALUES (#{user_id})
+	<insert useGeneratedKeys="true" keyColumn="com_num" keyProperty="com_num" id="comregister" parameterType="kr.co.gudi.profile.dto.ProfileDTO">
+		insert into company (user_id,com_name,address,com_time,accept,pickup)
+		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup})
 	</insert>
 	
 </mapper>

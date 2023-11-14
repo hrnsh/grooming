@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 <style>
 table, th, td {
 	margin: 10px;
@@ -77,13 +78,6 @@ button {
 		<tr>
 			<th>
 				<button
-					onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'"
-					class="button">회원 예약 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
 					onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'"
 					class="button">일반 문의 관리</button>
 			</th>
@@ -146,6 +140,14 @@ button {
 		<tbody id="adminlist">
 
 		</tbody>
+	</table>
+	<div style = "width : 300px; height : 500px; overflow : auto">
+	<table width = "300px" border = "0" cellspacing = "0" cellpadding = "0" >
+		<tr>
+			<th>ID</th>
+			<th>이름</th>
+			<th>직급</th>
+		</tr>
 		<tbody id="adminSearchList">
 
 		</tbody>
@@ -153,11 +155,15 @@ button {
 	</div>
 </body>
 <script>
+$(".logo").on('click',function(){
+	
+	location.href='./adProfile?ad_id=${sessionScope.ad_id}';
+	
+});
 
+adminlistCall();
 
-
-adminlistCall(); // 하나에 다 하자 ***대공사 예정***
-/* adminSearchListCall(); */
+adminSearchListCall();
 
 	function adminlistCall(){
 		$.ajax({
@@ -248,11 +254,9 @@ adminlistCall(); // 하나에 다 하자 ***대공사 예정***
 	
 	}
 	
-	$(".logo").on('click',function(){
-		
-		location.href='./';
-		
-	});
+
+	
+	
 	
 </script>
 </html>
