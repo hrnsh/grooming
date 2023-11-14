@@ -246,6 +246,7 @@ button {
 						
 					</tbody>
 				</table>
+				<button onclick="location.href='./boardMain'">게시판 가기</button>
 				<button onclick="del_modal()" class="delBtn">삭제</button>
 				<div id="paging" class="pagingBox">
 					<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공함-->

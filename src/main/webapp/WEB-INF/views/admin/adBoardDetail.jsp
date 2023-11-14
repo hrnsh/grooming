@@ -16,148 +16,195 @@
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
 
-table{
-width: 1000px;
-padding : 5px 10px;
-	margin-left:auto; 
-    margin-right:auto;
+/* 테스트 */
+/*popup*/
+.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+/*팝업 박스*/
+.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:375px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
+/*컨텐츠 영역*/
+.popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px; }
+.popup_box .popup_cont h2 {padding:15px 0;color:#333;margin:0;}
+.popup_box .popup_cont p{ border-top: 1px solid #666;padding-top: 30px;}
+/*버튼영역*/
+.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
+.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
+.popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
+.popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
+.popup_box .popup_btn a.close_day {background:#5d5d5d;}
+.popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after{display:none;}
+/*오버레이 뒷배경*/
+.popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
+/*popup*/
+#rpname {padding-left: 100px;}
+#rpbt {border: 1px solid black; border-collapse: collapse; cursor: pointer;}
+
+#ured {
+
+	background-color: rgb(94, 94, 94);
 
 }
+#conp {
 
-body{
-		margin-left:auto; 
-	    margin-right:auto;
-		padding-top: 90px;
-		padding-bottom: 90px;
-		
-		
-
-}
-
-#subject {
-	
-	border-bottom : 1px solid black;
-	border-collapse: collapse;
-
-}
-
-#first{
-
-	border-bottom : 1px solid black;
-	font-size: 30px;
-}
-
-#user_id{
-
-	border-right: 1px solid black; 
-	float: left;
-	padding: 0px 20px;
-	
-}
-#writedate{
-border-right: 1px solid black; 
-	float: left;
-	padding: 0px 20px;
-}
-
-#report{
-
-border-right: 1px solid black;
-padding: 0px 20px;
-margin-left: 55%; 
-float: left;
-
-
-}
-
-#b_hit{
-padding: 0px 20px;
-float: left;
-}
-
-#content{
-
-border-top: 1px solid black;
-border-left: 1px solid black;
-border-right: 1px solid black;
-border-collapse: collapse;
-border-radius: 5px;
-
-}
-
-#getreply, #list , #delete, #modify{
-
-	border: 1px solid black;
-	border-collapse: collapse;
-	float: left;
-	border-radius: 5px;
-	padding: 0px 40px;
-}
-
-#delete {
-
-	margin-left: 58%;
-
-}
-
-#reply{
-
-	margin-top : 30px;
-	float:left;
-	width : 500px;
-	height: 55px
-}
-
-#getreply, #list, #delete, #modify{
-
-	cursor: pointer;
+	float: none;
 	
 
-}
-#uid,#ucon,#ure{
-	float : left;
-	border-left : 1px solid black;
-	border-collapse: collapse;
-}
-
-#ucon{
-
-	width: 500px;
-
-}
-
-#uid{
-
-	width: 100px;
-
-}
-
-#r, #d{
-	float : left;
-	border-radius: 5px;
-	border : 1px solid black;
-	border-collapse: collapse;
-	cursor: pointer;
-
-}
-
-# pagination {
-
-	width : 10px;
-
-}
-
-#conp{
-
-	border-bottom: 1px solid black;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-collapse: collapse;
 
 }
 
 
+#getreply{
 
+	padding-left: 10px;
+
+}
+
+/* chatGPT */
+
+ body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px auto;
+      background-color: #fff;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    #subject {
+      background-color: rgb(243, 208, 204);
+      color: black;
+      font-size: 50px;
+    }
+
+    #user_id, #writedate, #report, #b_hit {
+      margin-bottom: 10px;
+    }
+
+    #content {
+      white-space: pre-wrap;
+      padding: 15px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+      display: block;
+    }
+
+    #list, #delete, #modify, #getreply {
+      padding: 10px;
+      background-color: rgb(163, 161, 161);
+      color: white;
+      cursor: pointer;
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    #list:hover, #delete:hover, #modify:hover, #getreply:hover {
+      background-color: rgb(94, 94, 94);
+      
+      border-radius: 5px;
+      
+      
+    }
+    
+    #delete{
+    
+    margin-left: 900px;
+    
+    
+    }
+
+
+    .popup_layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup_box {
+      width: 375px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #rpbt {
+      text-align: center;
+    }
+    
+      #user_id, #writedate, #report, #b_hit {
+    display: inline-block;
+    margin-right: 50px;
+  }
+
+  #report, #goreportform {
+    text-decoration: none;
+    color: #3498db;
+    cursor: pointer;
+  }
+
+  #report:hover, #goreportform:hover {
+    text-decoration: underline;
+  }
+  
+    #uid, #ucon, #ure, #ured {
+    display: inline-block;
+    margin-left: 190px;
+  }
+  
+  #ucon{
+  
+  	width: 100px;
+  
+  }
+
+  #ured, #d {
+    cursor: pointer;
+    color: #3498db;
+  }
+
+  #ured:hover, #d:hover {
+    text-decoration: underline;
+  }
+  
+    .nav {
+  	width:1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo img {
+    cursor: pointer;
+}
+
+.iconAll{
+	width:100px;
+    text-align: center;
+}
 </style>
 </head>
 <body>
@@ -198,7 +245,7 @@ border-radius: 5px;
 			<div id="b_hit">
 			
 			
-			<p>${list.adb_hit}</p>
+			<p>조회수 : ${list.adb_hit}</p>
 			
 			
 			</div>
