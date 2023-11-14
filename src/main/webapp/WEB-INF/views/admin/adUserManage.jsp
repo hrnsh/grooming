@@ -153,9 +153,9 @@ table{
 						<td id="state"></td>
 						<td>
 							<select id="state" name="state">
-							<option value="일반">일반</option>
-							<option value="업체">업체</option>
-							<option value="정지">정지</option>							
+							<option value="0">일반</option>
+							<option value="2">업체</option>
+							<option value="3">정지</option>							
 							</select>
 						</td>
 					</tr>
@@ -182,10 +182,6 @@ table{
 						<td colspan="3"><textarea name="m_complet"></textarea></td>
 					</tr>
 					<tr>
-						<th>요청일시</th>
-						<td>날짜</td>
-					</tr>
-					<tr>
 						<td colspan="2"><input type="submit" onclick="saveManage()"
 							value="수정" /></td>
 					</tr>
@@ -194,7 +190,7 @@ table{
 		</div>
 	</div>
 	</main>
-</body>
+</body> 
 <script>
 
 var showPage = 1;
@@ -239,8 +235,7 @@ function drawAdUserManageList(adUserManageList){
 			content+='승인대기'
 		}else if(item.state==2){
 			content+='업체'
-		}
-		else if(item.state==3){
+		}else if(item.state==3){
 			content+='정지'
 		}else if(item.state==4){
 			content+='탈퇴'

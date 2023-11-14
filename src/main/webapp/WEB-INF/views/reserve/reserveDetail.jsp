@@ -8,6 +8,39 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <style>
+ .nav {
+  	width:1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo img {
+    cursor: pointer;
+}
+
+.iconAll{
+	width:100px;
+    text-align: center;
+}
+
+div{text-align: center;}
+
+.button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: rgb(163, 161, 161);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgb(243, 208, 204);
+}
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -149,6 +182,23 @@ ul.inner_box {
 </style>
 </head>
 <body>
+<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width="150" height="120"/>
+		</div>	
+		<div class="iconAll">
+			<img src="resources/img/mapIcon.jpg" alt="mapIcon" width=100 height=100/>
+			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/calendarIcon.jpg" alt="calendarIcon" width=100 height=100/>
+			<button onclick="location.href='./revList'" class="button">예약 관리</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/boardIcon.jpg" alt="boardIcon" width=100 height=100/>
+			<button onclick="location.href='./boardMain'" class="button">게시판</button>
+		</div>
+		</nav>
 	<form action="change">
 		<table>
 			<tr>
@@ -403,14 +453,17 @@ $(document).ready(function() {
 	function openModal() {
 		var reviewSize = "${review.size()}";
 		console.log("리뷰체크"+reviewSize);
-		
+		console.log("예약상태: "+"${rState}");
+		if("${rState}"=="이용완료"){
 		if(reviewSize>0){
 			alert("리뷰는 한번만 작성할 수 있습니다.");
 		}else{
 			console.log("리뷰없음");
 			modal.style.display = 'block';
 		}
-		
+		}else{
+			alert("이용완료된 예약에만 리뷰작성이 가능합니다.");
+		}
 	}
 
 	function closeModal() {

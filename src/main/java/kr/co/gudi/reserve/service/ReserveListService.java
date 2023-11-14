@@ -107,7 +107,8 @@ public class ReserveListService {
 
 	public void saveReview(HashMap<String, Object> params) {
 		dao.saveReview(params);
-		
+		dao.saveStar(params);
+	
 	}
 
 	public ArrayList<ReserveDTO> rivDetail(int idx) {
@@ -209,6 +210,7 @@ public class ReserveListService {
 		dao.rrepDel(rrep_num);
 		
 	}
+
 
 
 

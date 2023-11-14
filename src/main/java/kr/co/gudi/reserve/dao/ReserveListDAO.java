@@ -114,4 +114,7 @@ public interface ReserveListDAO {
 
 
 
+	void saveStar(HashMap<String, Object> params);
+
+
 }

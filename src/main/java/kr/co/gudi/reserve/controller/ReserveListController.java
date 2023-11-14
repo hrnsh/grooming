@@ -183,6 +183,9 @@ public class ReserveListController {
 				for(ReserveDTO dto : detail) {
 					model.addAttribute("rStart",dto.getR_start());
 					}
+				for(ReserveDTO dto : detail) {
+					model.addAttribute("rState",dto.getR_state());
+					}
 				ArrayList<ReserveDTO> rivdetail = service.rivDetail(idx);
 				model.addAttribute("review",rivdetail);
 				
@@ -264,7 +267,7 @@ public class ReserveListController {
 			public String reviewDel(@RequestParam int rev_num) {
 				logger.info("리뷰번호: "+ rev_num);
 				service.reviewDel(rev_num);
-				return "reserve/reserveListl";
+				return "reserve/reserveList";
 			}
 			
 			@RequestMapping(value="/rrepDel")
