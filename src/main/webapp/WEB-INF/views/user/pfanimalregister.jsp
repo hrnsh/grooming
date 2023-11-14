@@ -75,8 +75,8 @@ button {
 		</tr>
 	</table>
 	
-		<form action="animalregister" method="post">
-		<input type="submit" value="등록 완료" />
+		<form name="animalsub" action="animalregister" method="post">
+		<input type="button" value="등록 완료" id="btnChk"/>
 	
 		<table>
 			<tr>
@@ -96,7 +96,7 @@ button {
 			</tr>
 			<tr>
 				<th>나이</th>
-				<th><input type="text" name="a_age" value=""/></th>
+				<th><input type="text" id="a_age" name="a_age" value=""/></th>
 			</tr>
 			<tr>
 				<th>종</th>
@@ -114,7 +114,7 @@ button {
 	</form>
 	
 	<div style = "width : 75%; height : 500px; overflow : auto">
-	<table width = "75%" border = "0" cellspacing = "0" cellpadding = "0" >
+	<table>
 		<tr>
 			<th>번호</th>
 			<th>이름</th>
@@ -127,17 +127,14 @@ button {
 
 		</tbody>
 	</table>
-
+	</div>
 </body>
 <script>
 listCall();
 
-listCall()
-
 console.log("listCall : " + listCall);
 	
 	function listCall(){
-	/* $('#listCall').on('click', function() { */
 		var user_id = '${sessionScope.loginId}';
 		console.log("profile user_id : " + user_id);
 
@@ -190,6 +187,15 @@ console.log("listCall : " + listCall);
 		$('#list').empty();
 		$('#list').append(content);
 	}
+	
+	$('#btnChk').click(function(){
+		if ($("#a_age").val() == "") {	
+			alert("이름을 정확히 입력해주세요");
+			location.href='profileUpdateForm?user_id=${sessionScope.loginId}';
+			}else{
+				document.animalsub.submit();
+				}
+		});
 	
 	$(".logo").on('click',function(){
 		

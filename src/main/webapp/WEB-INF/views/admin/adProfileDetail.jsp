@@ -111,25 +111,7 @@ button {
 			<th>${admin.ad_position}</th>
 		</tr>
 	</table>
-		<!-- <select id="positionsearch" name="positionsearch">
-			<option value="Boss">사장</option>
-			<option value="headofdepartment">부장</option>
-			<option value="Teamleader">팀장</option>
-			<option value="AssistantManager">대리</option>
-			<option value="Employee">사원</option>
-		</select>
-	<div style = "width : 45%; height : 500px; overflow : auto">
-	<table width = "45%" border = "0" cellspacing = "0" cellpadding = "0" >
-		<tr>
-			<th>ID</th>
-			<th>이름</th>
-			<th>직급</th>
-		</tr>
-		<tbody id="adminlist">
-
-		</tbody>
-	</table>
-	</div> -->
+		
 </body>
 <script>
 adminlistCall();

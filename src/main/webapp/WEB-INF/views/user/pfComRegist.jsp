@@ -78,12 +78,10 @@ button {
 		</tr>
 	</table>
 	
-	<form action="comregister" method="post" enctype="multipart/form-data">
+	<form name="comsub" action="comregister" method="post" enctype="multipart/form-data">
 	
-	<button>등록 완료</button>
+	<input type="button" value="등록 완료" id="btnChk"/>
 	
-	<!-- <input type="button" id="comregister" value="등록 완료" /> -->
-
 	<table style="text-align: left;">
 		<tr>
 			<th>유저 ID</th>
@@ -91,7 +89,7 @@ button {
 		</tr>
 		<tr>
 			<th>업체명</th>
-			<th colspan="3"><input type="text" name="com_name" value="" /></th>
+			<th colspan="3"><input type="text" id="com_name" name="com_name" value="" /></th>
 		</tr>
 		<tr>
 			<th>주소지</th>
@@ -99,32 +97,29 @@ button {
 				<input type="text" id="sample4_postcode" placeholder="우편번호"> 
 				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
 				<br>
-				<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
 				<input type="text" id="sample4_jibunAddress" name="address" placeholder="지번주소">
 				<span id="guide" style="color: #999; display: none"></span>
-				<input type="text" id="sample4_detailAddress" placeholder="상세주소" />
-				<input type="text" id="sample4_extraAddress" placeholder="참고항목">
 			</th>
 		</tr>
 		<tr>
 			<th>영업시간</th>
-			<th colspan="3"><input type="text" name="com_time" value="" /></th>
+			<th colspan="3"><input type="text" id="com_time" name="com_time" value="" /></th>
 		</tr>
 		<tr>
 			<th>수용 가능 수</th>
-			<th colspan="3"><input type="text" name="accept" value="" /></th>
+			<th colspan="3"><input type="text" id="accept" name="accept" value="" /></th>
 		</tr>
 		<tr>
 			<th>픽업여부</th>
 			<th colspan="3">
-				<input type="radio" name="pickup" value="Y" />픽업 가능
-				<input type="radio" name="pickup" value="N" />픽업 불가능
+				<input type="radio" id="pickup" name="pickup" value="Y" />픽업 가능
+				<input type="radio" id="pickup" name="pickup" value="N" />픽업 불가능
 			</th>
 		</tr>		
 		<tr>
 			<th>사진 등록</th>
 			<th colspan="4">
-				<input type="file" name="photos" class="fileBtn"/>
+				<input type="file" id="photos" name="photos" class="fileBtn"/>
 			</th>
 		</tr>
 		</table>
@@ -195,44 +190,14 @@ button {
 	}
 	
 	
-	/* $('#comregister').on('click',function(){
-		var $user_id = $('input[name="user_id"]');
-		var $com_name = $('input[name="com_name"]');
-		var $address = $('input[name="address"]');
-		var $com_time = $('input[name="com_time"]');
-		var $pickup = $('input[name="pickup"]:checked');
-		var $accept = $('input[name="accept"]');
-		
-		var param = {};
-		param.user_id = $user_id.val();
-		param.com_name = $com_name.val();
-		param.address = $address.val();
-		param.com_time = $com_time.val();
-		param.pickup = $pickup.val();
-		param.accept = $accept.val();
-		
-		console.log("업체 등록 파라메터 : " + param);
-		
-		$.ajax({
-			type:'post',
-			url:'comregister',
-			data:param,
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				if(data.success>0){
-					console.log("업체 등록 성공");
-					location.href='/gudi/profile?user_id='+param.user_id;
-				}else{
-					console.log("업체 등록 실패");
+	$('#btnChk').click(function(){
+		if ($("#a_age").val() == "") {	
+			alert("이름을 정확히 입력해주세요");
+			location.href='profileUpdateForm?user_id=${sessionScope.loginId}';
+			}else{
+				document.animalsub.submit();
 				}
-			},
-			error:function(e){
-				console.log(e);
-			}
 		});
-		
-	}); */
 	
 	
 	$(".logo").on('click',function(){
