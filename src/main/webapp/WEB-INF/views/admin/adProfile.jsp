@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 프로필</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 <style>
@@ -19,14 +19,13 @@
 .logo {
     position: relative;
     left: 50px;
-    top: 40px;
 }
 
 h1{
 	position: relative;
 	right: 50px;
 	top: 50px;
-	font-size: 40px;
+	font-size: 35px;
 }
 
 .logoutBtn {
@@ -41,14 +40,16 @@ h1{
     top: 20px;
 }
 
-.profButtonBox {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+#adpfdetail{
+    background-color: rgb(224, 224, 224);
+    border-radius:10px;
+    border: 1px solid rgb(224, 224, 224);
 }
 
 .button {
     width: 100%;
+    border: 1px solid rgb(224, 224, 224);
+	border-radius:10px;
 }
 
 table {
@@ -57,10 +58,13 @@ table {
     margin-right: 20px;
     border-collapse: collapse;
     table-layout:fixed;
+    border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
 }
 
 th, td {
-    border: 1px solid black;
+    border: 1px solid rgb(163, 161, 161);
     padding: 8px;
     text-align: center;
 }
@@ -75,35 +79,37 @@ th, td {
 }
 
 .firstBox{
-	left: 60px;
+	left: 75px;
 	width: 350px;
 	height: 500px;
 	position: relative;
 	top: 20px;
+	
 }
 
 .secondBox{
-	width: 300px;
+	width: 350px;
 	height: 500px;
-	overflow : auto;
 	position: relative;
 	left: 80px;
-	top: 10px;
+	bottom: 10px;
 	padding-top: 20px;
+	
 }
 
 .thirdBox{
-	width: 300px;
+	width: 350px;
 	height: 500px;
 	position: relative;
 	left: 130px;
-	bottom: 20px;
+	bottom: 40px;
 }
 
 .option{
 	position: relative;
-	left: 220px;
+	left: 195px;
 	top: 10px;
+	width: 50px;
 }
 
 
@@ -158,11 +164,13 @@ th, td {
 		</div>
 
 		<div class="secondBox">
-			<table style="width: 300px;">
+			<div style="font-size:18; top: 10px; position:relative;">관리자 목록</div>
+			<table style="width: 350px;">
 				<tr>
 					<th style="width: 70px;">ID</th>
 					<th>이름</th>
 					<th>직급</th>
+					<th>상세보기</th>
 				</tr>
 				<tbody id="adminlist">
 		
@@ -171,7 +179,8 @@ th, td {
 		</div>
 		
 		<div class="thirdBox">
-			<span class="option">
+			<div style="font-size:18; position:relative; top:50px;">직급별 관리자 보기</div>
+			<div class="option">
 			<select id="positionSearchOption">
 				<option value="사장">사장</option>
 				<option value="부장">부장</option>
@@ -179,12 +188,13 @@ th, td {
 				<option value="대리">대리</option>
 				<option value="사원">사원</option>
 			</select>
-			</span>
-			<table style="width: 300px;">
+			</div>
+			<table style="width: 350px;">
 				<tr>
 					<th style="width: 70px;">ID</th>
 					<th>이름</th>
 					<th>직급</th>
+					<th>상세보기</th>
 				</tr>
 				<tbody id="adminSearchList">
 		
