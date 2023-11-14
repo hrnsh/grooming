@@ -48,6 +48,7 @@ public class ManageController {
 		log_ad_id=loginId;
 		HashMap<String, Object>  manageDetail= new HashMap<>();
 		ArrayList<ManageDTO> dto = service.manageDetail(user_id);
+		
 		manageDetail.put("mDetail", dto);
 
 		return manageDetail;

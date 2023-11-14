@@ -107,4 +107,5 @@ ORDER BY formatted_date;
 			where user_id=#{param1}
 	</select>
 	
+	
 </mapper>

@@ -38,8 +38,4 @@ public class LocationService{
 	public void sendNoteToCom(String subject, String content, String receiver, String sender) {
 		locationDao.sendNoteToCom(subject, content, receiver, sender);
 	}
-
-	public List<ReviewDTO> AverageReviews(String companyName) {
-		return locationDao.AverageReviews(companyName);
-	}
 }

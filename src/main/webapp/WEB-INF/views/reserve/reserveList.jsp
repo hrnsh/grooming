@@ -13,8 +13,8 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-.nav {
-    width: 1200px;
+ .nav {
+  	width:1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,14 +25,12 @@
     cursor: pointer;
 }
 
-.iconAll {
-    width: 100px;
+.iconAll{
+	width:100px;
     text-align: center;
 }
 
-div {
-    text-align: center;
-}
+div{text-align: center;}
 
 .button {
     margin-top: 5px;
@@ -119,6 +117,23 @@ textarea {
 </head>
 <body>
 	<p>예약관리 - 회원</p>
+	<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width="150" height="120"/>
+		</div>	
+		<div class="iconAll">
+			<img src="resources/img/mapIcon.jpg" alt="mapIcon" width=100 height=100/>
+			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/calendarIcon.jpg" alt="calendarIcon" width=100 height=100/>
+			<button onclick="location.href='./revList'" class="button">예약 관리</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/boardIcon.jpg" alt="boardIcon" width=100 height=100/>
+			<button onclick="location.href='./boardMain'" class="button">게시판</button>
+		</div>
+		</nav>
 	<div>
 		<th>기간</th> <select id="selDate">
 			<option value="all">전체</option>
