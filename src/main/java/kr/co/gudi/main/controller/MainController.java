@@ -26,7 +26,7 @@ public class MainController {
 		String page = "main";
 		String ad_id = (String) session.getAttribute("ad_id");
 		if(ad_id!=null) {
-			page = "/admin/adInquiry";
+			page = "redirect:/adProfile?ad_id="+ad_id;
 		}
 		
 		return page;

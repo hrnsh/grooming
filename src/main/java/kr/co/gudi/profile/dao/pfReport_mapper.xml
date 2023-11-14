@@ -28,4 +28,11 @@
 				WHERE r.report_type = #{param2}	AND r.user_id = #{param3}
 			ORDER BY r.report_num DESC LIMIT 10 OFFSET #{param1}
 	</select>
+	
+	<select id="reportDetail" resultType="kr.co.gudi.admin.dto.ReportDTO">
+		SELECT r.report_num, r.user_id, r.report_content, r.report_type, r.report_date, r.report_state, h.rephis_date, h.ad_id, h.rephis_content, h.rephis_date
+			FROM report r LEFT OUTER JOIN report_history h ON r.report_num = h.report_num 
+				WHERE r.report_num = #{param1} AND r.user_id = #{param2}
+	</select>
+	
 </mapper>

@@ -37,12 +37,12 @@ main{
 
 .detailBox{
 	width: 800px;
-	height: 300px;
+	height: 250px;
 	border: 1px solid black;
 	border-radius: 50px;
 	position: relative;
 	left: 50px;
-	bottom: 140px;
+	bottom: 200px;
 }
 
 th, td{
@@ -66,42 +66,14 @@ table{
 	left: 50px;
 }
 
-.replyBtn{
-	position: absolute;
-	left: 70%;
-	top: 40%;
-	height: 35px;
-	width: 80px;
-	background-color: rgb(94, 94, 94);
-	border: none;
-	border-radius: 10px;
-	color: white;
-}
-
-.targetBtn{
-	height: 20px;
-	width: 50px;
-	background-color: rgb(94, 94, 94);
-	border: none;
-	border-radius: 5px;
-	color: white;
-}
-
-button{
-	cursor: pointer;
-}
-
 .handleBox{
 	position: relative;
 	width: 800px;
-	height: 230px;
+	height: 200px;
 	top: 80px;
 	border: 1px solid black;
 	border-radius: 50px;
 }
-
-
-
 
 </style>
 </head>
@@ -110,27 +82,22 @@ button{
 		<div class="logo">
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="arrowBtn"> ← </button>
+		<button onclick="location.href='pfReportList?loginId=${sessionScope.loginId}'" class="arrowBtn"> ← </button>
 	</nav>
 	<main>
 		<div class="profButtonBox">
-			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
-			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
-			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
-			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
-			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
+			<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
+			<button onclick="location.href='./pfNoteList?user_id=${sessionScope.loginId}'" class="profButton">쪽지함</button>
+			<button onclick="location.href='./pfWrite?user_id=${sessionScope.loginId}'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='./pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 		</div>
 		<div class="detailBox">
 			<span style="left: 70px; top:20px; position: relative; font-size:20px; border-bottom:1px solid black;">신고 내역</span>
 			<div style="width:90%; height:80%; position:relative; top: 30px;overflow:scroll;">
 			<table>
 				<tr>
-					<td style="width: 70px;">신고자</td>
-					<td colspan="3">${reportDetail.user_id}</td>
-				</tr>
-				<tr>
-					<td>신고 일자</td>
-					<td>${reportDetail.report_date}</td>
+					<td style="width: 70px;">신고 일자</td>
+					<td colspan="3">${reportDetail.report_date}</td>
 				</tr>	
 				<tr>
 					<td>신고 분류</td>
@@ -157,10 +124,6 @@ button{
 					<td>신고 내용</td>
 					<td>${reportDetail.report_content}</td>
 				</tr>
-				<tr>
-					<td>신고 대상</td>
-					<td><button onclick="reportTarget()" class="targetBtn">보기</button></td>
-				</tr>
 			</table>
 			</div>
 			<!--상태가 '2' 이면 처리내역 출력 -->
@@ -186,42 +149,16 @@ button{
 					</div>
 			</c:if>
 		</div>
-		<c:if test="${reportDetail.report_state==1}">
-			<button onclick="location.href='adReportAnswer?report_num=${reportDetail.report_num}'" class="replyBtn">답장</button>
-		</c:if>
 	</main>
 </body>
 <script>
 
-var ad_id="${sessionScope.ad_id}";
-if (!ad_id) {
-    alert("관리자 권한이 필요한 페이지 입니다.");
+var loginId="${sessionScope.loginId}";
+if (!loginId) {
+    alert("로그인이 필요한 서비스 입니다.");
     location.href = "./"; 
 }
 
-function reportTarget(){
-	var reportType = "${reportDetail.report_type}";
-    var reportGet = "${reportDetail.report_get}";
-	
-	 // 각 게시물 타입에 따라 URL 생성
-    var targetUrl = generateTargetUrl(reportType, reportGet);
-	 
-    window.location.href = targetUrl;
-}
-
-function generateTargetUrl(reportType, reportGet) {
-	// 각 게시물 타입에 따라 URL 생성
-    var baseUrl = "./";
-    
-    switch (reportType) {
-	    case "0":  // 게시글
-	        return baseUrl + "boardDetail?b_num=" + reportGet;
-	    case "1":  // 리뷰
-	        return baseUrl + "reviewDetail?rev_num=" + reportGet;
-	    case "2":  // 예약
-	        return baseUrl + "reserveDetail?=r_num" + reportGet;
-	}
-}
 
 </script>
 </html>

@@ -59,16 +59,17 @@ public class MemberController {
 		return "findID";
 	}
 	
-	@RequestMapping(value = {"/dofindID"})
-	public String dofindID(@RequestParam String name, @RequestParam String email, Model model, HttpSession session) {
+	@RequestMapping(value="/dofindID", method=RequestMethod.POST)
+	public String dofindID(@RequestParam String name, @RequestParam String email, Model model) {
 		String user_Id = service.dofindID(name,email);
+		String page = "/findID";
 		if(user_Id != null) {
-			model.addAttribute("user_Id", user_Id);
+			model.addAttribute("msg", "회원님의 아이디는 '"+user_Id+"' 입니다.");
+			page="login";
 		}else {
-			model.addAttribute("message", "아이디를 찾을 수 없습니다.");
+			model.addAttribute("msg", "이름 또는 이메일을 확인해 주세요.");
 		}
-		
-		return "findIDresult";
+		return page;
 	}
 	
 	@RequestMapping(value = {"/findPW"})
@@ -76,17 +77,19 @@ public class MemberController {
 		return "findPW";
 	}
 	
-	@RequestMapping(value = {"/dofindPW"})
+	@RequestMapping(value="/dofindPW", method=RequestMethod.POST)
 	public String dofindPW(@RequestParam String name, @RequestParam String user_id, @RequestParam String email, Model model, HttpSession session) {
 		logger.info("name,user_id,email " + name,user_id,email);
 		String pw = service.dofindPW(name, user_id, email);
+		String page = "findPW";
 		if(pw != null) {
-			model.addAttribute("pw", pw);
+			model.addAttribute("msg", "회원님의 비밀 번호는 '"+pw+"' 입니다.");
+			page="login";
 		}else {
-			model.addAttribute("message", "비밀번호를 찾을 수 없습니다.");
+			model.addAttribute("msg", "비밀번호를 찾을 수 없습니다.");
 		}
 		
-		return "findPWresult";
+		return page;
 	}
 	
 	

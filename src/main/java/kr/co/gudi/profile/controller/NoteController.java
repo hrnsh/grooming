@@ -118,12 +118,23 @@ public class NoteController {
 		return "/note/pfNoteList";
 	}
 	
-	@RequestMapping(value="/dateFilter")
+	// 내가 쓴 쪽지 날짜 필터링 
+	@RequestMapping(value="/noteSendDateFilter")
 	@ResponseBody
-	public Map<String, Object> dateFilter(@RequestParam String selectedDate,
+	public Map<String, Object> noteSendDateFilter(@RequestParam String selectedDate,
 			@RequestParam String page, @RequestParam String loginId){
 		logger.info(selectedDate);
-		return noteService.dateFilter(selectedDate, page, loginId);
+		return noteService.dateFilterSend(selectedDate, page, loginId);
+		
+	}
+	
+	// 받은 쪽지 날짜 필터링 
+	@RequestMapping(value="/noteReceiveDateFilter")
+	@ResponseBody
+	public Map<String, Object> noteReceiveDateFilter(@RequestParam String selectedDate,
+			@RequestParam String page, @RequestParam String loginId){
+		logger.info(selectedDate);
+		return noteService.dateFilterReceive(selectedDate, page, loginId);
 		
 	}
 	

@@ -59,4 +59,15 @@ public class ReportController {
 		reportService.repAnswerSend(content, report_num);
 		return "redirect:/adReport";
 	}
+
+	// 접수 날짜 필터링 기능 
+	@RequestMapping(value="/reportDatePickSend")
+	@ResponseBody
+	public Map<String, Object> reportDatePickSend(@RequestParam String selectedDate,
+			@RequestParam String page){
+		logger.info(selectedDate);
+		return reportService.reportDatePickSend(selectedDate, page);
+		
+	}
+	
 }

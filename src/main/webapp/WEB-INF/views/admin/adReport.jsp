@@ -45,6 +45,9 @@ table{
 	position: relative;
 	left: 50px;
 	top: 50px;
+	border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
 }
 
 .reportBox{
@@ -73,9 +76,23 @@ a{
 	width: 250px;
 	position: relative;
 	left: 70%;
-	top: 5%;
+	top: 7%;
 }
 
+.dateSearchBox{
+	position: relative;
+	top: 7%;
+}
+
+#reportDatePickSend{
+	position: relative;	
+	left: 29%;
+}
+
+#reportDatePickHandle{
+	position: relative;	
+	left: 43%;
+}
 
 </style>
 </head>
@@ -91,15 +108,18 @@ a{
 			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
 			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
-			<button onclick="location.href='adReservationManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 예약 관리</button>
 			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 		<div class="reportBox">
-			<div class="searchBox">
+			<span class="searchBox">
 				<input type="text"/> 
 				<button onclick="searchId()">검색</button>
-			</div>
+			</span>
+			<span class="dateSearchBox">
+				<input type="date" id="reportDatePickSend"/>
+				<input type="date" id="reportDatePickHandle"/>				
+			</span>
 				<table>
 					<thead>
 						<tr>
@@ -165,6 +185,28 @@ $('#typeOption').change(function(){
 	$('#stateOption').val('all');
 	reportListCall(showPage);
 });
+
+//접수 날짜 필터링 
+var selectedSendDate;
+document.getElementById('reportDatePickSend').addEventListener('change', sendDateChange);
+
+function sendDateChange() {
+    // 변경된 날짜 값을 가져옴
+    var selectedSendDate = document.getElementById('reportDatePickSend').value;
+    $.ajax({
+        type: "get",
+        url: "reportDatePickSend", 
+        data: {"selectedDate":selectedSendDate,"page":showPage},
+        dataType:'JSON',
+        success: function (data) {
+            console.log(data);
+            drawReportList(data);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });  
+}
 
 
 function reportListCall(page){	

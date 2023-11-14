@@ -26,14 +26,14 @@ public interface NoteDAO {
 	
 	NoteDTO callDetail(String idx);
 
-	void sendNote(Map<String, String> params, String sender);
-
 	void sendNote(String subject, String content, String receiver, String sender);
 
 	int delSent(String idx);
 
 	int delReceive(String idx);
 
-	ArrayList<NoteDTO> dateFilter(String loginId, String selectedDate, int offset);
+	ArrayList<NoteDTO> dateFilterSend(String loginId, String selectedDate, int offset);
+
+	ArrayList<NoteDTO> dateFilterReceive(String loginId, String selectedDate, int offset);
 
 }
