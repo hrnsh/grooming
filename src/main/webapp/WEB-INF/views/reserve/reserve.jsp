@@ -113,6 +113,13 @@ div{text-align: center;}
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7f33f996b442a5d86588bc9173489c3&libraries=services"
         type="text/javascript"></script>
 <script>
+
+var loginId="${sessionScope.loginId}";
+if (!loginId) {
+    alert("페이지에 권한이 없습니다.");
+    location.href = "./"; 
+}
+
 var selectedDate;
 	
 $(function() {

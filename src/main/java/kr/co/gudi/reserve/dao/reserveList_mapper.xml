@@ -140,7 +140,7 @@ WHERE
 		SELECT review.rev_num, review_reply.*
 			FROM review
 			INNER JOIN review_reply ON review.rev_num = review_reply.rev_num
-			WHERE review.r_num = #{param1}
+			WHERE review.r_num = #{param1} AND review_reply.rrep_state=1
 	</select>
 	
 	<select id="totalPage" resultType="int">
@@ -157,6 +157,22 @@ WHERE
 			SET rev_state = 0
 			WHERE rev_num=#{param1}
 	</update>
+	
+	<update id="rrepDel">
+		UPDATE review_reply
+			SET rrep_state = 0
+			WHERE rrep_num=#{param1}
+	</update>
+	
+	<update id="saveStar">
+		UPDATE company
+		SET avg_star = (avg_star + #{rev_star}) / (SELECT COUNT(*) FROM review
+   		 WHERE com_id = (SELECT user_id FROM company
+        WHERE user_id = (SELECT com_id FROM reserve WHERE r_num = #{r_num})) 
+        AND rev_star > 0)
+		WHERE user_id = (SELECT com_id FROM reserve WHERE r_num = #{r_num});	
+	</update>
+	
 </mapper>
 
 

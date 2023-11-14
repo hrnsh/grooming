@@ -109,4 +109,12 @@ public interface ReserveListDAO {
 
 
 
+	void rrepDel(int rrep_num);
+
+
+
+
+	void saveStar(HashMap<String, Object> params);
+
+
 }

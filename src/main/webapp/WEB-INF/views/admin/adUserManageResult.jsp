@@ -16,118 +16,112 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-}
 
-p {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 4px;
-}
-
-input[type="text"],
-input[type="button"] {
-    padding: 8px;
-    margin: 5px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 4px;
-}
-
-#paging {
-    margin-top: 20px;
-}
-
-.container {
-    text-align: center;
-}
-
-.pagination {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-}
-
-.pagination li {
-    display: inline;
-    margin: 0;
-}
-
+/* 모달 전체 스타일 */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* 모달 내용 스타일 */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
+/* 닫기 버튼 스타일 */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 4px;
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    }
+ .nav {
+	height: 150px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 40px;
+}
+
+.logo {
+	position: relative;
+	right: 335px;
+}
+
+h1{
+	position: relative;
+	right: 230px;
+	top: 50px;
+}
+
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 10px;
+}
+
+th{
+	 text-align: center;
+}
+
+table{	
+	width: 750px;
+	position: relative;
+	left: 50px;
+	top: 50px;
+	text-align:center;
+	border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
+}
+
+.listBox{
+	position: relative;
+	height: 500px;
+	left: 5%;
+	width: 900px;
+	bottom: 50px;
+}
+
+#paging {
+	position: relative;
+	top: 100px;
+	right: 150px;
+}
+
+.btn{
+	position: relative;
+	left: 80%;
+	top: 10%;
+	height: 35px;
+	width: 80px;
+	background-color: rgb(94, 94, 94);
+	border: none;
+	border-radius: 10px;
+	color: white;
 }
 
 .input-group {
@@ -156,7 +150,21 @@ textarea {
 </style>
 </head>
 <body>
-<p>처리 내역</p>
+
+<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+		</div>
+		<h1>처리내역</h1>
+	</nav>
+		<div class="profButtonBox">
+			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
+			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
+			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
+			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
+		</div>
+
 	<tr>
 		<th>관리자ID</th>
 		<td><input type="text" id="selAd_id"/></td>

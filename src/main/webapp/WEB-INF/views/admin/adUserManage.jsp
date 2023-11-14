@@ -131,10 +131,10 @@ form{
 				<th>
 				<select id="user_state" name="user_state">
 				<option value="전체">전체</option>
-				<option value="일반">일반</option>
-				<option value="업체">업체</option>
-				<option value="승인요청">승인요청</option>
-				<option value="정지">정지</option>
+				<option value="0">일반</option>
+				<option value="2">업체</option>
+				<option value="1">승인요청</option>
+				<option value="3">정지</option>
 				</select>
 				</th>
 			</tr>
@@ -178,9 +178,9 @@ form{
 						<td id="state"></td>
 						<td>
 							<select id="state" name="state">
-							<option value="일반">일반</option>
-							<option value="업체">업체</option>
-							<option value="정지">정지</option>							
+							<option value="0">일반</option>
+							<option value="2">업체</option>
+							<option value="3">정지</option>							
 							</select>
 						</td>
 					</tr>
@@ -207,10 +207,6 @@ form{
 						<td colspan="3"><textarea name="m_complet"></textarea></td>
 					</tr>
 					<tr>
-						<th>요청일시</th>
-						<td>날짜</td>
-					</tr>
-					<tr>
 						<td colspan="2"><input type="submit" onclick="saveManage()"
 							value="수정" /></td>
 					</tr>
@@ -219,7 +215,7 @@ form{
 		</div>
 	</div>
 	</main>
-</body>
+</body> 
 <script>
 
 var showPage = 1;
@@ -257,7 +253,19 @@ function drawAdUserManageList(adUserManageList){
 		content+='<tr>';
 		content+='<td><a href="#" onclick="openModal(\'' + item.user_id + '\')">'+item.user_id+'</a></td>';
 		content+='<td>'+item.name+'</td>';
-		content+='<td>'+item.state+'</td>';
+		content+='<td>'
+		if(item.state==0){
+			content+='일반'
+		}else if(item.state==1){
+			content+='승인대기'
+		}else if(item.state==2){
+			content+='업체'
+		}else if(item.state==3){
+			content+='정지'
+		}else if(item.state==4){
+			content+='탈퇴'
+		}
+		'</td>';
 		content+='</tr>';
 	});
 
