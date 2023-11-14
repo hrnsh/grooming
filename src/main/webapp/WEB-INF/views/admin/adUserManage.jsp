@@ -106,10 +106,10 @@ table{
 				<th>
 				<select id="user_state" name="user_state">
 				<option value="전체">전체</option>
-				<option value="일반">일반</option>
-				<option value="업체">업체</option>
-				<option value="승인요청">승인요청</option>
-				<option value="정지">정지</option>
+				<option value="0">일반</option>
+				<option value="2">업체</option>
+				<option value="1">승인요청</option>
+				<option value="3">정지</option>
 				</select>
 				</th>
 			</tr>
@@ -232,7 +232,20 @@ function drawAdUserManageList(adUserManageList){
 		content+='<tr>';
 		content+='<td><a href="#" onclick="openModal(\'' + item.user_id + '\')">'+item.user_id+'</a></td>';
 		content+='<td>'+item.name+'</td>';
-		content+='<td>'+item.state+'</td>';
+		content+='<td>'
+		if(item.state==0){
+			content+='일반'
+		}else if(item.state==1){
+			content+='승인대기'
+		}else if(item.state==2){
+			content+='업체'
+		}
+		else if(item.state==3){
+			content+='정지'
+		}else if(item.state==4){
+			content+='탈퇴'
+		}
+		'</td>';
 		content+='</tr>';
 	});
 

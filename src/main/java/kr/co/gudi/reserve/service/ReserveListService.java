@@ -205,6 +205,11 @@ public class ReserveListService {
 		
 	}
 
+	public void rrepDel(int rrep_num) {
+		dao.rrepDel(rrep_num);
+		
+	}
+
 
 
 

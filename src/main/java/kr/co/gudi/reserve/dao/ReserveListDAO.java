@@ -109,4 +109,9 @@ public interface ReserveListDAO {
 
 
 
+	void rrepDel(int rrep_num);
+
+
+
+
 }

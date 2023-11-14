@@ -264,7 +264,13 @@ public class ReserveListController {
 			public String reviewDel(@RequestParam int rev_num) {
 				logger.info("리뷰번호: "+ rev_num);
 				service.reviewDel(rev_num);
-				return "reserve/reserveList";
+				return "reserve/reserveListl";
+			}
+			
+			@RequestMapping(value="/rrepDel")
+			public String rrepDel(@RequestParam int rrep_num) {
+				service.rrepDel(rrep_num);
+				return "reserve/reserveComList";
 			}
 }
 

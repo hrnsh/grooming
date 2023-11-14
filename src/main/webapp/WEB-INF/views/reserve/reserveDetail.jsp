@@ -155,7 +155,7 @@ ul.inner_box {
 				<th>
 					<p>예약 정보</p>
 				</th>
-				<c:if test="${auto}>0">
+				<c:if test="${auto>0}">
 				<th>
 				<select id="changeState" name="selState">
 						<option value="예약완료">예약완료</option>
@@ -332,6 +332,10 @@ ul.inner_box {
 		</div>
 	</c:forEach>
 			<c:if test="${replyDetail.size()>0}">
+			<form action="rrepDel">
+			<c:forEach items="${replyDetail}" var="riv">							
+					<input type="hidden" name="rrep_num" value="${riv.rrep_num}">
+			</c:forEach>
 				<table>
 				<tr>
 					<p>댓글</p>
@@ -346,6 +350,10 @@ ul.inner_box {
 				</tr>
 					</c:forEach>
 					</table>
+					<c:if test="${auto>0}">
+					<input type="submit" value="댓글삭제"/>
+					</c:if>
+					</form>
 				</c:if>
 	<!-- 취소 사유 출력 -->
 	<c:forEach items="${revCancel}" var="revC">
@@ -429,7 +437,14 @@ $(document).ready(function() {
 
 	function openCancelModal() {
 		console.log("가져와야하는데"+"${rStart}");
-        cancelModal.style.display = 'block';
+		var receivedDate = new Date("${rStart}");
+		var today = new Date();
+		var timeDifference = (receivedDate - today) / (1000 * 60 * 60 * 24);
+		if(timeDifference>1){
+        cancelModal.style.display = 'block';			
+		}else{
+			alert("취소 가능한 시간이 지났습니다.");
+		}
     }
 
     function closeCancelModal() {
