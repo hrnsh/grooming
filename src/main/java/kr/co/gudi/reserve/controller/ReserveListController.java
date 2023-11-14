@@ -180,6 +180,9 @@ public class ReserveListController {
 				ArrayList<ReserveDTO> detail = service.detail(loginId,idx);
 				logger.info("예약정보 회원:"+detail);
 				model.addAttribute("detail",detail);
+				for(ReserveDTO dto : detail) {
+					model.addAttribute("rStart",dto.getR_start());
+					}
 				ArrayList<ReserveDTO> rivdetail = service.rivDetail(idx);
 				model.addAttribute("review",rivdetail);
 				

@@ -426,8 +426,9 @@ $(document).ready(function() {
 		$('input[name="rev_star"]').val(selectedStars);
 		return false;
 	});
-	
+
 	function openCancelModal() {
+		console.log("가져와야하는데"+"${rStart}");
         cancelModal.style.display = 'block';
     }
 
