@@ -7,80 +7,162 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
+
 <style>
+
+main {
+      margin-top: 70px;
+    }
+    
+    .btnChk {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(94, 94, 94);
+      border: none;
+      cursor: pointer;
+    }
+    
+    
+
+ nav {
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Style for the logo */
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 150px;
+    height: 120px;
+}
+
+/* Style for the heading */
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Style for the buttons */
+.button {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    margin: 10px auto;
+    text-align: center;
+   
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+/* Style for the table */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
 table, th, td {
 	margin: 10px;
 	border: 1px solid black;
 	border-collapse: collapse;
 	padding: 5px 10px;
 	height: 80px;
+    text-align: left;
+	
 }
 
-table {
-	float: left;
+  tr:hover {
+      background-color: #f5f5f5;
+    }
+
+
+table th:first-child {
+    width: 30%;
 }
 
-button {
-	float: left;
-	display: flex;
-	align-items: left;
+table input[type="text"],
+table input[type="file"],
+table input[type="button"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
 }
 
-::-webkit-scrollbar {
-	display: none;
+/* Style for the form */
+form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+/* Style for the buttons in the form */
+#btnChk {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    margin: 20px auto;
+    text-align: center;
+   	background-color: rgb(224, 224, 224);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.profile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	padding: 10px;
+.profButtonBox{
+	width: 20px;
+	position: absolute;
+	top: 10px;
+	display:flex;
+	left: 50px;
+	flex-direction: column;
 }
 
-.animalprofile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	float: left;
-}
+.profButtonBox {
+      display: flex;
+      margin-top: 10px;
+    }
+
 </style>
 </head>
 <body>
-
+<nav class="nav">
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
 	
-	<h1 style="text-align: center;">업체 등록</h1>
 	
-	<table>
-		<tr>
-			<th>
-				<button onclick="location.href='profile?user_id=${sessionScope.loginId}'" class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="button">쪽지함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="button">신고 내역</button>
-			</th>
-		</tr>
-	</table>
+	</nav>
 	
+	
+	<main>
+	<div>
+	<h1>업체 등록</h1>
+	<div class="profButtonBox">
+				<button onclick="location.href='profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
+			
+				<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="profButton">쪽지함</button>
+			
+				<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="profButton">내가 쓴 글</button>
+			
+				<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
+			</div>
 	<form name="comsub" action="comregister" method="post" enctype="multipart/form-data">
 	
-	<input type="button" value="등록 완료" id="btnChk"/>
 	
 	<table style="text-align: left;">
 		<tr>
@@ -128,8 +210,13 @@ button {
 				<input type="file" id="photos" name="photos" class="fileBtn"/>
 			</th>
 		</tr>
+		<tr>
+		<th colspan="5"><input class="btnChk" type="button" value="등록 완료" id="btnChk"/></th>
+		</tr>
 		</table>
 		</form>
+		</div>
+		</main>
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

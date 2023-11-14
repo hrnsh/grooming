@@ -189,7 +189,6 @@ button {
 	
 	
 	<div>
-	<input type="submit" value="수정 완료" />
 	<input type="button" id="animalprofiledelete" onclick = "del()" value="삭제"/>
 	<input type="button" onclick="location.href='animalregisterForm?user_id=${sessionScope.loginId}'" class="button" value="동물 등록"/>
 	<div style = "width : 600px; height : 600px; overflow : auto">
