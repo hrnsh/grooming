@@ -150,12 +150,12 @@ table{
 </style>
 </head>
 <body>
-<<<<<<< HEAD
+
 <nav class="nav">
 		<div class="logo">
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<h1>신고 문의 관리</h1>
+		<h1>처리내역</h1>
 	</nav>
 		<div class="profButtonBox">
 			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
@@ -164,9 +164,7 @@ table{
 			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
-=======
-<p>처리 내역</p>
->>>>>>> origin/master
+
 	<tr>
 		<th>관리자ID</th>
 		<td><input type="text" id="selAd_id"/></td>
