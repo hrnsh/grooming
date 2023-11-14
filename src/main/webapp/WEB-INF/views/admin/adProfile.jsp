@@ -5,154 +5,204 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 프로필</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 <style>
-table, th, td {
-	margin: 10px;
-	border-bottom: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
-	height: 80px;
+.nav {
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.logo {
+    position: relative;
+    left: 50px;
+}
+
+h1{
+	position: relative;
+	right: 50px;
+	top: 50px;
+	font-size: 35px;
+}
+
+.logoutBtn {
+    margin-top: 30px;
+    height: 40px;
+    width: 100px;
+    background-color: rgb(224, 224, 224);
+    border-radius:10px;
+    border: 1px solid rgb(224, 224, 224);
+    position: relative;
+    right: 50px;
+    top: 20px;
+}
+
+#adpfdetail{
+    background-color: rgb(224, 224, 224);
+    border-radius:10px;
+    border: 1px solid rgb(224, 224, 224);
+}
+
+.button {
+    width: 100%;
+    border: 1px solid rgb(224, 224, 224);
+	border-radius:10px;
 }
 
 table {
-	float: left;
+    margin-top: 20px;
+    float: left;
+    margin-right: 20px;
+    border-collapse: collapse;
+    table-layout:fixed;
+    border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
 }
 
-button {
-	float: left;
-	display: flex;
-	align-items: left;
+th, td {
+    border: 1px solid rgb(163, 161, 161);
+    padding: 8px;
+    text-align: center;
 }
 
-::-webkit-scrollbar {
-	display: none;
+#adminlist, #adminSearchList {
+    overflow-y: auto;
+    max-height: 500px;
 }
 
-.profile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	padding: 10px;
+#positionSearchOption {
+    margin-top: 20px;
 }
 
-.animalprofile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	float: left;
+.firstBox{
+	left: 75px;
+	width: 350px;
+	height: 500px;
+	position: relative;
+	top: 20px;
+	
 }
+
+.secondBox{
+	width: 350px;
+	height: 500px;
+	position: relative;
+	left: 80px;
+	bottom: 10px;
+	padding-top: 20px;
+	
+}
+
+.thirdBox{
+	width: 350px;
+	height: 500px;
+	position: relative;
+	left: 130px;
+	bottom: 40px;
+}
+
+.option{
+	position: relative;
+	left: 195px;
+	top: 10px;
+	width: 50px;
+}
+
 
 </style>
 </head>
 <body>
-	<div class="logo">
-		<img src="/gudi/resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
-	</div>
-	<table>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'"
-					class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'"
-					class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'"
-					class="button">회원 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'"
-					class="button">일반 문의 관리</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'"
-					class="button">신고 문의 관리</button>
-			</th>
-		</tr>
-	</table>
+	<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+		</div>
+		<h1>내 프로필</h1>
 		<button onclick="location.href='adLogout'" class="logoutBtn">로그아웃</button>
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>${admin.ad_id}</th>
-		</tr>
-		<tr>
-			<th>PW</th>
-			<th>${admin.ad_pw}</th>
-		</tr>
-		<tr>
-			<th>이름</th>
-			<th>${admin.ad_name}</th>
-		</tr>
-		<tr>
-			<th>e-mail</th>
-			<th>${admin.ad_email}</th>
-		</tr>
-		<tr>
-			<th>전화번호</th>
-			<th>${admin.ad_phone}</th>
-		</tr>
-		<tr>
-			<th>직급</th>
-			<th>${admin.ad_position}</th>
-		</tr>
-		<tr>
-			<th colspan="2"><button onclick="location.href='adminprofileUpdateForm?ad_id=${sessionScope.ad_id}'" class = "button">프로필 수정</button></th>
-		</tr>
-	</table>
-	
-		<select id="positionSearchOption">
-			<option value="사장">사장</option>
-			<option value="부장">부장</option>
-			<option value="팀장">팀장</option>
-			<option value="대리">대리</option>
-			<option value="사원">사원</option>
-		</select>
-		
-		
-	<div style = "width : 45%; height : 500px; overflow : auto">
-	<table width = "45%" border = "0" cellspacing = "0" cellpadding = "0" >
-		<tr>
-			<th>ID</th>
-			<th>이름</th>
-			<th>직급</th>
-		</tr>
-		<tbody id="adminlist">
+	</nav>
+	<main>
+		<div class="profButtonBox">
+			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
+			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
+			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
+			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
+		</div>
+		<div class="firstBox">
+			<table style="width: 300px;">
+				<tr>
+					<th style="width: 70px;">ID</th>
+					<th>${admin.ad_id}</th>
+				</tr>
+				<tr>
+					<th>PW</th>
+					<th>${admin.ad_pw}</th>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<th>${admin.ad_name}</th>
+				</tr>
+				<tr>
+					<th>e-mail</th>
+					<th>${admin.ad_email}</th>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<th>${admin.ad_phone}</th>
+				</tr>
+				<tr>
+					<th>직급</th>
+					<th>${admin.ad_position}</th>
+				</tr>
+				<tr>
+					<th colspan="2"><button onclick="location.href='adminprofileUpdateForm?ad_id=${sessionScope.ad_id}'" class = "button">프로필 수정</button></th>
+				</tr>
+			</table>
+		</div>
 
-		</tbody>
-	</table>
-	<div style = "width : 300px; height : 500px; overflow : auto">
-	<table width = "300px" border = "0" cellspacing = "0" cellpadding = "0" >
-		<tr>
-			<th>ID</th>
-			<th>이름</th>
-			<th>직급</th>
-		</tr>
-		<tbody id="adminSearchList">
-
-		</tbody>
-	</table>
-	</div>
+		<div class="secondBox">
+			<div style="font-size:18; top: 10px; position:relative;">관리자 목록</div>
+			<table style="width: 350px;">
+				<tr>
+					<th style="width: 70px;">ID</th>
+					<th>이름</th>
+					<th>직급</th>
+					<th>상세보기</th>
+				</tr>
+				<tbody id="adminlist">
+		
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="thirdBox">
+			<div style="font-size:18; position:relative; top:50px;">직급별 관리자 보기</div>
+			<div class="option">
+			<select id="positionSearchOption">
+				<option value="사장">사장</option>
+				<option value="부장">부장</option>
+				<option value="팀장">팀장</option>
+				<option value="대리">대리</option>
+				<option value="사원">사원</option>
+			</select>
+			</div>
+			<table style="width: 350px;">
+				<tr>
+					<th style="width: 70px;">ID</th>
+					<th>이름</th>
+					<th>직급</th>
+					<th>상세보기</th>
+				</tr>
+				<tbody id="adminSearchList">
+		
+				</tbody>
+			</table>
+		</div>
+		
+	</main>
 </body>
 <script>
 $(".logo").on('click',function(){
