@@ -220,7 +220,7 @@ function generateTargetUrl(reportType, reportGet) {
 	    case "1":  // 리뷰
 	        return baseUrl + "reviewDetail?rev_num=" + reportGet;
 	    case "2":  // 예약
-	        return baseUrl + "reserveDetail?=r_num" + reportGet;
+	        return baseUrl + "reserveDetail?r_num=" + reportGet;
 	}
 }
 

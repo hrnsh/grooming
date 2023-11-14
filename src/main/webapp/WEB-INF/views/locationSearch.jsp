@@ -10,90 +10,113 @@
 		
 		<style>
 			#map{
-				height: 100vh;
+				height: 98vh;
 				width: 100%;
-				position:relative;
-				overflow:hidden;
+				position: relative;
+				overflow: hidden;
 			}
 			
 			#companyList{
 				list-style-type: none;
-                padding: 10px;
+                padding: 30px 5px 10px 0px;
                 margin: 0;
 			}
 			
-			.companyItem{
+			.logo{
 				cursor: pointer;
-				padding: 5px;
-				margin: 5px 0;
-				background-color: #f1f1f1;
-				border: 1px solid #ccc;
-				border-radius: 5px;
+				position: absolute;
+				z-index: 1;
+				top: 20px;
+				left: 30px;
 			}
 			
 			.search-container {
                 position: absolute;
-                top: 10px;
-                left: 10px;
+                top: 50px;
+                left: 200px;
                 z-index: 1;
-                background-color: #fff;
+                background-color: Transparent;
                 padding: 10px;
                 border-radius: 5px;
-                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                 display: inline-block;
                 height: 3%;
             }
             
             .companyListContainer {
                 position: absolute;
-                top: 70px;
-                left: 10px;
+                top: 155px;
+                left: 30px;
                 z-index: 1;
-                background-color: #fff;
+                background-color: rgba(255,255,255,0.7);
                 padding: 5px;
                 border-radius: 5px;
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                 max-height: 80%;
                 overflow-y: auto;
-                width: 30%
+                width: 300px;
             }
+			
+			.companyItem{
+				cursor: pointer;
+				padding: 0px 5px;
+				margin: 5px 0px;
+				background-color: #f1f1f1;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+			}
 			
 			.detail-container {
                 position: absolute;
-                top: 110px;
-                left: 31.5%;
+                top: 180px;
+                left: 350px;
                 z-index: 1;
-                background-color: #fff;
+                background-color: rgba(255,255,255,0.7);
                 padding: 10px;
                 border-radius: 5px;
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                 max-height: 70%;
                 overflow-y: auto;
-                width: 30%;
+                width: 380px;
+            }
+            
+            .contact-btn{
+            	background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				width: 45px;
+				height: 25px;
+            }
+            
+            .reserve-btn{
+            	background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				width: 45px;
+				height: 25px;
             }
 
             .company-detail {
                 text-align: left;
-                border: 1px solid black;
+                background-color: #f1f1f1;
             }
 			
 			.review-btn {
-			    position: absolute;
-			    top: 10px;
-			    right: 10px;
-			    z-index: 1;
-			    background-color: #fff;
-			    padding: 5px;
-			    border-radius: 5px;
-			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			   	background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				height: 25px;
+				position: absolute;
 			}
 			
 			.review {
 			    position: absolute;
-			    top: 150px;
-			    left: 63%;
+			    top: 205px;
+			    left: 760px;
 			    z-index: 1;
-			    background-color: #fff;
+			    background-color: rgba(255,255,255,0.7);
 			    padding: 10px;
 			    border-radius: 5px;
 			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -102,17 +125,78 @@
 			    width: 30%;
 			}
 			
-			#showUserLocation {
-			    margin-left: 10px;
+			#showUserLocation,  #searchPlaces{
 			    height: 80%;
-			}
-			#searchPlaces {
-    			height: 80%;
+			    cursor: pointer;
 			}
 			
+			#searchPlaces {
+		        margin-right: 5px;
+		        background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				bottom: 43px;
+				position: relative;
+				height: 32px;
+		    }
+			
 			#keyword{
-				height: 80%;
+				position: relative;
+				height: 30px;
+				width: 300px;
+				margin-right: 5px;
+				bottom: 45px;
 			}
+			
+			#closeCompanyList{
+				background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				width: 45px;
+				height: 25px;
+				position: absolute;
+				left: 250px;
+				top: 10px;
+			}
+			
+			#closeCompanyDetail{
+				background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				width: 45px;
+				height: 25px;
+				position: absolute;
+				top: 20px;
+    			right: 25px;
+			}
+			
+			#closeReview-container{
+				background-color: rgb(94, 94, 94);
+				border: none;
+				border-radius: 5px;
+				color: white;
+				height: 25px;
+				position: absolute;
+			}
+			
+			#showUserLocation{
+				border:none;
+				background-color:Transparent;
+				position:relative;
+				bottom: 15px;
+			}
+			
+			#sortDropdown{
+				position: relative;
+			    left: 10px;
+			    height: 25px;
+			    top: 5px;
+			}
+			
+			
 		</style>
 	</head>
 	
@@ -121,18 +205,25 @@
             <div class="map_wrap">
                 <div id="map"></div>
                 
+                <div class="logo">
+					<img onclick="location.href='./'" src="resources/img/logo(location).png" alt="logoImage" width="150" height="120"/>
+				</div>
+                
                 <div class="search-container">
                     <input type="text" id="keyword" size="15" placeholder="키워드를 입력해주세요">
     				<button id= "searchPlaces" type="submit">검색하기</button>
-	                <button id="showUserLocation">현재 위치 조회하기</button>
+	                <button id="showUserLocation">
+	                	<img alt="내 주변 위탁소 찾기" src="resources/img/locationButton.png" width="70px" height="70px">
+	                	
+	                </button>
                 </div>
                 
                 <div class="companyListContainer">
-                	<button id="closeCompanyList">닫기</button>
                 	<select id="sortDropdown">
                 		<option value="distance">거리순</option>
                 		<option value="rating">평균 별점순</option>
                 	</select>
+                	<button id="closeCompanyList">닫기</button>
                     <ul id="companyList" class="companyList"></ul>
                 </div>
             </div>
@@ -242,7 +333,7 @@
 			
 					
 			function displayUserMarker(userLocation, message){
-				var imageSrc = "resources/img/userMarker.png";
+				var imageSrc = "resources/img/user.png";
 				var imageSize = new kakao.maps.Size(35, 35);
 				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 				
@@ -299,6 +390,7 @@
 						
 						if (companies.length > 0) {
 							$(".companyListContainer").show();
+							$("#sortDropdown").show();
 							
 							$(".company-detail").empty();
 							$(".review-container").empty();
@@ -328,7 +420,7 @@
 					                '" data-lon="' + company.lon + 
 					                '" data-distance="' + distance +
 					                '" data-rating="' + company.avg_star +
-					                '">' +'<span id="span">'+
+					                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
 					                company.com_name + '</span>' +
 					                '<br>평균 별점: ' + company.avg_star +
 					                '<br>누적 이용자 수: ' + company.user_total +
@@ -366,7 +458,7 @@
 			}
 			
 			function displayCompaniesMarker(companyLocation, message){
-				var imageSrc = "resources/img/storeMarker.png";
+				var imageSrc = "resources/img/store.png";
 				var imageSize = new kakao.maps.Size(35, 35);
 				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 				
@@ -452,7 +544,7 @@
 					            		'<li class="companyItem" data-lat="' + company.lat +
 					                '" data-lon="' + company.lon + 
 					                '" data-rating="' + company.avg_star +
-					                '">' +'<span id="span">'+
+					                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
 					                company.com_name + '</span>' +
 					                '<br>평균 별점: ' + company.avg_star +
 					                '<br>누적 이용자 수: ' + company.user_total +
@@ -695,7 +787,7 @@
 			$(document).on("click", ".contact-btn", function() {
 				console.log("문의하기 이동");
     		var companyName = $(this).data("company");
-    		window.location.href = "문의하기페이지의URL?companyName=" + companyName;
+    		window.location.href = "locationNote?companyName=" + companyName;
 			});
 
 			// 예약하기 버튼 클릭 이벤트

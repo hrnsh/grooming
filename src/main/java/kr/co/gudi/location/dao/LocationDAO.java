@@ -17,5 +17,7 @@ public interface LocationDAO{
 	List<LocationDTO> getTicketPrice(String companyName);
 
 	List<ReviewDTO> getReviews(String companyName);
+
+	void sendNoteToCom(String subject, String content, String receiver, String sender);
 	
 }
