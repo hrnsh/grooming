@@ -15,7 +15,7 @@ public interface ReserveDAO {
 
 	HashMap<String, Object> lat(String com_id);
 
-	String tPrice();
+	String tPrice(String com_id);
 
 	String tAmPrice();
 

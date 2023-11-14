@@ -153,7 +153,7 @@ textarea{
 	</nav>
 	<main>
 		<div class="writeBox">
-		<form id="writeForm" action="sendNote">
+		<form id="writeForm" action="revNote">
 		<c:forEach items="${rev}" var="rev">
 			<table>
 				<tr>
@@ -217,11 +217,12 @@ function openModal(){
 		
 		yesBtn.onclick = function(){
 			document.getElementById('writeForm').submit();
+			console.log($('input[name="subject"]').val());
 			console.log('form 전송 성공!');
 			alert('전송이 완료 되었습니다!');
-			location.href='./revList';
 		}
 	}
+	
 }
 </script>
 </html>

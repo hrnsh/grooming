@@ -195,6 +195,16 @@ public class ReserveListService {
 		
 	}
 
+	public int auto(String loginId) {
+		
+		return dao.auto(loginId);
+	}
+
+	public void reviewDel(int rev_num) {
+		dao.reviewDel(rev_num);
+		
+	}
+
 
 
 

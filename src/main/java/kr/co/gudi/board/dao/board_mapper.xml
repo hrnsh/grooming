@@ -36,7 +36,7 @@
 
 		SELECT *
 			FROM board WHERE user_id in(SELECT user_id FROM MEMBER WHERE state = #{param1})
-		AND b_state = 1 ORDER BY b_num DESC LIMIT #{param2} OFFSET #{param3}
+		AND b_state = '1' ORDER BY b_num DESC LIMIT #{param2} OFFSET #{param3}
 
 		</select>
 

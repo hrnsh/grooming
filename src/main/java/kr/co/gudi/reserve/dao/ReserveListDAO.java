@@ -99,4 +99,14 @@ public interface ReserveListDAO {
 
 
 
+	int auto(String loginId);
+
+
+
+
+	void reviewDel(int rev_num);
+
+
+
+
 }

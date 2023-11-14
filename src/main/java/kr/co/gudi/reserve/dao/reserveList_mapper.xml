@@ -68,10 +68,12 @@
     a.a_gender,
     a.a_age,
     a.a_kind,
+    a.a_spec,
     r.r_spec,
     r.r_start,
     r.r_end,
     r.r_pick,
+    r.r_pickaddr,
     r.r_totalprice,
     r.r_state,
     m.phone
@@ -110,6 +112,7 @@ WHERE
 	<select id="rivDetail" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
 		select * from review 
 			where r_num = #{param1}
+			AND rev_state=1
 	</select>
 	
 	<update id="revCancel">
@@ -143,6 +146,17 @@ WHERE
 	<select id="totalPage" resultType="int">
 		SELECT CEIL(COUNT(user_id)/5) AS pages FROM reserve
 	</select>
+	
+	<select id="auto" resultType="int">
+		SELECT count(*) FROM company
+			WHERE user_id = #{param1}
+	</select>
+	
+	<update id="reviewDel">
+		UPDATE review
+			SET rev_state = 0
+			WHERE rev_num=#{param1}
+	</update>
 </mapper>
 
 
