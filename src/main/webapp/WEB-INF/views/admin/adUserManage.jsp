@@ -13,121 +13,91 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <!-- 페이징 처리를 위한 라이브러리 -->
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
+
 <style>
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
+.nav {
+	height: 150px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 40px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+.logo {
+	position: relative;
+	right: 310px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
+h1{
+	position: relative;
+	right: 220px;
+	top: 50px;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 10px;
 }
 
-th {
-    background-color: #f2f2f2;
+th{
+	 text-align: center;
 }
 
-select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 4px;
+table{	
+	width: 750px;
+	position: relative;
+	left: 50px;
+	top: 50px;
+	text-align:center;
+	border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
 }
 
-input[type="submit"] {
-    background-color: rgb(163, 161, 161);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: rgb(243, 208, 204);
+.listBox{
+	position: relative;
+	height: 500px;
+	left: 5%;
+	width: 900px;
+	bottom: 50px;
 }
 
 #paging {
-    margin-top: 20px;
+	position: relative;
+	top: 100px;
+	right: 150px;
 }
 
-.container {
-    text-align: center;
+.btn{
+	position: relative;
+	left: 80%;
+	top: 10%;
+	height: 35px;
+	width: 80px;
+	background-color: rgb(94, 94, 94);
+	border: none;
+	border-radius: 10px;
+	color: white;
 }
-
-.pagination {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-}
-
-.pagination li {
-    display: inline;
-    margin: 0;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 4px;
-}
-
 </style>
 </head>
 <body>
+	<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+		</div>
+		<h1>회원 관리</h1>
+	</nav>
+	<main>
+		<div class="profButtonBox">
+			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
+			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
+			<button onclick="location.href='adUserManage?ad_id=${sessionScope.ad_id}'" class="profButton">회원 관리</button>
+			<button onclick="location.href='adInquiry?ad_id=${sessionScope.ad_id}'" class="profButton">일반 문의 관리</button>
+			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
+		</div>
+		<div class="listBox">
 	<table>
 		<thead>
 			<tr>
@@ -148,6 +118,7 @@ textarea {
 
 		</tbody>
 	</table>
+	
 			<div id="paging">	
 				<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공-->
 				<div class="container">									
@@ -157,9 +128,9 @@ textarea {
 				</div>
 			</div>
 			<form action="adUserManageResult">
-				<input type="submit" value="처리내역"/>
+				<input type="submit" value="처리내역" class="btn"/>
 			</form>
-	
+	</div>
 			
 	<!-- detail 모달 -->		
 	<div id="myModal" class="modal">
@@ -222,7 +193,7 @@ textarea {
 			</form>
 		</div>
 	</div>
-			
+	</main>
 </body>
 <script>
 

@@ -145,6 +145,54 @@ public class InquiryService {
 		inquiryDao.updateInqState(inq_num);
 		logger.info("문의 리스트 상태 2로 업데이트 성공!");
 	}
+
+	public Map<String, Object> inquiryDatePickSend(String selectedDate, String page) {
+		// parameter 값은 String으로 받아와서 int로 변환한다.
+		int p = Integer.parseInt(page);
+		// offset 구하기
+		int offset = (p - 1) * 5;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<InquiryDTO> list = inquiryDao.inquiryDatePickSend(selectedDate,offset);
+		
+		map.put("list", list);
+		// 만들 수 있는 총 페이지 수 / 페이지 당 게시글 수
+		// select COUNT(idx)/ppn from bbs;
+		int pages = inquiryDao.totalPage();
+		//logger.info("만들 수 있는 총 페이지 수 : " + pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if (p > pages) {
+			p = pages;
+		}
+		map.put("currPage", p);
+		logger.info("list : "+ list);
+		return map;
+	}
+
+	public Map<String, Object> inquiryDatePickHandle(String selectedDate, String page) {
+		// parameter 값은 String으로 받아와서 int로 변환한다.
+		int p = Integer.parseInt(page);
+		// offset 구하기
+		int offset = (p - 1) * 5;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<InquiryDTO> list = inquiryDao.inquiryDatePickHandle(selectedDate,offset);
+		
+		map.put("list", list);
+		// 만들 수 있는 총 페이지 수 / 페이지 당 게시글 수
+		// select COUNT(idx)/ppn from bbs;
+		int pages = inquiryDao.totalPage();
+		//logger.info("만들 수 있는 총 페이지 수 : " + pages);
+		map.put("pages", pages);
+		// 만약 현재 보고있는 페이지가 총 페이지 수보다 크면 현재 페이지를 총 페이지 수로 변경한다.
+		if (p > pages) {
+			p = pages;
+		}
+		map.put("currPage", p);
+		logger.info("list : "+ list);
+		return map;
+	}
 	
 
 }

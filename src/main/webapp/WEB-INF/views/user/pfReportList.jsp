@@ -45,6 +45,9 @@ table{
 	position: relative;
 	left: 50px;
 	top: 50px;
+	border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
 }
 
 .reportBox{

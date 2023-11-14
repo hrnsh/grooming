@@ -249,7 +249,7 @@ button{
 		<div class="receiveBox">
 			<div class="receiveContent">
 				<h1>받은 쪽지</h1>
-				<input type="date" name="datePickerReceive" class="datePickerReceive"/>
+				<input type="date" id="datePickerReceive" class="datePickerReceive"/>
 				<select id="readOptionReceive">
 					<option value="all">전체</option>
 					<option value="read">읽음</option>
@@ -307,10 +307,27 @@ $('#readOptionSent').change(function(){
 });
 
 // 내가 쓴 쪽지 날짜 필터링 
-var selectedDate;
-$('#datePickerSent').on('change',function(){
-	sentListCall(showPage);
-});
+var selectedSendDate;
+document.getElementById('datePickerSent').addEventListener('change', sendDateChange);
+
+function sendDateChange() {
+    // 변경된 날짜 값을 가져옴
+    var selectedSendDate = document.getElementById('datePickerSent').value;
+    var loginId = "${sessionScope.loginId}";
+    $.ajax({
+        type: "get",
+        url: "noteSendDateFilter", // 여기에 실제 컨트롤러의 URL을 입력하세요.
+        data: {"selectedDate":selectedSendDate,"page":showPage,"loginId":loginId},
+        dataType:'JSON',
+        success: function (data) {
+            console.log(data);
+            drawSentList(data);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });  
+}
 
 function sentListCall(page){	
 	var loginId = "${sessionScope.loginId}";
@@ -428,6 +445,31 @@ $('#readOptionReceive').change(function(){
 	receiveListCall(showPage);
 });
 
+
+// 받은 쪽지 날짜 필터링 
+var selectedReceiveDate;
+document.getElementById('datePickerReceive').addEventListener('change', receiveDateChange);
+
+function receiveDateChange() {
+    // 변경된 날짜 값을 가져옴
+    var selectedReceiveDate = document.getElementById('datePickerReceive').value;
+    console.log(selectedReceiveDate);
+    var loginId = "${sessionScope.loginId}";
+    $.ajax({
+        type: "get",
+        url: "noteReceiveDateFilter", // 여기에 실제 컨트롤러의 URL을 입력하세요.
+        data: {"selectedDate":selectedReceiveDate,"page":showPage,"loginId":loginId},
+        dataType:'JSON',
+        success: function (data) {
+            console.log(data);
+            drawReceiveList(data);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });  
+}
+
 function receiveListCall(page){
 	var loginId = "${sessionScope.loginId}";
 	$.ajax({
@@ -536,27 +578,7 @@ function delYesReceive(){
 }
 
 
-var selectedDate;
-document.getElementById('datePickerSent').addEventListener('change', handleDateChange);
 
-function handleDateChange() {
-    // 변경된 날짜 값을 가져옴
-    var selectedDate = document.getElementById('datePickerSent').value;
-    var loginId = "${sessionScope.loginId}";
-    $.ajax({
-        type: "get",
-        url: "dateFilter", // 여기에 실제 컨트롤러의 URL을 입력하세요.
-        data: {"selectedDate":selectedDate,"page":showPage,"loginId":loginId},
-        dataType:'JSON',
-        success: function (data) {
-            console.log(data);
-            drawSentList(data);
-        },
-        error: function (error) {
-            console.error(error);
-        }
-    });  
-}
 
 </script>
 </html>

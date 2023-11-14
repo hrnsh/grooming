@@ -114,6 +114,7 @@
             font-size: 16px;
             margin-bottom: 20px;
         }
+        
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -136,7 +137,7 @@
 	                <input type="password" name="pw" value="" placeholder="비밀번호를 입력 하세요"/>
 	            </th>                
 	        </tr>
-	        <tr style="margin-top: 20px;">
+	        <tr>
 	            <th colspan="2">
 	                <input type="submit" value="login"/>
 	            </th>	        

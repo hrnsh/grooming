@@ -26,5 +26,7 @@ public interface ReportDAO {
 
 	ArrayList<ReportDTO> typeListCall(int offset, int tpOption);
 
+	ArrayList<ReportDTO> reportDatePickSend(String selectedDate, int offset);
+
 
 }

@@ -19,7 +19,7 @@ nav {
 .profileBox {
 	width: 300px;
 	height: 150px;
-	background-color: rgb(221, 215, 214);
+	background-color: rgb(255, 232, 230);
 	margin-right: 50px;
 	border-radius: 50px;
 	position: relative;
@@ -28,7 +28,7 @@ nav {
 .btnBox{
 	width: 300px;
 	height: 70px;
-	background-color: rgb(170, 164, 164);
+	background-color: rgb(243, 208, 204);
 	position: absolute;
 	display: flex;
 	justify-content: space-around;
@@ -41,7 +41,7 @@ nav {
 	width: 80px;
 	top: 15px;
 	border: none;
-	background-color: rgb(170, 164, 164);
+	background-color: rgb(243, 208, 204);
 	position: relative;
 }
 
@@ -49,7 +49,7 @@ nav {
 	border: none;
 	height: 50px;
 	width: 150px;
-	background-color: rgb(221, 215, 214);
+	background-color: rgb(255, 232, 230);
 	padding: 14px 32px;
 	border-radius: 500px;
 	color: black;
@@ -64,21 +64,20 @@ nav {
 	border: none;
 	height: 30px;
 	width: 200px;
-	background-color: rgb(221, 215, 214);
-	padding: 14px 32px;
+	background-color: rgb(255, 232, 230);
 	border-radius: 500px;
 	color: black;
 	font-weight: 700;
 	font-size: inherit;
 	position: absolute;
-	top: 100px;
+	top: 110px;
 	color: rgb(158, 158, 158);
 }
 
 .logoutBox {
 	width: 300px;
 	height: 70px;
-	background-color: rgb(221, 215, 214);
+	background-color: rgb(255, 232, 230);
 	position: absolute;
 	display: flex;
 	justify-content: space-around;
@@ -89,7 +88,7 @@ nav {
 	border: none;
 	width: 70px;
 	height: 30px;
-	background-color: rgb(221, 215, 214);
+	background-color: rgb(255, 232, 230);
 	position: relative;
 	top: 30px;
 }
@@ -123,7 +122,7 @@ button{
 .button {
 	height: 50px;
 	width: 150px;
-	background-color: rgb(221, 215, 214);
+	background-color: rgba(220, 212, 212, 0.49);
 	padding: 14px 32px;
 	border-radius: 500px;
 	border: none;
@@ -134,6 +133,7 @@ button{
 
 .button:hover{
 	transform: scale(1.05);
+	background-color: rgb(243, 208, 204);
 }
 
 .iconAll{
@@ -147,7 +147,7 @@ button{
 .rankBox{
 	width: 500px;
 	height: 150px;
-	background-color: rgb(221, 215, 214);
+	background-color: rgba(220, 212, 212, 0.49);
 	position: absolute;
 	top: 200px;
 	border-radius: 30px;
@@ -165,7 +165,7 @@ button{
 footer {
 	height: 400px;
 	align-items: center;
-	background-color: rgb(221, 215, 214);
+	background-color: rgba(220, 212, 212, 0.49);
 	background-position: 50%;
 }
 
@@ -193,7 +193,7 @@ footer {
 }
 
 .image h2 {
-	color: #464646;
+	color: black;
 	text-align: center;
 	line-height: 400px;
 }
@@ -234,7 +234,6 @@ a:visited {
 					<c:choose>
 						<c:when test="${not empty sessionScope.loginId}">
 							<div class="name">${sessionScope.loginId} 님</div>
-							<button onclick="location.href='./pfNotiList?user_id=${sessionScope.loginId}'" class="logoutNotiBtn">⚫️</button>
 							<button onclick="location.href='./logout'" class="logoutNotiBtn">로그아웃</button>
 							<div class="btnBox">
 								<button onclick="location.href='./profile?user_id=${sessionScope.loginId}'" class="profileBtn" id="profileBtn">프로필</button>

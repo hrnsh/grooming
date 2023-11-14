@@ -32,6 +32,8 @@ public interface NoteDAO {
 
 	int delReceive(String idx);
 
-	ArrayList<NoteDTO> dateFilter(String loginId, String selectedDate, int offset);
+	ArrayList<NoteDTO> dateFilterSend(String loginId, String selectedDate, int offset);
+
+	ArrayList<NoteDTO> dateFilterReceive(String loginId, String selectedDate, int offset);
 
 }

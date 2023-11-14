@@ -80,5 +80,25 @@ public class InquiryController {
 		return "redirect:/adInquiry";
 	}
 	
+	// 접수 날짜 필터링 기능 
+	@RequestMapping(value="/inquiryDatePickSend")
+	@ResponseBody
+	public Map<String, Object> inquiryDatePickSend(@RequestParam String selectedDate,
+			@RequestParam String page){
+		logger.info(selectedDate);
+		return inquiryService.inquiryDatePickSend(selectedDate, page);
+		
+	}
+
+	// 처리 날짜 필터링 기능 
+	@RequestMapping(value="/inquiryDatePickHandle")
+	@ResponseBody
+	public Map<String, Object> inquiryDatePickHandle(@RequestParam String selectedDate,
+			@RequestParam String page){
+		logger.info(selectedDate);
+		return inquiryService.inquiryDatePickHandle(selectedDate, page);
+		
+	}
+	
 	
 }
