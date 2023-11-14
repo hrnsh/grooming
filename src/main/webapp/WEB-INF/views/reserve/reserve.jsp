@@ -11,35 +11,102 @@
   <title>Datepicker 예약된 날짜 표시</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style>
-    .reserved-date  {
-      background-color: red ; /* 예약된 날짜의 배경색을 빨간색으로 설정 */
-    }
-    #calendar{
-		height:1000px;
-		width:1000px;
-		
-	}
-	
-	#revdetail{
-		height:500px;
-		width:500px;
-		margin: 30px;
-		top:100px;
-		float:right;
-		background-color:pink;
-		display:none;
-	}
-	
-	table,th,td{
-		border:1px solid black;
-		border-collapse: collapse;
-		padding:5px 10px;
-	}
-	
-	th,td{
-		font-size: 30px;
-	}
-  </style>
+  .nav {
+  	width:1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo img {
+    cursor: pointer;
+}
+
+.iconAll{
+	width:100px;
+    text-align: center;
+}
+
+div{text-align: center;}
+
+.button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: rgb(163, 161, 161);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgb(243, 208, 204);
+}
+  
+  
+   body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #revdetail {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            display:none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        input[type="button"], input[type="submit"] {
+            background-color: rgb(163, 161, 161);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover, input[type="submit"]:hover {
+            background-color: rgb(243, 208, 204);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+    </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -47,15 +114,12 @@
         type="text/javascript"></script>
 <script>
 
-$(function() {
-	
-    // 첫 번째 datepicker 초기화
-    $("#datepicker1").datepicker();
+var selectedDate;
 
-    // 두 번째 datepicker 초기화
-    $("#datepicker2").datepicker();
+$(function() {
+	$("#datepicker1").datepicker();
+	$("#datepicker2").datepicker();
 });
-	var selectedDate;
 	
 $(function() {
 	$("#datepicker").click(function(){
@@ -66,14 +130,21 @@ $(function() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                // 성공적으로 응답을 받았을 때 처리할 코드
-                console.log("서버 응답: " + JSON.stringify(response));
-                //예약 데이터 저장
-                var reservedDates = response;        
-    			var enableDays = 90;
-    
+            	var findRevArray = Array.isArray(response.findRev) ? response.findRev : [response.findRev];
+
+                var reservedDates = findRevArray.map(function(item) {
+                    // formatted_date를 'yy-mm-dd' 형식으로 변환
+                    return {
+                        formatted_date: $.datepicker.formatDate("yy-mm-dd", new Date(item.formatted_date)),
+                        reservation_count: item.reservation_count
+                    };
+                });		
+                console.log("나와:" + JSON.stringify(reservedDates));
+            	 var enableDays = 90;
+            	 
    			 $("#datepicker").datepicker({  	
      			 beforeShowDay: function(date) {
+     				 console.log("비포쇼데이");
        			 var dateString = $.datepicker.formatDate("yy-mm-dd", date);
        			 var today = new Date();
        			 today.setHours(0, 0, 0, 0);
@@ -86,9 +157,10 @@ $(function() {
 				
        			// reservedDates 배열에서 해당 날짜의 예약 건수 가져오기
                  var reservationCount = getReservationCount(dateString, reservedDates);
-                 if (reservationCount >= 10) {
+                console.log("뭐라고말좀해봐"+reservationCount); 
+       			if (reservationCount >= 5) {
                      // 예약 건수가 10개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "10개 이상 예약됨"];
+                     return [false, "", "예약됨"];
                  }
 
          		 // 나머지 날짜는 선택 가능
@@ -307,16 +379,33 @@ $(function() {
   </script>
 </head>
 <body>
+	<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width="150" height="120"/>
+		</div>	
+		<div class="iconAll">
+			<img src="resources/img/mapIcon.jpg" alt="mapIcon" width=100 height=100/>
+			<button onclick="location.href='./locationSearch'" class="button">위치 탐색</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/calendarIcon.jpg" alt="calendarIcon" width=100 height=100/>
+			<button onclick="location.href='./revList'" class="button">예약 관리</button>
+		</div>
+		<div class="iconAll">
+			<img src="resources/img/boardIcon.jpg" alt="boardIcon" width=100 height=100/>
+			<button onclick="location.href='./boardMain'" class="button">게시판</button>
+		</div>
+		</nav>
 	<label for="datepicker">날짜 선택:</label>
   <input type="text" id="datepicker" class="dtp">
   
   <div id="revdetail">
-    <form action="booking" method="post" display="none">
+    <form action="booking" method="post">
     <a href="">업체명</a><br>   
     &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="Am" value="오전권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Pm" value="오후권" />&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="button" id="Apm" value="종일권" />
-	<input type="hidden" id="com_id" name="com_id" value="'${com_id}'" />
+	<input type="hidden" id="com_id" name="com_id" value="${com_id}" />
     <table>
 			<tr>
 				<th>예약 시작 시간</th>

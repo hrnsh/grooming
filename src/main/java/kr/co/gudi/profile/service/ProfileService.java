@@ -1,13 +1,19 @@
 package kr.co.gudi.profile.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.gudi.admin.dao.AdminDAO;
 import kr.co.gudi.profile.dao.ProfileDAO;
 import kr.co.gudi.profile.dto.ProfileDTO;
 
@@ -18,6 +24,8 @@ public class ProfileService {
 
 	@Autowired ProfileDAO dao;
 
+	private String root = "C:\\img\\";
+	
 	public ProfileDTO profile(String user_id) {
 		return dao.profile(user_id);
 	}
@@ -47,22 +55,68 @@ public class ProfileService {
 		logger.info("동물 등록 count : " + row);
 	}
 
-	public int comregister(HashMap<String, String> params) {
-		int row = 0;
-		
-		row = dao.comregister(params);
-		logger.info("업체 등록 count : " + row);
-		
-		if(row>0) {
-			row = dao.userstateupdater(params.get("user_id"), "1");
-		}
-		return row;
-	}
+//	public int comregister(HashMap<String, String> params) {
+//		int row = 0;
+//		
+//		row = dao.comregister(params);
+//		logger.info("업체 등록 count : " + row);
+//		
+//		if(row>0) {
+//			row = dao.userstateupdater(params.get("user_id"), "1");
+//		}
+//		return row;
+//	}
 
 	public ProfileDTO userstatechecker(String user_id) {
 		return dao.userstatechecker(user_id);
 	}
 	
+	
+	public String comregister(Map<String, String> params, MultipartFile photos) {
+		ProfileDTO dto = new ProfileDTO();
+		dto.setUser_id(params.get("user_id"));
+		dto.setCom_name(params.get("com_name"));
+		dto.setCom_time(params.get("com_time"));
+		dto.setAccept(params.get("accept"));
+		dto.setPickup(params.get("pickup"));
+		dto.setAddress(params.get("address"));
+		dto.setAddress(params.get("address"));
+		dao.comregister(dto);
+		dao.userstateupdater(params.get("user_id"), "1");
+		
+		int com_num = dto.getCom_num();
+		String user_id = dto.getUser_id();
+		logger.info("com_num  = " + com_num);
+		String page = "redirect:/profile?user_id="+user_id;
+
+		if (com_num > 0) {
+			try {
+				saveFile(com_num, photos);
+				page = "redirect:/profile?user_id="+user_id;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return page;
+	}
+
+	private void saveFile(int com_num, MultipartFile photos) throws Exception {
+
+			String oriFileName = photos.getOriginalFilename();
+			logger.info("oriFileName : " + oriFileName);
+			if (!oriFileName.equals("")) {
+
+				// 1. 파일 이름 변경
+				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+				String newFileName = System.currentTimeMillis() + ext;
+
+				// 2. 파일 저장
+				byte[] arr = photos.getBytes();
+				Path path = Paths.get(root + newFileName);
+				Files.write(path, arr);
+				dao.saveFile(com_num, oriFileName, newFileName);
+			}
+		}
 
 	public ArrayList<ProfileDTO> comlist(String user_id) {
 		return dao.comlist(user_id);
@@ -76,19 +130,77 @@ public class ProfileService {
 
 	public int writepickupinfo(HashMap<String, String> params) {
 		int row = 0;
-		
 		logger.info("픽업 정보 등록 : " + params);
-		
 		row = dao.writepickupinfo(params.get("com_num"),params.get("p_distance"),params.get("p_section"),params.get("p_price"));
-		
 		logger.info("픽업 정보 등록 2 : " + row);
 		
 		return row;
 	}
 
-	public ArrayList<ProfileDTO> pickuplist(String p_num) {
-		return dao.pickuplist(p_num);
+	public ArrayList<ProfileDTO> pickuplist(String com_num) {
+		return dao.pickuplist(com_num);
+	}
+
+	public int writeticketprice(HashMap<String, String> params) {
+		int row = 0;
+		logger.info("예약권 정보 입력 : " + params);
+		row = dao.writeticketprice(params.get("com_num"),params.get("t_price"),params.get("t_type"));
+		
+		return row;
+	}
+
+	public int pickuppricedelete(ArrayList<String> pickuppricedeleteList) {
+		int pickuppricedelete_count = 0;
+		for(String p_num : pickuppricedeleteList) {
+			pickuppricedelete_count += dao.pickuppricedelete(p_num);
+		}
+		return pickuppricedelete_count;
+	}
+
+	public ArrayList<ProfileDTO> ticketlist(String com_num) {
+		return dao.ticketlist(com_num);
 	}
 	
+	public int ticketpricedelete(ArrayList<String> ticketpricedeleteList) {
+		int ticketpricedelete_count = 0;
+		for(String t_num : ticketpricedeleteList) {
+			ticketpricedelete_count += dao.ticketpricedelete(t_num);
+		}
+		return ticketpricedelete_count;
+	}
 
+//	public void savecompic(MultipartFile photo, String loginId) throws Exception {
+//		ProfileDTO dto = new ProfileDTO();
+//		dto.setUser_id(loginId);
+//		ProfileDAO.savecompic(dto);
+//		
+//		int num = dto.getCom_num();
+//		String code = "COMPIC";
+//		
+//		if(num>0) {
+//			savePhoto(num,code,photo);
+//		}
+//	}
+	
+//	private void savePhoto(int num, String code, MultipartFile photo) throws Exception {
+//		// 1. oriFileName 추출 (image.jpg)
+//			String oriFileName = photo.getOriginalFilename();
+//			//logger.info("oriFileName : "+oriFileName);
+//			if(!oriFileName.equals("")) {
+//				String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
+//				// 2. 파일명 변경해서 newFileName로 저장 (1234567981234.jpg)
+//				String newFileName = System.currentTimeMillis() + ext; 
+//				//logger.info("newFileName : "+newFileName);
+//				// 3. 파일 저장
+//				// 3-1. 객체로 부터 바이트 추출
+//				byte[] arr = photo.getBytes();
+//				// 3-2. 저장할 경로와 파일명 지정
+//				Path path = Paths.get(root + newFileName);
+//				// 3-3. 파일 저장
+//				Files.write(path, arr);
+//				ProfileDAO.savePhoto(code, num, oriFileName, newFileName);
+//				logger.info("사진 저장 성공!");
+//			}
+//	}
+	
 }

@@ -48,10 +48,13 @@ button {
 </style>
 </head>
 <body>
+
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
+	
 	<h1 style="text-align: center;">업체 등록</h1>
+	
 	<table>
 		<tr>
 			<th>
@@ -70,17 +73,16 @@ button {
 		</tr>
 		<tr>
 			<th>
-				<button	onclick="location.href='pfNotiList?user_id=${sessionScope.loginId}'"	class="button">알림함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
 				<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="button">신고 내역</button>
 			</th>
 		</tr>
 	</table>
-
-	<input type="button" id="comregister" value="등록 완료" />
+	
+	<form action="comregister" method="post" enctype="multipart/form-data">
+	
+	<button>등록 완료</button>
+	
+	<!-- <input type="button" id="comregister" value="등록 완료" /> -->
 
 	<table style="text-align: left;">
 		<tr>
@@ -118,16 +120,19 @@ button {
 				<input type="radio" name="pickup" value="Y" />픽업 가능
 				<input type="radio" name="pickup" value="N" />픽업 불가능
 			</th>
-		</tr>
-		
+		</tr>		
 		<tr>
 			<th>사진 등록</th>
-			<th colspan="4"></th>
+			<th colspan="4">
+				<input type="file" name="photos" class="fileBtn"/>
+			</th>
 		</tr>
-	</table>
+		</table>
+		</form>
 </body>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	
+
 	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 	function sample4_execDaumPostcode() {
 		new daum.Postcode(
@@ -190,7 +195,7 @@ button {
 	}
 	
 	
-	$('#comregister').on('click',function(){
+	/* $('#comregister').on('click',function(){
 		var $user_id = $('input[name="user_id"]');
 		var $com_name = $('input[name="com_name"]');
 		var $address = $('input[name="address"]');
@@ -227,9 +232,14 @@ button {
 			}
 		});
 		
+	}); */
+	
+	
+	$(".logo").on('click',function(){
+		
+		location.href='./';
+		
 	});
-	
-	
 	
 </script>
 </html>

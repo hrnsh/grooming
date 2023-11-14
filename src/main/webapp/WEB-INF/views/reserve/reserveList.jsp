@@ -13,28 +13,107 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-table,th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-		padding: 5px 10px;	
-	}
-	
-	table {
-		width:500px
-	}
-	
-	input[type="text"]{
-		width:100%;
-	}
-	button{
-		margin: 5px 0;
-	}
-	
-	textarea{
-		width: 100%;	
-		height : 150px;
-		resize: none;
-	}
+.nav {
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo img {
+    cursor: pointer;
+}
+
+.iconAll {
+    width: 100px;
+    text-align: center;
+}
+
+div {
+    text-align: center;
+}
+
+.button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: rgb(163, 161, 161);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgb(243, 208, 204);
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#revdetail {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+input[type="button"],
+input[type="submit"] {
+    background-color: rgb(163, 161, 161);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+    background-color: rgb(243, 208, 204);
+}
+
+textarea {
+    resize: vertical;
+}
+
 	
 </style>
 </head>

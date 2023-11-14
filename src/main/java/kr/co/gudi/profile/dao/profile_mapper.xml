@@ -31,10 +31,10 @@
 		value(#{user_id},#{a_name},#{a_gender},#{a_age},#{a_kind},#{a_spec})
 	</insert>
 	
-	<insert id="comregister" parameterType="HashMap">
+	<!-- <insert id="comregister" parameterType="HashMap">
 		insert into company (user_id,com_name,address,com_time,accept,pickup)
 		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup})
-	</insert>
+	</insert> -->
 	
 	<update id="userstatedeleter" parameterType="hashmap">
 		update member set state='4' where user_id=#{param1}
@@ -59,7 +59,39 @@
 	</insert> 
 	
 	<select id="pickuplist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
-		select * from pick_price where com_num=#{param1}
-	</select>
+		SELECT pp.p_num, pp.p_distance,pp.p_section,pp.p_price
+		FROM company c
+		JOIN pick_price pp ON c.com_num = pp.com_num
+		WHERE c.com_num = #{param1}
+    </select>
+    
+    <insert id="writeticketprice" parameterType="hashmap">
+    	insert into ticket_price (com_num,t_price,t_type)
+		values(#{param1},#{param2},#{param3})
+    </insert>
+    
+    <select id="ticketlist" resultType="kr.co.gudi.profile.dto.ProfileDTO">
+		SELECT tp.t_num, tp.t_price, tp.t_type FROM company c
+		JOIN ticket_price tp ON c.com_num = tp.com_num
+		WHERE c.com_num = #{param1}
+    </select>
+    
+    <delete id="pickuppricedelete">
+		delete from pick_price where p_num = #{param1}
+	</delete>
+	
+	<delete id="ticketpricedelete">
+		delete from ticket_price where t_num = #{param1}
+	</delete>
+	
+	<insert id="saveFile">
+		INSERT INTO photo (photo_code, photo_n, oriFileName, newFileName)
+			VALUES ('cp', #{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<insert useGeneratedKeys="true" keyColumn="com_num" keyProperty="com_num" id="comregister" parameterType="kr.co.gudi.profile.dto.ProfileDTO">
+		insert into company (user_id,com_name,address,com_time,accept,pickup)
+		values (#{user_id},#{com_name},#{address},#{com_time},#{accept},#{pickup})
+	</insert>
 	
 </mapper>

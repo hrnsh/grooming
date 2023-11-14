@@ -16,69 +16,143 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
-
-.calendar-icon {
-        cursor: pointer;
-    }
-    
-table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-th{
-	 text-align: center;
+p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-table{	
-	width: 500px;
-	table-layout: fixed;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
 }
 
-
-textarea {
-	width: 300px;
-	resize: none;
-	font-size: 16px;
-	padding: 10px;
+table, th, td {
+    border: 1px solid #ddd;
 }
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+input[type="text"],
+input[type="button"] {
+    padding: 8px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+#paging {
+    margin-top: 20px;
+}
+
+.container {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    display: inline;
+    margin: 0;
+}
+
 .modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
-	padding-top: 60px;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-	position: relative;
-	background-color: rgb(243, 208, 204);
-	width: 35%;
-	height: 500px;
-	margin: 5% auto;
-	padding: 20px;
-	border: 1px solid #888;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
 }
 
 .close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
+
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+.input-group .input-group-append {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.input-group .input-group-append span {
+    padding: 8px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.calendar-icon:hover {
+    background-color: #ddd;
+}
+
 </style>
 </head>
 <body>

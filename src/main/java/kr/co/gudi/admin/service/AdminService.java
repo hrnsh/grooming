@@ -18,6 +18,7 @@ public class AdminService {
 	
 	@Autowired AdminDAO dao;
 
+	
 	public AdminDTO adminProfile(String ad_id) {
 		return dao.adminProfile(ad_id);
 	}
@@ -38,5 +39,16 @@ public class AdminService {
 	public int adminprofileupdate(HashMap<String, String> params) {
 		return dao.adminprofileupdate(params);
 	}
+
+	public AdminDTO adpfdetail(String ad_id) {
+		return dao.adpfdetail(ad_id);
+	}
+
+	public ArrayList<AdminDTO> adminSearchList(String positionSearchOption) {
+		return dao.adminSearchList(positionSearchOption);
+	}
+
+
+
 }
 

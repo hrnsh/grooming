@@ -11,58 +11,151 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
+
 <style>
-table, th, td {
-	margin: 10px;
-	border-bottom: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
-	height: 80px;
+/* gpt */
+
+.logo {
+	margin-left: 50px;
+	right: 0px;
 }
 
-table {
-	float: left;
-}
+body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-button {
-	float: left;
+   nav {
+	height: 200px;
 	display: flex;
-	align-items: left;
+	align-items: center;
+	justify-content: space-between;
 }
 
-::-webkit-scrollbar {
-	display: none;
+
+    .logo img {
+      cursor: pointer;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .logoutBtn {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(94, 94, 94);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .profileupdate {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(224, 224, 224);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .comreg {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(224, 224, 224);
+      border: none;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+   input[type="button"] {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+   .profButtonBox {
+      display: flex;
+      margin-top: 10px;
+    }
+    
+    .comtable {
+      width: 900px;
+      height: 800px;
+      margin: 20px;
+      border-collapse: collapse;
+      justify-content: space-around;
+    }
+    
+    .profButtonBox{
+	width: 20px;
+	position: absolute;
+	top: 10px;
+	display:flex;
+	left: 50px;
+	flex-direction: column;
+}
+    
+    .main2{
+	height: 900px;
+	background-size: 175%;
+	background-position: 46% 4%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;	
 }
 
-.profile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	padding: 10px;
-}
+    table {
+      width:400px;
+      height:500px;
+      margin: 20px;
+      border-collapse: collapse;
+      justify-content: space-around;
+      
+    }
 
-.animalprofile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	float: left;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+   tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+   
+
 </style>
 </head>
 <body>
-	<div class="logo">
-		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
+	<nav class="nav">
+		<div class="logo">
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width="150" height="120"/>
+		</div>
+		<h1> 환영합니다 ${sessionScope.loginId}님 </h1>
+	</nav>
+	
+	<button onclick="location.href='nomalLogout'" class="logoutBtn">로그아웃</button>
+	<button onclick="location.href='profileUpdateForm?user_id=${sessionScope.loginId}'" class = "profileupdate">프로필 수정</button>
+	<button onclick="location.href='comregisterForm?user_id=${sessionScope.loginId}'" class = "comreg" name="stateupdater" >업체 등록</button>
+	
+	<main>
+	<div class="profButtonBox">
+		<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="profButton">내 프로필</button>
+		<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="profButton">쪽지함</button>
+		<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="profButton">내가 쓴 글</button>
+		<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 	</div>
-	<input type="button" value="프로필 수정" onclick="location.href='profileUpdateForm?user_id=${sessionScope.loginId}'"/>
-	<div class="buttonBox">
-		<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="button">내 프로필</button>
-		<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="button">쪽지함</button>
-		<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="button">내가 쓴 글</button>
-		<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="button">신고 내역</button>
-	</div>
-			
+	
+		
 	<table>
 		<tr>
 			<th>ID</th>
@@ -91,8 +184,8 @@ button {
 	</table>
 	
 	
-	<div style = "width : 60%; height : 495px; overflow : auto">
-	<table width = "60%" border = "0" cellspacing = "0" cellpadding = "0" >
+	<div style = "width : 500px; height : 500px; overflow : auto">
+	<table>
 		<tr>
 			<th>번호</th>
 			<th>이름</th>
@@ -107,20 +200,15 @@ button {
 	</table>
 	</div>
 	
-		<table>
+	</main>
+	<main class = "main2">
+	<table class = "comtable">
 		<tr>
 		<tbody id="comlist">
 		
 		</tbody>
-		</tr>
-		</table>
-		
-	<button name="stateupdater" onclick="location.href='comregisterForm?user_id=${sessionScope.loginId}'">업체 등록</button>
-	
-	<input type="button" id="comupdater" value="업체 수정"/>
-	
-	<%-- <button name="comupdater" id = "comupdater" onclick="location.href='pickupinfoForm?com_num=${item.com_num}'">업체 수정</button> --%>
-	
+	</table>
+	</main>	
 </body>
 <script>	
 listCall();
@@ -129,7 +217,6 @@ comlistCall();
 console.log("listCall : " + listCall);
 	
 	function listCall(){
-	/* $('#listCall').on('click', function() { */
 		var user_id = '${sessionScope.loginId}';
 		console.log("profile user_id : " + user_id);
 
@@ -237,7 +324,6 @@ console.log("listCall : " + listCall);
 						content += '<tr>';
 						content += '<th>'+"픽업 여부"+'</th>';
 						content += '<th>'+item.pickup+'</th>';
-						content += '<th><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">픽업 정보 입력</button></th>';
 						content += '</tr>';
 						content += '<tr>';
 						content += '<th>'+"총 이용자 수"+'</th>';
@@ -251,11 +337,20 @@ console.log("listCall : " + listCall);
 						content += '<th>'+"주소"+'</th>';
 						content += '<th colspan="2">'+item.address+'</th>';
 						content += '</tr>';
-						
+						content += '<tr>';
+						content += '<th colspan = "2"><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">가격표 보기</button></th>';
+						content += '</tr>';
 					});
 				$('#comlist').empty();
 				$('#comlist').append(content);
 				
 		}
+		
+		$(".logo").on('click',function(){
+			
+			location.href='./';
+			
+		});
+		
 </script>
 </html>
