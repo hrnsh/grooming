@@ -94,4 +94,19 @@ public interface ReserveListDAO {
 
 
 
+	void plus(String loginId);
+
+
+
+
+	int auto(String loginId);
+
+
+
+
+	void reviewDel(int rev_num);
+
+
+
+
 }

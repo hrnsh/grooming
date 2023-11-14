@@ -600,7 +600,7 @@
 				
 				$.ajax({
 					url: "getCompanyDetail",
-					type: "POST",
+					type: "get",
 					data: {"companyName": companyName},
 					dataType: "JSON",
 					success: function(companyDetail) {
