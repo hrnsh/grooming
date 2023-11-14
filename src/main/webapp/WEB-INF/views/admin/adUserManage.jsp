@@ -25,12 +25,12 @@
 
 .logo {
 	position: relative;
-	right: 310px;
+	right: 335px;
 }
 
 h1{
 	position: relative;
-	right: 220px;
+	right: 230px;
 	top: 50px;
 }
 

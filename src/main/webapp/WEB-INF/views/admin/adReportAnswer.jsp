@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>신고 문의 답장</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
 <%@ page import="java.text.SimpleDateFormat" %>

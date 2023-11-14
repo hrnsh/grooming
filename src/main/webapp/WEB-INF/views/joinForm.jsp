@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <style>
     body {
@@ -69,9 +69,8 @@
         }
         
         .arrowBtn{
-        	position: absolute;
-			right: 930px;
-			top: 60px;
+        	position: relative;
+			right: 100px;
 			
 			background-color: rgb(243, 208, 204);
             color: white;
@@ -87,7 +86,7 @@
 </head>
 <body>
 	<button onclick="location.href='./login'" class="arrowBtn"> ← </button>
-   <form action="join" method = "post">
+   <form action="join" id="joinForm" method = "post">
    <h2>Welcome 돌봐주개!</h2>
 	
     <p/>이&nbsp;&nbsp;&nbsp;&nbsp;름
@@ -106,41 +105,49 @@
     
     <p/>이메일
     <input type = "email" name = "email" placeholder="이메일을 입력해주세요"/>
+     <input type = "button" id = "overlayEmail" value="이메일 중복확인"/>
     <p/><span class="label2"></span>
 
      <br/>
- 	<input type="submit" value="돌봐주개 회원가입"/>
+ 	<input type="button" value="돌봐주개 회원가입" id="join"/>
    </form>
 </body>
 <script>
-var overlayIdChk = false;
-var $id;
 
+// 아이디 중복 확인
+var overlayChk=false; 
 
 $('#overlayId').on('click', function(){
-	$id = $('input[name="user_id"]').val();
-	console.log('user_id='+$id);
+	var user_id = $('input[name="user_id"]').val();
+	console.log('user_id='+user_id);
 	
-	$.ajax({
-		type : 'post',
-		url : 'overlayId',
-		data : {'user_id' : $id},
-		dataType : 'JSON',
-		success : function(data){
-			console.log(data);
-			overlayIdChk = data.use;
-			if(data.use){
-				$(".label1").text("사용이 가능한 ID입니다.").css("color", "green").css("font=size", "8px");
-			}else{
-				$(".label1").text("이미 사용중인 아이디입니다.").css("color", "red").css("font=size", "8px");
-				$('input[name="user_id"]').val("");
+	if(user_id!=""){
+		$.ajax({
+			type : 'post',
+			url : 'overlayId',
+			data : {'user_id' : user_id},
+			dataType : 'JSON',
+			success : function(data){
+				console.log(data);
+				overlayChk=data.use;
+				if(overlayChk){
+					$(".label1").text("사용이 가능한 ID입니다.").css("color", "green").css("font=size", "8px");
+				}else if(!data.use){
+					$(".label1").text("이미 사용중인 아이디입니다.").css("color", "red").css("font=size", "8px");
+					$('input[name="user_id"]').val("");
+				}
+			},
+			error : function(e){
+				console.log(e);
 			}
-		},
-		error : function(e){
-		}
-	});
+		});
+	}else{
+		$(".label1").text("아이디를 입력해 주세요.").css("color", "red").css("font=size", "8px");
+	}
 });
 
+
+// 이메일 중복 확인
 var overlayEmailChk = false;
 var $email;
 
@@ -148,11 +155,7 @@ $('#overlayEmail').on('click', function(){
 	$email = $('input[name="email"]').val();
 	console.log('email='+$email);
 	
-	if($email = ""){
-		$(".label2").text("ID를 입력해주세요!").css("color", "red").css("font=size", "8px");
-		return false;
-	}
-
+	if($email != ""){
 	$.ajax({
 		type : 'post',
 		url : 'overlayEmail',
@@ -162,15 +165,62 @@ $('#overlayEmail').on('click', function(){
 			console.log(data);
 			overlayEmailChk = data.use;
 			if(data.use){
-				$(".label2").text("사용이 가능한 ID입니다.").css("color", "green").css("font=size", "8px");
+				$(".label2").text("사용이 가능한 이메일 입니다.").css("color", "green").css("font=size", "8px");
 			}else{
-				$(".label2").text("이미 사용중인 아이디입니다.").css("color", "red").css("font=size", "8px");
+				$(".label2").text("이미 사용중인 이메일 입니다.").css("color", "red").css("font=size", "8px");
 				$('input[name="email"]').val("");
 			}
 		},
 		error : function(e){
 		}
 	});
+	}else{
+		$(".label2").text("이메일을 입력해주세요!").css("color", "red").css("font=size", "8px");
+	}
 });
+
+
+// 아이디, 이메일 중복 확인 후 회원가입 검사
+$('#join').on('click',function(){
+	var name = $('input[name="name"]');
+	var user_id = $('input[name="user_id"]');
+	var pw = $('input[name="pw"]');
+	var phone = $('input[name="phone"]');
+	var email = $('input[name="email"]');
+	
+	if(overlayChk && overlayEmailChk){
+		if(name.val()==''){
+			alert('이름을 입력해 주세요!');
+			name.focus(); //해당 input 으로 커서 이동 
+		}else if(user_id.val()==''){
+			alert('아이디를 입력해 주세요!');
+			user_id.focus();
+		}else if(pw.val()==''){
+	         alert('비밀 번호를 입력해 주세요!');
+	         pw.focus();
+	    }else if(phone.val()==''){
+	         alert('전화 번호를 입력해 주세요!');
+	         phone.focus();
+	    }else if(email.val()==''){
+	         alert('이메일을 입력해 주세요!');
+	         email.focus();
+	    }else{
+	    	var regex = new RegExp('[a-zA-Zㄱ-ㅎ가-힣]'); // 0-9로 넣고 false 일 경우로 처리해도 된다.
+	         var match = regex.test(phone.val()); // 패턴이 일치하면 true, 아니면 false 반환
+	         console.log("match : "+match);
+	         if(match){
+	        	 alert('숫자만 넣어 주세요');
+	        	 phone.val('');
+	        	 phone.focus();
+	        	 return false; 
+	         }
+	         
+	         $('#joinForm').submit();
+	    }
+	}else{
+		alert('아이디 또는 이메일 중복 체크를 해주세요!');
+	}
+});
+
 </script>
 </html>

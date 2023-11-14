@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쪽지함</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -207,7 +207,7 @@ button{
 		<!-- 내가 쓴 쪽지 -->
 		<div class="sentListBox">
 			<div class="sentListContent">
-				<h1>내가 쓴 쪽지</h1>
+				<h1>보낸 쪽지</h1>
 				<input type="date" id="datePickerSent" class="datePickerSent"/>
 				<select id="readOptionSent">
 					<option value="all">전체</option>
