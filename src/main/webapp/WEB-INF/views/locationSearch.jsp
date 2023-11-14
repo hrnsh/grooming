@@ -84,8 +84,10 @@
 				border: none;
 				border-radius: 5px;
 				color: white;
-				width: 45px;
+				width: 70px;
 				height: 25px;
+				position: relative;
+				margin-right: 5px;
             }
             
             .reserve-btn{
@@ -93,8 +95,9 @@
 				border: none;
 				border-radius: 5px;
 				color: white;
-				width: 45px;
+				width: 70px;
 				height: 25px;
+				position: relative;
             }
 
             .company-detail {
@@ -169,7 +172,7 @@
 				width: 45px;
 				height: 25px;
 				position: absolute;
-				top: 20px;
+				top: 45px;
     			right: 25px;
 			}
 			
@@ -396,21 +399,27 @@
 							$(".review-container").empty();
 						
 							for (var i = 0; i < companies.length; i++){
+								
 								var company = companies[i];
+								
+								console.log("업체 정보: "+companies[i]);
 								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
+								
+								// 업체의 평균 별점을 계산
+					             var avgStar = calculateAverageReview(company.com_name);
+								console.log("업체 평균 별점 : "+avgStar);
 								
 								var message = '<div style="padding:5px;">'
 					                + company.com_name + '<br>'
-					                + '평균 별점: ' + company.avg_star
+					                + '평균 별점: ' + avgStar
 					                + '<br>'
-					                + '누적 이용자 수: ' + company.user_total
-					                + '</div>';
+					                + '누적 이용자 수: ' + company.user_total + "</br>";
 					            
 					             // 업체와 사용자 간의 거리 계산
 					            var distance = calculateDistance(userLocation.getLat(), userLocation.getLng(), company.lat, company.lon);
-					                
+					             
 					         	// 거리를 메시지에 추가
-				                message += '거리: ' + distance + ' km';
+				                message += '거리: ' + distance + ' km' + '</div>';
 					             
 					            displayCompaniesMarker(companyLocation, message);
 					             
@@ -422,7 +431,7 @@
 					                '" data-rating="' + company.avg_star +
 					                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
 					                company.com_name + '</span>' +
-					                '<br>평균 별점: ' + company.avg_star +
+					                '<br>평균 별점: ' + avgStar +
 					                '<br>누적 이용자 수: ' + company.user_total +
 					                '<br>거리: ' + distance + ' km' +
 					                '</li>');
@@ -438,7 +447,7 @@
 					            
 					        	 // 업체 상세 정보를 가져와서 표시
 				                var companyName = $(this).find("span").text();
-					         	console.log(companyName);
+					         	console.log("업체 리스트에서 클릭한 업체 이름 : "+companyName);
 					         
 				                showCompanyDetail(companyName);
 				                
@@ -530,9 +539,11 @@
 								var company = companies[i];
 								var companyLocation = new kakao.maps.LatLng(company.lat, company.lon);
 								
+								var avgStar = calculateAverageReview(company.com_name);
+								
 								var message = '<div style="padding:5px;">'
 					                + company.com_name + '<br>'
-					                + '평균 별점: ' + company.avg_star
+					                + '평균 별점: ' + avgStar
 					                + '<br>'
 					                + '누적 이용자 수: ' + company.user_total
 					                + '</div>';
@@ -543,10 +554,10 @@
 					            $("#companyList").append(
 					            		'<li class="companyItem" data-lat="' + company.lat +
 					                '" data-lon="' + company.lon + 
-					                '" data-rating="' + company.avg_star +
+					                '" data-rating="' + avgStar +
 					                '">' +'<span id="span" style="font-weight:bold; font-size:20px;">'+
 					                company.com_name + '</span>' +
-					                '<br>평균 별점: ' + company.avg_star +
+					                '<br>평균 별점: ' + avgStar +
 					                '<br>누적 이용자 수: ' + company.user_total +
 					                '</li>'); 
 					                
@@ -600,6 +611,7 @@
 						
 						drawList(companyDetail);
 						
+						/*
 						$.ajax({
 							url: "getTicketPrice",
 							type: "POST",
@@ -608,6 +620,7 @@
 							success: function(ticketPrice) {
 								console.log(ticketPrice);
 								drawTicketList(ticketPrice);
+								*/
 								
 								// 상세 정보가 있는 경우 상세 정보 창을 표시
 			                    $(".detail-container").show();
@@ -626,12 +639,15 @@
 									
 									// 리뷰 컨테이너를 보이게 함
 								    $(".review-container").show();
+									
 								});
+					         	/*
 							},
 							error: function(e) {
 								console.log(e);
 							}
 						});
+						*/
 					},
 					error: function(e){
 						console.log(e);
@@ -640,12 +656,17 @@
 			}
 			
 			function drawList(companyDetail){
+				console.log("drawList 호출!!");
+				console.log("drawList : "+companyDetail);
 				var content="";
 				
 				$(".company-detail").empty();
 				
 				if (companyDetail.length > 0) {
 					$(".detail-container").show();
+					
+					var avgStar = calculateAverageReview(companyDetail);
+					console.log("업체 상세 보기 안의 평균 별점 : "+avgStar);
 					
 					companyDetail.forEach(function(item,idx){
 						content +='<h2>'+item.com_name+'</h2>';
@@ -656,8 +677,9 @@
 						content +="픽업 가능 여부: " + item.pickup + "<br>";
 						content +="전화번호: " + item.phone + "<br>";
 						content +="수용 가능 동물 수: " + item.accept + "<br>";
-						content +="평균 별점: " + item.avg_star + "<br>";
-						content +="누적 이용자 수: " + item.user_total + "<br></div>";
+						content +="평균 별점: " + avgStar + "<br>";
+						content +="누적 이용자 수: " + item.user_total + "<br>";
+						content += "가격 : " + item.price +"<br> </div>";
 					});
 					
 					$(".company-detail").append(content);
@@ -666,6 +688,41 @@
 				}
 			}
 			
+			function calculateAverageReview(companyName) {
+				console.log("calculateAverageReview 호출!!");
+				
+				console.log("업체 이름: "+companyName);
+				var totalStars = 0;
+			    var totalReviews = 0;
+			    
+			    $.ajax({
+			    	url: "AverageReviews",
+			    	type: "POST",
+			    	data: {"companyName": companyName},
+			    	dataType: "JSON",
+			    	async: false,
+			    	success: function(response) {
+			    		console.log(response);
+			    		
+						for(var i = 0; i < response.length; i++){
+							totalStars += parseInt(response[i].rev_star);
+							totalReviews++;
+						}
+					},
+					error: function(error) {
+						console.log("리뷰 정보 가져오기 실패!! : ", error);
+					}
+			    });
+			    
+			    // 리뷰가 하나라도 있는 경우에만 평균을 계산하고 반환
+			    if(totalReviews > 0) {
+			    	return totalStars / totalReviews;
+			    } else {
+			    	return 0;
+			    }
+			}
+			
+			/*
 			function drawTicketList(ticketPrice) {
 				var content = "";
 				
@@ -684,6 +741,7 @@
 				
 				$(".company-detail").append(content);
 			}
+			*/
 			
 			function getReview(companyName) {
 				$.ajax({
@@ -795,11 +853,6 @@
 				console.log("예약하기 이동");
    			 var companyName = $(this).data("company");
     		window.location.href = "reserve?companyName=" + companyName;
-			});
-
-			// 리뷰 보기 버튼 클릭 이벤트
-			$(document).on("click", ".review-btn", function() {
-   			 
 			});
 		
 			function showDistance(position, companies) {

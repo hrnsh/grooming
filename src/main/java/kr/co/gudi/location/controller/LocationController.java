@@ -54,11 +54,13 @@ public class LocationController {
     	return companyDetail;
     }
     
+    /*
     @RequestMapping(value = "/getTicketPrice", method = RequestMethod.POST)
     @ResponseBody
     public List<LocationDTO> getTicketPrice(@RequestParam String companyName) {
     	return locationService.getTicketPrice(companyName);
     }
+    */
     
     @RequestMapping(value = "/getReviews", method = RequestMethod.POST)
     @ResponseBody
@@ -85,5 +87,15 @@ public class LocationController {
     	
     	locationService.sendNoteToCom(subject, content, receiver, sender);
     	return "redirect:/locationSearch";
+    }
+    
+    @RequestMapping(value = "/AverageReviews", method = RequestMethod.POST)
+    @ResponseBody
+    public List<ReviewDTO> AverageReviews(@RequestParam String companyName) {
+    	logger.info("companyName"+companyName);
+    	List<ReviewDTO> reviewList = locationService.AverageReviews(companyName);
+    	
+    	logger.info("reviewList: "+reviewList);
+    	return reviewList;
     }
 }
