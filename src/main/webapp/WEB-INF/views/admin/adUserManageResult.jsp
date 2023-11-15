@@ -15,51 +15,11 @@
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="resources/css/adminProfileCommon.css" type="text/css">
+
 <style>
 
-/* 모달 전체 스타일 */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* 모달 내용 스타일 */
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* 닫기 버튼 스타일 */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    }
- .nav {
+.nav {
 	height: 150px;
 	display: flex;
 	justify-content: space-between;
@@ -68,14 +28,15 @@ body {
 
 .logo {
 	position: relative;
-	right: 335px;
+	right: 330px;
 }
 
 h1{
 	position: relative;
-	right: 230px;
+	right: 220px;
 	top: 50px;
 }
+
 
 table, th, td{
 	border: 1px solid black;
@@ -83,45 +44,50 @@ table, th, td{
 	padding: 5px 10px;
 }
 
-th{
-	 text-align: center;
-}
-
-table{	
-	width: 750px;
-	position: relative;
-	left: 50px;
-	top: 50px;
-	text-align:center;
+.listTable{	
+	width: 100%;
+	height: 100%;
 	border-radius: 10px;
   	border-style: hidden;
   	box-shadow: 0 0 0 1px #000;
+  	table-layout:fixed;
 }
 
-.listBox{
+.listTable th{
+	text-align:center;
+}
+
+.tableBox{
+	width: 700px;
+	height:450px;
 	position: relative;
-	height: 500px;
+	bottom: 5%;
 	left: 5%;
-	width: 900px;
-	bottom: 50px;
 }
 
-#paging {
-	position: relative;
-	top: 100px;
-	right: 150px;
+.searchbox{
+	width: 70%;
+    height: 6%;
+    display: flex;
+    position: relative;
+    bottom: 5px;
+    left: 25%;
 }
 
-.btn{
-	position: relative;
-	left: 80%;
-	top: 10%;
-	height: 35px;
-	width: 80px;
+input[type="button"]{
+	height: 25px;
+	width: 40px;
 	background-color: rgb(94, 94, 94);
 	border: none;
 	border-radius: 10px;
 	color: white;
+	position: relative;
+	left: 20px;
+}
+
+#paging {
+	position: relative;
+	right: 35%;
 }
 
 .input-group {
@@ -141,22 +107,88 @@ table{
     background-color: #f2f2f2;
     border: 1px solid #ccc;
     border-radius: 4px;
+    position: relative;
+    bottom: 20px;
+    left: 5px;
 }
 
 .calendar-icon:hover {
     background-color: #ddd;
 }
 
+
+.modal{
+  position: fixed;
+  top:0; left: 0; bottom: 0; right: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content{
+	width: 600px;
+    height: 560px;
+	left: 30%;
+	top: 15%;
+	border: 1px solid rgb(94, 94, 94);
+	align-items:center;
+}
+
+.modalTable{
+	width: 500px;
+    height: 450px;
+	position: relative;
+	left: 50px;
+	top: 50px;
+	text-align:center;
+	border-radius: 10px;
+  	border-style: hidden;
+  	box-shadow: 0 0 0 1px #000;
+}
+
+.modalTable td{
+	text-align: left;
+}
+
+.tableBox{
+	width: 700px;
+	height:450px;
+	position: relative;
+	bottom: 5%;
+	left: 5%;
+}
+
+.close {
+  color: gray;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  display:relative;
+  right: 10px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+textarea{
+	resize: none;
+	width: 100%;
+	height: 100px;
+	border: none;
+}
+
 </style>
 </head>
 <body>
-
-<nav class="nav">
+	<nav class="nav">
 		<div class="logo">
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
 		</div>
-		<h1>처리내역</h1>
+		<h1> 처리 내역 </h1>
 	</nav>
+	<main>
 		<div class="profButtonBox">
 			<button onclick="location.href='adProfile?ad_id=${sessionScope.ad_id}'" class="profButton">내 프로필</button>
 			<button onclick="location.href='adWrite?ad_id=${sessionScope.ad_id}'" class="profButton">내가 쓴 글</button>
@@ -165,46 +197,46 @@ table{
 			<button onclick="location.href='adReport?ad_id=${sessionScope.ad_id}'" class="profButton">신고 문의 관리</button>
 		</div>
 
-	<tr>
-		<th>관리자ID</th>
-		<td><input type="text" id="selAd_id"/></td>
-		<th>회원ID</th>
-		<td><input type="text" id="selUser_id"/></td>
-		<td><input type="button" value="조회" onclick="idFilter()"/></td>
-	</tr>
-	<table>
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th class="user_id">회원ID</th>
-				<th><select id="m_type" name="m_type">
-						<option value="전체">전체</option>
-						<option value="일반">일반</option>
-						<option value="업체">업체</option>
-						<option value="승인요청">승인요청</option>
-						<option value="정지">정지</option>
-				</select></th>
-				<th>처리날짜
-					<div class="input-group date">
-						<!-- 숨겨진 input 태그 -->
-						<input type="text" id="datepicker" class="form-control"
-							style="display: none;">
-						<!-- 달력 아이콘을 나타내는 버튼 -->
-						<div class="input-group-append">
-							<span class="input-group-text calendar-icon"
-								onclick="showDatePicker()"> &#128197; <!-- 유니코드로 달력 아이콘 표시 -->
-							</span>
+		
+		<div class="tableBox">
+			<div class="searchbox" >
+				<div>관리자ID : <input type="text" id="selAd_id"/></div>
+				<div style="position:relative; left: 10px;">회원ID : <input type="text" id="selUser_id"/></div>
+				<div><input type="button" value="조회" onclick="idFilter()"/></div>
+			</div>
+		<table class="listTable">
+			<thead>
+				<tr>
+					<th style="width:60px;">번호</th>
+					<th class="user_id">회원ID</th>
+					<th><select id="m_type" name="m_type">
+							<option value="전체">전체</option>
+							<option value="일반">일반</option>
+							<option value="업체">업체</option>
+							<option value="승인요청">승인요청</option>
+							<option value="정지">정지</option>
+					</select></th>
+					<th>처리날짜
+						<div class="input-group date">
+							<!-- 숨겨진 input 태그 -->
+							<input type="text" id="datepicker" class="form-control"
+								style="display: none;">
+							<!-- 달력 아이콘을 나타내는 버튼 -->
+							<div class="input-group-append">
+								<span class="input-group-text calendar-icon"
+									onclick="showDatePicker()"> &#128197; <!-- 유니코드로 달력 아이콘 표시 -->
+								</span>
+							</div>
 						</div>
-					</div>
-				</th>
-				<th>담당자</th>
-				<th>상태</th>
-			</tr>
-		</thead>
-		<tbody id="adUserManageResultList">
-
-		</tbody>
-	</table>
+					</th>
+					<th>담당자</th>
+					<th>상태</th>
+				</tr>
+			</thead>
+			<tbody id="adUserManageResultList">
+	
+			</tbody>
+		</table>
 			<div id="paging">	
 				<!-- 	플러그인 사용	(twbsPagination)	- 이렇게 사용하라고 tutorial 에서 제공-->
 				<div class="container">									
@@ -213,17 +245,18 @@ table{
 					</nav>					
 				</div>
 			</div>
+		</div>
 	
 			
 	<!-- detail 모달 -->		
 	<div id="myModal" class="modal">
 		<div class="modal-content">
 			<span class="close" onclick="closeModal()">&times;</span>			
-				<table>
+				<table class="modalTable">
 					<tr>
-						<th>ID</th>
+						<th style="width:100px;">ID</th>
 						<td id="user_id"></td>
-						<th>관리자</th>
+						<th style="text-align:center;">관리자</th>
 					</tr>
 					<tr>
 						<th>이름</th>
@@ -239,28 +272,29 @@ table{
 						<td id="m_state"></td>
 					</tr>
 					<tr>
-						<th colspan="3">사업자 등록증</th>
+						<th>사업자 등록증</th>
+						<td colspan="2" style="text-align:left;">사업자 등록증 이미지 링크</td>
 					</tr>
 					<tr>
 						<th>사유</th>
 					</tr>
 					<tr>
-						<td colspan="3"><textarea readonly id="m_content"></textarea></td>
+						<td colspan="3"><textarea readonly id="m_content" placeholder="사유를 입력해 주세요."></textarea></td>
 					</tr>
 					<tr>
 						<th>처리내역</th>
 					</tr>
 					<tr>
-						<td colspan="3"><textarea readonly id="m_complet"></textarea></td>
+						<td colspan="3"><textarea readonly id="m_complet" placeholder="내용을 입력해 주세요."></textarea></td>
 					</tr>
 					<tr>
 						<th>처리일시</th>
-						<td id="m_date"></td>
+						<td id="m_date" colspan="2"></td>
 					</tr>
 				</table>
 		</div>
 	</div>
-			
+			</main>
 </body>
 <script>
 
@@ -297,7 +331,7 @@ function drawAdUserManageResultList(adUserManageResultList){
 	adUserManageResultList.list.forEach(function(item, idx){ 
 		var date = new Date(item.m_date);
 		var dateStr = date.toLocaleDateString("ko-KR");
-		content+='<tr>';
+		content+='<tr style="text-align:center;">';
 		content+='<td><a href="#" onclick="openModal(\'' + item.m_num + '\')">'+item.m_num+'</a></td>';
 		content+='<td>'+item.user_id+'</td>';
 		content+='<td>'+item.m_type+'</td>';
