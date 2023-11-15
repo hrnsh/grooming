@@ -14,16 +14,27 @@ main {
       margin-top: 50px;
     }
 
- nav {
-	height: 200px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+nav {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 45%;
 }
 
     .logo {
 	margin-left: 50px;
 	right: 0px;
+}
+
+.del{
+padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+background-color:  rgb(94, 94, 94);
+color: white;
+
 }
 
     .logo img {
@@ -37,7 +48,8 @@ main {
     }
 
     table {
-      width: 450px;
+      width: 500px;
+      height: 200;
       margin: 20px auto;
       border-collapse: collapse;
     }
@@ -55,6 +67,7 @@ main {
     form {
       text-align: center;
       margin-top: 20px;
+      margin-left: 30px;
     }
 
     input[type="submit"],
@@ -86,11 +99,12 @@ table, th, td {
 	border-collapse: collapse;
 	padding: 5px 10px;
 	height: 80px;
+	/* margin-left: 100px; */
 }
 
-table {
+/* table {
 	float: left;
-}
+} */
 
 button {
 	float: left;
@@ -130,6 +144,10 @@ button {
 .profButtonBox {
       display: flex;
       margin-top: 10px;
+    }
+    
+    .profButton{
+    	cursor: pointer;
     }
     
 </style>
@@ -179,7 +197,7 @@ button {
 				<th><input style="border: none; background: transparent;" type="text" name="state" readonly="readonly" value="${member.state}"/></th>
 			</tr>
 			<tr>
-				<th colspan="3" style="text-align: center;"><input type="button" id="userstatedeleter" value="회원 탈퇴"/><input type="submit" value="수정 완료" /></th>
+				<th colspan="3" style="text-align: center;"><input class="del" type="button" id="userstatedeleter" value="회원 탈퇴"/><input type="submit" value="수정 완료" /></th>
 				
 			</tr>
 		</table>
@@ -189,7 +207,7 @@ button {
 	
 	
 	<div>
-	<input type="button" id="animalprofiledelete" onclick = "del()" value="삭제"/>
+	<input type="button" class="del" id="animalprofiledelete" onclick = "del()" value="삭제"/>
 	<input type="button" onclick="location.href='animalregisterForm?user_id=${sessionScope.loginId}'" class="button" value="동물 등록"/>
 	<div style = "width : 600px; height : 600px; overflow : auto">
 	<table>
@@ -208,6 +226,7 @@ button {
 	</table>
 	</div>
 	</div>
+	
 		</main>
 	
 	

@@ -71,13 +71,13 @@ body {
       padding: 20px;
     }
 
-   input[type="button"] {
+  /*  input[type="button"] {
       padding: 5px 10px;
       background-color: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
-    }
+    } */
 
    .profButtonBox {
       display: flex;
@@ -111,19 +111,34 @@ body {
 	position: relative;	
 }
 
-    table {
+table {
+    margin-top: 20px;
+    width:450px;
+    height:500px;
+    float: left;
+    margin-right: 20px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-radius: 10px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px #000;
+}
+
+    /* table {
       width:450px;
       height:500px;
       margin: 20px;
       border-collapse: collapse;
       justify-content: space-around;
       
-    }
+    } */
 
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: left;
+      height:50px;
+      
     }
 
    tr:nth-child(even) {
