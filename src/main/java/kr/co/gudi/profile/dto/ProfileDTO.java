@@ -26,7 +26,14 @@ public class ProfileDTO {
 	private int avg_star;
 	private double lat;
 	private double lon;
+	private String price;
 	
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
 	private int ac_num;
 	private String ac_kind;
 	
