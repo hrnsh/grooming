@@ -90,7 +90,7 @@ th, td {
 <body>
 	<nav class="nav">
 		<div class="logo">
-			<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120/>
+			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 style="cursor: pointer;"/>
 		</div>
 		<h1>내가 쓴 글</h1>
 	</nav>
