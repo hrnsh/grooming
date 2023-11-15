@@ -4,7 +4,10 @@
    
  <mapper namespace="kr.co.gudi.main.dao.MainDAO">
 	<select id="rank" resultType="kr.co.gudi.main.dto.MainDTO">
-		SELECT com_name, user_total, avg_star FROM company 
+	SELECT com_name, user_total, avg_star FROM company where user_id = (select user_id from member where state = "2")
+	
+	
+		<!-- SELECT com_name, user_total, avg_star FROM company c,member m where m.state = '2' -->
 			ORDER BY avg_star DESC, user_total DESC LIMIT 3;
 	</select>
 		
