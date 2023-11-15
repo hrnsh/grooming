@@ -39,7 +39,12 @@
 .popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
 /*popup*/
 #rpname {padding-left: 100px;}
-#rpbt {border: 1px solid black; border-collapse: collapse; cursor: pointer;}
+#rpbt {border: 1px solid black; 
+		border-collapse: collapse; 
+		cursor: pointer;
+		border-radius: 5px;
+		
+		}
 
 #ured {
 
@@ -155,6 +160,7 @@
 
     #rpbt {
       text-align: center;
+      
     }
     
       #user_id, #writedate, #report, #b_hit {
@@ -185,12 +191,11 @@
 
   #ured, #d {
     cursor: pointer;
-    color: #3498db;
+    color: white;
+    border-radius: 5px;
   }
 
-  #ured:hover, #d:hover {
-    text-decoration: underline;
-  }
+
   
     .nav {
   	width:1200px;
@@ -214,6 +219,16 @@
 	margin-left: 400px;
 
 }
+
+#reply{
+
+	width : 400px;
+	height: 60px;
+	font-size: 30px;
+
+}
+
+
 </style>
 </head>
 <body>
@@ -358,23 +373,23 @@
 
 
 <div class="popup_layer" id="popup_layer" style="display: none;">
-  <div class="popup_box">
-      <div style="height: 10px; width: 375px; float: top;">
+  <div class="popup_box" style="background-color: rgb(243, 208, 204); border-radius: 5px;">
+      <div style="height: 0px; width: 300px; float: top;">
         <a href="javascript:closePop();"><img src="resources/img/down.png" class="m_header-banner-close" width="30px" height="30px"></a>
       </div>
       <!--팝업 컨텐츠 영역-->
-      <div><p id="rpname">게시글 신고</p></div>
-      <div class="popup_cont">
+      <div><p id="rpname" style="font-size: 15px;">게시글 신고</p></div>
+      <div class="popup_cont" style="">
           <h5>신고 게시글 : ${list.b_subject}</h5>
           <h5>작성자 : ${list.user_id}</h5>
-		<pre><textarea id="con" rows="" cols="" style= "width: 250px; height: 320px; resize: none;"></textarea></pre>
+		<pre><textarea id="con" rows="" cols="" style= "width: 210px; height: 300px; resize: none;"></textarea></pre>
       </div>
-      <div id="rpbt">
+      <div id="rpbt" style="background-color: rgb(227, 156, 147);">
       <!--팝업 버튼 영역-->
 <!--       <div class="popup_btn" style="float: bottom; margin-top: 100px;">
       뭔가 들어가기 -->
       
-      	버튼
+      	신고하기
       </div>
   </div>
 </div>
