@@ -66,12 +66,12 @@ table, th, td{
 }
 
 .searchbox{
-	width: 70%;
+	width: 90%;
     height: 6%;
     display: flex;
     position: relative;
-    bottom: 10px;
-    left: 25%;
+    bottom: 30px;
+    left: 20%;
 }
 
 input[type="button"]{

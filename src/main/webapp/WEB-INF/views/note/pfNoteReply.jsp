@@ -20,8 +20,8 @@ h1{
 	border: none;
 	background-color: white;
 	font-size: 40px;
-	right: 830px;
-	top: 105px;
+	right: 900px;
+	top: 115px;
 }
 
 .detailBox{

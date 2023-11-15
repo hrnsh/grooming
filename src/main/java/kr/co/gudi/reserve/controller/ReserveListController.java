@@ -202,22 +202,23 @@ public class ReserveListController {
 			}
 			
 			@RequestMapping(value="/saveReview")
-			public String saveReview(@RequestParam HashMap<String, Object> params
-					,HttpSession session) {											
-				String loginId=(String) session.getAttribute("loginId");
-				logger.info("리뷰 정보: "+params);
-				service.saveReview(params,loginId);
-				String page="";
-				int checkId=service.checkId(loginId);
-				logger.info("로그인ID :"+checkId);
-			
-				if(checkId==0) {			
-					page = "reserve/reserveList";
-				}else {
-					page="reserve/reserveComList";
-				}
-				return page;
-			}
+	         public String saveReview(@RequestParam HashMap<String, Object> params
+	               ,HttpSession session) {                                 
+	            String page="";
+	            String loginId=(String) session.getAttribute("loginId");
+	            logger.info("리뷰 정보: "+params);
+	            service.saveReview(params, loginId);
+	            
+	            int checkId=service.checkId(loginId);
+	            logger.info("로그인ID :"+checkId);
+	         
+	            if(checkId==0) {         
+	               page = "reserve/reserveList";
+	            }else {
+	               page="reserve/reserveComList";
+	            }
+	            return page;
+	         }
 			
 			@RequestMapping(value="/revCancel")
 			public String revCancel(HttpSession session,@RequestParam String c_reason) {

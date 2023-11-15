@@ -175,7 +175,19 @@ WHERE
 			WHERE rrep_num=#{param1}
 	</update>
 	
-
+	<select id="calStar" resultType="int">
+      SELECT avg(rev_star)
+      FROM review
+      WHERE com_id  = (SELECT user_id
+                                              FROM company
+                                              WHERE  user_id= (select com_id from review where r_num=#{r_num}))
+   </select>
+   
+   <update id="updateStar">
+      UPDATE company
+      SET avg_star = #{avg_star}
+      WHERE user_id = (select com_id from review where r_num=#{r_num})
+   </update>
 	
 </mapper>
 

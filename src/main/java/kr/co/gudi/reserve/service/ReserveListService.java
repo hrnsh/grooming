@@ -116,12 +116,16 @@ public class ReserveListService {
 	}
 
 	public void saveReview(HashMap<String, Object> params, String loginId) {
-		logger.info("dd"+params+loginId);
-		dao.saveReview(params);
-		params.put("loginId", loginId);
-		
-
-	}
+	      dao.saveReview(params);
+	      params.put("loginId", loginId);
+	      int avg_star = dao.calStar(params);
+	      if(avg_star>0) {
+	         logger.info("avg: "+avg_star);
+	         params.put("avg_star", avg_star);
+	         logger.info("params:"+params);
+	         dao.updateStar(params);
+	      }
+	   }
 	
 			
 	public ArrayList<ReserveDTO> rivDetail(int idx) {

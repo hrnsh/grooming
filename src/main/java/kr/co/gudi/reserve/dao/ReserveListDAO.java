@@ -129,6 +129,16 @@ public interface ReserveListDAO {
 
 
 
+	int calStar(HashMap<String, Object> params);
+
+
+
+
+	void updateStar(HashMap<String, Object> params);
+
+
+
+
 
 
 }

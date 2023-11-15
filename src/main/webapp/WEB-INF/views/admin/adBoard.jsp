@@ -59,7 +59,7 @@ th, td {
 
 .boardBtn, .delBtn{
 	height: 35px;
-	width: 80px;
+	width: 100px;
 	background-color: rgb(94, 94, 94);
 	border: none;
 	border-radius: 10px;

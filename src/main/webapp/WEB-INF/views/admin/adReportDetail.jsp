@@ -168,7 +168,7 @@ button{
 			<c:if test="${reportDetail.report_state==2}">
 				<div class="handleBox">
 					<span style="left: 70px; top:20px; position: relative; font-size:20px; border-bottom:1px solid black;">처리 내역</span>
-						<div style="width:90%; height:140px; position:relative; top: 35px;overflow:scroll;">
+						<div style="height:140px; position:relative; top: 35px;overflow-y:scroll;overflow:auto;">
 						<table style="width: 92%;">
 							<tr>
 								<td style="width: 80px;">처리 일자</td>

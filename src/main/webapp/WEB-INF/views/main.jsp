@@ -145,7 +145,7 @@ button{
 }
 
 .rankBox{
-	width: 500px;
+	width: 600px;
 	height: 150px;
 	background-color: rgba(220, 212, 212, 0.49);
 	position: absolute;
@@ -203,14 +203,13 @@ footer {
     color: gold;
 }
 
-td{
-	width: 30%;
-}
-
 
 table{
+	width: 600px;
+	height: 100px;
 	border-spacing: 20px;
 	border-collapse: seperate;
+	table-layout:fixed;
 }
 
 a{
@@ -266,7 +265,7 @@ a:visited {
 			<table>
 				<c:forEach items="${rank}" var="info">
 					<tr>
-						<td> <a href="location.href='./locationSearch?user_id=${member.id}'">${info.com_name}</a></td>
+						<td style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"> <a href="location.href='./locationSearch?user_id=${member.id}'">${info.com_name}</a></td>
 						<td> 누적 이용자 수 : ${info.user_total}</td>
 						<td>
 							별점 :
