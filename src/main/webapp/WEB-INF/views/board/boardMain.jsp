@@ -142,7 +142,7 @@ width:120px;
 
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f8f8f8;
+      background-color: white;
       margin: 0;
       padding: 0;
       margin-bottom:50px;
@@ -206,14 +206,18 @@ width:120px;
 
     #btn {
       padding: 8px;
-      background-color: #3498db;
-      color: #fff;
+      padding-left:12px;
+      padding-right:12px;
+      background-color: rgb(243, 208, 204);
+      color: black;
       border: none;
       cursor: pointer;
+      border-radius: 5px;
     }
 
     #btn:hover {
-      background-color: #2980b9;
+      background-color: rgb(163, 161, 161);
+      color: white;
     }
 
     .container {
@@ -251,11 +255,28 @@ width:120px;
       color: black;
       text-align: center;
       cursor: pointer;
+      font-size: 20px;
     }
 
     .write:hover {
       background-color: rgb(163, 161, 161);
+      color: white;
     }
+    
+    .button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: rgb(163, 161, 161);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgb(243, 208, 204);
+}
 
 
 </style>
