@@ -100,14 +100,6 @@ body {
 	left: 50px;
 	flex-direction: column;
 }
-
-.pricelist{
-	margin: 10px;
-      padding: 5px 10px;
-      background-color: rgb(224, 224, 224);
-      border: none;
-      cursor: pointer;
-    }
     
     .main2{
 	height: 900px;
@@ -119,7 +111,7 @@ body {
 	position: relative;	
 }
 
-.profile {
+table {
     margin-top: 20px;
     width:450px;
     height:500px;
@@ -131,35 +123,6 @@ body {
     border-style: hidden;
     box-shadow: 0 0 0 1px #000;
 }
-
-.animal {
-    margin-top: 20px;
-    width:450px;
-    height:500px;
-    float: left;
-    margin-right: 20px;
-    border-collapse: collapse;
-    table-layout: fixed;
-    border-radius: 10px;
-    border-style: hidden;
-    box-shadow: 0 0 0 1px #000;
-}
-
-.company {
-    margin-top: 20px;
-    width:450px;
-    height:500px;
-    float: left;
-    margin-right: 20px;
-    border-collapse: collapse;
-    table-layout: fixed;
-    border-radius: 10px;
-    border-style: hidden;
-    box-shadow: 0 0 0 1px #000;
-}
-
-
-
 
     /* table {
       width:450px;
@@ -185,10 +148,6 @@ body {
 	::-webkit-scrollbar {
   		display: none;
 	}
-	
-	.profilecontroller{
-		text-align: center;
-	}
 
 </style>
 </head>
@@ -200,14 +159,11 @@ body {
 		<h1> 환영합니다 ${sessionScope.loginId}님 </h1>
 	</nav>
 	
-	<div class ="profilecontroller">
 	<button onclick="location.href='nomalLogout'" class="logoutBtn">로그아웃</button>
 	<button onclick="location.href='profileUpdateForm?user_id=${sessionScope.loginId}'" class = "profileupdate">프로필 수정</button>
 	<button onclick="location.href='comregisterForm?user_id=${sessionScope.loginId}'" class = "comreg" name="stateupdater" >업체 등록</button>
-	</div>
 	
 	<main>
-	
 	<div class="profButtonBox">
 		<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="profButton">내 프로필</button>
 		<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="profButton">쪽지함</button>
@@ -216,10 +172,7 @@ body {
 	</div>
 	
 		
-	<table class="profile">
-	
-	
-	
+	<table>
 		<tr>
 			<th>ID</th>
 			<th><input style="border: none; background: transparent;" type="text" name="user_id" readonly="readonly" value="${member.user_id}"/></th>
@@ -248,7 +201,7 @@ body {
 	
 	
 	<div style = "width : 500px; height : 500px; overflow : auto">
-	<table class="animal">
+	<table>
 		<tr>
 			<!-- <th>번호</th> -->
 			<th>이름</th>
@@ -405,7 +358,7 @@ console.log("listCall : " + listCall);
 						content += '<th colspan="2">'+item.price+'</th>';
 						content += '</tr>';
 						content += '<tr>';
-						content += '<th colspan = "2"><button class="pricelist" id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">가격표 보기</button></th>';
+						content += '<th colspan = "2"><button id="pickupbutton" onclick='+'"location.href='+"'pickupinfoForm?com_num="+item.com_num+"'"+'">가격표 보기</button></th>';
 						content += '</tr>';
 					});
 				$('#comlist').empty();
