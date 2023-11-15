@@ -81,6 +81,7 @@ public class ProfileService {
 		dto.setPickup(params.get("pickup"));
 		dto.setAddress(params.get("address"));
 		dto.setAddress(params.get("address"));
+		dto.setPrice(params.get("price"));
 		dao.comregister(dto);
 		dao.userstateupdater(params.get("user_id"), "1");
 		

@@ -7,7 +7,43 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
+
 <style>
+main {
+      margin-top: 50px;
+    }
+ .logo {
+	margin-left: 50px;
+	right: 0px;
+}
+
+    .logo img {
+      width: 150px;
+      height: 120px;
+      cursor: pointer;
+    }
+
+ .compickdel {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(94, 94, 94);
+      border: none;
+      cursor: pointer;
+    }
+
+ .comreg {
+      width: 500px;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    
+    .compick{
+    width: 400px;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+
 table, th, td {
 	margin: 10px;
 	border: 1px solid black;
@@ -15,6 +51,25 @@ table, th, td {
 	padding: 5px 10px;
 	height: 80px;
 }
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.button {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    margin: 10px auto;
+    text-align: center;
+    background-color: rgb(224, 224, 224);
+   
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 
 table {
 	float: left;
@@ -30,60 +85,58 @@ button {
 	display: none;
 }
 
-.profile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	padding: 10px;
+
+ th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+table input[type="text"],
+table input[type="file"],
+table input[type="button"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
 }
 
-.animalprofile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	float: left;
+#btnChk {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    margin: 20px auto;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 </style>
 </head>
 <body>
+<nav class="nav">
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
 	</div>
+	</nav>
+	<main	>
+	
+				<div class="profButtonBox">
+				<button onclick="location.href='profile?user_id=${sessionScope.loginId}'" class="profButton">내 프로필</button>
+			
+				<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="profButton">쪽지함</button>
+			
+				<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="profButton">내가 쓴 글</button>
+			
+				<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
+			</div>
+<div>
 	<h1 style="text-align: center;">가격표 보기</h1>
-	<table>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='profile?user_id=${sessionScope.loginId}'"
-					class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"
-					class="button">쪽지함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"
-					class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button
-					onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'"
-					class="button">신고 내역</button>
-			</th>
-		</tr>
-	</table>
-
-	<table style="text-align: left;">
+	
+	<table style="text-align: left;" class="comrig">
 		<tr>
 			<th>유저 ID</th>
 			<th colspan="4"><input style="border: none; background: transparent;" readonly="readonly" type="text" 
@@ -96,7 +149,7 @@ button {
 		<tr>
 			<th>픽업 가능 거리 (업체 기준 반경)</th>
 			<th colspan="4">
-				<input type="text" name="p_distance" value="" /> KM
+				<input type="text" name="p_distance" value="10" readonly="readonly" /> KM
 			</th>
 		</tr>
 		<tr>
@@ -108,10 +161,10 @@ button {
 		</tr>
 		<tr>
 			<th colspan="5" style="text-align: center;">
-				<input type="button" id="writepickupinfo" value="픽업 정보 입력 완료" />
+				<input class="button" type="button" id="writepickupinfo" value="픽업 정보 입력 완료" />
 			</th>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<th>이용권 가격</th>
 			<th colspan="2">
 				<input type='radio' name="t_type" value="오전권" />오전권
@@ -124,12 +177,12 @@ button {
 			<th colspan="5" style="text-align: center;">
 				<input type="button" id="writeticketprice" value="예약권 정보 입력 완료" />
 			</th>
-		</tr>
+		</tr> -->
 	</table>
 	
-	<table>
+	<table class="compick">
 		<tr>
-			<th colspan="5"><input type="button" id="pickuppricedelete" onclick = "pickuppricedelete()" value="픽업 가격표 삭제"/></th>
+			<th colspan="5"><input class="button" type="button" id="pickuppricedelete" onclick = "pickuppricedelete()" value="픽업 가격표 삭제"/></th>
 		</tr>
 		<tr>
 			<tbody id="pickuplist">
@@ -137,8 +190,8 @@ button {
 			</tbody>
 			
 	</table>
-	
-	<table>
+	</div>
+	<!-- <table>
 		<tr>
 			<th colspan="5"><input type="button" id="ticketpricedelete" onclick = "ticketpricedelete()" value="예약권 가격표 삭제"/></th>
 		</tr>
@@ -146,8 +199,8 @@ button {
 			<tbody id="ticketlist">
 
 			</tbody>
-	</table>
-	
+	</table> -->
+	</main>
 </body>
 <script>
 pickuplistCall();

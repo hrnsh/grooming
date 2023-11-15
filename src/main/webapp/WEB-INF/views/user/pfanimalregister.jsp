@@ -7,76 +7,158 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link rel="stylesheet" href="resources/css/profileCommon.css" type="text/css">
+
 <style>
-table, th, td {
-	margin: 10px;
-	border-bottom: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 10px;
-	height: 80px;
+
+.logo {
+	margin-left: 50px;
+	right: 0px;
 }
 
-table {
-	float: left;
-}
+body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-button {
-	float: left;
+   nav {
+	height: 200px;
 	display: flex;
-	align-items: left;
+	align-items: center;
+	justify-content: space-between;
 }
 
-::-webkit-scrollbar {
-	display: none;
+
+    .logo img {
+      cursor: pointer;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .logoutBtn {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(94, 94, 94);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .profileupdate {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(224, 224, 224);
+      border: none;
+      cursor: pointer;
+    }
+    
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .comreg {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(224, 224, 224);
+      border: none;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+   input[type="button"] {
+       margin: 10px;
+      padding: 5px 10px;
+      background-color: rgb(224, 224, 224);
+      border: none;
+      cursor: pointer;
+    }
+
+   .profButtonBox {
+      display: flex;
+      margin-top: 10px;
+    }
+    
+     .profButton{
+    	cursor: pointer;
+    }
+    
+    .comtable {
+      width: 900px;
+      height: 800px;
+      margin: 20px;
+      border-collapse: collapse;
+      justify-content: space-around;
+    }
+    
+    .profButtonBox{
+	width: 20px;
+	position: absolute;
+	top: 10px;
+	display:flex;
+	left: 50px;
+	flex-direction: column;
+}
+    
+    .main2{
+	height: 900px;
+	background-size: 175%;
+	background-position: 46% 4%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;	
 }
 
-.profile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	padding: 10px;
-}
+    table {
+      width:450px;
+      height:500px;
+      margin: 20px;
+      border-collapse: collapse;
+      justify-content: space-around;
+      
+    }
 
-.animalprofile {
-	width: 30%;
-	height: 300px;
-	float: left;
-	border: solid;
-	float: left;
-}
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+   tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+	::-webkit-scrollbar {
+  		display: none;
+	}
+
 </style>
 </head>
 <body>
+<nav class="nav">
 	<div class="logo">
 		<img src="resources/img/logo.jpg" alt="logoImage" width=150 height=120 />
+		</div>
+		<h1>동물 등록</h1>
+		
+		</nav>
+	<main>
+	<div class="profButtonBox">
+		<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="profButton">내 프로필</button>
+		<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="profButton">쪽지함</button>
+		<button	onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'"	class="profButton">내가 쓴 글</button>
+		<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="profButton">신고 내역</button>
 	</div>
-	<h1 style="text-align: center;">동물 등록</h1>
-	<table>
-		<tr>
-			<th>
-				<button	onclick="location.href='profile?user_id=${sessionScope.loginId}'"	class="button">내 프로필</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button	onclick="location.href='pfNoteList?user_id=${sessionScope.loginId}'"	class="button">쪽지함</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button onclick="location.href='pfWrite?user_id=${sessionScope.loginId}'" class="button">내가 쓴 글</button>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<button	onclick="location.href='pfReportList?user_id=${sessionScope.loginId}'" class="button">신고 내역</button>
-			</th>
-		</tr>
-	</table>
-	
-		<form action="animalregister" method="post">
-		<input type="submit" value="등록 완료" />
+			
+		<form name="animalsub" action="animalregister" method="post">
+		<input type="button" value="등록 완료" id="btnChk"/>
 	
 		<table>
 			<tr>
@@ -96,7 +178,7 @@ button {
 			</tr>
 			<tr>
 				<th>나이</th>
-				<th><input type="text" name="a_age" value=""/></th>
+				<th><input type="text" id="a_age" name="a_age" value=""/></th>
 			</tr>
 			<tr>
 				<th>종</th>
@@ -113,8 +195,8 @@ button {
 		</table>
 	</form>
 	
-	<div style = "width : 75%; height : 500px; overflow : auto">
-	<table width = "75%" border = "0" cellspacing = "0" cellpadding = "0" >
+	<div style = "width : 600px; height : 600px; overflow : auto">
+	<table>
 		<tr>
 			<th>번호</th>
 			<th>이름</th>
@@ -127,17 +209,15 @@ button {
 
 		</tbody>
 	</table>
-
+	</div>
+	</main>
 </body>
 <script>
 listCall();
 
-listCall()
-
 console.log("listCall : " + listCall);
 	
 	function listCall(){
-	/* $('#listCall').on('click', function() { */
 		var user_id = '${sessionScope.loginId}';
 		console.log("profile user_id : " + user_id);
 
@@ -190,6 +270,15 @@ console.log("listCall : " + listCall);
 		$('#list').empty();
 		$('#list').append(content);
 	}
+	
+	$('#btnChk').click(function(){
+		if ($("#a_age").val() == "") {	
+			alert("이름을 정확히 입력해주세요");
+			location.href='profileUpdateForm?user_id=${sessionScope.loginId}';
+			}else{
+				document.animalsub.submit();
+				}
+		});
 	
 	$(".logo").on('click',function(){
 		
