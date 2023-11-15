@@ -200,7 +200,7 @@ input[type="submit"]{
 					</tr>
 					<tr>
 						<th>사업자 등록증</th>
-						<td colspan="2" style="text-align:left;">사업자 등록증 이미지 링크</td>
+						<td colspan="2" style="text-align:left;" id="photo">사업자 등록증 이미지 링크</td>
 					</tr>
 					<tr>
 						<th colspan="3" style="text-align:left;">사유</th>

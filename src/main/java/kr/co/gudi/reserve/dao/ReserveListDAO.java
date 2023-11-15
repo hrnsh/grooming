@@ -127,4 +127,8 @@ public interface ReserveListDAO {
 	ArrayList<ReserveDTO> userState(String loginId, String stateFilter, int offset);
 
 
+
+
+
+
 }

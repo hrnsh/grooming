@@ -676,7 +676,7 @@
 						content +="수용 가능 동물 수 : " + item.accept + "<br>";
 						content +="평균 별점 : " + item.avg_star + "<br>";
 						content +="누적 이용자 수 : " + item.user_total + "<br>";
-						content += "가격 : " + item.price + "</div>";
+						content += "가격 : " + 70000 + "</div>";
 					});
 					
 					$(".company-detail").append(content);

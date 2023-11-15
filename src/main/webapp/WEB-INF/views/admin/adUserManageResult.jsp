@@ -70,7 +70,7 @@ table, th, td{
     height: 6%;
     display: flex;
     position: relative;
-    bottom: 5px;
+    bottom: 10px;
     left: 25%;
 }
 

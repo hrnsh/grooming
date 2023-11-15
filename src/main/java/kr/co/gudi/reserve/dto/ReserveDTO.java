@@ -176,6 +176,13 @@ public class ReserveDTO {
 	public void setR_spec(String r_spec) {
 		this.r_spec = r_spec;
 	}
+	private int price;
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	private String r_totalprice;
 	private String r_state;
 	private String t_type;

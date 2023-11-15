@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.gudi.admin.dto.ManageDTO;
-import kr.co.gudi.reserve.dao.ReserveDAO;
 import kr.co.gudi.reserve.dao.ReserveListDAO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
+import kr.co.gudi.review.dto.ReviewDTO;
 
 
 @Service
@@ -116,12 +115,15 @@ public class ReserveListService {
 		}
 	}
 
-	public void saveReview(HashMap<String, Object> params) {
+	public void saveReview(HashMap<String, Object> params, String loginId) {
+		logger.info("dd"+params+loginId);
 		dao.saveReview(params);
-		dao.saveStar(params);
-	
-	}
+		params.put("loginId", loginId);
+		
 
+	}
+	
+			
 	public ArrayList<ReserveDTO> rivDetail(int idx) {
 	
 		return dao.rivDetail(idx);

@@ -204,10 +204,10 @@ public class ReserveListController {
 			@RequestMapping(value="/saveReview")
 			public String saveReview(@RequestParam HashMap<String, Object> params
 					,HttpSession session) {											
-				logger.info("리뷰 정보: "+params);
-				service.saveReview(params);
-				String page="";
 				String loginId=(String) session.getAttribute("loginId");
+				logger.info("리뷰 정보: "+params);
+				service.saveReview(params,loginId);
+				String page="";
 				int checkId=service.checkId(loginId);
 				logger.info("로그인ID :"+checkId);
 			

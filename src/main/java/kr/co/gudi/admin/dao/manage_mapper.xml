@@ -77,7 +77,4 @@
 			where m.m_num = #{param1}
 	</select>
 	
-	<insert id="upState">
-		INSERT INTO manage()
-	</insert>
 </mapper>

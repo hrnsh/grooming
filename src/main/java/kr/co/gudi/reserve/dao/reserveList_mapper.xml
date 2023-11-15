@@ -175,14 +175,7 @@ WHERE
 			WHERE rrep_num=#{param1}
 	</update>
 	
-	<update id="saveStar">
-		UPDATE company
-		SET avg_star = (avg_star + #{rev_star}) / (SELECT COUNT(*) FROM review
-   		 WHERE com_id = (SELECT user_id FROM company
-        WHERE user_id = (SELECT com_id FROM reserve WHERE r_num = #{r_num})) 
-        AND rev_star > 0)
-		WHERE user_id = (SELECT com_id FROM reserve WHERE r_num = #{r_num})	
-	</update>
+
 	
 </mapper>
 
