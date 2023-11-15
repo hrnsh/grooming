@@ -116,7 +116,7 @@ textarea {
 </style>
 </head>
 <body>
-	<p>예약관리 - 회원</p>
+	<h1>예약관리 - 회원</h1>>
 	<nav class="nav">
 		<div class="logo">
 			<img onclick="location.href='./'" src="resources/img/logo.jpg" alt="logoImage" width="150" height="120"/>
@@ -135,7 +135,7 @@ textarea {
 		</div>
 		</nav>
 	<div>
-		<th>기간</th> <select id="selDate">
+		 <select id="selDate">
 			<option value="all">전체</option>
 			<option value="today">오늘</option>
 			<option value="week">1주일</option>

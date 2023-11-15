@@ -31,6 +31,6 @@ public interface ManageDAO {
 
 	void updateMember(HashMap<String, Object> params);
 
-	void upState(String user_id);
+	void upState(String user_id, ArrayList<ManageDTO> dto);
 
 }

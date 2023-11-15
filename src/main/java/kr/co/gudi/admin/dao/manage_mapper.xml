@@ -76,4 +76,8 @@
 			join member m2 on m.user_id = m2.user_id 
 			where m.m_num = #{param1}
 	</select>
+	
+	<insert id="upState">
+		INSERT INTO manage()
+	</insert>
 </mapper>

@@ -192,7 +192,7 @@ public class ReserveController {
 			logger.info("받아온 데이터: "+params);
 			service.writeNote(params);
  
-			return "./";
+			return "reserve/reserveList";
 		}
 	}
 

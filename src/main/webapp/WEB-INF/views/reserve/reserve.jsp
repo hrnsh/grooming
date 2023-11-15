@@ -150,7 +150,7 @@ $(function() {
        			 today.setHours(0, 0, 0, 0);
         		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-       			 if (date < today || date > maxDate) {
+       			 if (date <= today || date > maxDate) {
            			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
             	return [false, "", "선택불가능"];
          		 }			
@@ -207,7 +207,7 @@ $(function() {
        			 today.setHours(0, 0, 0, 0);
         		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-       			 if (date < today || date > maxDate) {
+       			 if (date <= today || date > maxDate) {
            			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
             	return [false, "", "선택불가능"];
          		 }
@@ -217,7 +217,7 @@ $(function() {
                 console.log("뭐라고말좀해봐"+reservationCount); 
        			if (reservationCount >= accept) {
                      // 예약 건수가 accept개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "예약됨"];
+                     return [false, "", "reserved"];
                  }
 
          		 // 나머지 날짜는 선택 가능
@@ -261,7 +261,7 @@ $(function() {
        			 today.setHours(0, 0, 0, 0);
         		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-       			 if (date < today || date > maxDate) {
+       			 if (date <= today || date > maxDate) {
            			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
             	return [false, "", "선택불가능"];
          		 }
@@ -271,7 +271,7 @@ $(function() {
                 console.log("뭐라고말좀해봐"+reservationCount); 
        			if (reservationCount >= accept) {
                      // 예약 건수가 accept개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "예약됨"];
+                     return [false, "", "reserved"];
                  }
 
          		 // 나머지 날짜는 선택 가능
