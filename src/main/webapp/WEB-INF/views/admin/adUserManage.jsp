@@ -40,12 +40,9 @@ table, th, td{
 	padding: 5px 10px;
 }
 
-th{
-	 text-align: center;
-}
-
 table{	
-	width: 750px;
+	width: 500px;
+	height: 450px;
 	position: relative;
 	left: 50px;
 	top: 50px;
@@ -57,22 +54,21 @@ table{
 
 .listBox{
 	position: relative;
-	height: 500px;
-	left: 5%;
-	width: 900px;
+	height: 550px;
+	left: 2%;
+	width: 600px;
 	bottom: 50px;
 }
 
 #paging {
 	position: relative;
 	top: 100px;
-	right: 150px;
+	right: 50%;
 }
 
 .btn{
 	position: relative;
 	left: 80%;
-	top: 10%;
 	height: 35px;
 	width: 80px;
 	background-color: rgb(94, 94, 94);
@@ -82,21 +78,45 @@ table{
 }
 
 .modal{
-	width: 900px;
-	height: 500px;
-	left: 20%;
+  position: fixed;
+  top:0; left: 0; bottom: 0; right: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content{
+	width: 600px;
+	height: 550px;
+	left: 30%;
 	top: 15%;
 	border: 1px solid rgb(94, 94, 94);
+	align-items:center;
 }
 
 form{
-	height: 500px;
+	height: 600px;
+	width: 600px;
 }
 
 .close{
 	font-size: 40px;
 	right: 10px;
 	position: relative;
+}
+
+textarea{
+	resize: none;
+	width: 100%;
+	height: 100px;
+	border: none;
+}
+
+input[type="submit"]{
+	height: 35px;
+	width: 80px;
+	background-color: rgb(94, 94, 94);
+	border: none;
+	border-radius: 10px;
+	color: white;
 }
 
 </style>
@@ -120,9 +140,9 @@ form{
 	<table>
 		<thead>
 			<tr>
-				<th class="user_id">회원ID</th>
-				<th class="user_name">이름</th>
-				<th>
+				<th class="user_id" style="text-align:center;">회원ID</th>
+				<th class="user_name" style="text-align:center;">이름</th>
+				<th style="text-align:center;">
 				<select id="user_state" name="user_state">
 				<option value="전체">전체</option>
 				<option value="0">일반</option>
@@ -158,9 +178,9 @@ form{
 			<form action="saveManage">
 				<table>
 					<tr>
-						<th>ID</th>
+						<th style="width:100px;">ID</th>
 						<td id="user_id"></td>
-						<th>관리자</th>
+						<th style="text-align:center;">관리자</th>
 					</tr>
 					<tr>
 						<th>이름</th>
@@ -179,29 +199,30 @@ form{
 						</td>
 					</tr>
 					<tr>
-						<th colspan="3">사업자 등록증</th>
+						<th>사업자 등록증</th>
+						<td colspan="2" style="text-align:left;">사업자 등록증 이미지 링크</td>
 					</tr>
 					<tr>
-						<th>사유</th>
+						<th colspan="3" style="text-align:left;">사유</th>
 					</tr>
 					<tr>
-						<td colspan="3"><textarea name="m_content"></textarea></td>
+						<td colspan="3"><textarea name="m_content" placeholder="사유를 입력해 주세요."></textarea></td>
 					</tr>
 					<tr>
 						<th>처리내역</th>
-						<td>
+						<td colspan="2" style="text-align:left;">
 							<select id="m_type" name="m_type">
-							<option value="승인요청">승인요청</option>
-							<option value="정지">정지</option>
-							<option value="정지해제">정지해제</option>							
+								<option value="승인요청">승인요청</option>
+								<option value="정지">정지</option>
+								<option value="정지해제">정지해제</option>							
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="3"><textarea name="m_complet"></textarea></td>
+						<td colspan="3"><textarea name="m_complet" placeholder="내용을 입력해 주세요."></textarea></td>
 					</tr>
 					<tr>
-						<td colspan="2"><input type="submit" onclick="saveManage()"
+						<td colspan="3"><input type="submit" onclick="saveManage()"
 							value="수정" /></td>
 					</tr>
 				</table>

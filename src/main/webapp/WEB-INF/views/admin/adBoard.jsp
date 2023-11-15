@@ -28,6 +28,7 @@ h1{
 	right: 18%;
 	top: 55px;
 	font-size: 35px;
+	font-weight: 5;
 }
 
 table {
