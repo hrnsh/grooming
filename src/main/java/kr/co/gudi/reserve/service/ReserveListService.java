@@ -46,14 +46,20 @@ public class ReserveListService {
 
 
 
-	public HashMap<String, Object> all(String loginId, String stateFilter,String page) {
+	public HashMap<String, Object> all(String loginId, String stateFilter,String page, int checkId) {
 		int p = Integer.parseInt(page);		
 
 		int offset = (p-1)*10;		
 		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		list = dao.all(loginId,stateFilter,offset);
-		map.put("revComList",list);
+		if(checkId==0) {		
+				list = dao.userAll(loginId,stateFilter,offset);
+				map.put("revComList",list);
+			}else {
+				list = dao.all(loginId,stateFilter,offset);
+				map.put("revComList",list);	
+			}
+			
 		int pages = dao.totalPage();
 		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
 		map.put("pages", pages);
@@ -66,14 +72,19 @@ public class ReserveListService {
 		return map;
 	}
 
-	public HashMap<String, Object> state(String loginId, String stateFilter,String page) {
+	public HashMap<String, Object> state(String loginId, String stateFilter,String page, int checkId) {
 		int p = Integer.parseInt(page);		
 
 		int offset = (p-1)*10;		
 		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		list = dao.state(loginId,stateFilter,offset);
-		map.put("revComList",list);
+		if(checkId==0) {		
+			list = dao.userState(loginId,stateFilter,offset);
+			map.put("revComList",list);
+		}else {
+			list = dao.state(loginId,stateFilter,offset);
+			map.put("revComList",list);
+		}
 		logger.info("상태리스트 :"+list);
 		int pages = dao.totalPage();
 		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
@@ -210,6 +221,7 @@ public class ReserveListService {
 		dao.rrepDel(rrep_num);
 		
 	}
+
 
 
 

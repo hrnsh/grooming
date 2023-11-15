@@ -117,4 +117,14 @@ public interface ReserveListDAO {
 	void saveStar(HashMap<String, Object> params);
 
 
+
+
+	ArrayList<ReserveDTO> userAll(String loginId, String stateFilter, int offset);
+
+
+
+
+	ArrayList<ReserveDTO> userState(String loginId, String stateFilter, int offset);
+
+
 }

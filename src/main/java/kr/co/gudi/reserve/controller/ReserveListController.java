@@ -139,28 +139,20 @@ public class ReserveListController {
 	
 			@RequestMapping(value="/state")
 			@ResponseBody
-			public HashMap<String, Object> stat(@RequestParam String stateFilter,HttpSession session
+			public HashMap<String, Object> state(@RequestParam String stateFilter,HttpSession session
 					,@RequestParam String page){
 				HashMap<String, Object> stat = new HashMap<>();
 				logger.info("상태 :"+stateFilter);
 				String loginId=(String) session.getAttribute("loginId");
 				int checkId=service.checkId(loginId);
 				logger.info("로그인ID :"+checkId);
-				if(checkId==0) {
-					// 일반
+		
 					if(stateFilter.equals("전체")) {
-						stat =service.all(loginId,stateFilter,page);
+						stat =service.all(loginId,stateFilter,page,checkId);
 					}else {
-						stat =service.state(loginId,stateFilter,page);
+						stat =service.state(loginId,stateFilter,page,checkId);
 					}
-				}else {
-					//업체
-					if(stateFilter.equals("전체")) {
-						stat =service.all(loginId,stateFilter,page);
-					}else {
-						stat =service.state(loginId,stateFilter,page);
-					}
-				}
+				
 				
 				return stat;
 			}
