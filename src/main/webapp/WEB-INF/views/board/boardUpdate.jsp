@@ -52,6 +52,81 @@
 		resize: none;
 	
 	}
+	
+	
+	    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+    }
+
+    td {
+      padding: 10px;
+    }
+
+    #subject,
+    #editorTxt {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    #editorTxt {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #picture {
+      width: 100%;
+    }
+
+    th {
+      text-align: right;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: rgb(243, 208, 204);
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    input[type="button"] {
+      padding: 10px 20px;
+      background-color: #ccc;
+      color: #333;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    	#editorTxt {
+	
+		resize: none;
+	
+	
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -69,8 +144,8 @@
 		</tr>
 		<tr>
 		<th colspan="2">
-			<input type="button" onclick="location.href='./boardMain'" value="리스트" />
-			<button id="save">저장</button>
+			<input type="button" onclick="location.href='./boardMain'" value="수정취소" />
+			<button id="save">수정</button>
 		</th>
 		</tr>
 	</table>
