@@ -106,6 +106,12 @@ div{text-align: center;}
         textarea {
             resize: vertical;
         }
+
+    .ui-datepicker-unselectable.ui-state-disabled[title="reserved"] {
+        background-color: red !important;
+        color: white !important;
+        border: 1px solid red !important;
+    }
     </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -134,26 +140,26 @@ $(function() {
             	 var findRevArray = Array.isArray(response.findRev) ? response.findRev : [response.findRev];
                  var accept = response.findAcc;              
             	 var enableDays = 90;
-            	 
+            	 console.log("예약건"+findRevArray);
             	console.log("수용"+accept);
    			 $("#datepicker").datepicker({  	
      			 beforeShowDay: function(date) {
+     				 console.log("비활성화");
        			 var dateString = $.datepicker.formatDate("yy-mm-dd", date);
        			 var today = new Date();
        			 today.setHours(0, 0, 0, 0);
         		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-       			 if (date < today || date > maxDate) {
+       			 if (date <= today || date > maxDate) {
            			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
             	return [false, "", "선택불가능"];
-         		 }
-				
+         		 }			
        			// reservedDates 배열에서 해당 날짜의 예약 건수 가져오기
                  var reservationCount = getReservationCount(dateString, findRevArray);
                 console.log("뭐라고말좀해봐"+reservationCount); 
        			if (reservationCount >= accept) {
                      // 예약 건수가 accept개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "예약됨"];
+                     return [false, "", "reserved"];
                  }
 
          		 // 나머지 날짜는 선택 가능
@@ -177,6 +183,8 @@ $(function() {
     });
 });
 
+
+
 // picker1
 $(function() {
 	$("#datepicker1").click(function(){
@@ -199,7 +207,7 @@ $(function() {
        			 today.setHours(0, 0, 0, 0);
         		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-       			 if (date < today || date > maxDate) {
+       			 if (date <= today || date > maxDate) {
            			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
             	return [false, "", "선택불가능"];
          		 }
@@ -209,7 +217,7 @@ $(function() {
                 console.log("뭐라고말좀해봐"+reservationCount); 
        			if (reservationCount >= accept) {
                      // 예약 건수가 accept개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "예약됨"];
+                     return [false, "", "reserved"];
                  }
 
          		 // 나머지 날짜는 선택 가능
@@ -253,7 +261,7 @@ $(function() {
        			 today.setHours(0, 0, 0, 0);
         		var maxDate = new Date(today.getTime() + enableDays * 24 * 60 * 60 * 1000);
         
-       			 if (date < today || date > maxDate) {
+       			 if (date <= today || date > maxDate) {
            			 // 오늘 이전이거나 90일 이후인 경우 선택 불가능하게 만듦
             	return [false, "", "선택불가능"];
          		 }
@@ -263,7 +271,7 @@ $(function() {
                 console.log("뭐라고말좀해봐"+reservationCount); 
        			if (reservationCount >= accept) {
                      // 예약 건수가 accept개 이상인 경우 선택 불가능하게 만듦
-                     return [false, "", "예약됨"];
+                     return [false, "", "reserved"];
                  }
 
          		 // 나머지 날짜는 선택 가능
@@ -286,7 +294,29 @@ $(function() {
     });
 });
 
-function getReservationCount(date, reservedDates) {
+function getReservationCount(dateString, findRevArray) {
+    console.log("dateString:", dateString);
+    console.log("findRevArray:", findRevArray);
+
+    var count = 0;
+    var selectedDate = new Date(dateString);
+
+    for (var i = 0; i < findRevArray.length; i++) {
+        console.log("findRevArray[i].formatted_date:", findRevArray[i].formatted_date);
+        var formattedDate = new Date(findRevArray[i].formatted_date);
+
+        // 날짜가 일치하는 경우에만 count 증가
+        if (formattedDate.toDateString() === selectedDate.toDateString()) {
+            count += findRevArray[i].reservation_count;
+        }
+    }
+
+    console.log("count:", count);
+    return count;
+}
+
+
+/* function getReservationCount(date, reservedDates) {
     for (var i = 0; i < reservedDates.length; i++) {
         if (date === reservedDates[i].formatted_date) {
             return reservedDates[i].reservation_count;
@@ -294,7 +324,7 @@ function getReservationCount(date, reservedDates) {
     }
     return 0; // 예약 데이터가 없을 경우 0을 반환
 }
-
+ */
 // 이용권종류 버튼 이벤트
 /* var ticket;
 

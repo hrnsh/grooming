@@ -26,12 +26,12 @@ public class InquiryService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired InquiryDAO inquiryDao;
 	
-	private String root = "/Users/amy/yurini/img/";
+	private String root = "C:/upload/";
 	
 	// 일반 문의 보내기 & 테이블에 저장 
 	public void saveInquiry(MultipartFile photo, String subject, 
 			String content, String loginId) throws Exception {
-		// dto 로 데이터 저장 후 inquiry 테이블에 insert 한다. 
+		// dto 로 데이터 저장 후 inquiry 테이블에 insert 한다. f
 		InquiryDTO dto = new InquiryDTO();
 		dto.setInq_subject(subject);
 		dto.setInq_content(content);

@@ -356,8 +356,14 @@ function drawSentList(sentList){
 		var date = new Date(item.note_date);
 		var dateStr = date.toLocaleDateString("ko-KR");
 		content+='<td>'+dateStr+'</td>';
-		content+='<td>'+item.receiver+'</td>';
-		content+='<td>' 
+		content+='<td>';
+		if(item.receiver!=null){
+			content+=item.receiver;
+		}else{
+			content+='관리자';
+		}
+		content+='</td>';
+		content+='<td>';
 		if(item.note_state==0){
 			content+='<img src="resources/img/unread.jpg" alt="logoImage" width=20 height=20/>';
 		}else{

@@ -47,10 +47,21 @@
 			WHERE com_id = #{param1} AND r_state=#{param2}
 			ORDER BY r_num DESC LIMIT 10 OFFSET #{param3}
 	</select>
-	
+
+		<select id="userState" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		SELECT * FROM reserve
+			WHERE user_id = #{param1} AND r_state=#{param2}
+			ORDER BY r_num DESC LIMIT 10 OFFSET #{param3}
+	</select>
 	<select id="all" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
 		select r_num,user_id,r_start,r_end,r_state from reserve
 			where com_id=#{param1}
+			ORDER BY r_num DESC LIMIT 10 OFFSET #{param3}
+	</select>
+
+	<select id="userAll" resultType="kr.co.gudi.reserve.dto.ReserveDTO">
+		select r_num,user_id,r_start,r_end,r_state from reserve
+			where user_id=#{param1}
 			ORDER BY r_num DESC LIMIT 10 OFFSET #{param3}
 	</select>
 	
@@ -164,14 +175,19 @@ WHERE
 			WHERE rrep_num=#{param1}
 	</update>
 	
-	<update id="saveStar">
-		UPDATE company
-		SET avg_star = (avg_star + #{rev_star}) / (SELECT COUNT(*) FROM review
-   		 WHERE com_id = (SELECT user_id FROM company
-        WHERE user_id = (SELECT com_id FROM reserve WHERE r_num = #{r_num})) 
-        AND rev_star > 0)
-		WHERE user_id = (SELECT com_id FROM reserve WHERE r_num = #{r_num});	
-	</update>
+	<select id="calStar" resultType="int">
+      SELECT avg(rev_star)
+      FROM review
+      WHERE com_id  = (SELECT user_id
+                                              FROM company
+                                              WHERE  user_id= (select com_id from review where r_num=#{r_num}))
+   </select>
+   
+   <update id="updateStar">
+      UPDATE company
+      SET avg_star = #{avg_star}
+      WHERE user_id = (select com_id from review where r_num=#{r_num})
+   </update>
 	
 </mapper>
 

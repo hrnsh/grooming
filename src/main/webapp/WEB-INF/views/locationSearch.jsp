@@ -132,7 +132,8 @@
 			}
 			
 			.review-container{
-				background-color: #f1f1f1;
+				    height: 240px;
+			
 			}
 			
 			#showUserLocation,  #searchPlaces{
@@ -206,6 +207,15 @@
 			    left: 10px;
 			    height: 25px;
 			    top: 5px;
+			}
+			
+			.reviewContent{
+				border:1px solid black;
+				margin-top:10px;
+				margin-bottom:10px;
+				position: relative;
+				top: 10px;
+				background-color: #f1f1f1;
 			}
 			
 			
@@ -324,6 +334,7 @@
 						switch (error.code) {
 			  			case error.PERMISSION_DENIED:
 			  				console.error("사용자가 위치 공유를 거부했습니다.");
+			  				alert("사용자가 위치 공유를 거부했습니다.");
 			  				break;
 			  	
 			  			case error.POSITION_UNAVAILABLE:
@@ -676,7 +687,7 @@
 						content +="수용 가능 동물 수 : " + item.accept + "<br>";
 						content +="평균 별점 : " + item.avg_star + "<br>";
 						content +="누적 이용자 수 : " + item.user_total + "<br>";
-						content += "가격 : " + item.price + "</div>";
+						content += "가격 : " + 70000 + "</div>";
 					});
 					
 					$(".company-detail").append(content);
@@ -739,7 +750,7 @@
 					    var dateStr = date.toLocaleDateString("ko-KR");
 					    
 					   
-						content += '<div><strong>작성자:</strong> ' + item.user_id + '<br>';
+						content += '<div class="reviewContent"><strong>작성자:</strong> ' + item.user_id + '<br>';
 						content += '<strong>제목:</strong> ' + item.rev_subject + '<br>';
 						content += '<strong>별점:</strong> ' + item.rev_star + '<br>';
 						content += '<strong>내용:</strong> ' + item.rev_content + '<br>';

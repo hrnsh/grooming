@@ -203,7 +203,7 @@ ul.inner_box {
 		<table>
 			<tr>
 				<th>
-					<p>예약 정보</p>
+					<h1>예약 정보</h1>
 				</th>
 				<c:if test="${auto>0}">
 				<th>
@@ -258,7 +258,6 @@ ul.inner_box {
 						<ul class="">
 							<li>픽업</li>
 							<li>픽업 주소</li>
-							<li>상세 주소</li>
 							<li>총 이용금액</li>
 							<li>예약 상태</li>
 						</ul>
@@ -267,7 +266,6 @@ ul.inner_box {
 						<ul>
 							<li>${rev.r_pick}</li>
 							<li>${rev.r_pickaddr}</li>
-							<li></li>
 							<li>${rev.r_totalprice}</li>
 							<li>${rev.r_state}</li>
 

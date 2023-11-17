@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.gudi.admin.dto.ManageDTO;
-import kr.co.gudi.reserve.dao.ReserveDAO;
 import kr.co.gudi.reserve.dao.ReserveListDAO;
 import kr.co.gudi.reserve.dto.ReserveDTO;
+import kr.co.gudi.review.dto.ReviewDTO;
 
 
 @Service
@@ -46,14 +45,20 @@ public class ReserveListService {
 
 
 
-	public HashMap<String, Object> all(String loginId, String stateFilter,String page) {
+	public HashMap<String, Object> all(String loginId, String stateFilter,String page, int checkId) {
 		int p = Integer.parseInt(page);		
 
 		int offset = (p-1)*10;		
 		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		list = dao.all(loginId,stateFilter,offset);
-		map.put("revComList",list);
+		if(checkId==0) {		
+				list = dao.userAll(loginId,stateFilter,offset);
+				map.put("revComList",list);
+			}else {
+				list = dao.all(loginId,stateFilter,offset);
+				map.put("revComList",list);	
+			}
+			
 		int pages = dao.totalPage();
 		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
 		map.put("pages", pages);
@@ -66,14 +71,19 @@ public class ReserveListService {
 		return map;
 	}
 
-	public HashMap<String, Object> state(String loginId, String stateFilter,String page) {
+	public HashMap<String, Object> state(String loginId, String stateFilter,String page, int checkId) {
 		int p = Integer.parseInt(page);		
 
 		int offset = (p-1)*10;		
 		ArrayList<ReserveDTO> list = new ArrayList<ReserveDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		list = dao.state(loginId,stateFilter,offset);
-		map.put("revComList",list);
+		if(checkId==0) {		
+			list = dao.userState(loginId,stateFilter,offset);
+			map.put("revComList",list);
+		}else {
+			list = dao.state(loginId,stateFilter,offset);
+			map.put("revComList",list);
+		}
 		logger.info("상태리스트 :"+list);
 		int pages = dao.totalPage();
 		//logger.info("만들 수 있는 총 페이지 수 : " +pages);
@@ -105,12 +115,19 @@ public class ReserveListService {
 		}
 	}
 
-	public void saveReview(HashMap<String, Object> params) {
-		dao.saveReview(params);
-		dao.saveStar(params);
+	public void saveReview(HashMap<String, Object> params, String loginId) {
+	      dao.saveReview(params);
+	      params.put("loginId", loginId);
+	      int avg_star = dao.calStar(params);
+	      if(avg_star>0) {
+	         logger.info("avg: "+avg_star);
+	         params.put("avg_star", avg_star);
+	         logger.info("params:"+params);
+	         dao.updateStar(params);
+	      }
+	   }
 	
-	}
-
+			
 	public ArrayList<ReserveDTO> rivDetail(int idx) {
 	
 		return dao.rivDetail(idx);
@@ -210,6 +227,7 @@ public class ReserveListService {
 		dao.rrepDel(rrep_num);
 		
 	}
+
 
 
 

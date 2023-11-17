@@ -9,7 +9,14 @@ public class ReviewDTO {
 	private int rev_star;
 	private String rev_content;
 	private Date rev_date;
+	private int avg_star;
 	
+	public int getAvg_star() {
+		return avg_star;
+	}
+	public void setAvg_star(int avg_star) {
+		this.avg_star = avg_star;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

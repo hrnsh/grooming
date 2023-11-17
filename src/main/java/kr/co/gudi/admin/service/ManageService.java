@@ -40,8 +40,9 @@ public class ManageService {
 		return map;
 	}
 	public ArrayList<ManageDTO> manageDetail(String user_id) {
-	
-		return dao.manageDetail(user_id);
+		ArrayList<ManageDTO>dto=dao.manageDetail(user_id);
+		//dao.upState(user_id,dto);
+		return dto;
 	}
 	public void saveManage(HashMap<String, Object> params) {
 		dao.saveManage(params);
